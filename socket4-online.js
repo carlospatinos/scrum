@@ -12,30 +12,36 @@ const io = require('socket.io')(httpServer);
 var users = [];
 
 io.on('connect', socket => {
-    console.log("user connected" + users);
-    
-    socket.on('disconnect', () => {
-        console.log('user disconnected');
-    });
+  console.log("user connected: " + socket.id);
+  io.emit('newCliientJoined', { user_id: socket.id });
 
-    socket.on('setUsername', function(data) {
-      console.log("user: " + data);
-      if(users.indexOf(data) == -1) {
-         console.log('new user added ' + data);
-         users.push(data);
-         socket.emit('userSet', {username: data});
-      } else {
-         socket.emit('userExists', data + ' username is taken! Try some other username.');
-      }
-   });
+  // let counter = 0;
+  // setInterval(() => {
+  //   socket.emit('hello', ++counter);
+  // }, 1000);
 
-   socket.on('newMsg', function(data) {
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+
+  socket.on('setUsername', function (data) {
+    console.log("user: " + data);
+    if (users.indexOf(data) == -1) {
+      console.log('new user added ' + data);
+      users.push(data);
+      socket.emit('userSet', { username: data });
+    } else {
+      socket.emit('userExists', data + ' username is taken! Try some other username.');
+    }
+  });
+
+  socket.on('newMsg', function (data) {
     console.log("newMsg: " + JSON.stringify(data));
     socket.emit('newMsg', data);
-   });
-  
-    
   });
+
+
+});
 
 httpServer.listen(3000, () => {
   console.log('go to http://localhost:3000');
