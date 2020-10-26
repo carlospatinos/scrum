@@ -56,14 +56,6 @@
         $events.appendChild(newItem(`New user joined: ${jsonUserInfo}`));
     });
 
-    socket.on('connect', () => {
-        $events = document.getElementById('events');
-        $events.appendChild(newItem('connect'));
-    });
-
-    
-
-
 </script>
 
 <body>
