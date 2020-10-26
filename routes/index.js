@@ -12,4 +12,8 @@ router.get('/signin', function (req, res, next) {
   res.render('welcome', { title: 'Scrum' });
 });
 
+router.post('/signin', function (req, res, next) {
+  res.render('welcome', { title: 'Scrum' });
+});
+
 module.exports = router;
