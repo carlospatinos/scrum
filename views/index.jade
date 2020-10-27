@@ -1,22 +1,14 @@
 extends defaultLayout
 
 block content
-  div.top
-  br
-  br
-  br
-  div.container
-    div.content
-      div.text-center
-        form.form-horizontal(method="post", id="loginForm", action='/signin')
-          div.input-group
-            input.span3(type="text" class="form-control" placeholder="Enter your id" name="personalSecretId")
-            span.input-group-btn
-              button.btn.btn-primary(type="submit") Go
-  div.footer
-    h4 Lista de eventos
-    ul#events 
-      li Lista de eventos
-  script(src="/socket.io/socket.io.js")
-  script(src="/js/test.js")
-
+    .row.justify-content-center
+        .card(style='width: 40rem;')
+            img.card-img-top(src='/img/logo.png' alt='...') 
+            .card-body.justify-content-center
+                h5.card-title Welcome
+                p.card-text
+                    | Get together #haveFun #crackOn #scrum ...
+                    br
+                    | Trust the quality of what you know, not the quantity.
+                a.btn.btn-danger(href='/register') Create an Account!
+                a.btn.btn-danger(href='/login') Use your Account!
