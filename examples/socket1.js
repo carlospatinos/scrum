@@ -36,11 +36,11 @@ io.on('connection', (socket) => {
     });
 
     socket.on('chat message', (msg) => {
-        //io.emit('chat message', msg);
-        let recipientSocketIds = userSocketIdMap.get(recipientUserName);
-        for (let socketId of recipientSocketIds) {
-            io.to(socketID).emit('chat message', messageContent);
-        }
+        io.emit('chat message', msg);
+        // let recipientSocketIds = userSocketIdMap.get(recipientUserName);
+        // for (let socketId of recipientSocketIds) {
+        //     io.to(socketID).emit('chat message', messageContent);
+        // }
         console.log('message: ' + msg);
     });
 });
