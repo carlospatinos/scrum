@@ -1,0 +1,16 @@
+extends defaultLayout
+block content
+    .row.justify-content-center
+        .card(style='width: 40rem;')
+            .card-body
+                p.card-title
+                    h3 Welcome
+                p.card-text
+                    form(action='/users/login' method='POST')
+                        .form-group
+                            label(for='inputEmail1') Email
+                            input#inputEmail1.form-control(type='email' name='email' placeholder='Enter Email')
+                        .form-group
+                            label(for='securePassword1') Password
+                            input#securePassword1.form-control(type='password' name='password' placeholder='Secret password')
+                        button.btn.btn-primary.btn-block(type='submit') #JoinTheFun

@@ -31,7 +31,7 @@ router.get('/register', function (req, res, next) {
 });
 
 router.get('/login', function (req, res, next) {
-  res.render('welcome', { title: 'Express' });
+  res.render('login', { title: 'Express' });
 });
 
 

@@ -5,7 +5,7 @@ block content
             .card-body
             p.card-title
             h3 Register
-
+            include ./includes/feedback.jade
             p
             p.card-text
                 form(action='/users/register' method='POST')
@@ -24,6 +24,9 @@ block content
                     .form-group
                         label(for='type') Type
                         select#type.form-control(name='type')
-                            each userType, i in userTypes
-                                option(value='#{userType._id}') #{userType.type}
+                            - if (userTypes)
+                                each userType, i in userTypes
+                                    option(value='#{userType._id}') #{userType.type}
+                            - else
+                                option(value='0') Not available
                     button.btn.btn-primary.btn-block(type='submit') Register
