@@ -9,11 +9,11 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/signin', function (req, res, next) {
-  res.render('welcome', { title: 'Scrum' });
+  res.render('dashboard', { title: 'Scrum' });
 });
 
 router.post('/signin', function (req, res, next) {
-  res.render('welcome', { title: 'Scrum' });
+  res.render('dashboard', { title: 'Scrum' });
 });
 
 router.get('/appRunning', function (req, res, next) {
