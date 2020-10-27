@@ -2,6 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 const UserType = require("../models/userType.js");
+
+const {ensureAuthenticated} = require("../config/auth.js")
+
 //var SocketSingleton = require('../utils/socket-singleton');
 
 /* GET home page. */
@@ -13,9 +16,13 @@ router.get('/signin', function (req, res, next) {
   res.render('dashboard', { title: 'Scrum' });
 });
 
-router.post('/signin', function (req, res, next) {
+router.get('/dashboard', function (req, res, next) {
   res.render('dashboard', { title: 'Scrum' });
 });
+
+// router.get('/dashboard', ensureAuthenticated, (req, res) => {
+//   res.render('dashboard', { title: 'Scrum' });
+// });
 
 router.get('/appRunning', function (req, res, next) {
   return res.status(200).json({

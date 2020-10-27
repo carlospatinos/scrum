@@ -1,5 +1,6 @@
 var express = require('express');
 var bcrypt = require('bcrypt');
+const passport = require('passport');
 var router = express.Router();
 
 const User = require("../models/user.js");
@@ -84,6 +85,15 @@ router.post('/register', (req, res) => {
       }
     });
   }
+});
+
+router.post('/login', (req, res, next) => {
+  // TODO checar por que los mensajes no salen 
+  passport.authenticate('local', {
+    successRedirect: '/dashboard',
+    failureRedirect: '/login',
+    failureFlash: true,
+  })(req, res, next);
 });
 
 module.exports = router;

@@ -6,6 +6,9 @@ var logger = require('morgan');
 const session = require('express-session');
 const flash = require('connect-flash');
 
+const passport = require('passport');
+require("./config/passport")(passport)
+
 var db = require('./utils/db.js');
 
 var indexRouter = require('./routes/index');
@@ -23,6 +26,10 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(session({
   secret: process.env.SESSION_SECRET || 'defaultSecret',
   resave: true,
