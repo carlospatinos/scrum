@@ -96,4 +96,14 @@ router.post('/login', (req, res, next) => {
   })(req, res, next);
 });
 
+router.get('/logout', (req, res) => {
+  req.logout();
+  req.flash('success_msg', 'Now logged out');
+  res.redirect('/');
+});
+
+router.get('/online', function(req, res, next) {
+  res.render('online', {});
+});
+
 module.exports = router;

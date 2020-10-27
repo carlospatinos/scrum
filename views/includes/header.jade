@@ -10,16 +10,19 @@ header
                     a.nav-link(href='#') Home 
                         span.sr-only (current)
                 li.nav-item
-                    a.nav-link(href='#') Link
+                    a.nav-link(href='/users/logout') logout
                 li.nav-item.dropdown
-                    a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false') Dropdown
+                    a#navbarDropdown.nav-link.dropdown-toggle(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false') Tools
                     .dropdown-menu(aria-labelledby='navbarDropdown')
-                        a.dropdown-item(href='#') Action
-                        a.dropdown-item(href='#') Another action
+                        a.dropdown-item(href='#') Planning
+                        a.dropdown-item(href='#') Retro
                         .dropdown-divider
-                        a.dropdown-item(href='#') Something else here
+                        a.dropdown-item(href='#') Online users
                 li.nav-item
-                    a.nav-link.disabled(href='#') Disabled
+                    - if (user && user.username)
+                        a.nav-link.disabled(href='#') #{user.username}
+                    - else 
+                        a.nav-link.disabled(href='#') Usuario
             //- form.form-inline.my-2.my-lg-0
             //-     input.form-control.mr-sm-2(type='search' placeholder='Search' aria-label='Search')
             //-     button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search
