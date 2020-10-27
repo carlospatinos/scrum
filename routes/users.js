@@ -6,4 +6,8 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+router.post('/register', (req, res) => {
+  res.send('In progress');
+});
+
 module.exports = router;

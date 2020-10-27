@@ -1,0 +1,21 @@
+extends defaultLayout
+
+block content
+  div.top
+  br
+  br
+  br
+  div.container
+    div.content
+      div.text-center
+        form.form-horizontal(method="post", id="loginForm", action='/signin')
+          div.input-group
+            input.span3(type="text" class="form-control" placeholder="Enter your id" name="personalSecretId")
+            span.input-group-btn
+              button.btn.btn-primary(type="submit") Go
+  div.footer
+    h4 Lista de eventos
+    ul#events 
+  script(src="/socket.io/socket.io.js")
+  script(src="/js/test.js")
+
