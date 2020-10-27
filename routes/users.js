@@ -103,7 +103,7 @@ router.get('/logout', (req, res) => {
 });
 
 router.get('/online', function(req, res, next) {
-  res.render('online', {});
+  res.render('online', {user: req.user, user2: "carlossssss hardcoded"});
 });
 
 module.exports = router;

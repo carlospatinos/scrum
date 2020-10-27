@@ -2,7 +2,12 @@ extend authLayout
 block content
     script(src='/socket.io/socket.io.js')
     script(src='/js/online.js')
-    #error-container
-    input#name(type='text' name='name' value='' placeholder='Enter your name!')
-    button(type='button' name='button' onclick='setUsername()') Let me chat!
-    ul#events
+    script(type='text/javascript').
+        var userJS="#{user.email}";
+        console.log(userJS);
+        setUsername(userJS);
+
+    .row.justify-content-center
+        #error-container
+        h3 Online users
+    ul#events.row.justify-content-center

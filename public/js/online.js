@@ -8,14 +8,27 @@ const newItem = (content) => {
 
 var socket = io();
 
-function setUsername() {
-    console.log("set username");
-    socket.emit('setUsername', document.getElementById('name').value);
+socket.on('connect', () => {
+    $events = document.getElementById('events');
+    //$events.appendChild(newItem('user connected'));
+});
+
+function setUsername(email) {
+    console.log("set username: " + email);
+    socket.emit('newOnlineUser', email);
 };
 
 
 socket.on('userExists', function (data) {
     document.getElementById('error-container').innerHTML = data;
+});
+
+socket.on('onlineUser', function(data) {
+    console.log('new user online: ' + JSON.stringify(data));
+    var events = document.getElementById('events');
+    if (events) {
+        events.appendChild(newItem(`${JSON.stringify(data)}`));
+    }
 });
 
 socket.on('userSet', function (data) {
@@ -41,13 +54,10 @@ socket.on('newMsg', function (data) {
             data.user + '</b>: ' + data.message + '</div>'
     }
 });
-socket.on('connect', () => {
-    $events = document.getElementById('events');
-    $events.appendChild(newItem('connect'));
-});
+
 
 socket.on('newCliientJoined', (userInfo) => {
     $events = document.getElementById('events');
-    jsonUserInfo = JSON.stringify(userInfo);
+    var jsonUserInfo = JSON.stringify(userInfo);
     $events.appendChild(newItem(`New user joined: ${jsonUserInfo}`));
 });

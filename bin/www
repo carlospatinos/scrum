@@ -28,10 +28,24 @@ const io = require('socket.io')(server);
 var users = [];
 
 io.on('connect', socket => {
-  console.log("=======> user connected");
+  console.log("user connected");
 
   socket.on('disconnect', () => {
     console.log('user disconnected');
+  });
+
+  socket.on('newOnlineUser', function (data){
+    console.log("=======> user online: " + data);
+    socket.emit('onlineUser', { user: data });
+    socket.broadcast.emit('onlineUser', { user: data });
+    // if (users.indexOf(data) == -1) {
+    //   console.log('new user added ' + data);
+    //   users.push(data);
+    //   //socket.emit('onlineUser', { user: data });
+    // } else {
+    //   //socket.emit('userExists', data + ' username is taken! Try some other username.');
+      
+    // }
   });
 
   socket.on('setUsername', function (data) {
