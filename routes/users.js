@@ -5,13 +5,14 @@ var router = express.Router();
 
 const User = require("../models/user.js");
 
+const {ensureAuthenticated} = require("../config/auth.js")
+
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
 router.post('/register', (req, res) => {
-  console.log(req.body);
   const { name, email, password, password2, type } = req.body;
   console.log(' Name ' + name + ' email :' + email);
   if (!name || !email || !password || !password2 || !type) {
@@ -32,22 +33,22 @@ router.post('/register', (req, res) => {
 
   if (!messagesToSend || messagesToSend.length > 0) {
     console.log(messagesToSend);
-    res.redirect('/register');
-    // res.render('/register', {
-    //   message: messagesToSend,
-    //   name: name,
-    //   email: email,
-    //   password: password,
-    //   password2: password2,
-    //   type: type
-    // });
+    //res.redirect('/register');
+    res.render('register', {
+      error_msg: messagesToSend,
+      name: name,
+      email: email,
+      password: password,
+      password2: password2,
+      type: type
+    });
   } else {
     //validation passed
     User.findOne({ email: email }).exec((err, user) => {
       if (user) {
         console.log("USER FOUND");
         req.flash('error_msg', 'Email already registered');
-        res.render('publicRegister', {
+        res.render('register', {
           message: req.flash('error_msg'),
           name: name,
           email: email,
@@ -102,8 +103,8 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-router.get('/online', function(req, res, next) {
-  res.render('online', {user: req.user, user2: "carlossssss hardcoded"});
+router.get('/online', ensureAuthenticated, (req, res, next) => {
+  res.render('online', {user: req.user});
 });
 
 module.exports = router;
