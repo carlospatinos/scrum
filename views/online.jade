@@ -1,0 +1,13 @@
+extend authLayout
+block content
+    script(src='/socket.io/socket.io.js')
+    script(src='/js/online.js')
+    script(type='text/javascript').
+        var userJS="#{user.email}";
+        console.log(userJS);
+        setUsername(userJS);
+
+    .row.justify-content-center
+        #error-container
+        h3 Online users
+    ul#events.row.justify-content-center

@@ -16,13 +16,14 @@ router.get('/signin', function (req, res, next) {
   res.render('dashboard', { title: 'Scrum' });
 });
 
-router.get('/dashboard', function (req, res, next) {
-  res.render('dashboard', { title: 'Scrum' });
-});
-
-// router.get('/dashboard', ensureAuthenticated, (req, res) => {
+// router.get('/dashboard', function (req, res, next) {
+//   // console.log("user: "+ req.user);
 //   res.render('dashboard', { title: 'Scrum' });
 // });
+
+router.get('/dashboard', ensureAuthenticated, (req, res) => {
+  res.render('dashboard', { user: req.user });
+});
 
 router.get('/appRunning', function (req, res, next) {
   return res.status(200).json({
