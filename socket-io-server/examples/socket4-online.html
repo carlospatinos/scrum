@@ -35,11 +35,11 @@
         var msg = document.getElementById('message').value;
         if (msg) {
             socket.emit('newMsg', { message: msg, user: user });
-            // socket.broadcast.emit('newMsg', 'hello friends!');
+            socket.broadcast.emit('newMsg', 'hello friends!');
         }
     }
     socket.on('newMsg', function (data) {
-        console.log("new message" +  data.message );
+        console.log("new message" + data);
         if (user) {
             document.getElementById('message-container').innerHTML += '<div><b>' +
                 data.user + '</b>: ' + data.message + '</div>'

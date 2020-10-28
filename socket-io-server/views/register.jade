@@ -1,0 +1,32 @@
+extends defaultLayout
+block content
+    .row.justify-content-center
+        .card(style='width: 40rem;')
+            .card-body
+            p.card-title
+            h3 Register
+            include ./includes/feedback.jade
+            p
+            p.card-text
+                form(action='/users/register' method='POST')
+                    .form-group
+                        label(for='inputName') Name
+                        input#inputName.form-control(type="text" name="name" placeholder="Enter Name" value=name)
+                    .form-group
+                        label(for='inputEmail1') Email
+                        input#inputEmail1.form-control(type='email' name='email' placeholder='Enter Email' value=email)
+                    .form-group
+                        label(for='securePassword1') Password
+                        input#securePassword1.form-control(type='password' name='password' placeholder='Create Password' value=password)
+                    .form-group
+                        label(for='securePassword2') Confirm Password
+                        input#securePassword2.form-control(type='password' name='password2' placeholder='Confirm Password' value=password2)
+                    .form-group
+                        label(for='type') Type
+                        select#type.form-control(name='type')
+                            - if (userTypes)
+                                each userType, i in userTypes
+                                    option(value='#{userType._id}') #{userType.type}
+                            - else
+                                option(value='0') Not available
+                    button.btn.btn-primary.btn-block(type='submit') Register

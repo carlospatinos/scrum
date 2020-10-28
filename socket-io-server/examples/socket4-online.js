@@ -1,6 +1,3 @@
-// const port = process.env.PORT || 4001;//3000
-const port = process.env.PORT || 3000;//3000
-
 const content = require('fs').readFileSync(__dirname + '/socket4-online.html', 'utf8');
 
 const httpServer = require('http').createServer((req, res) => {
@@ -46,7 +43,7 @@ io.on('connect', socket => {
 
 });
 
-httpServer.listen(port, () => {
+httpServer.listen(3000, () => {
   console.log('go to http://localhost:3000');
 });
 
