@@ -1,0 +1,36 @@
+{
+  "name": "scrum",
+  "version": "1.0.0",
+  "description": "Dev tools",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./bin/www",
+    "start-socket": "node socket4-online.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carlospatinos/scrum.git"
+  },
+  "author": "carlospatinos@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carlospatinos/scrum/issues"
+  },
+  "homepage": "https://github.com/carlospatinos/scrum#readme",
+  "dependencies": {
+    "bootstrap": "^4.5.3",
+    "coffee-script": "^1.12.7",
+    "connect": "^3.7.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "^4.17.1",
+    "express.io": "^1.1.13",
+    "http-errors": "~1.6.2",
+    "jade": "~1.11.0",
+    "jquery": "^3.5.1",
+    "morgan": "~1.9.0",
+    "socket.io": "^2.3.0",
+    "static-favicon": "^2.0.0-alpha"
+  }
+}
