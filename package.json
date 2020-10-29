@@ -1,0 +1,22 @@
+{
+  "name": "scrum",
+  "private": true,
+  "scripts": {
+    "start": "npx lerna run start --stream",
+    "build": "npx lerna run build --stream",
+    "test": "echo \"TODO: no test specified\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carlospatinos/scrum.git"
+  },
+  "author": "carlospatinos@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carlospatinos/scrum/issues"
+  },
+  "homepage": "https://github.com/carlospatinos/scrum#readme",
+  "devDependencies": {
+    "lerna": "^3.22.1"
+  }
+}

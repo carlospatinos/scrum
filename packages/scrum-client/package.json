@@ -1,6 +1,6 @@
 {
-  "name": "socket-io-client",
-  "version": "0.1.0",
+  "name": "scrum-client",
+  "version": "0.0.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.5",

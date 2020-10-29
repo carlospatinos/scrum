@@ -1,12 +1,12 @@
 {
-  "name": "scrum",
-  "version": "1.0.0",
+  "name": "scrum-server",
+  "version": "0.0.0",
   "description": "Dev tools",
   "main": "index.js",
   "scripts": {
     "test": "mocha --require babel-register tests/*.js --exit",
     "dev": "nodemon --exec babel-node --presets babel-preset-env ./bin/www",
-    "start": "node ./bin/www"
+    "start": "node ./bin/www" 
   },
   "repository": {
     "type": "git",
