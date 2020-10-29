@@ -2,9 +2,11 @@
   "name": "scrum",
   "private": true,
   "scripts": {
-    "start": "npx lerna run start --stream",
-    "build": "npx lerna run build --stream",
-    "test": "echo \"TODO: no test specified\" && exit 0"
+    "start": "lerna run start --stream",
+    "build": "lerna run build --stream",
+    "clean": "lerna clean --yes && lerna run clean --stream",
+    "test": "echo \"TODO: no test specified\" && exit 0",
+    "postinstall": "lerna bootstrap"
   },
   "repository": {
     "type": "git",
