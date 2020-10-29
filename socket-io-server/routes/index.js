@@ -3,7 +3,7 @@ var router = express.Router();
 
 const UserType = require("../models/userType.js");
 
-const {ensureAuthenticated} = require("../config/auth.js")
+const {ensureAuthenticated} = require("../config/auth.js");
 
 //var SocketSingleton = require('../utils/socket-singleton');
 
@@ -21,7 +21,7 @@ router.get('/signin', function (req, res, next) {
 //   res.render('dashboard', { title: 'Scrum' });
 // });
 
-router.get('/dashboard', ensureAuthenticated, (req, res) => {
+router.get('/dashboard', ensureAuthenticated, (req, res, next) => {
   res.render('dashboard', { user: req.user });
 });
 
@@ -33,7 +33,6 @@ router.get('/appRunning', function (req, res, next) {
 
 router.get('/register', function (req, res, next) {
   UserType.find().exec((err, types) => {
-    console.log(types);
     res.render('register', { userTypes: types });
   });
 });
