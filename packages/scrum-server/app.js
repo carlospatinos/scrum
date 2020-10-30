@@ -3,10 +3,9 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const session = require('express-session');
-const flash = require('connect-flash');
-
-const passport = require('passport');
+var session = require('express-session');
+var flash = require('connect-flash');
+var passport = require('passport');
 require("./config/passport")(passport)
 
 var db = require('./utils/db.js');
@@ -16,7 +15,7 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
-
+const CLIENT_PATH = '/../scrum-client/build/';
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -38,6 +37,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, CLIENT_PATH)));
+
 app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
@@ -53,6 +54,11 @@ app.use((req, res, next) => {
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+// Handles any requests that don't match the ones above
+app.get('*', (req,res, next) =>{
+  res.sendFile(path.join(__dirname + CLIENT_PATH + 'index.html'));
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
