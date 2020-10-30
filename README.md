@@ -37,10 +37,3 @@ Don’t send the same message to the user that sent it. Instead, append the mess
 Add “{user} is typing” functionality.
 Show who’s online.
 Add private messaging. 
-
-
-## Contributors
-
-El chavo mas chavo ya es senior :) 
-
-EL don Carlos ya es chavoruco 

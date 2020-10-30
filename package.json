@@ -5,7 +5,7 @@
     "start": "lerna run start --stream",
     "build": "lerna run build --stream",
     "clean": "lerna clean --yes && lerna run clean --stream",
-    "test": "echo \"TODO: no test specified\" && exit 0",
+    "test": "lerna run test",
     "postinstall": "lerna bootstrap"
   },
   "repository": {
