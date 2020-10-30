@@ -9,9 +9,11 @@ I am just trying to create a client to communicate multiple users.
 ## Installation
 Clone this repo.
 
+Please generate an .env file on each module (located inside the package) using the template.env as a template, complete all the configuration, specially about the mongodb and you are ready to work. This project uses mongo as the persitant storage so you need to have one local or cloud based.
+
 Then from its root, run:
 
-```
+```sh
 npm install
 npx lerna bootstrap
 ```
@@ -20,13 +22,15 @@ npx lerna bootstrap
 
 Then from its root, run:
 
+```sh
+npm start
+```
 
-Please generate an .env file using the template.env as a template, complete all the information, specially about the mongodb and you are ready to work. This project uses mongo as the persitant storage so you need to have one local or cloud based.
+
+## Deployment config
 
 heroku config:set DB_USER=dbname --app app-name
 
-## Usage
-Run `npm start` from the root.
 
 
 ## Milestones

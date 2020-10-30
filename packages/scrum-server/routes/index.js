@@ -8,7 +8,7 @@ const {ensureAuthenticated} = require("../config/auth.js");
 //var SocketSingleton = require('../utils/socket-singleton');
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
+router.get('/static', function (req, res, next) {
   res.render('index', { title: 'Scrum' });
 });
 
