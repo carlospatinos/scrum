@@ -9,11 +9,11 @@ chai.use(chaiHttp);
 chai.use(chaiJson);
 chai.should();
 describe("Root", () => {
-    describe("GET /", () => {
+    describe("GET /static", () => {
         // Test to get all students record
         it("should return a json file with [message: Application is running]", (done) => {
              chai.request(app)
-                 .get('/')
+                 .get('/static')
                  .end((err, res) => {
                      //expect(res).to.be.a.jsonFile();
                      res.should.have.status(200);
