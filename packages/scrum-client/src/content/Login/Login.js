@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "./Login.css";
 
+import * as Constants from '../../constants'
+
+
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,6 +15,14 @@ export default function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
+    try {
+      fetch(Constants.API_URL)
+        .then((response) => response.json())
+        .then((data) => console.log('This is your data', data));
+      alert("Logged in");
+    } catch (e) {
+      alert(e.message);
+    }
   }
 
   return (

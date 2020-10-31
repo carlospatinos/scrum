@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Row, Col, Container, CardDeck, Card } from "react-bootstrap";
-import ClientComponent from "../ClientComponent";
+import ClientComponent from "../../ClientComponent";
 
 const Home = () => {
   const [loadClient, setLoadClient] = useState(true);
