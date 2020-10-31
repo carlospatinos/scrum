@@ -8,9 +8,10 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./content/Home";
 import Login from "./content/Login";
+import Signup from "./content/Signup";
 import NotFound from "./content/NotFound";
 
-console.log(process.env.NODE_ENV);
+console.log("NODE_ENV: " + process.env.NODE_ENV);
 if(process.env.NODE_ENV === "production") {
   ReactGA.initialize(process.env.REACT_APP_GMEASUREMENT_ID);
 }
@@ -27,6 +28,7 @@ function App() {
               <Route exact path="/" component={Login} />
               <Route exact path="/home" component={Home} />
               <Route exact path="/login" component={Login} />
+              <Route exact path="/signup" component={Signup} />
               <NotFound />
             </Switch>
           </BrowserRouter>

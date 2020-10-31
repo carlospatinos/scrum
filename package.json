@@ -4,13 +4,13 @@
   "scripts": {
     "start": "lerna run start --stream",
     "build": "lerna run build --stream",
+    "dev": "lerna run dev --stream",
     "clean": "lerna clean --yes && lerna run clean --stream",
     "test": "lerna run test",
     "postinstall": "lerna bootstrap",
-    "heroku-postbuild": "cd packages/scrum-client/ && npm install --only=dev && npm install && npm run build",
     "change": "lerna changed",
     "release": "lerna publish",
-    "heroku": "lerna run heroku --stream"
+    "heroku-postbuild-skip": "cd packages/scrum-client/ && npm install --only=dev && npm install && npm run build"
   },
   "repository": {
     "type": "git",
