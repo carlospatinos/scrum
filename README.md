@@ -23,7 +23,7 @@ npx lerna bootstrap
 Then from its root, run:
 
 ```sh
-npm start
+npm run dev
 ```
 
 
