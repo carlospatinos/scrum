@@ -20,12 +20,17 @@ npx lerna bootstrap
 
 ## Set up
 
-Then from its root, run:
+There are 2 ways to start the app, the first one is for development purposes where 2 services run, the client and the server. In this mode all changes to the client or server are updated on the fly, and you can initiate it as follows:
 
 ```sh
 npm run dev
 ```
 
+The second mode is for production with a single instance server, the client still works but changes to the client code will not be reflected immediatelly, you can initiate it as follows:
+
+```sh
+npm start
+```
 
 ## Deployment config
 
