@@ -16,11 +16,6 @@ router.get('/signin', function (req, res, next) {
   res.render('dashboard', { title: 'Scrum' });
 });
 
-// router.get('/dashboard', function (req, res, next) {
-//   // console.log("user: "+ req.user);
-//   res.render('dashboard', { title: 'Scrum' });
-// });
-
 router.get('/dashboard', ensureAuthenticated, (req, res, next) => {
   res.render('dashboard', { user: req.user });
 });
@@ -37,7 +32,7 @@ router.get('/register', function (req, res, next) {
   });
 });
 
-router.get('/login', function (req, res, next) {
+router.get('/expLogin', function (req, res, next) {
   res.render('login', { title: 'Express' });
 });
 

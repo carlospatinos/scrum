@@ -7,7 +7,9 @@
     "clean": "lerna clean --yes && lerna run clean --stream",
     "test": "lerna run test",
     "postinstall": "lerna bootstrap",
-    "heroku-postbuild": "cd packages/scrum-client/ && npm install --only=dev && npm install && npm run build"
+    "heroku-postbuild": "cd packages/scrum-client/ && npm install --only=dev && npm install && npm run build",
+    "change": "lerna changed",
+    "release": "leerna publish"
   },
   "repository": {
     "type": "git",

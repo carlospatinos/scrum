@@ -57,6 +57,7 @@ app.use('/users', usersRouter);
 
 // Handles any requests that don't match the ones above
 app.get('*', (req,res, next) =>{
+  console.log("Client retrieval: " + path.join(__dirname + CLIENT_PATH + 'index.html'));
   res.sendFile(path.join(__dirname + CLIENT_PATH + 'index.html'));
 });
 

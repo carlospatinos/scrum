@@ -78,7 +78,7 @@ router.post('/register', (req, res) => {
                 .then((value) => {
                   console.log(value);
                   req.flash('success_msg', 'You have now registered!');
-                  res.redirect('/login');
+                  res.redirect('/expLogin');
                 })
                 .catch(value => console.log(value));
 
@@ -88,11 +88,11 @@ router.post('/register', (req, res) => {
   }
 });
 
-router.post('/login', (req, res, next) => {
+router.post('/expLogin', (req, res, next) => {
   // TODO checar por que los mensajes no salen 
   passport.authenticate('local', {
     successRedirect: '/dashboard',
-    failureRedirect: '/login',
+    failureRedirect: '/expLogin',
     failureFlash: true,
   })(req, res, next);
 });

@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha --require babel-register tests/*.js --exit",
     "dev": "nodemon --exec babel-node --presets babel-preset-env ./bin/www",
-    "start": "node ./bin/www" 
+    "start": "node ./bin/www"
   },
   "repository": {
     "type": "git",
@@ -40,13 +40,13 @@
     "static-favicon": "^2.0.0-alpha"
   },
   "devDependencies": {
-    "chai-json": "^1.0.0",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
+    "chai-json": "^1.0.0",
+    "express.io": "^1.1.13",
     "mocha": "^5.1.1",
-    "nodemon": "^1.17.4",
-    "express.io": "^1.1.13"
+    "nodemon": "^1.17.4"
   }
 }
