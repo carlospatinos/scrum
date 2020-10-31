@@ -4,7 +4,8 @@ import "./Login.css";
 
 import ReactGA from 'react-ga';
 
-if(process.env.NODE_ENV === "production") {
+console.log(window.location.pathname + window.location.search);
+if (process.env.NODE_ENV === "production") {
   ReactGA.pageview(window.location.pathname + window.location.search);
 }
 
@@ -18,14 +19,19 @@ export default function Login() {
   }
 
   function handleSubmit(event) {
-    console.log("======> " + process.env.REACT_APP_API_URL + "/api");
     event.preventDefault();
+
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: email, password: password })
+    };
+
     try {
-      fetch(process.env.REACT_APP_API_URL + "/api")
+      fetch(process.env.REACT_APP_API_URL + "/api/login", requestOptions) ///api
         .then((response) => response.json())
         //.then(response => response.text())
         .then((data) => {
-          console.log('This is your data2', data.message);
           setApiResponse(data.message);
         });
     } catch (e) {
