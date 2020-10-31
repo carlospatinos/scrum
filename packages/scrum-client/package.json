@@ -19,7 +19,9 @@
   },
   "scripts": {
     "start": "npm install --only=dev && npm install && npm run build",
-    "start2": "react-scripts start",
+    "start-server": "react-scripts start",
+    "dev": "webpack --env.API_URL=http://localhost:8000 --config webpack.config.dev.js",
+    "prod": "webpack --env.API_URL=https://www.myapi.com --config webpack.config.build.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

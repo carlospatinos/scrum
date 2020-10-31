@@ -47,8 +47,6 @@
     "chai-json": "^1.0.0",
     "express.io": "^1.1.13",
     "mocha": "^5.1.1",
-    "nodemon": "^1.17.4",
-    "webpack": "^5.3.2",
-    "webpack-cli": "^4.1.0"
+    "nodemon": "^1.17.4"
   }
 }
