@@ -6,12 +6,15 @@ var logger = require('morgan');
 var session = require('express-session');
 var flash = require('connect-flash');
 var passport = require('passport');
+var cors = require("cors");
+
 require("./config/passport")(passport)
 
 var db = require('./utils/db.js');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var api = require('./routes/api');
 
 var app = express();
 
@@ -21,6 +24,7 @@ const CLIENT_PATH = '/../scrum-client/build/';
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -48,12 +52,13 @@ app.use((req, res, next) => {
   res.locals.success_msg = req.flash('success_msg');
   res.locals.error_msg = req.flash('error_msg');
   res.locals.error = req.flash('error');
-  
   next();
 });
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+app.use('/api', api);
 
 // Handles any requests that don't match the ones above
 app.get('*', (req,res, next) =>{

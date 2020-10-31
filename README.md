@@ -32,7 +32,6 @@ npm start
 heroku config:set DB_USER=dbname --app app-name
 
 
-
 ## Milestones
 
 Broadcast a message to connected users when someone connects or disconnects.

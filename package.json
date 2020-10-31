@@ -9,7 +9,8 @@
     "postinstall": "lerna bootstrap",
     "heroku-postbuild": "cd packages/scrum-client/ && npm install --only=dev && npm install && npm run build",
     "change": "lerna changed",
-    "release": "leerna publish"
+    "release": "lerna publish",
+    "heroku": "lerna run heroku --stream"
   },
   "repository": {
     "type": "git",

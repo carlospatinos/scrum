@@ -10,7 +10,11 @@ import Home from "./content/Home";
 import Login from "./content/Login";
 import NotFound from "./content/NotFound";
 
-ReactGA.initialize(process.env.REACT_APP_GMEASUREMENT_ID);
+console.log(process.env.NODE_ENV);
+if(process.env.NODE_ENV === "production") {
+  ReactGA.initialize(process.env.REACT_APP_GMEASUREMENT_ID);
+}
+
 
 function App() {
   return (
