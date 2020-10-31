@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --require babel-register tests/*.js --exit",
-    "dev": "nodemon --exec babel-node --presets babel-preset-env ./bin/www",
-    "start": "node ./bin/www"
+    "start": "nodemon --exec babel-node --presets babel-preset-env ./bin/www",
+    "dev": "node ./bin/www",
+    "heroku": "node ./bin/www"
   },
   "repository": {
     "type": "git",
@@ -25,6 +26,7 @@
     "connect": "^3.7.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.5",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -32,6 +34,7 @@
     "http-errors": "~1.6.2",
     "jade": "~1.11.0",
     "jquery": "^3.5.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.9",
     "morgan": "~1.9.0",
     "passport": "^0.4.1",

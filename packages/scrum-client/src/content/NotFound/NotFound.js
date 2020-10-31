@@ -2,7 +2,9 @@ import React from "react";
 import "./NotFound.css";
 
 import ReactGA from 'react-ga';
-ReactGA.pageview(window.location.pathname + window.location.search);
+if(process.env.NODE_ENV === "production") {
+  ReactGA.pageview(window.location.pathname + window.location.search);
+}
 
 
 export default function NotFound() {

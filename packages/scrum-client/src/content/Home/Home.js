@@ -3,7 +3,10 @@ import { Row, Col, Container, CardDeck, Card } from "react-bootstrap";
 import ClientComponent from "../../ClientComponent";
 
 import ReactGA from 'react-ga';
-ReactGA.pageview(window.location.pathname + window.location.search);
+
+if(process.env.NODE_ENV === "production") {
+  ReactGA.pageview(window.location.pathname + window.location.search);
+}
 
 const Home = () => {
   const [loadClient, setLoadClient] = useState(true);
