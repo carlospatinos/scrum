@@ -2,10 +2,18 @@ import React, { useState } from "react";
 import { Row, Col, Container, CardDeck, Card } from "react-bootstrap";
 import ClientComponent from "../../ClientComponent";
 
-import ReactGA from 'react-ga';
+import TagManager from 'react-gtm-module'
 
-if(process.env.NODE_ENV === "production") {
-  ReactGA.pageview(window.location.pathname + window.location.search);
+if(process.env.NODE_ENV === "production" && !!process.env.REACT_APP_GTM_ID) {
+  const tagManagerArgs = {
+    dataLayer: {
+      page: "home", //Specific to each page
+      pagePath: window.location.pathname + window.location.search, //"/home", //Specific to each page
+      titlee: "home"
+    },
+    dataLayerName: "PageDataLayer"
+  };
+  TagManager.dataLayer(tagManagerArgs);
 }
 
 const Home = () => {

@@ -1,19 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "./Login.css";
 
-import ReactGA from 'react-ga';
+import TagManager from 'react-gtm-module'
 
-console.log(window.location.pathname + window.location.search);
-if (process.env.NODE_ENV === "production") {
-  ReactGA.pageview(window.location.pathname + window.location.search);
+if (process.env.NODE_ENV === "production" && !!process.env.REACT_APP_GTM_ID) {  
+  const tagManagerArgs = {
+    dataLayer: {
+      page: "login", //Specific to each page
+      pagePath: window.location.pathname + window.location.search, //"/login", //Specific to each page
+      title: "login"
+    },
+    dataLayerName: "PageDataLayer"
+  };
+  TagManager.dataLayer(tagManagerArgs);
 }
 
 
 export default function Login() {
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [apiResponse, setApiResponse] = useState("");
+
+  // useEffect(() => {
+  //   // Update the document title using the browser API
+  //document.title = `You clicked ${count} times`;  
+  // });
+  
+
   function validateForm() {
     return email.length > 0 && password.length > 0;
   }
