@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "./Signup.css";
 
-import ReactGA from 'react-ga';
+import TagManager from 'react-gtm-module'
 
-console.log(window.location.pathname + window.location.search);
-if (process.env.NODE_ENV === "production") {
-  ReactGA.pageview(window.location.pathname + window.location.search);
+if (process.env.NODE_ENV === "production" && !!process.env.REACT_APP_GTM_ID) {
+  const tagManagerArgs = {
+    dataLayer: {
+      page: "signup", //Specific to each page
+      pagePath: window.location.pathname + window.location.search, //"/signup", //Specific to each page
+      title: "signup"
+    },
+    dataLayerName: "PageDataLayer"
+  };
+  TagManager.dataLayer(tagManagerArgs);
 }
 
 
@@ -20,8 +27,14 @@ export default function Signup() {
   const [errorMessage, setErrorMessage] = useState("");
 
   const [apiResponse] = useState("");
+  
+  // useEffect(() => {
+  //   // Update the document title using the browser API
+  //   ReactGA.pageview(window.location.pathname + window.location.search);
+  // });
+
   function validateForm() {
-    return email.length > 0 && password.length > 0;
+    return firstName.length > 0 && lastName.length > 0  && email.length > 0 && password.length > 0 && password === password2;
   }
 
   function handleSubmit(event) {

@@ -5,7 +5,7 @@ export default function ClientComponent() {
   const [response, setResponse] = useState("");
 
   useEffect(() => {
-    const socket = socketIOClient("http://worldclockapi.com/api/json/utc/now");
+    const socket = socketIOClient(process.env.REACT_APP_API_URL + "/api");
     socket.on("FromAPI", data => {
       setResponse(data);
     });

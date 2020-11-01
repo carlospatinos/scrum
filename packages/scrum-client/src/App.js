@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Container } from "react-bootstrap";
 
-import ReactGA from 'react-ga';
+import TagManager from 'react-gtm-module'
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -11,9 +11,12 @@ import Login from "./content/Login";
 import Signup from "./content/Signup";
 import NotFound from "./content/NotFound";
 
-console.log("NODE_ENV: " + process.env.NODE_ENV);
-if(process.env.NODE_ENV === "production") {
-  ReactGA.initialize(process.env.REACT_APP_GMEASUREMENT_ID);
+if(process.env.NODE_ENV === "production" && !!process.env.REACT_APP_GTM_ID) {
+  const tagManagerArgs = {
+    gtmId: process.env.REACT_APP_GTM_ID,
+    dataLayerName: "PageDataLayer"
+  }
+  TagManager.initialize(tagManagerArgs, {debug: process.env.REACT_APP_GTM_DEBUG === 'true'});
 }
 
 

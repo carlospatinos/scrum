@@ -1,11 +1,19 @@
 import React from "react";
 import "./NotFound.css";
 
-import ReactGA from 'react-ga';
+import TagManager from 'react-gtm-module'
 
-console.log(window.location.pathname + window.location.search);
-if(process.env.NODE_ENV === "production") {
-  ReactGA.pageview(window.location.pathname + window.location.search);
+
+if (process.env.NODE_ENV === "production" && !!process.env.REACT_APP_GTM_ID) {  
+  const tagManagerArgs = {
+    dataLayer: {
+      page: "not_found", //Specific to each page
+      pagePath: window.location.pathname + window.location.search, //"/login", //Specific to each page
+      title: "not found"
+    },
+    dataLayerName: "PageDataLayer"
+  };
+  TagManager.dataLayer(tagManagerArgs);
 }
 
 
