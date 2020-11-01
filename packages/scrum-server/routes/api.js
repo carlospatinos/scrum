@@ -19,14 +19,13 @@ router.post('/', (req, res, next) => {
   res.json({ message: 'API is working properly' });
 });
 
-router.post('/signup', (req, res, next) => {
+router.post('/signup', function (req, res, next) {
   const newUser = new User(req.body);
   const typeForNewUser = new UserType();
-  typeForNewUser.type = 'admin';
+  typeForNewUser.type = "admin";
   newUser.userType = typeForNewUser; // TODO fix
 
-  if (newUser.password != newUser.password2)
-    return res.status(400).json({ message: 'password not match' });
+  if (newUser.password != newUser.password2) return res.status(400).json({ success: false, message: "password not match" });
 
   User.findOne({ email: newUser.email }, function (err, user) {
     if (user) return res.status(400).json({ success: false, message: "email exits" });
@@ -44,13 +43,14 @@ router.post('/signup', (req, res, next) => {
   });
 });
 
+
 router.post('/login', (req, res, next) => {
   let token = req.cookies.auth;
   User.findByToken(token, (err, user) => {
     if (err) return res(err);
     if (user) {
       return res.status(400).json({
-        error: true,
+        success: false,
         message: "You are already logged in"
       });
     } else {
@@ -67,16 +67,14 @@ router.post('/login', (req, res, next) => {
               id: user._id,
               email: user.email,
               ACCESS_TOKEN: user.token
-
             });
           });
         });
       });
-    }
+    };
   });
-
-
 });
+
 
 
 
