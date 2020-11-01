@@ -12,7 +12,6 @@ import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../../constants/apiConstants';
 import "./Login.css";
 
 // import TagManager from 'react-gtm-module'
-
 // if (process.env.NODE_ENV === "development" && !!process.env.REACT_APP_GTM_ID) {
 //   document.title = "login";
 //   const tagManagerArgs = {
@@ -32,9 +31,9 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [apiResponse, setApiResponse] = useState("");
-  
- function validateForm() {
-   return email.length > 0 && password.length > 0;
+
+  function validateForm() {
+    return email.length > 0 && password.length > 0;
   }
 
   function handleSubmit(event) {
