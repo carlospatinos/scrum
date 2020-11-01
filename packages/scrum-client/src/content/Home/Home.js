@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Row, Col, Container, CardDeck, Card } from 'react-bootstrap';
-import TagManager from 'react-gtm-module';
 import ClientComponent from '../../ClientComponent';
 
 // import TagManager from 'react-gtm-module'

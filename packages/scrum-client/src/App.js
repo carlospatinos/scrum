@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
-import { Container } from "react-bootstrap";
+import { Container } from 'react-bootstrap';
 
 // import TagManager from 'react-gtm-module'
 
-import Header from "./components/Header";
-import Footer from "./components/Footer";
-import Home from "./content/Home";
-import Login from "./content/Login";
-import Signup from "./content/Signup";
-import NotFound from "./content/NotFound";
+import Header from './components/Header';
+import Footer from './components/Footer';
+import Home from './content/Home';
+import Login from './content/Login';
+import Signup from './content/Signup';
+import NotFound from './content/NotFound';
 // import { AppContext } from "./lib/contextLib";
 
 // const [isAuthenticated, userHasAuthenticated] = useState(false);
@@ -22,8 +22,6 @@ import NotFound from "./content/NotFound";
 // }
 
 function App() {
-
-
   return (
     <>
       <Header />

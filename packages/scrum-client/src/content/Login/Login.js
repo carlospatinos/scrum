@@ -1,19 +1,12 @@
-import React, { useState } from "react";
-import {
-  Alert,
-  Button,
-  FormGroup,
-  FormControl,
-  FormLabel,
-} from "react-bootstrap";
+import React, { useState } from 'react';
+import { Alert, Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
 import { API_BASE_URL, ACCESS_TOKEN_NAME } from '../../constants/apiConstants';
 
-import "./Login.css";
+import './Login.css';
 
 // import TagManager from 'react-gtm-module'
-
 
 // if (process.env.NODE_ENV === "development" && !!process.env.REACT_APP_GTM_ID) {
 //   document.title = "login";
@@ -29,15 +22,13 @@ import "./Login.css";
 // }
 
 export default function Login() {
-
   const history = useHistory();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [apiResponse, setApiResponse] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [apiResponse, setApiResponse] = useState('');
   function validateForm() {
     return email.length > 0 && password.length > 0;
-
   }
 
   function handleSubmit(event) {
@@ -50,19 +41,18 @@ export default function Login() {
     };
 
     try {
-      fetch(API_BASE_URL + "/api/login", requestOptions) 
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
+      fetch(`${API_BASE_URL}/api/login`, requestOptions)
+        .then(response => response.json())
+        .then(data => {
           if (data.isAuth) {
-           localStorage.setItem(ACCESS_TOKEN_NAME, data.token);
-            history.push("/home");
+            localStorage.setItem(ACCESS_TOKEN_NAME, data.token);
+            history.push('/home');
           } else {
             setApiResponse(data.message);
           }
         });
     } catch (e) {
-      // console.log(e);
+      // console.error(e);
     }
   }
   const isValidForm = validateForm();
