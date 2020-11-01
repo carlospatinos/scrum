@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom';
 import { API_BASE_URL } from '../../constants/apiConstants';
 
 // import TagManager from 'react-gtm-module'
-
 // if (process.env.NODE_ENV === "development" && !!process.env.REACT_APP_GTM_ID) {
 //   document.title = "signup";
 //   console.log(document.title);

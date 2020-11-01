@@ -15,7 +15,6 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
   console.log(req.body);
   const { email } = req.body;
-  // const { password } = req.body;
   console.log(email);
   res.json({ message: 'API is working properly' });
 });
@@ -51,7 +50,7 @@ router.post('/login', (req, res, next) => {
     if (err) return res(err);
     if (user) {
       return res.status(400).json({
-        success: false,
+        error: true,
         message: "You are already logged in"
       });
     } else {
@@ -74,7 +73,10 @@ router.post('/login', (req, res, next) => {
       });
     }
   });
+
+
 });
+
 
 
 
