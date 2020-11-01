@@ -23,8 +23,6 @@ router.post('/signup', function (req, res, next) {
     typeForNewUser.type = "admin";
     newUser.userType = typeForNewUser; // TODO fix
 
-    console.log("newUser: "+ newUser);
-
     if (newUser.password != newUser.password2) return res.status(400).json({ message: "password not match" });
 
     User.findOne({ email: newUser.email }, function (err, user) {
@@ -44,11 +42,6 @@ router.post('/signup', function (req, res, next) {
 });
 
 router.post('/login', (req, res, next) => {
-    // res.json({
-    //     anObject: { item1: "item1val", item2: "item2val" },
-    //     anArray: ["item1", "item2"],
-    //     another: "item"
-    // });
     let token = req.cookies.auth;
     User.findByToken(token, (err, user) => {
         if (err) return res(err);
@@ -69,7 +62,8 @@ router.post('/login', (req, res, next) => {
                         res.cookie('auth', user.token).json({
                             isAuth: true,
                             id: user._id,
-                            email: user.email
+                            email: user.email,
+                            ACCESS_TOKEN: user.token
                         });
                     });
                 });

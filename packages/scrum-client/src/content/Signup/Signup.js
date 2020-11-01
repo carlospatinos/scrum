@@ -1,20 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "./Signup.css";
 
-import TagManager from 'react-gtm-module'
+import {API_BASE_URL} from '../../constants/apiConstants';
 
-if (process.env.NODE_ENV === "production" && !!process.env.REACT_APP_GTM_ID) {
-  const tagManagerArgs = {
-    dataLayer: {
-      page: "signup", //Specific to each page
-      pagePath: window.location.pathname + window.location.search, //"/signup", //Specific to each page
-      title: "signup"
-    },
-    dataLayerName: "PageDataLayer"
-  };
-  TagManager.dataLayer(tagManagerArgs);
-}
+
+// import TagManager from 'react-gtm-module'
+
+// if (process.env.NODE_ENV === "development" && !!process.env.REACT_APP_GTM_ID) {
+//   document.title = "signup";
+//   console.log(document.title);
+//   const tagManagerArgs = {
+//     dataLayer: {
+//       page: "signup", //Specific to each page
+//       pagePath: window.location.pathname + window.location.search, //"/signup", //Specific to each page
+//       title: "signup"
+//     },
+//     dataLayerName: "PageDataLayer"
+//   };
+//   TagManager.dataLayer(tagManagerArgs);
+// }
 
 
 export default function Signup() {
@@ -47,7 +52,7 @@ export default function Signup() {
     };
 
     try {
-      fetch(process.env.REACT_APP_API_URL + "/api/signup", requestOptions)
+      fetch(API_BASE_URL + "/api/signup", requestOptions)
         .then((response) => response.json())
         .then((data) => {
           console.log('This is your data', data);
