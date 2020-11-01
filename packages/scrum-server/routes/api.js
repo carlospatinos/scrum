@@ -31,6 +31,7 @@ router.post('/signup', (req, res, next) => {
 
   User.findOne({ email: newUser.email }, (err, user) => {
     if (user) return res.status(400).json({ auth: false, message: 'email exits' });
+    if (newUser.password != newUser.password2) return res.status(400).json({ message: "password not match" });
 
     newUser.save((err, docUser) => {
       if (err) {
@@ -75,6 +76,8 @@ router.post('/login', (req, res, next) => {
     }
   });
 });
+
+
 
 
 router.get('/profile', auth, (req, res, next) => {
