@@ -40,6 +40,7 @@ export default function Signup() {
       password.length > 0 &&
       password === password2
     );
+
   }
 
   function handleSubmit(event) {

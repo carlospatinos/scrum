@@ -36,6 +36,7 @@ export default function Login() {
   const [apiResponse, setApiResponse] = useState("");
   function validateForm() {
     return email.length > 0 && password.length > 0;
+
   }
 
   function handleSubmit(event) {
@@ -53,7 +54,7 @@ export default function Login() {
         .then((data) => {
           console.log(data);
           if (data.isAuth) {
-            localStorage.setItem(ACCESS_TOKEN_NAME, data.token);
+           localStorage.setItem(ACCESS_TOKEN_NAME, data.token);
             history.push("/home");
           } else {
             setApiResponse(data.message);

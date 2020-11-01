@@ -67,6 +67,7 @@ router.post('/login', (req, res, next) => {
               id: user._id,
               email: user.email,
               ACCESS_TOKEN: user.token
+
             });
           });
         });
