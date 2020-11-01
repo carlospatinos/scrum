@@ -6,6 +6,7 @@ import {
   FormControl,
   FormLabel,
 } from "react-bootstrap";
+import { useHistory } from 'react-router-dom';
 import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../../constants/apiConstants';
 
 import "./Login.css";
@@ -26,12 +27,14 @@ import "./Login.css";
 // }
 
 export default function Login() {
+  const history = useHistory();
+  
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [apiResponse, setApiResponse] = useState("");
   
  function validateForm() {
-    return email.length > 0 && password.length > 0;
+   return email.length > 0 && password.length > 0;
   }
 
   function handleSubmit(event) {
@@ -44,15 +47,14 @@ export default function Login() {
     };
 
     try {
-      fetch(API_BASE_URL + "/api/login", requestOptions) ///api
+      fetch(API_BASE_URL + "/api/login", requestOptions) 
         .then((response) => response.json())
         //.then(response => response.text())
         .then((data) => {
           console.log(data);
           if (data.isAuth){
-            console.log("user authenticated");
             localStorage.setItem(ACCESS_TOKEN_NAME, data.token);
-            //redirectToHome();
+            history.push("/home");
           } else {
             setApiResponse(data.message);
           }
