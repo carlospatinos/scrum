@@ -1,22 +1,27 @@
 import React, { useState } from 'react';
-import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
+import { Alert, Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import './Signup.css';
+import { useHistory } from 'react-router-dom';
+import { API_BASE_URL } from '../../constants/apiConstants';
 
-import TagManager from 'react-gtm-module';
-
-if (process.env.NODE_ENV === 'production' && !!process.env.REACT_APP_GTM_ID) {
-  const tagManagerArgs = {
-    dataLayer: {
-      page: 'signup', // Specific to each page
-      pagePath: window.location.pathname + window.location.search, // "/signup", //Specific to each page
-      title: 'signup',
-    },
-    dataLayerName: 'PageDataLayer',
-  };
-  TagManager.dataLayer(tagManagerArgs);
-}
+// import TagManager from 'react-gtm-module'
+// if (process.env.NODE_ENV === "development" && !!process.env.REACT_APP_GTM_ID) {
+//   document.title = "signup";
+//   console.log(document.title);
+//   const tagManagerArgs = {
+//     dataLayer: {
+//       page: "signup", //Specific to each page
+//       pagePath: window.location.pathname + window.location.search, //"/signup", //Specific to each page
+//       title: "signup"
+//     },
+//     dataLayerName: "PageDataLayer"
+//   };
+//   TagManager.dataLayer(tagManagerArgs);
+// }
 
 export default function Signup() {
+  const history = useHistory();
+
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -25,12 +30,7 @@ export default function Signup() {
 
   const [errorMessage, setErrorMessage] = useState('');
 
-  const [apiResponse] = useState('');
-
-  // useEffect(() => {
-  //   // Update the document title using the browser API
-  //   ReactGA.pageview(window.location.pathname + window.location.search);
-  // });
+  const [apiResponse, setApiResponse] = useState('');
 
   function validateForm() {
     return (
@@ -58,20 +58,23 @@ export default function Signup() {
     };
 
     try {
-      fetch(`${process.env.REACT_APP_API_URL}/api/signup`, requestOptions)
+      fetch(`${API_BASE_URL}/api/signup`, requestOptions)
         .then(response => response.json())
         .then(data => {
-          // eslint-disable-next-line no-console
-          console.log('This is your data', data);
-          // setApiResponse(data.success);
+          if (data.success) {
+            history.push('/home');
+          } else {
+            setApiResponse(data.message);
+          }
         });
     } catch (e) {
-      // eslint-disable-next-line no-console
-      console.log(`=====> error:${e}`);
+      // console.error(`=====> error:${e}`);
       setErrorMessage({ error: e });
       // TODO this erro happen if API is not available but business errors like length of password go above. how to handle and display those?
     }
   }
+
+  const isValidForm = validateForm();
 
   return (
     <div className="Signup">
@@ -110,13 +113,14 @@ export default function Signup() {
             type="password"
           />
         </FormGroup>
-        <FormGroup>
-          <FormLabel>{apiResponse}</FormLabel>
-        </FormGroup>
-        <FormGroup>
-          <FormLabel>{errorMessage}</FormLabel>
-        </FormGroup>
-        <Button block disabled={!validateForm()} type="submit">
+        {apiResponse && <Alert variant="danger">{apiResponse}</Alert>}
+        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+        <Button
+          block
+          disabled={!validateForm()}
+          type="submit"
+          variant={isValidForm ? 'primary' : 'secondary'}
+        >
           Sign up
         </Button>
       </form>

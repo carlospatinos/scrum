@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import socketIOClient from 'socket.io-client';
+import { API_BASE_URL } from './constants/apiConstants';
 
 export default function ClientComponent() {
   const [response, setResponse] = useState('');
 
   useEffect(() => {
-    const socket = socketIOClient(`${process.env.REACT_APP_API_URL}/api`);
+    const socket = socketIOClient(`${API_BASE_URL}/api`);
     socket.on('FromAPI', data => {
       setResponse(data);
     });
