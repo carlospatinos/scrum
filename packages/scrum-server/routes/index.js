@@ -1,18 +1,19 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
 
-const UserType = require("../models/userType.js");
+const router = express.Router();
 
-const {ensureAuthenticated} = require("../config/auth.js");
+const UserType = require('../models/userType.js');
 
-//var SocketSingleton = require('../utils/socket-singleton');
+const { ensureAuthenticated } = require('../config/auth.js');
+
+// var SocketSingleton = require('../utils/socket-singleton');
 
 /* GET home page. */
-router.get('/static', function (req, res, next) {
+router.get('/static', (req, res, next) => {
   res.render('index', { title: 'Scrum' });
 });
 
-router.get('/signin', function (req, res, next) {
+router.get('/signin', (req, res, next) => {
   res.render('dashboard', { title: 'Scrum' });
 });
 
@@ -20,21 +21,20 @@ router.get('/dashboard', ensureAuthenticated, (req, res, next) => {
   res.render('dashboard', { user: req.user });
 });
 
-router.get('/appRunning', function (req, res, next) {
-  return res.status(200).json({
-    message: "Application is running",
-  });
-});
+router.get('/appRunning', (req, res, next) =>
+  res.status(200).json({
+    message: 'Application is running',
+  })
+);
 
-router.get('/register', function (req, res, next) {
+router.get('/register', (req, res, next) => {
   UserType.find().exec((err, types) => {
     res.render('register', { userTypes: types });
   });
 });
 
-router.get('/expLogin', function (req, res, next) {
+router.get('/expLogin', (req, res, next) => {
   res.render('login', { title: 'Express' });
 });
-
 
 module.exports = router;
