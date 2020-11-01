@@ -7,6 +7,7 @@ import {
   FormControl,
   FormLabel,
 } from "react-bootstrap";
+import { useHistory } from 'react-router-dom';
 import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../../constants/apiConstants';
 
 import "./Login.css";
@@ -27,9 +28,12 @@ import "./Login.css";
 // }
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [apiResponse, setApiResponse] = useState();
+
+  const history = useHistory();
+  
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [apiResponse, setApiResponse] = useState("");
 
   function validateForm() {
     return email.length > 0 && password.length > 0;
@@ -50,8 +54,8 @@ export default function Login() {
         .then((data) => {
           console.log(data);
           if (data.isAuth){
-            console.log("user authenticated");
             localStorage.setItem(ACCESS_TOKEN_NAME, data.token);
+            history.push("/home");
           } else {
             setApiResponse(data.message);
           }
