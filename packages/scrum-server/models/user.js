@@ -1,112 +1,111 @@
+/* eslint-disable */
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 const salt = 10;
-const SECRET = "mysecretjwt"
+const SECRET = 'mysecretjwt';
 
 const UserSchema = new mongoose.Schema({
-    firstName: {
-        type: String,
-        required: true,
-        maxlength: 100
-    },
-    lastName: {
-        type: String,
-        required: true,
-        maxlength: 100
-    },
-    email: {
-        type: String,
-        required: true,
-        trim: true,
-        unique: 1
-    },
-    password: {
-        type: String,
-        required: true,
-        minlength: 8
-    },
-    password2: {
-        type: String,
-        required: true,
-        minlength: 8
-    },
-    token: {
-        type: String
-    },
-    userType: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'UserType'
-    },
-    team: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Team',
-    },
-    date: {
-        type: Date,
-        default: Date.now
-    }
+  firstName: {
+    type: String,
+    required: true,
+    maxlength: 100,
+  },
+  lastName: {
+    type: String,
+    required: true,
+    maxlength: 100,
+  },
+  email: {
+    type: String,
+    required: true,
+    trim: true,
+    unique: 1,
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 8,
+  },
+  password2: {
+    type: String,
+    required: true,
+    minlength: 8,
+  },
+  token: {
+    type: String,
+  },
+  userType: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'UserType',
+  },
+  team: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Team',
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 UserSchema.pre('save', function (next) {
-    var user = this;
+  const user = this;
 
-    if (user.isModified('password')) {
-        bcrypt.genSalt(salt, function (err, salt) {
-            if (err) return next(err);
+  if (user.isModified('password')) {
+    bcrypt.genSalt(salt, (err, salt) => {
+      if (err) return next(err);
 
-            bcrypt.hash(user.password, salt, function (err, hash) {
-                if (err) return next(err);
-                user.password = hash;
-                user.password2 = hash; //TODO remove
-                next();
-            })
-
-        })
-    }
-    else {
+      bcrypt.hash(user.password, salt, (err, hash) => {
+        if (err) return next(err);
+        user.password = hash;
+        user.password2 = hash; // TODO remove
         next();
-    }
+      });
+    });
+  } else {
+    next();
+  }
 });
 
 UserSchema.methods.comparePassword = function (password, cb) {
-    bcrypt.compare(password, this.password, function (err, isMatch) {
-        if (err) return cb(next);
-        cb(null, isMatch);
-    });
-}
+  bcrypt.compare(password, this.password, (err, isMatch) => {
+    if (err) return cb(next);
+    cb(null, isMatch);
+  });
+};
 
 UserSchema.methods.generateToken = function (cb) {
-    var user = this;
-    var token = jwt.sign(user._id.toHexString(), SECRET);
+  const user = this;
+  const token = jwt.sign(user._id.toHexString(), SECRET);
 
-    user.token = token;
-    user.save(function (err, user) {
-        if (err) return cb(err);
-        cb(null, user);
-    })
-}
+  user.token = token;
+  user.save((err, user) => {
+    if (err) return cb(err);
+    cb(null, user);
+  });
+};
 
 UserSchema.statics.findByToken = function (token, cb) {
-    var user = this;
+  const user = this;
 
-    jwt.verify(token, SECRET, function (err, decode) {
-        user.findOne({ "_id": decode, "token": token }, function (err, user) {
-            if (err) return cb(err);
-            cb(null, user);
-        })
-    })
+  jwt.verify(token, SECRET, (err, decode) => {
+    user.findOne({ _id: decode, token }, (err, user) => {
+      if (err) return cb(err);
+      cb(null, user);
+    });
+  });
 };
 
 UserSchema.methods.deleteToken = function (token, cb) {
-    var user = this;
+  const user = this;
 
-    user.update({ $unset: { token: 1 } }, function (err, user) {
-        if (err) return cb(err);
-        cb(null, user);
-    })
-}
+  user.update({ $unset: { token: 1 } }, (err, user) => {
+    if (err) return cb(err);
+    cb(null, user);
+  });
+};
 
 const User = mongoose.model('User', UserSchema);
 
