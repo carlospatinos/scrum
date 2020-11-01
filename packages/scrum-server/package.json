@@ -1,5 +1,5 @@
 {
-  "name": "scrum-server",
+  "name": "@scrum/server",
   "version": "0.0.0",
   "description": "Dev tools",
   "main": "index.js",
