@@ -1,30 +1,29 @@
-import React, { useState } from 'react';
-import { Alert, Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
-import './Login.css';
+import React, { useState } from "react";
+import { Alert, Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 
-import TagManager from 'react-gtm-module';
+import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../../constants/apiConstants';
 
-if (process.env.NODE_ENV === 'production' && !!process.env.REACT_APP_GTM_ID) {
-  const tagManagerArgs = {
-    dataLayer: {
-      page: 'login', // Specific to each page
-      pagePath: window.location.pathname + window.location.search, // "/login", //Specific to each page
-      title: 'login',
-    },
-    dataLayerName: 'PageDataLayer',
-  };
-  TagManager.dataLayer(tagManagerArgs);
-}
+import "./Login.css";
+
+// import TagManager from 'react-gtm-module'
+
+// if (process.env.NODE_ENV === "development" && !!process.env.REACT_APP_GTM_ID) {
+//   document.title = "login";
+//   const tagManagerArgs = {
+//     dataLayer: {
+//       page: "login", //Specific to each page
+//       pagePath: window.location.pathname + window.location.search, //"/login", //Specific to each page
+//       title: "login"
+//     },
+//     dataLayerName: "PageDataLayer"
+//   };
+//   TagManager.dataLayer(tagManagerArgs);
+// }
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [apiResponse, setApiResponse] = useState();
-
-  // useEffect(() => {
-  //   // Update the document title using the browser API
-  // document.title = `You clicked ${count} times`;
-  // });
 
   function validateForm() {
     return email.length > 0 && password.length > 0;
@@ -40,11 +39,16 @@ export default function Login() {
     };
 
     try {
-      fetch(`${process.env.REACT_APP_API_URL}/api/login`, requestOptions) /// api
-        .then(response => response.json())
-        // .then(response => response.text())
-        .then(data => {
-          setApiResponse(data.message);
+      fetch(API_BASE_URL + "/api/login", requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data.isAuth){
+            console.log("user authenticated");
+            localStorage.setItem(ACCESS_TOKEN_NAME, data.token);
+          } else {
+            setApiResponse(data.message);
+          }
         });
     } catch (e) {
       // console.log(e);

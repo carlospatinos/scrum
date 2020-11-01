@@ -3,17 +3,21 @@ import { Row, Col, Container, CardDeck, Card } from 'react-bootstrap';
 import TagManager from 'react-gtm-module';
 import ClientComponent from '../../ClientComponent';
 
-if (process.env.NODE_ENV === 'production' && !!process.env.REACT_APP_GTM_ID) {
-  const tagManagerArgs = {
-    dataLayer: {
-      page: 'home', // Specific to each page
-      pagePath: window.location.pathname + window.location.search, // "/home", //Specific to each page
-      title: 'home',
-    },
-    dataLayerName: 'PageDataLayer',
-  };
-  TagManager.dataLayer(tagManagerArgs);
-}
+// import TagManager from 'react-gtm-module'
+
+// if(process.env.NODE_ENV === "development" && !!process.env.REACT_APP_GTM_ID) {
+//   document.title = "home";
+//   console.log(document.title);
+//   const tagManagerArgs = {
+//     dataLayer: {
+//       page: "home", //Specific to each page
+//       pagePath: window.location.pathname + window.location.search, //"/home", //Specific to each page
+//       title: "home"
+//     },
+//     dataLayerName: "PageDataLayer"
+//   };
+//   TagManager.dataLayer(tagManagerArgs);
+// }
 
 const Home = () => {
   const [loadClient, setLoadClient] = useState(true);
