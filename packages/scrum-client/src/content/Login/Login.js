@@ -1,29 +1,35 @@
-import React, { useState } from 'react';
-import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
-import './Login.css';
+import React, { useState, useEffect } from "react";
+import {
+  Alert,
+  Button,
+  FormGroup,
+  FormControl,
+  FormLabel,
+} from "react-bootstrap";
+import "./Login.css";
 
-import TagManager from 'react-gtm-module';
+import TagManager from "react-gtm-module";
 
-if (process.env.NODE_ENV === 'production' && !!process.env.REACT_APP_GTM_ID) {
+if (process.env.NODE_ENV === "production" && !!process.env.REACT_APP_GTM_ID) {
   const tagManagerArgs = {
     dataLayer: {
-      page: 'login', // Specific to each page
-      pagePath: window.location.pathname + window.location.search, // "/login", //Specific to each page
-      title: 'login',
+      page: "login", //Specific to each page
+      pagePath: window.location.pathname + window.location.search, //"/login", //Specific to each page
+      title: "login",
     },
-    dataLayerName: 'PageDataLayer',
+    dataLayerName: "PageDataLayer",
   };
   TagManager.dataLayer(tagManagerArgs);
 }
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [apiResponse, setApiResponse] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [apiResponse, setApiResponse] = useState();
 
   // useEffect(() => {
   //   // Update the document title using the browser API
-  // document.title = `You clicked ${count} times`;
+  //document.title = `You clicked ${count} times`;
   // });
 
   function validateForm() {
@@ -34,9 +40,9 @@ export default function Login() {
     event.preventDefault();
 
     const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, password: password }),
     };
 
     try {
@@ -50,6 +56,7 @@ export default function Login() {
       // console.log(e);
     }
   }
+  const isValidForm = validateForm();
 
   return (
     <div className="Login">
@@ -60,21 +67,24 @@ export default function Login() {
             autoFocus
             type="email"
             value={email}
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </FormGroup>
         <FormGroup controlId="password">
           <FormLabel>Password</FormLabel>
           <FormControl
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             type="password"
           />
         </FormGroup>
-        <FormGroup>
-          <FormLabel>{apiResponse}</FormLabel>
-        </FormGroup>
-        <Button block disabled={!validateForm()} type="submit">
+        {apiResponse && <Alert variant={"danger"}>{apiResponse}</Alert>}
+        <Button
+          block
+          disabled={!isValidForm}
+          variant={isValidForm ? "primary" : "secondary"}
+          type="submit"
+        >
           Login
         </Button>
       </form>
