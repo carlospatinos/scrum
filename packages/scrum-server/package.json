@@ -6,7 +6,9 @@
   "scripts": {
     "test": "mocha --require babel-register tests/*.js --exit",
     "start": "node ./bin/www",
-    "dev": "nodemon --exec babel-node --presets babel-preset-env ./bin/www"
+    "dev": "nodemon --exec babel-node --presets babel-preset-env ./bin/www",
+    "lint": "eslint \"./**/*.js\" ",
+    "lint-fix": "eslint --fix \"./**/*.js\""
   },
   "repository": {
     "type": "git",
@@ -47,8 +49,15 @@
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "chai-json": "^1.0.0",
+    "eslint": "^7.12.1",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "express.io": "^1.1.13",
     "mocha": "^5.1.1",
-    "nodemon": "^1.17.4"
+    "nodemon": "^1.17.4",
+    "prettier": "^2.1.2"
   }
 }
