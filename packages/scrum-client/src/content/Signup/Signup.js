@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
+import { Alert, Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 import "./Signup.css";
-
-import {API_BASE_URL} from '../../constants/apiConstants';
+import { useHistory } from 'react-router-dom';
+import { API_BASE_URL } from '../../constants/apiConstants';
 
 
 // import TagManager from 'react-gtm-module'
@@ -23,6 +23,8 @@ import {API_BASE_URL} from '../../constants/apiConstants';
 
 
 export default function Signup() {
+  const history = useHistory();
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -31,15 +33,11 @@ export default function Signup() {
 
   const [errorMessage, setErrorMessage] = useState("");
 
-  const [apiResponse] = useState("");
-  
-  // useEffect(() => {
-  //   // Update the document title using the browser API
-  //   ReactGA.pageview(window.location.pathname + window.location.search);
-  // });
+  const [apiResponse, setApiResponse] = useState("");
+
 
   function validateForm() {
-    return firstName.length > 0 && lastName.length > 0  && email.length > 0 && password.length > 0 && password === password2;
+    return firstName.length > 0 && lastName.length > 0 && email.length > 0 && password.length > 0 && password === password2;
   }
 
   function handleSubmit(event) {
@@ -55,15 +53,20 @@ export default function Signup() {
       fetch(API_BASE_URL + "/api/signup", requestOptions)
         .then((response) => response.json())
         .then((data) => {
-          console.log('This is your data', data);
-          //setApiResponse(data.success);
+          if (data.success) {
+            history.push("/home");
+          } else {
+            setApiResponse(data.message);
+          }
         });
     } catch (e) {
       console.log("=====> error:" + e);
-      setErrorMessage({error: e});
+      setErrorMessage({ error: e });
       // TODO this erro happen if API is not available but business errors like length of password go above. how to handle and display those?
     }
   }
+
+  const isValidForm = validateForm();
 
   return (
     <div className="Signup">
@@ -109,13 +112,9 @@ export default function Signup() {
             type="password"
           />
         </FormGroup>
-        <FormGroup>
-          <FormLabel>{apiResponse}</FormLabel>
-        </FormGroup>
-        <FormGroup>
-          <FormLabel>{errorMessage}</FormLabel>
-        </FormGroup>
-        <Button block disabled={!validateForm()} type="submit">
+        {apiResponse && <Alert variant={"danger"}>{apiResponse}</Alert>}
+        {errorMessage && <Alert variant={"danger"}>{errorMessage}</Alert>}
+        <Button block disabled={!validateForm()} type="submit" variant={isValidForm ? "primary" : "secondary"}>
           Sign up
         </Button>
       </form>

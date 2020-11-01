@@ -23,10 +23,10 @@ router.post('/signup', function (req, res, next) {
     typeForNewUser.type = "admin";
     newUser.userType = typeForNewUser; // TODO fix
 
-    if (newUser.password != newUser.password2) return res.status(400).json({ message: "password not match" });
+    if (newUser.password != newUser.password2) return res.status(400).json({ success: false, message: "password not match" });
 
     User.findOne({ email: newUser.email }, function (err, user) {
-        if (user) return res.status(400).json({ auth: false, message: "email exits" });
+        if (user) return res.status(400).json({ success: false, message: "email exits" });
 
         newUser.save((err, docUser) => {
             if (err) {
@@ -34,7 +34,7 @@ router.post('/signup', function (req, res, next) {
                 return res.status(400).json({ success: false });
             }
             res.status(200).json({
-                succes: true,
+                success: true,
                 user: docUser
             });
         });
@@ -47,7 +47,7 @@ router.post('/login', (req, res, next) => {
         if (err) return res(err);
         if (user) {
             return res.status(400).json({
-                error: true,
+                success: false,
                 message: "You are already logged in"
             });
         } else {
