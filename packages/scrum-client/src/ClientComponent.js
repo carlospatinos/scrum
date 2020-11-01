@@ -1,20 +1,19 @@
-import React, { useEffect, useState } from "react";
-import socketIOClient from "socket.io-client";
+import React, { useEffect, useState } from 'react';
+import socketIOClient from 'socket.io-client';
 
 export default function ClientComponent() {
-  const [response, setResponse] = useState("");
+  const [response, setResponse] = useState('');
 
   useEffect(() => {
-    const socket = socketIOClient(process.env.REACT_APP_API_URL + "/api");
-    socket.on("FromAPI", data => {
+    const socket = socketIOClient(`${process.env.REACT_APP_API_URL}/api`);
+    socket.on('FromAPI', data => {
       setResponse(data);
     });
-
   }, []);
 
   return (
     <p>
-      It's <time dateTime={response}>{response}</time>
+      Its <time dateTime={response}>{response}</time>
     </p>
   );
 }

@@ -1,40 +1,45 @@
-import React, { useState, useEffect } from "react";
-import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
-import "./Signup.css";
+import React, { useState } from 'react';
+import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
+import './Signup.css';
 
-import TagManager from 'react-gtm-module'
+import TagManager from 'react-gtm-module';
 
-if (process.env.NODE_ENV === "production" && !!process.env.REACT_APP_GTM_ID) {
+if (process.env.NODE_ENV === 'production' && !!process.env.REACT_APP_GTM_ID) {
   const tagManagerArgs = {
     dataLayer: {
-      page: "signup", //Specific to each page
-      pagePath: window.location.pathname + window.location.search, //"/signup", //Specific to each page
-      title: "signup"
+      page: 'signup', // Specific to each page
+      pagePath: window.location.pathname + window.location.search, // "/signup", //Specific to each page
+      title: 'signup',
     },
-    dataLayerName: "PageDataLayer"
+    dataLayerName: 'PageDataLayer',
   };
   TagManager.dataLayer(tagManagerArgs);
 }
 
-
 export default function Signup() {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [password2, setPassword2] = useState("");
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [password2, setPassword2] = useState('');
 
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const [apiResponse] = useState("");
-  
+  const [apiResponse] = useState('');
+
   // useEffect(() => {
   //   // Update the document title using the browser API
   //   ReactGA.pageview(window.location.pathname + window.location.search);
   // });
 
   function validateForm() {
-    return firstName.length > 0 && lastName.length > 0  && email.length > 0 && password.length > 0 && password === password2;
+    return (
+      firstName.length > 0 &&
+      lastName.length > 0 &&
+      email.length > 0 &&
+      password.length > 0 &&
+      password === password2
+    );
   }
 
   function handleSubmit(event) {
@@ -43,19 +48,27 @@ export default function Signup() {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ firstName: firstName, lastName: lastName, email: email, password: password, password2: password2 })
+      body: JSON.stringify({
+        firstName,
+        lastName,
+        email,
+        password,
+        password2,
+      }),
     };
 
     try {
-      fetch(process.env.REACT_APP_API_URL + "/api/signup", requestOptions)
-        .then((response) => response.json())
-        .then((data) => {
+      fetch(`${process.env.REACT_APP_API_URL}/api/signup`, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          // eslint-disable-next-line no-console
           console.log('This is your data', data);
-          //setApiResponse(data.success);
+          // setApiResponse(data.success);
         });
     } catch (e) {
-      console.log("=====> error:" + e);
-      setErrorMessage({error: e});
+      // eslint-disable-next-line no-console
+      console.log(`=====> error:${e}`);
+      setErrorMessage({ error: e });
       // TODO this erro happen if API is not available but business errors like length of password go above. how to handle and display those?
     }
   }
@@ -65,19 +78,12 @@ export default function Signup() {
       <form onSubmit={handleSubmit}>
         <FormGroup controlId="firstName">
           <FormLabel>First Name</FormLabel>
-          <FormControl
-            value={firstName}
-            onChange={e => setFirstName(e.target.value)}
-          />
+          <FormControl value={firstName} onChange={e => setFirstName(e.target.value)} />
         </FormGroup>
         <FormGroup controlId="lastName">
           <FormLabel>Last Name</FormLabel>
-          <FormControl
-            value={lastName}
-            onChange={e => setLastName(e.target.value)}
-          />
+          <FormControl value={lastName} onChange={e => setLastName(e.target.value)} />
         </FormGroup>
-
 
         <FormGroup controlId="email">
           <FormLabel>Email</FormLabel>

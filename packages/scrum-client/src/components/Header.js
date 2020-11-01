@@ -1,10 +1,6 @@
-import React from "react";
-import {
-  Navbar,
-  Nav,
-} from "react-bootstrap";
+import React from 'react';
+import { Navbar, Nav } from 'react-bootstrap';
 // import { LinkContainer } from "react-router-bootstrap"; TODO use this to avoid refreshing the page
-
 
 const Header = () => (
   <header>
@@ -13,7 +9,7 @@ const Header = () => (
         <Navbar.Brand href="#home">Scrum</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav >
+          <Nav>
             <Nav.Link href="/signup">Signup</Nav.Link>
             <Nav.Link href="/login">Login</Nav.Link>
             <Nav.Link href="/home">Home</Nav.Link>

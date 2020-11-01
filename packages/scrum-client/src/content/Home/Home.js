@@ -1,17 +1,16 @@
-import React, { useState } from "react";
-import { Row, Col, Container, CardDeck, Card } from "react-bootstrap";
-import ClientComponent from "../../ClientComponent";
+import React, { useState } from 'react';
+import { Row, Col, Container, CardDeck, Card } from 'react-bootstrap';
+import TagManager from 'react-gtm-module';
+import ClientComponent from '../../ClientComponent';
 
-import TagManager from 'react-gtm-module'
-
-if(process.env.NODE_ENV === "production" && !!process.env.REACT_APP_GTM_ID) {
+if (process.env.NODE_ENV === 'production' && !!process.env.REACT_APP_GTM_ID) {
   const tagManagerArgs = {
     dataLayer: {
-      page: "home", //Specific to each page
-      pagePath: window.location.pathname + window.location.search, //"/home", //Specific to each page
-      titlee: "home"
+      page: 'home', // Specific to each page
+      pagePath: window.location.pathname + window.location.search, // "/home", //Specific to each page
+      title: 'home',
     },
-    dataLayerName: "PageDataLayer"
+    dataLayerName: 'PageDataLayer',
   };
   TagManager.dataLayer(tagManagerArgs);
 }
@@ -25,9 +24,9 @@ const Home = () => {
           <div className="pricing-Home px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
             <h1 className="display-4">Team</h1>
             <p className="lead">
-              Quickly build an pricing table for your potential customers with
-              this Bootstrap example. It's built with default Bootstrap
-              components and utilities with little customization.
+              Quickly build an pricing table for your potential customers with this Bootstrap
+              example. Its built with default Bootstrap components and utilities with little
+              customization.
             </p>
           </div>
         </Col>
@@ -38,35 +37,32 @@ const Home = () => {
             <h4>Retro</h4>
           </Card.Header>
           <Card.Body>
-            <Card.Title></Card.Title>
-            <Card.Text></Card.Text>
+            <Card.Title />
+            <Card.Text />
           </Card.Body>
         </Card>
         <Card>
           <Card.Header>
-            {" "}
+            {' '}
             <h4>Planning</h4>
           </Card.Header>
           <Card.Body>
-            <Card.Title></Card.Title>
-            <Card.Text></Card.Text>
+            <Card.Title />
+            <Card.Text />
           </Card.Body>
         </Card>
         <Card>
           <Card.Header>
-            {" "}
+            {' '}
             <h4>Other</h4>
           </Card.Header>
           <Card.Body>
-            <Card.Title></Card.Title>
-            <Card.Text></Card.Text>
+            <Card.Title />
+            <Card.Text />
           </Card.Body>
         </Card>
       </CardDeck>
-      <Row
-        noGutters
-        className="pt-2 pt-md-5 w-100 px-4 px-xl-0 position-relative"
-      >
+      <Row noGutters className="pt-2 pt-md-5 w-100 px-4 px-xl-0 position-relative">
         <Col
           xs={{ order: 1 }}
           md={{ size: 7, offset: 1 }}
@@ -74,10 +70,10 @@ const Home = () => {
           className="py-5 mb-5 py-md-0 mb-md-0"
         >
           {/* LOAD OR UNLOAD THE CLIENT */}
-          <button onClick={() => setLoadClient((prevState) => !prevState)}>
+          <button type="button" onClick={() => setLoadClient(prevState => !prevState)}>
             STOP CLIENT
           </button>
-          {/* SOCKET IO CLIENT*/}
+          {/* SOCKET IO CLIENT */}
           {loadClient ? <ClientComponent /> : null}
         </Col>
       </Row>
