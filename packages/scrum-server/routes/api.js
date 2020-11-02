@@ -75,12 +75,6 @@ router.post('/login', (req, res, next) => {
   });
 });
 
-
-
-
-
-
-
 router.get('/profile', auth, (req, res, next) => {
   res.json({
     isAuth: true,
