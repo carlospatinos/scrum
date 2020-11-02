@@ -10,6 +10,8 @@ import Home from './content/Home';
 import Login from './content/Login';
 import Signup from './content/Signup';
 import NotFound from './content/NotFound';
+import Logout from './content/Logout';
+
 import { AppContext } from './lib/contextLib';
 
 // const [isAuthenticated, userHasAuthenticated] = useState(false);
@@ -36,6 +38,7 @@ function App() {
                 <Route exact path="/home" component={Home} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
+                <Route exact path="/logout" component={Logout} />
                 <NotFound />
               </Switch>
             </Router>

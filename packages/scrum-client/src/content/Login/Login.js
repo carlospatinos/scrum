@@ -64,6 +64,7 @@ export default function Login() {
   return (
     <div className="Login">
       <form onSubmit={handleSubmit}>
+        <h3>Sign In</h3>
         <FormGroup controlId="email">
           <FormLabel>Email</FormLabel>
           <FormControl
@@ -90,6 +91,10 @@ export default function Login() {
         >
           Login
         </Button>
+
+        <p className="forgot-password text-right">
+          Forgot <a href="/forgot">password?</a>
+        </p>
       </form>
     </div>
   );
