@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { useAppContext } from '../lib/contextLib';
+import Logout from '../content/Logout';
 
 // import { LinkContainer } from "react-router-bootstrap"; TODO use this to avoid refreshing the page
 
@@ -17,7 +18,7 @@ export default function Header() {
             {isAuthenticated ? (
               <Nav className="justify-content-end" activeKey="/login">
                 <Nav.Link href="/home">Home</Nav.Link>
-                <Nav.Link href="/logout">Logout</Nav.Link>
+                <Nav.Link onClick={Logout.handleLogout()}>Logout</Nav.Link>
               </Nav>
             ) : (
               <Nav className="justify-content-end" activeKey="/login">

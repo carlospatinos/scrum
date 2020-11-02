@@ -1,8 +1,6 @@
-import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useAppContext } from '../../lib/contextLib';
 import { API_BASE_URL } from '../../constants/apiConstants';
-import './Logout.css';
 
 export default function Logout() {
   const { userHasAuthenticated } = useAppContext();
@@ -28,10 +26,4 @@ export default function Logout() {
       // console.error(e);
     }
   }
-
-
-  return (
-    <div className="Logout">
-    </div>
-  );
 }
