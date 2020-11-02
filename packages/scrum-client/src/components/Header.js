@@ -24,6 +24,7 @@ export default function Header() {
               <Nav className="justify-content-end" activeKey="/login">
                 <Nav.Link href="/login">Login</Nav.Link>
                 <Nav.Link href="/signup">Signup</Nav.Link>
+                <Nav.Link href="/joinSession">Join Session</Nav.Link>
               </Nav>
             )}
           </Navbar.Collapse>

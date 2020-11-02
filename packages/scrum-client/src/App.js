@@ -11,6 +11,7 @@ import Login from './content/Login';
 import Signup from './content/Signup';
 import NotFound from './content/NotFound';
 import Logout from './content/Logout';
+import JoinSession from './content/JoinSession';
 
 import { AppContext } from './lib/contextLib';
 
@@ -39,6 +40,7 @@ function App() {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/logout" component={Logout} />
+                <Route exact path="/joinSession" component={JoinSession} />
                 <NotFound />
               </Switch>
             </Router>
