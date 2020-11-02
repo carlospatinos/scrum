@@ -81,10 +81,11 @@ UserSchema.methods.generateToken = function (cb) {
   const token = jwt.sign(user._id.toHexString(), SECRET);
 
   user.token = token;
-  user.save((err, user) => {
-    if (err) return cb(err);
-    cb(null, user);
-  });
+  // user.save((err, user) => {
+  //   if (err) return cb(err);
+  // cb(null, user);
+  // });
+  cb(null, user); // TODO remove when token is saved (code above)
 };
 
 UserSchema.statics.findByToken = function (token, cb) {

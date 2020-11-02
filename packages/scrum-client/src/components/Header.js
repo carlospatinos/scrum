@@ -1,23 +1,38 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
+import { useAppContext } from '../lib/contextLib';
+
 // import { LinkContainer } from "react-router-bootstrap"; TODO use this to avoid refreshing the page
 
-const Header = () => (
-  <header>
-    <div className="App">
-      <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#home">Scrum</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav>
-            <Nav.Link href="/signup">Signup</Nav.Link>
-            <Nav.Link href="/login">Login</Nav.Link>
-            <Nav.Link href="/home">Home</Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
-    </div>
-  </header>
-);
+export default function Header() {
+  const { isAuthenticated, userHasAuthenticated } = useAppContext();
+  function handleLogout() {
+    userHasAuthenticated(false);
+  }
 
-export default Header;
+  return (
+    <header>
+      <div>
+        <Navbar bg="light" expand="lg">
+          <Navbar.Brand href="#home">Scrum</Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse id="basic-navbar-nav">
+            {isAuthenticated ? (
+              <Nav className="justify-content-end" activeKey="/login">
+                <Nav.Link href="/home">Home</Nav.Link>
+                <Nav.Link href="#" onClick={handleLogout}>
+                  Logout
+                </Nav.Link>
+              </Nav>
+            ) : (
+              <Nav className="justify-content-end" activeKey="/login">
+                <Nav.Link href="/login">Login</Nav.Link>
+                <Nav.Link href="/signup">Signup</Nav.Link>
+              </Nav>
+            )}
+          </Navbar.Collapse>
+        </Navbar>
+      </div>
+    </header>
+  );
+}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 
@@ -10,7 +10,7 @@ import Home from './content/Home';
 import Login from './content/Login';
 import Signup from './content/Signup';
 import NotFound from './content/NotFound';
-// import { AppContext } from "./lib/contextLib";
+import { AppContext } from './lib/contextLib';
 
 // const [isAuthenticated, userHasAuthenticated] = useState(false);
 // if (process.env.NODE_ENV === "development" && !!process.env.REACT_APP_GTM_ID) {
@@ -22,22 +22,26 @@ import NotFound from './content/NotFound';
 // }
 
 function App() {
+  const [isAuthenticated, userHasAuthenticated] = useState(false);
+
   return (
     <>
-      <Header />
-      <main>
-        <Container className="px-5">
-          <Router>
-            <Switch>
-              <Route exact path="/" component={Login} />
-              <Route exact path="/home" component={Home} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/signup" component={Signup} />
-              <NotFound />
-            </Switch>
-          </Router>
-        </Container>
-      </main>
+      <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
+        <Header />
+        <main>
+          <Container className="px-5">
+            <Router>
+              <Switch>
+                <Route exact path="/" component={Login} />
+                <Route exact path="/home" component={Home} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/signup" component={Signup} />
+                <NotFound />
+              </Switch>
+            </Router>
+          </Container>
+        </main>
+      </AppContext.Provider>
       <Footer />
     </>
   );
