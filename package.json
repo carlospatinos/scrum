@@ -37,12 +37,6 @@
   "dependencies": {
     "lerna": "^3.22.1"
   },
-  "lint-staged": {
-    "packages/*/src/**/*.{js,jsx}": [
-      "eslint . --fix",
-      "git add"
-    ]
-  },
   "config": {
     "commitizen": {
       "path": "@commitlint/prompt"
@@ -50,7 +44,6 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   }

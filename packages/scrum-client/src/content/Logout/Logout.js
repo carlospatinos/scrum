@@ -1,11 +1,13 @@
-import { useHistory } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 import { useAppContext } from '../../lib/contextLib';
 import { API_BASE_URL } from '../../constants/apiConstants';
+import PATHS from '../../constants/paths';
 
-export default function Logout() {
+function Logout(props) {
   const { userHasAuthenticated } = useAppContext();
+  const { location } = props;
 
-  const history = useHistory();
+  // const history = useHistory();
 
   /* eslint-disable */
   function handleLogout() {
@@ -20,10 +22,21 @@ export default function Logout() {
         .then(response => response.json())
         .then(data => {
           console.log(data);
-          history.push('/login');
+          // history.push('/login');
         });
     } catch (e) {
       // console.error(e);
     }
   }
+
+  handleLogout();
+  return (
+    <Redirect
+      to={{
+        pathname: PATHS.LOGIN,
+        state: { redirectedFrom: location },
+      }}
+    />
+  );
 }
+export default withRouter(Logout);
