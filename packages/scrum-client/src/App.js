@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Route, Switch, BrowserRouter as Router } from 'react-router-dom';
+import { Switch, BrowserRouter as Router } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 
 // import TagManager from 'react-gtm-module'
@@ -13,6 +13,8 @@ import NotFound from './content/NotFound';
 import Logout from './content/Logout';
 
 import { AppContext } from './lib/contextLib';
+import PATHS from './constants/paths';
+import { TitledRoute, AuthenticatedRoute } from './components/router';
 
 // const [isAuthenticated, userHasAuthenticated] = useState(false);
 // if (process.env.NODE_ENV === "development" && !!process.env.REACT_APP_GTM_ID) {
@@ -34,11 +36,11 @@ function App() {
           <Container className="px-5">
             <Router>
               <Switch>
-                <Route exact path="/" component={Login} />
-                <Route exact path="/home" component={Home} />
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/signup" component={Signup} />
-                <Route exact path="/logout" component={Logout} />
+                <TitledRoute exact path={PATHS.DEFAULT} component={Login} title="Login" />
+                <AuthenticatedRoute exact path={PATHS.HOME} component={Home} title="Home" />
+                <TitledRoute exact path={PATHS.LOGIN} component={Login} title="Login" />
+                <TitledRoute exact path={PATHS.SIGNUP} component={Signup} title="Signup" />
+                <TitledRoute exact path={PATHS.LOGOUT} component={Logout} title="Logout" />
                 <NotFound />
               </Switch>
             </Router>
