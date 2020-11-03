@@ -4,7 +4,7 @@ const PATHS = {
   LOGIN: '/login',
   SIGNUP: '/signup',
   LOGOUT: '/logout',
-  JOIN_SESSION: '/joinSession',
+  JOIN_SESSION: '/joinsession',
 };
 
 export default PATHS;
