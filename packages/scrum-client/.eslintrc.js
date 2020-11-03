@@ -11,13 +11,15 @@ module.exports = {
   ],
   plugins: ['jsx-a11y', 'prettier', 'testing-library', 'jest-dom'],
   rules: {
-    "react/react-in-jsx-scope": "off",
+    'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 'off',
+    'react/jsx-props-no-spreading': 'off',
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
     'testing-library/no-render-in-setup': 'error',
     'testing-library/no-wait-for-empty-callback': 'error',
     'testing-library/prefer-explicit-assert': 'error',
     'testing-library/prefer-presence-queries': 'error',
     'testing-library/prefer-screen-queries': 'error',
-    'testing-library/prefer-wait-for': 'error'
+    'testing-library/prefer-wait-for': 'error',
   },
 };
