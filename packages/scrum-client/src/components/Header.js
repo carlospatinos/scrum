@@ -23,6 +23,7 @@ export default function Header() {
             ) : (
               <Nav className="justify-content-end" activeKey={PATHS.LOGIN}>
                 <Nav.Link href={PATHS.LOGIN}>Login</Nav.Link>
+                <Nav.Link href={PATHS.NEW_LOGIN}>Login2</Nav.Link>
                 <Nav.Link href={PATHS.SIGNUP}>Signup</Nav.Link>
                 <Nav.Link href={PATHS.PLANNING_CONFIG}>Planning Config</Nav.Link>
                 <Nav.Link href={PATHS.JOIN_SESSION}>Start Session</Nav.Link>

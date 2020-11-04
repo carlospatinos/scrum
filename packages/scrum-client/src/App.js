@@ -12,6 +12,7 @@ import Logout from './content/Logout';
 import JoinSession from './content/JoinSession';
 import PlanningConfig from './content/PlanningConfig';
 import SessionStarted from './content/SessionStarted';
+import NewLogin from './content/NewLogin';
 
 import { AppContext } from './lib/contextLib';
 import PATHS from './constants/paths';
@@ -29,6 +30,7 @@ function App() {
             <Router>
               <Switch>
                 <TitledRoute exact path={PATHS.DEFAULT} component={Login} title="Login" />
+                <TitledRoute exact path={PATHS.NEW_LOGIN} component={NewLogin} title="Login2" />
                 <AuthenticatedRoute exact path={PATHS.HOME} component={Home} title="Home" />
                 <TitledRoute exact path={PATHS.LOGIN} component={Login} title="Login" />
                 <TitledRoute exact path={PATHS.SIGNUP} component={Signup} title="Signup" />

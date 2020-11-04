@@ -11,7 +11,7 @@ export default function Signup() {
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [password2, setPassword2] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -23,39 +23,43 @@ export default function Signup() {
       lastName.length > 0 &&
       email.length > 0 &&
       password.length > 0 &&
-      password === password2
+      confirmPassword.length > 0
     );
   }
 
   function handleSubmit(event) {
     event.preventDefault();
 
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        firstName,
-        lastName,
-        email,
-        password,
-        password2,
-      }),
-    };
+    if (password !== confirmPassword) {
+      setErrorMessage("Passwords don't match");
+    } else {
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          password,
+          password2: confirmPassword,
+        }),
+      };
 
-    try {
-      fetch(`${API_BASE_URL}/api/signup`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            history.push('/home');
-          } else {
-            setApiResponse(data.message);
-          }
-        });
-    } catch (e) {
-      // console.error(`=====> error:${e}`);
-      setErrorMessage({ error: e });
-      // TODO this erro happen if API is not available but business errors like length of password go above. how to handle and display those?
+      try {
+        fetch(`${API_BASE_URL}/api/signup`, requestOptions)
+          .then(response => response.json())
+          .then(data => {
+            if (data.success) {
+              history.push('/home');
+            } else {
+              setApiResponse(data.message);
+            }
+          });
+      } catch (e) {
+        // console.error(`=====> error:${e}`);
+        setErrorMessage({ error: e });
+        // TODO this erro happen if API is not available but business errors like length of password go above. how to handle and display those?
+      }
     }
   }
 
@@ -93,8 +97,8 @@ export default function Signup() {
         <FormGroup controlId="password2">
           <FormLabel>Password2</FormLabel>
           <FormControl
-            value={password2}
-            onChange={e => setPassword2(e.target.value)}
+            value={confirmPassword}
+            onChange={e => setConfirmPassword(e.target.value)}
             type="password"
           />
         </FormGroup>
