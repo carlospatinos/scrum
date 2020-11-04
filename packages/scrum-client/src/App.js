@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Switch, BrowserRouter as Router } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 
-// import TagManager from 'react-gtm-module'
-
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './content/Home';

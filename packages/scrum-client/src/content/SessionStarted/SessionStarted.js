@@ -21,6 +21,7 @@ export default function Signup() {
         .then(response => response.json())
         .then(data => {
           if (data.success) {
+            // eslint-disable-next-line
             console.log('succeed');
           } else {
             setApiResponse(data.message);
