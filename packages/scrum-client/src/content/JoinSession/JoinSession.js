@@ -7,10 +7,14 @@ export default function JoinSession() {
 
   return (
     <div className="NotFound">
-      <h3>Join the session</h3>
+      <h3>Invite members</h3>
+      <p>
+        Please share the following link with the members joining the session or if you are sharing
+        the screen let them see the QR so they can join automatticaly
+      </p>
       <QRCode value={sessionToJoin} />
       <br />
-      {sessionToJoin}
+      <a href={sessionToJoin}>{sessionToJoin}</a>
     </div>
   );
 }
