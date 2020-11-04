@@ -4,7 +4,11 @@ Personal dev tools
 
 [![Build Status](https://travis-ci.com/carlospatinos/scrum.svg?branch=main)](https://travis-ci.com/carlospatinos/scrum)
 
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+
+
 I am just trying to create a client to communicate multiple users.
+
 
 ## Installation
 
