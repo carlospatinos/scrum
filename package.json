@@ -36,11 +36,7 @@
     "lint-staged": "^10.5.1"
   },
   "dependencies": {
-    "isemail": "^3.2.0",
-    "lerna": "^3.22.1",
-    "node-sass": "^5.0.0",
-    "prop-types": "^15.7.2",
-    "zxcvbn": "^4.4.2"
+    "lerna": "^3.22.1"
   },
   "config": {
     "commitizen": {
