@@ -4,21 +4,6 @@ import './Signup.css';
 import { useHistory } from 'react-router-dom';
 import { API_BASE_URL } from '../../constants/apiConstants';
 
-// import TagManager from 'react-gtm-module'
-// if (process.env.NODE_ENV === "development" && !!process.env.REACT_APP_GTM_ID) {
-//   document.title = "signup";
-//   console.log(document.title);
-//   const tagManagerArgs = {
-//     dataLayer: {
-//       page: "signup", //Specific to each page
-//       pagePath: window.location.pathname + window.location.search, //"/signup", //Specific to each page
-//       title: "signup"
-//     },
-//     dataLayerName: "PageDataLayer"
-//   };
-//   TagManager.dataLayer(tagManagerArgs);
-// }
-
 export default function Signup() {
   const history = useHistory();
 

@@ -14,7 +14,7 @@ require('./config/passport')(passport);
 const db = require('./utils/db.js');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+// const usersRouter = require('./routes/users');
 const api = require('./routes/api');
 
 const app = express();
@@ -59,7 +59,7 @@ app.use((req, res, next) => {
 });
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// app.use('/users', usersRouter);
 
 app.use('/api', api);
 
