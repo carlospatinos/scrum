@@ -12,19 +12,12 @@ import Signup from './content/Signup';
 import NotFound from './content/NotFound';
 import Logout from './content/Logout';
 import JoinSession from './content/JoinSession';
+import PlanningConfig from './content/PlanningConfig';
+import SessionStarted from './content/SessionStarted';
 
 import { AppContext } from './lib/contextLib';
 import PATHS from './constants/paths';
 import { TitledRoute, AuthenticatedRoute } from './components/router';
-
-// const [isAuthenticated, userHasAuthenticated] = useState(false);
-// if (process.env.NODE_ENV === "development" && !!process.env.REACT_APP_GTM_ID) {
-//   const tagManagerArgs = {
-//     gtmId: process.env.REACT_APP_GTM_ID,
-//     dataLayerName: "PageDataLayer"
-//   }
-//   TagManager.initialize(tagManagerArgs, { debug: process.env.REACT_APP_GTM_DEBUG === 'true' });
-// }
 
 function App() {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
@@ -42,6 +35,18 @@ function App() {
                 <TitledRoute exact path={PATHS.LOGIN} component={Login} title="Login" />
                 <TitledRoute exact path={PATHS.SIGNUP} component={Signup} title="Signup" />
                 <TitledRoute exact path={PATHS.LOGOUT} component={Logout} title="Logout" />
+                <TitledRoute
+                  exact
+                  path={PATHS.SESSION_STARTED}
+                  component={SessionStarted}
+                  title="Session Started"
+                />
+                <TitledRoute
+                  exact
+                  path={PATHS.PLANNING_CONFIG}
+                  component={PlanningConfig}
+                  title="Planning Config"
+                />
                 <TitledRoute
                   exact
                   path={PATHS.JOIN_SESSION}
