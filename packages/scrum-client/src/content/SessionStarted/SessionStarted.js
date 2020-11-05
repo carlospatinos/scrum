@@ -3,7 +3,7 @@ import { Alert } from 'react-bootstrap';
 import './SessionStarted.css';
 import { API_BASE_URL } from '../../constants/apiConstants';
 
-export default function Signup() {
+export default function SessionStarted() {
   const [errorMessage, setErrorMessage] = useState('');
   const [apiResponse, setApiResponse] = useState('');
 

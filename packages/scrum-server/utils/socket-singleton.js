@@ -1,13 +1,31 @@
-const socket = require('socket.io');
+const socketIo = require('socket.io');
 
-const SocketSingleton = (function () {
-  this.io = null;
-  this.configure = function (server) {
-    console.log('configuring socket.io');
-    this.io = socket(server);
-  };
+class SocketService {
+  constructor(server) {
+    this.io = socketIo(server);
+    this.io.on('connect', socket => {
+      console.log('user connected to server');
 
-  return this;
-})();
+      socket.on('disconnect', () => {
+        console.log('user disconnected to server')
+      });
+      
+      socket.on('hi', () => {
+        console.log('hi to server');
+        this.io.emit('message', "hi return from server to client");
+      });
+    });
+    
+  }
 
-module.exports = SocketSingleton;
+  getInstance(){
+    return this;
+  }
+
+  emiter(event, body) {
+    if (body)
+      this.io.emit(event, body);
+  }
+}
+
+module.exports = SocketService;

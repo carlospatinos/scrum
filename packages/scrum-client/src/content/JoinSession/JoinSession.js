@@ -1,9 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import QRCode from 'qrcode.react';
 import { API_BASE_URL } from '../../constants/apiConstants';
 
 export default function JoinSession() {
-  const sessionToJoin = `${API_BASE_URL}/session123`;
+  const [sessionToJoin, setSessionToJoin] = useState('');
+  function generateUUID() {
+    const requestOptions = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    };
+
+    try {
+      fetch(`${API_BASE_URL}/api/uuid`, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          // TODO this is different from dev and prod
+          setSessionToJoin(`http://localhost:4000/session/${data.uuid}`);
+        });
+    } catch (e) {
+      // console.error(e);
+    }
+  }
+
+  useEffect(() => {
+    generateUUID();
+  }, []);
 
   return (
     <div className="NotFound">
