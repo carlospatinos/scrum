@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import QRCode from 'qrcode.react';
+import { Container } from 'react-bootstrap';
 import { API_BASE_URL } from '../../constants/apiConstants';
 
 export default function JoinSession() {
@@ -27,7 +28,7 @@ export default function JoinSession() {
   }, []);
 
   return (
-    <div className="NotFound">
+    <Container className="NotFound">
       <h3>Invite members</h3>
       <p>
         Please share the following link with the members joining the session or if you are sharing
@@ -36,6 +37,6 @@ export default function JoinSession() {
       <QRCode value={sessionToJoin} />
       <br />
       <a href={sessionToJoin}>{sessionToJoin}</a>
-    </div>
+    </Container>
   );
 }

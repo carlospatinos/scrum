@@ -27,7 +27,6 @@ export default function Header() {
                 <Nav.Link href={PATHS.SIGNUP}>Signup</Nav.Link>
                 <Nav.Link href={PATHS.PLANNING_CONFIG}>Planning Config</Nav.Link>
                 <Nav.Link href={PATHS.JOIN_SESSION}>Join Session</Nav.Link>
-                <Nav.Link href={PATHS.SESSION_PARTICIPATE}>Session participate</Nav.Link>
                 <Nav.Link href={PATHS.SESSION_STARTED}>Session Started</Nav.Link>
               </Nav>
             )}

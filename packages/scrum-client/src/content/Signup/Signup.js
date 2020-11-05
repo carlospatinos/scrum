@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
+import { Alert, Button, FormGroup, FormControl, FormLabel, Container, Form } from 'react-bootstrap';
 import './Signup.css';
 import { useHistory } from 'react-router-dom';
 import { API_BASE_URL } from '../../constants/apiConstants';
@@ -66,8 +66,8 @@ export default function Signup() {
   const isValidForm = validateForm();
 
   return (
-    <div className="Signup">
-      <form onSubmit={handleSubmit}>
+    <Container className="Signup">
+      <Form onSubmit={handleSubmit}>
         <FormGroup controlId="firstName">
           <FormLabel>First Name</FormLabel>
           <FormControl value={firstName} onChange={e => setFirstName(e.target.value)} />
@@ -115,7 +115,7 @@ export default function Signup() {
         <p className="forgot-password text-right">
           Already registered <a href="/login">sign in?</a>
         </p>
-      </form>
-    </div>
+      </Form>
+    </Container>
   );
 }

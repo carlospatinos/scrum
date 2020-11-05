@@ -1,13 +1,14 @@
 import React from 'react';
+import { Container } from 'react-bootstrap';
 import JoinForm from '../../components/JoinForm';
 
 import './NewLogin.scss';
 
 function NewLogin() {
   return (
-    <div className="main-container2 d-table m-auto">
+    <Container className="main-container2 d-table m-auto">
       <JoinForm />
-    </div>
+    </Container>
   );
 }
 

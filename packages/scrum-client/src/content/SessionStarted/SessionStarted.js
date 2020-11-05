@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert } from 'react-bootstrap';
+import { Alert, Container, Form } from 'react-bootstrap';
 import './SessionStarted.css';
 import { API_BASE_URL } from '../../constants/apiConstants';
 
@@ -34,12 +34,12 @@ export default function SessionStarted() {
     }
   }
   return (
-    <div className="Signup">
-      <form onSubmit={handleSubmit}>
+    <Container>
+      <Form onSubmit={handleSubmit}>
         <p>Users online</p>
         {apiResponse && <Alert variant="danger">{apiResponse}</Alert>}
         {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-      </form>
-    </div>
+      </Form>
+    </Container>
   );
 }
