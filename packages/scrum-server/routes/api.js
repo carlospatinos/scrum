@@ -1,12 +1,13 @@
 /* eslint-disable */
 
 const express = require('express');
-
 const router = express.Router();
 
 const { auth } = require('../middleware/auth.js');
 const User = require('../models/user.js');
 const UserType = require('../models/userType');
+
+const uuid = require('uuid');
 
 router.get('/', (req, res, next) => {
   res.json({ message: 'API is working properly' });
@@ -17,6 +18,10 @@ router.post('/', (req, res, next) => {
   const { email } = req.body;
   console.log(email);
   res.json({ message: 'API is working properly' });
+});
+
+router.get('/uuid', (req, res, next) => {
+  res.json({ uuid: uuid.v1() });
 });
 
 router.post('/signup', function (req, res, next) {

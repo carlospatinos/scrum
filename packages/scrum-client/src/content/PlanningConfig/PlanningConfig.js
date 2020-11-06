@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
+import { Alert, Button, FormGroup, FormControl, FormLabel, Container, Form } from 'react-bootstrap';
 import './PlanningConfig.css';
 import { API_BASE_URL } from '../../constants/apiConstants';
 
@@ -46,8 +46,8 @@ export default function Signup() {
   const isValidForm = validateForm();
 
   return (
-    <div className="Signup">
-      <form onSubmit={handleSubmit}>
+    <Container className="Signup">
+      <Form onSubmit={handleSubmit}>
         <FormGroup controlId="cardDeck">
           <FormLabel>Card Deck</FormLabel>
           <FormControl value={cardDeck} onChange={e => setCardDeck(e.target.value)} />
@@ -67,7 +67,7 @@ export default function Signup() {
         >
           Start Session
         </Button>
-      </form>
-    </div>
+      </Form>
+    </Container>
   );
 }

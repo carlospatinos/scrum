@@ -26,7 +26,7 @@ export default function Header() {
                 <Nav.Link href={PATHS.NEW_LOGIN}>Login2</Nav.Link>
                 <Nav.Link href={PATHS.SIGNUP}>Signup</Nav.Link>
                 <Nav.Link href={PATHS.PLANNING_CONFIG}>Planning Config</Nav.Link>
-                <Nav.Link href={PATHS.JOIN_SESSION}>Start Session</Nav.Link>
+                <Nav.Link href={PATHS.JOIN_SESSION}>Join Session</Nav.Link>
                 <Nav.Link href={PATHS.SESSION_STARTED}>Session Started</Nav.Link>
               </Nav>
             )}

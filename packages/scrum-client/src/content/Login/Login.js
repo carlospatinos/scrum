@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Alert, Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
+import { Alert, Button, Container, Form, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
 import { useAppContext } from '../../lib/contextLib';
@@ -47,8 +47,8 @@ export default function Login() {
   const isValidForm = validateForm();
 
   return (
-    <div className="Login">
-      <form onSubmit={handleSubmit}>
+    <Container className="Login">
+      <Form onSubmit={handleSubmit}>
         <h3>Sign In</h3>
         <FormGroup controlId="email">
           <FormLabel>Email</FormLabel>
@@ -80,7 +80,7 @@ export default function Login() {
         <p className="forgot-password text-right">
           Forgot <a href="/forgot">password?</a>
         </p>
-      </form>
-    </div>
+      </Form>
+    </Container>
   );
 }

@@ -13,10 +13,16 @@ import JoinSession from './content/JoinSession';
 import PlanningConfig from './content/PlanningConfig';
 import SessionStarted from './content/SessionStarted';
 import NewLogin from './content/NewLogin';
+import ParticipateSession from './content/ParticipateSession';
 
 import { AppContext } from './lib/contextLib';
 import PATHS from './constants/paths';
 import { TitledRoute, AuthenticatedRoute } from './components/router';
+
+// function BlogPost() {
+//   const { id } = useParams();
+//   return <div>Now showing post {id}</div>;
+// }
 
 function App() {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
@@ -30,7 +36,7 @@ function App() {
             <Router>
               <Switch>
                 <TitledRoute exact path={PATHS.DEFAULT} component={Login} title="Login" />
-                <TitledRoute exact path={PATHS.NEW_LOGIN} component={NewLogin} title="Login2" />
+                <TitledRoute exact path={PATHS.NEW_LOGIN} component={NewLogin} title="Signup 2" />
                 <AuthenticatedRoute exact path={PATHS.HOME} component={Home} title="Home" />
                 <TitledRoute exact path={PATHS.LOGIN} component={Login} title="Login" />
                 <TitledRoute exact path={PATHS.SIGNUP} component={Signup} title="Signup" />
@@ -53,6 +59,9 @@ function App() {
                   component={JoinSession}
                   title="JoinSession"
                 />
+                <TitledRoute path={PATHS.SESSION_PARTICIPATE} title="ParticipateSession">
+                  <ParticipateSession />
+                </TitledRoute>
                 <NotFound />
               </Switch>
             </Router>

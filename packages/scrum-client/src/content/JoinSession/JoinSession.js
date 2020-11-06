@@ -1,12 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import QRCode from 'qrcode.react';
+import { Container } from 'react-bootstrap';
 import { API_BASE_URL } from '../../constants/apiConstants';
 
 export default function JoinSession() {
-  const sessionToJoin = `${API_BASE_URL}/session123`;
+  const [sessionToJoin, setSessionToJoin] = useState('');
+  function generateUUID() {
+    const requestOptions = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    };
+
+    try {
+      fetch(`${API_BASE_URL}/api/uuid`, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          // TODO this is different from dev and prod
+          setSessionToJoin(`http://localhost:4000/session/${data.uuid}`);
+        });
+    } catch (e) {
+      // console.error(e);
+    }
+  }
+
+  useEffect(() => {
+    generateUUID();
+  }, []);
 
   return (
-    <div className="NotFound">
+    <Container className="NotFound">
       <h3>Invite members</h3>
       <p>
         Please share the following link with the members joining the session or if you are sharing
@@ -15,6 +37,6 @@ export default function JoinSession() {
       <QRCode value={sessionToJoin} />
       <br />
       <a href={sessionToJoin}>{sessionToJoin}</a>
-    </div>
+    </Container>
   );
 }

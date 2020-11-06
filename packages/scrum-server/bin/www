@@ -8,7 +8,6 @@ var app = require('../app');
 var debug = require('debug')('scrum:server');
 var http = require('http');
 var pjson = require('../package.json');
-//var SocketSingleton = require('../utils/socket-singleton');
 
 
 /**
@@ -23,89 +22,11 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-const io = require('socket.io')(server);
-//console.log(io);
 
-var users = [];
-
-io.on('connect', socket => {
-  console.log("user connected");
-
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
-
-  socket.on('newOnlineUser', function (data){
-    console.log("=======> user online: " + data);
-    socket.emit('onlineUser', { user: data });
-    socket.broadcast.emit('onlineUser', { user: data });
-    // if (users.indexOf(data) == -1) {
-    //   console.log('new user added ' + data);
-    //   users.push(data);
-    //   //socket.emit('onlineUser', { user: data });
-    // } else {
-    //   //socket.emit('userExists', data + ' username is taken! Try some other username.');
-      
-    // }
-  });
-
-  socket.on('setUsername', function (data) {
-    console.log("user: " + data);
-    if (users.indexOf(data) == -1) {
-      console.log('new user added ' + data);
-      users.push(data);
-      socket.emit('userSet', { username: data });
-    } else {
-      socket.emit('userExists', data + ' username is taken! Try some other username.');
-    }
-  });
-
-  socket.on('newMsg', function (data) {
-    console.log("newMsg: " + JSON.stringify(data));
-    socket.emit('newMsg', data);
-  });
-
-
-  // either with send()
-  socket.send('Hello!');
-
-  // or with emit() and custom event names
-  socket.emit('greetings', 'Hey!', { 'ms': 'jane' }, Buffer.from([4, 3, 3, 1]));
-
-  // handle the event sent with socket.send()
-  socket.on('message', (data) => {
-    console.log(data);
-  });
-
-  socket.on('disconnect', () => {
-    console.log('=======>  user disconnected');
-  });
-
-  // handle the event sent with socket.emit()
-  socket.on('salutations', (elem1, elem2, elem3) => {
-    console.log(elem1, elem2, elem3);
-  });
-
-
-});
-
-// SocketSingleton.configure(server); 
-
-// SocketSingleton.io.on('connection', (socket) => {
-//   console.log('a user connected');
-//   socket.on('disconnect', () => {
-//     console.log('user disconnected');
-//   });
-
-//   socket.on('chat message', (msg) => {
-//     //io.emit('chat message', msg);
-//     let recipientSocketIds = userSocketIdMap.get(recipientUserName);
-//     for (let socketId of recipientSocketIds) {
-//       io.to(socketID).emit('chat message', messageContent);
-//     }
-//     console.log('message: ' + msg);
-//   });
-// });
+var SocketService = require('../utils/socket-singleton');
+app.set("socketService", new SocketService(server));
+// app.get("socketService").emiter('message', 'hi from server to client');
+//app.get("socketService").getInstance().io.emmit('message', 'hi from server to client');
 
 /**
  * Listen on provided port, on all network interfaces.
