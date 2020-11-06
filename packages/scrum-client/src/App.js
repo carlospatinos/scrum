@@ -59,9 +59,11 @@ function App() {
                   component={JoinSession}
                   title="JoinSession"
                 />
-                <TitledRoute path={PATHS.SESSION_PARTICIPATE} title="ParticipateSession">
-                  <ParticipateSession />
-                </TitledRoute>
+                <AuthenticatedRoute
+                  path={PATHS.SESSION_PARTICIPATE}
+                  component={ParticipateSession}
+                  title="ParticipateSession"
+                />
                 <NotFound />
               </Switch>
             </Router>

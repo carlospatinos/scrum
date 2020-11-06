@@ -1,23 +1,32 @@
 import React, { useState } from 'react';
-import { Alert, Button, Container, Form, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
-
+import {
+  Alert,
+  Button,
+  Container,
+  Form,
+  FormGroup,
+  FormControl,
+  FormLabel,
+  Col,
+} from 'react-bootstrap';
+import { useHistory, useLocation, Link } from 'react-router-dom';
+import PATHS from '../../constants/paths';
 import { useAppContext } from '../../lib/contextLib';
 
 import { API_BASE_URL, ACCESS_TOKEN_NAME } from '../../constants/apiConstants';
 import './Login.css';
 
+const validateForm = (email, password) => email.length > 0 && password.length > 0;
+
 export default function Login() {
   const history = useHistory();
+  const location = useLocation();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [apiResponse, setApiResponse] = useState('');
   const { userHasAuthenticated } = useAppContext();
-
-  function validateForm() {
-    return email.length > 0 && password.length > 0;
-  }
+  const redirectedFrom = location.state?.redirectedFrom?.pathname || PATHS.HOME;
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -33,9 +42,11 @@ export default function Login() {
         .then(response => response.json())
         .then(data => {
           if (data.isAuth) {
-            localStorage.setItem(ACCESS_TOKEN_NAME, data.token);
+            localStorage.setItem(ACCESS_TOKEN_NAME, data.ACCESS_TOKEN);
             userHasAuthenticated(true);
-            history.push('/home');
+            history.push({
+              pathname: redirectedFrom,
+            });
           } else {
             setApiResponse(data.message);
           }
@@ -44,12 +55,25 @@ export default function Login() {
       // console.error(e);
     }
   }
-  const isValidForm = validateForm();
+  const isValidForm = validateForm(email, password);
 
   return (
     <Container className="Login">
       <Form onSubmit={handleSubmit}>
         <h3>Sign In</h3>
+        <Form.Row>
+          <Col className="text-right">
+            Do not have an account?
+            <Link
+              to={{
+                pathname: PATHS.SIGNUP,
+                state: { redirectedFrom: { pathname: redirectedFrom } },
+              }}
+            >
+              Sing Up.
+            </Link>
+          </Col>
+        </Form.Row>
         <FormGroup controlId="email">
           <FormLabel>Email</FormLabel>
           <FormControl
@@ -78,7 +102,7 @@ export default function Login() {
         </Button>
 
         <p className="forgot-password text-right">
-          Forgot <a href="/forgot">password?</a>
+          Forgot <a href={PATHS.FORGOT}>password?</a>
         </p>
       </Form>
     </Container>

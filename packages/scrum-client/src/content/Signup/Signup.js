@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Alert, Button, FormGroup, FormControl, FormLabel, Container, Form } from 'react-bootstrap';
 import './Signup.css';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation, Link } from 'react-router-dom';
 import { API_BASE_URL } from '../../constants/apiConstants';
+import PATHS from '../../constants/paths';
 
 export default function Signup() {
   const history = useHistory();
-
+  const location = useLocation();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -17,6 +18,7 @@ export default function Signup() {
 
   const [apiResponse, setApiResponse] = useState('');
 
+  const redirectedFrom = location.state?.redirectedFrom?.pathname || PATHS.HOME;
   function validateForm() {
     return (
       firstName.length > 0 &&
@@ -50,7 +52,7 @@ export default function Signup() {
           .then(response => response.json())
           .then(data => {
             if (data.success) {
-              history.push('/home');
+              history.push(redirectedFrom);
             } else {
               setApiResponse(data.message);
             }
@@ -113,7 +115,15 @@ export default function Signup() {
           Sign up
         </Button>
         <p className="forgot-password text-right">
-          Already registered <a href="/login">sign in?</a>
+          Already registered
+          <Link
+            to={{
+              pathname: PATHS.LOGIN,
+              state: { redirectedFrom: { pathname: redirectedFrom } },
+            }}
+          >
+            Sign In?
+          </Link>
         </p>
       </Form>
     </Container>

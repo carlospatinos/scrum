@@ -1,7 +1,13 @@
+import { useEffect } from 'react';
 import { Redirect, withRouter } from 'react-router-dom';
 import { useAppContext } from '../../lib/contextLib';
 import { API_BASE_URL } from '../../constants/apiConstants';
 import PATHS from '../../constants/paths';
+
+const requestOptions = {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+};
 
 function Logout(props) {
   const { userHasAuthenticated } = useAppContext();
@@ -10,13 +16,10 @@ function Logout(props) {
   // const history = useHistory();
 
   /* eslint-disable */
-  function handleLogout() {
-    userHasAuthenticated(false);
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-    };
 
+  const handleLogout= ()  => {
+    userHasAuthenticated(false);
+    localStorage.clear();
     try {
       fetch(`${API_BASE_URL}/api/logout`, requestOptions)
         .then(response => response.json())
@@ -29,7 +32,10 @@ function Logout(props) {
     }
   }
 
-  handleLogout();
+  useEffect(() => {
+    handleLogout();
+  }, []);
+
   return (
     <Redirect
       to={{
