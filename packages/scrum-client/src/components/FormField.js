@@ -1,4 +1,5 @@
 import React, { useState, Fragment } from 'react';
+import { FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 const FormField = props => {
@@ -45,11 +46,12 @@ const FormField = props => {
 
   return (
     <>
-      <div className="form-group px-3 pb-2">
+      <FormGroup className="form-group px-3 pb-2">
         <div className="d-flex flex-row justify-content-between align-items-center">
-          <label htmlFor={fieldId} className="control-label">
+          <FormLabel htmlFor={fieldId} className="control-label">
             {label}
-          </label>
+          </FormLabel>
+
           {/** Render the first error if there are any errors * */}
           {hasErrors && (
             <div className="error form-hint font-weight-bold text-right m-0 mb-2">{errors[0]}</div>
@@ -57,7 +59,7 @@ const FormField = props => {
         </div>
         {/** Render the children nodes passed to component * */}
         {children}
-        <input
+        <FormControl
           type={type}
           className={controlClass}
           id={fieldId}
@@ -65,7 +67,7 @@ const FormField = props => {
           value={value}
           onChange={hasChanged}
         />
-      </div>
+      </FormGroup>
     </>
   );
 };
