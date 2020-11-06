@@ -1,5 +1,6 @@
 const PATHS = {
   DEFAULT: '/',
+  FORGOT: '/forgot',
   HOME: '/home',
   LOGIN: '/login',
   NEW_LOGIN: '/newlogin',

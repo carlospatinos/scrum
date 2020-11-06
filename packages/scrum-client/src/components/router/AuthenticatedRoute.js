@@ -2,10 +2,10 @@ import React from 'react';
 import { Redirect, withRouter } from 'react-router-dom';
 import TitledRoute from './TitledRoute';
 import PATHS from '../../constants/paths';
-import { useAppContext } from '../../lib/contextLib';
+import { ACCESS_TOKEN_NAME } from '../../constants/apiConstants';
 
 const AuthenticatedRoute = ({ authUserTypes, location, ...rest }) => {
-  const { isAuthenticated } = useAppContext();
+  const isAuthenticated = !!localStorage.getItem(ACCESS_TOKEN_NAME);
   return isAuthenticated ? (
     <TitledRoute {...rest} />
   ) : (
