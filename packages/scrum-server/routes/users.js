@@ -10,10 +10,6 @@ const User = require('../models/user.js');
 const { ensureAuthenticated } = require('../config/auth.js');
 
 /* GET users listing. */
-router.get('/', (req, res, next) => {
-  res.send('respond with a resource');
-});
-
 router.post('/register', (req, res) => {
   const { name, email, password, password2, type } = req.body;
   console.log(` Name ${name} email :${email}`);

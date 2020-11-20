@@ -35,9 +35,6 @@ i18n.configure({
 const CLIENT_PATH = '/../scrum-client/build/';
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
 app.use(cors());
 app.use(i18n.init);
 app.use(logger('dev'));
