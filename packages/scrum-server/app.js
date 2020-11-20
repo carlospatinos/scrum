@@ -18,6 +18,19 @@ const indexRouter = require('./routes/index');
 const api = require('./routes/api');
 
 const app = express();
+const i18n = require('i18n');
+
+i18n.configure({
+  locales: ['es', 'en'],
+  cookie: 'locale',
+  directory: __dirname + "/locales",
+  defaultLocale: 'en',
+  queryParameter: 'lang',
+  api: {
+    '__': 'translate',
+    '__n': 'translateN'
+  },
+});
 
 const CLIENT_PATH = '/../scrum-client/build/';
 
@@ -26,6 +39,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(cors());
+app.use(i18n.init);
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

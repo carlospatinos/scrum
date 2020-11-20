@@ -2,8 +2,8 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
-
 const router = express.Router();
+const i18n = require('i18n');
 
 const User = require('../models/user.js');
 
@@ -18,7 +18,7 @@ router.post('/register', (req, res) => {
   const { name, email, password, password2, type } = req.body;
   console.log(` Name ${name} email :${email}`);
   if (!name || !email || !password || !password2 || !type) {
-    req.flash('error_msg', 'Please fill in all fields!');
+    req.flash('error_msg', i18n.__('apiFillTheFields'));
   }
   // check if match
   if (password !== password2) {
@@ -27,7 +27,7 @@ router.post('/register', (req, res) => {
 
   // check if password is more than 6 characters
   if (password.length < 6) {
-    req.flash('error_msg', 'Password atleast 6 characters');
+    req.flash('error_msg', i18n.__('apiPasswordMinLength'));
   }
 
   const messagesToSend = req.flash('error_msg');
@@ -49,7 +49,7 @@ router.post('/register', (req, res) => {
     User.findOne({ email }).exec((err, user) => {
       if (user) {
         console.log('USER FOUND');
-        req.flash('error_msg', 'Email already registered');
+        req.flash('error_msg', i18n.__('apiEmailAlreadyRegistered'));
         res.render('register', {
           message: req.flash('error_msg'),
           name,
@@ -79,7 +79,7 @@ router.post('/register', (req, res) => {
               .save()
               .then(value => {
                 console.log(value);
-                req.flash('success_msg', 'You have now registered!');
+                req.flash('success_msg', i18n.__('apiSuccessRegister'));
                 res.redirect('/expLogin');
               })
               .catch(value => console.log(value));
@@ -101,7 +101,7 @@ router.post('/expLogin', (req, res, next) => {
 
 router.get('/logout', (req, res) => {
   req.logout();
-  req.flash('success_msg', 'Now logged out');
+  req.flash('success_msg', i18n.__('apiNowLoggedOut'));
   res.redirect('/');
 });
 
