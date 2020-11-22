@@ -8,9 +8,4 @@ router.get('/appRunning', (req, res, next) =>
   })
 );
 
-/* GET home page. */
-router.get('/static', (req, res, next) => {
-  res.render('index', { title: 'Scrum' });
-});
-
 module.exports = router;

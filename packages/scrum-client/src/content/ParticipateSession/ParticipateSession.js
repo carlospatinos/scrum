@@ -16,9 +16,10 @@ export default function ParticipateSession() {
       // socket.to('12345').emit('hi', '1- sending first message');
 
       // and then later
-      console.log(`client user connected ${id}`);
+      // console.log(`client user connected ${id}`);
+      /* eslint-disable */
       socket.on('message', function (data) {
-        console.log(`new message: ${data}`);
+        // console.log(`new message: ${data}`);
         setResponse(data);
       });
     });
