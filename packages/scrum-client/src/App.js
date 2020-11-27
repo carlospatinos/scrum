@@ -16,14 +16,9 @@ import NewLogin from './content/NewLogin';
 import ParticipateSession from './content/ParticipateSession';
 import VotingCards from './content/VotingCards';
 
-import { AppContext } from './lib/contextLib';
 import PATHS from './constants/paths';
+import { AppContext } from './lib/contextLib';
 import { TitledRoute, AuthenticatedRoute } from './components/router';
-
-// function BlogPost() {
-//   const { id } = useParams();
-//   return <div>Now showing post {id}</div>;
-// }
 
 function App() {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
