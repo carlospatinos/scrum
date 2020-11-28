@@ -28,6 +28,7 @@ export default function Header() {
                 <Nav.Link href={PATHS.PLANNING_CONFIG}>Planning Config</Nav.Link>
                 <Nav.Link href={PATHS.JOIN_SESSION}>Join Session</Nav.Link>
                 <Nav.Link href={PATHS.SESSION_STARTED}>Session Started</Nav.Link>
+                <Nav.Link href={PATHS.VOTING_CARDS}>Voting Cards</Nav.Link>
               </Nav>
             )}
           </Navbar.Collapse>
