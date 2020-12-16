@@ -1,4 +1,5 @@
 import io from 'socket.io-client';
+import { API_BASE_URL } from '../constants/apiConstants';
 
 let socket;
 /**
@@ -8,9 +9,9 @@ let socket;
  * @param {Object} data.user The user object.
  */
 export const initiateSocket = data => {
-  console.log('client--initiateSocket', data);
+  // console.log('client--initiateSocket', API_BASE_URL);
   // TODO - get io info from configuration.
-  socket = io('http://localhost:3000');
+  socket = io(`${API_BASE_URL}`);
   socket.emit('join', data);
 };
 export const disconnectSocket = () => {

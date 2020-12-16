@@ -27,7 +27,7 @@ export default function ParticipateSession() {
       initiateSocket({ room: { id: roomId }, user: { name: email, email } });
     }
     subscribeToRoom((err, data) => {
-      // console.log('client--subscribeToRoom-cb', err, data);
+      console.log('client--subscribeToRoom-cb', err, data);
       if (err) return;
       setRoom({ ...data.room });
       setResponse(data.message);
