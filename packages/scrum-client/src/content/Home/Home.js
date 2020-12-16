@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Row, Col, Container, CardDeck, Card } from 'react-bootstrap';
-import ClientComponent from '../../ClientComponent';
 
 // import TagManager from 'react-gtm-module'
 
@@ -19,7 +18,6 @@ import ClientComponent from '../../ClientComponent';
 // }
 
 const Home = () => {
-  const [loadClient, setLoadClient] = useState(true);
   return (
     <Container>
       <Row>
@@ -71,14 +69,7 @@ const Home = () => {
           md={{ size: 7, offset: 1 }}
           tag="section"
           className="py-5 mb-5 py-md-0 mb-md-0"
-        >
-          {/* LOAD OR UNLOAD THE CLIENT */}
-          <button type="button" onClick={() => setLoadClient(prevState => !prevState)}>
-            STOP CLIENT
-          </button>
-          {/* SOCKET IO CLIENT */}
-          {loadClient ? <ClientComponent /> : null}
-        </Col>
+        />
       </Row>
     </Container>
   );
