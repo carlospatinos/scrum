@@ -24,10 +24,10 @@ function App() {
   const [isAuthenticated, userHasAuthenticated] = useState(false);
 
   return (
-    <>
+    <div className="d-flex flex-column min-vh-100">
       <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
         <Header />
-        <main>
+        <main className="flex-fill">
           <Container className="px-5">
             <Router>
               <Switch>
@@ -74,7 +74,7 @@ function App() {
         </main>
       </AppContext.Provider>
       <Footer />
-    </>
+    </div>
   );
 }
 

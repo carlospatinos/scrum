@@ -1,4 +1,17 @@
 @media all and (min-width: 480px) {
+    .center-container {
+        height: 100%;
+        padding: 0;
+        margin: 0;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     .f1_container {
         position: relative;
         margin: 30px;
