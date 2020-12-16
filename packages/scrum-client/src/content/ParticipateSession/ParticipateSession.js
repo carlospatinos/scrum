@@ -1,38 +1,49 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
-import io from 'socket.io-client';
+import { useParams, useLocation } from 'react-router-dom';
+import TeamList from '../../components/TeamList';
+import {
+  initiateSocket,
+  disconnectSocket,
+  subscribeToRoom,
+  sendMessage,
+} from '../../hooks/SocketEvents';
 
 export default function ParticipateSession() {
-  const { id } = useParams();
+  const { id: roomId } = useParams();
+  const location = useLocation();
   const [response, setResponse] = useState('');
+  const params = new URLSearchParams(location.search);
+  const email = params.get('email');
+  const [room, setRoom] = useState({
+    id: roomId,
+    title: 'Team',
+    subtitle: 'Lluvia de ideas',
+    users: [],
+  });
 
   useEffect(() => {
-    const socket = io('ws://localhost:3000');
-    socket.on('connect', () => {
-      socket.emit('createGroup', { uniqueGroupId: id, email: 'personal@email.com' });
-      socket.emit('hi', { email: 'personal@email.com', message: '1- sending first message' });
-      // socket.join('12345');
-      // socket.to('12345').emit('hi', '1- sending first message');
-
-      // and then later
-      // console.log(`client user connected ${id}`);
-      /* eslint-disable */
-      socket.on('message', function (data) {
-        // console.log(`new message: ${data}`);
-        setResponse(data);
-      });
+    if (roomId) {
+      initiateSocket({ room: { id: roomId }, user: { name: email, email } });
+    }
+    subscribeToRoom((err, data) => {
+      // console.log('client--subscribeToRoom-cb', err, data);
+      if (err) return;
+      setRoom({ ...data.room });
+      setResponse(data.message);
     });
+    sendMessage({ id: roomId }, 'Welcome to room');
 
-    // socket.on('disconnect', () => {
-    //   console.log('client user disconnected');
-    // });
-  }, [id]);
+    return () => {
+      disconnectSocket();
+    };
+  }, [email, roomId]);
 
   return (
     <Container className="NotFound">
       Message from server: {response}
-      <br /> on group {id}
+      <br /> on group {roomId}
+      <TeamList title={room.title} subtitle={room.subtitle} users={room.users} />
     </Container>
   );
 }

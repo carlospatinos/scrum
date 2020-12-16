@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Row, Col, Container, CardDeck, Card } from 'react-bootstrap';
-import ClientComponent from '../../ClientComponent';
 
 // import TagManager from 'react-gtm-module'
 
@@ -77,7 +76,7 @@ const Home = () => {
             STOP CLIENT
           </button>
           {/* SOCKET IO CLIENT */}
-          {loadClient ? <ClientComponent /> : null}
+          {loadClient ? <span>client</span> : null}
         </Col>
       </Row>
     </Container>
