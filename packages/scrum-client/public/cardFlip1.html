@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .flip-box {
+            background-color: transparent;
+            width: 300px;
+            height: 200px;
+            perspective: 1000px;
+        }
+
+        .flip-box-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-box:hover .flip-box-inner {
+            transform: rotateY(180deg);
+        }
+
+        .rotate {
+            transform: rotateY(180deg);
+        }
+
+        .flip-box-front,
+        .flip-box-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+        }
+
+        .flip-box-front {
+            color: black;
+        }
+
+        .flip-box-back {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <h1>Card flip</h1>
+
+    <div class="flip-box" id="flip-box">
+        <div class="flip-box-inner" id="flip-box-inner">
+            <div class="flip-box-front">
+                <img src="plain-card.svg" alt="Card">
+            </div>
+            <div class="flip-box-back">
+                <img src="plain-card.svg" alt="Card">
+            </div>
+        </div>
+    </div>
+    <br /><br /><br /><br /><br /><br />
+    <div id="header">Click me to toggle class</div>
+    <script>
+        document.querySelector('#header').addEventListener('click', function (e) {
+            document.querySelector('#flip-box').classList.toggle('rotate');
+            document.querySelector('#flip-box-inner').classList.toggle('rotate');
+        })
+    </script>
+</body>
+
+</html>

@@ -10,6 +10,7 @@ const PATHS = {
   PLANNING_CONFIG: '/planningconfig',
   SESSION_STARTED: '/sessionstarted',
   SESSION_PARTICIPATE: '/session/:id',
+  VOTING_CARDS: '/votingcards',
 };
 
 export default PATHS;
