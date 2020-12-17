@@ -12,9 +12,6 @@ const PlanningSessionSchema = require('../models/planningSession');
 const uuid = require('uuid');
 
 router.get('/', (req, res, next) => {
-  const used = process.memoryUsage().heapUsed / 1024 / 1024;
-  var current = new Date();
-  console.log(`${current} -> The script uses approximately ${Math.round(used * 100) / 100} MB`);
   res.json({ message: i18n.__('apiWorking') });
 });
 
@@ -102,8 +99,21 @@ router.get('/logout', auth, (req, res) => {
 
 router.post('/planningsession', function (req, res, next) {
   const newSession = new PlanningSessionSchema(req.body);
+  console.log(newSession);
   console.log(req.body);
-  res.json({ uuid: uuid.v1() });
+
+  newSession.save((err, docSession) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({ success: false });
+    }
+    res.status(200).json({
+      success: true,
+      uuid: uuid.v1(),
+      session: docSession
+    });
+  });
+
 });
 
 module.exports = router;

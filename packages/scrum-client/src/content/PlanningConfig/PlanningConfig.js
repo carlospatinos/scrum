@@ -10,14 +10,20 @@ import {
   FormCheck,
 } from 'react-bootstrap';
 import './PlanningConfig.css';
+import { useHistory, useLocation } from 'react-router-dom';
+import PATHS from '../../constants/paths';
+
 import { API_BASE_URL } from '../../constants/apiConstants';
 
-export default function Signup() {
+export default function PlanningConfig() {
+  const history = useHistory();
+  const location = useLocation();
   const [title, setTitle] = useState('');
-  const [cardDeck, setCardDeck] = useState(''); // value={cardDeck} onChange={e => setCardDeck(e.target.value)}
+  const [cardDeck, setCardDeck] = useState('');
   const [secure, setSecure] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [apiResponse, setApiResponse] = useState('');
+  const redirectedFrom = location.state?.redirectedFrom?.pathname || PATHS.JOIN_SESSION;
 
   const cardDeckOptions = [
     { key: 0, name: '', values: '-- select one --' },
@@ -36,7 +42,7 @@ export default function Signup() {
   }, []);
 
   function validateForm() {
-    return title.length > 0;
+    return title.length > 0 && cardDeck.length > 0;
   }
 
   function handleSubmit(event) {
@@ -58,7 +64,10 @@ export default function Signup() {
         .then(data => {
           if (data.success) {
             // eslint-disable-next-line
-            console.log('succeed');
+            console.log(data);
+            history.push({
+              pathname: redirectedFrom,
+            });
           } else {
             setApiResponse(data.message);
           }
@@ -84,7 +93,7 @@ export default function Signup() {
           <FormControl as="select" name="cardDeck" onChange={e => setCardDeck(e.target.value)}>
             {cardDeckOptions.map(({ key, name, values }) => (
               <option value={name} key={key}>
-                {name} - {values}
+                {values}
               </option>
             ))}
           </FormControl>
