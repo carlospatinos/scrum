@@ -25,8 +25,6 @@ var server = http.createServer(app);
 
 var SocketService = require('../utils/socket-singleton');
 app.set("socketService", new SocketService(server));
-// app.get("socketService").emiter('message', 'hi from server to client');
-//app.get("socketService").getInstance().io.emmit('message', 'hi from server to client');
 
 /**
  * Listen on provided port, on all network interfaces.

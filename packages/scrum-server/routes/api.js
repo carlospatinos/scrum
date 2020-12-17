@@ -7,6 +7,7 @@ const i18n = require('i18n');
 const { auth } = require('../middleware/auth.js');
 const User = require('../models/user.js');
 const UserType = require('../models/userType');
+const PlanningSessionSchema = require('../models/planningSession');
 
 const uuid = require('uuid');
 
@@ -15,9 +16,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-  console.log(req.body);
   const { email } = req.body;
-  console.log(email);
   res.json({ message: i18n.__('apiWorking') });
 });
 
@@ -95,6 +94,13 @@ router.get('/logout', auth, (req, res) => {
     if (err) return res.status(400).send(err);
     res.sendStatus(200);
   });
+});
+
+
+router.post('/planningsession', function (req, res, next) {
+  const newSession = new PlanningSessionSchema(req.body);
+  console.log(req.body);
+  res.json({ uuid: uuid.v1() });
 });
 
 module.exports = router;
