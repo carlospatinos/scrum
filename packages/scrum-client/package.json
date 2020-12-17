@@ -39,7 +39,9 @@
   },
   "scripts": {
     "dev": "react-scripts start",
-    "start": "npm install --only=dev && npm install && npm run build",
+    "start": "node --max-old-space-size=4000",
+    "start2": "npm install --only=dev && npm install && npm run build",
+    "profile": "npm install --only=dev && npm install && npm run build",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

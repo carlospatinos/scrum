@@ -1,59 +1,103 @@
+/* eslint-disable react/style-prop-object */
 import React, { useState, useEffect } from 'react';
 import * as d3 from 'd3';
-import { Container } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import './VotingCards.css';
 
 export default function Cards() {
-  const [count, setCount] = useState(0);
+  const [cardActive, setCardActive] = useState({ c1: false, c2: false, c3: false });
+
+  const handleSpecificCardToggle = event => {
+    console.log(event.target.id);
+    setCardActive({ c1: true, c2: false, c3: true });
+    // eslint-disable-next-line
+    const a = cardActive.c1;
+  };
+
+  const handleSpecificCardToggleKeyboard = event => {
+    console.log(event.target.id);
+  };
 
   useEffect(() => {
     // Update the document title using the browser API
-    document.title = `You clicked ${count} times`;
+    // document.title = `You clicked ${count} times`;
     d3.selectAll('p').style('color', 'blue');
   });
 
   return (
-    <Container className="Cards">
+    <Container>
       <br />
       <br />
-
-      <div className="f1_container">
-        <div className="shadow f1_card">
-          <div className="front face">
-            <img src="card-decks/number-1.svg" alt="Card" />
+      <Row>
+        <Col>
+          <div
+            onClick={handleSpecificCardToggle}
+            role="button"
+            tabIndex={0}
+            onKeyDown={handleSpecificCardToggleKeyboard}
+            style={{ display: 'inline-block' }}
+          >
+            <img src="card-decks/number-1.svg" alt="Card" width="100" id="one" />
           </div>
-          <img src="card-decks/back.svg" className="back face center" alt="Card" />
-        </div>
-      </div>
-      <div className="f1_container">
-        <div className="shadow f1_card">
-          <div className="front face">
-            <img src="card-decks/number-2.svg" alt="Card" />
+        </Col>
+        <Col>
+          <div
+            onClick={handleSpecificCardToggle}
+            role="button"
+            tabIndex={0}
+            onKeyDown={handleSpecificCardToggleKeyboard}
+            style={{ display: 'inline-block' }}
+          >
+            <img src="card-decks/number-2.svg" alt="Card" width="100" id="two" />
           </div>
-          <img src="card-decks/back.svg" className="back face center" alt="Card" />
-        </div>
-      </div>
-      <div className="f1_container">
-        <div className="shadow f1_card">
-          <div className="front face">
-            <img src="card-decks/number-3.svg" alt="Card" />
+        </Col>
+        <Col>
+          <div
+            onClick={handleSpecificCardToggle}
+            role="button"
+            tabIndex={0}
+            onKeyDown={handleSpecificCardToggleKeyboard}
+            style={{ display: 'inline-block' }}
+          >
+            <img src="card-decks/number-3.svg" alt="Card" width="100" id="three" />
           </div>
-          <img src="card-decks/back.svg" className="back face center" alt="Card" />
-        </div>
-      </div>
-
-      <br />
-      <br />
-      <p>Welcome test</p>
-      <div id="myDiv" />
-      <div id="myDiv2" />
-      <div>
-        <p>You clicked {count} times</p>
-        <button type="button" onClick={() => setCount(count + 1)}>
-          Click me
-        </button>
-      </div>
-      <br />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <div
+            onClick={handleSpecificCardToggle}
+            role="button"
+            tabIndex={0}
+            onKeyDown={handleSpecificCardToggleKeyboard}
+            style={{ display: 'inline-block' }}
+          >
+            <img src="card-decks/number-4.svg" alt="Card" width="100" id="four" />
+          </div>
+        </Col>
+        <Col>
+          <div
+            onClick={handleSpecificCardToggle}
+            role="button"
+            tabIndex={0}
+            onKeyDown={handleSpecificCardToggleKeyboard}
+            style={{ display: 'inline-block' }}
+          >
+            <img src="card-decks/number-5.svg" alt="Card" width="100" id="five" />
+          </div>
+        </Col>
+        <Col>
+          <div
+            onClick={handleSpecificCardToggle}
+            role="button"
+            tabIndex={0}
+            onKeyDown={handleSpecificCardToggleKeyboard}
+            style={{ display: 'inline-block' }}
+          >
+            <img src="card-decks/number-8.svg" alt="Card" width="100" id="eight" />
+          </div>
+        </Col>
+      </Row>
     </Container>
   );
 }

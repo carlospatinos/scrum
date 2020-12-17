@@ -21,7 +21,6 @@ class SocketService {
       socket.on('hi', async (jsonData) => {
         console.log("--server--hi", JSON.stringify(jsonData));
         try {
-          //this.io.in('12345').emit('message', "big announcement");
           this.io.sockets.in(userToGroupMap[jsonData.email]).emit('message', "big announcement");
         } catch (e) {
           console.log(e);
