@@ -34,6 +34,9 @@ app.set("socketService", new SocketService(server));
 server.listen(port, () => {
   console.log(`Server App v. ${pjson.version} listening at http://localhost:${port}`);
   process.env.REACT_APP_VERSION = pjson.version;
+
+  const used = process.memoryUsage().heapUsed / 1024 / 1024;
+  console.log(`The script uses approximately ${Math.round(used * 100) / 100} MB`);
 });
 server.on('error', onError);
 server.on('listening', onListening);

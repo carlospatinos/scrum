@@ -4,6 +4,7 @@
   "scripts": {
     "start": "lerna run start --stream",
     "build": "lerna run build --stream",
+    "profile": "lerna run profile --stream",
     "change": "lerna changed",
     "clean": "lerna clean --yes && lerna run clean --stream",
     "dev": "lerna run dev --stream",
