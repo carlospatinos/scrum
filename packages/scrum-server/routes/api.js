@@ -12,6 +12,9 @@ const PlanningSessionSchema = require('../models/planningSession');
 const uuid = require('uuid');
 
 router.get('/', (req, res, next) => {
+  const used = process.memoryUsage().heapUsed / 1024 / 1024;
+  var current = new Date();
+  console.log(`${current} -> The script uses approximately ${Math.round(used * 100) / 100} MB`);
   res.json({ message: i18n.__('apiWorking') });
 });
 
