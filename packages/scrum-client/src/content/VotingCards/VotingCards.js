@@ -30,6 +30,12 @@ export default function Cards() {
               { val: 2, image: '/card-decks/number-2.svg' },
               { val: 3, image: '/card-decks/number-4.svg' },
               { val: 4, image: '/card-decks/number-8.svg' },
+              { val: 4, image: '/card-decks/number-16.svg' },
+              { val: 4, image: '/card-decks/number-32.svg' },
+              { val: 4, image: '/card-decks/number-64.svg' },
+              { val: 4, image: '/card-decks/question-mark.svg' },
+              { val: 4, image: '/card-decks/infinity.svg' },
+              { val: 4, image: '/card-decks/coffee.svg' },
             ]);
           }
           if (data.sessionInformation.cardDeck === '0, 1, 2, 3, 5, 8, 13, 21, 34, ?, I, C') {
@@ -39,6 +45,12 @@ export default function Cards() {
               { val: 3, image: '/card-decks/number-3.svg' },
               { val: 4, image: '/card-decks/number-5.svg' },
               { val: 5, image: '/card-decks/number-8.svg' },
+              { val: 5, image: '/card-decks/number-13.svg' },
+              { val: 5, image: '/card-decks/number-21.svg' },
+              { val: 5, image: '/card-decks/number-34.svg' },
+              { val: 4, image: '/card-decks/question-mark.svg' },
+              { val: 4, image: '/card-decks/infinity.svg' },
+              { val: 4, image: '/card-decks/coffee.svg' },
             ]);
           }
           if (data.sessionInformation.cardDeck === 'xs, s, m, l, xl, ?, I, C') {
@@ -48,6 +60,9 @@ export default function Cards() {
               { val: 3, image: '/card-decks/size-m.svg' },
               { val: 4, image: '/card-decks/size-l.svg' },
               { val: 5, image: '/card-decks/size-xl.svg' },
+              { val: 4, image: '/card-decks/question-mark.svg' },
+              { val: 4, image: '/card-decks/infinity.svg' },
+              { val: 4, image: '/card-decks/coffee.svg' },
             ]);
           }
         });
