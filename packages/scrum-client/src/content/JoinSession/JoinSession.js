@@ -16,7 +16,9 @@ export default function JoinSession() {
         .then(response => response.json())
         .then(data => {
           // TODO this is different from dev and prod
-          setSessionToJoin(`http://localhost:4000/session/${data.uuid}`);
+          // http://localhost:4000
+
+          setSessionToJoin(`${API_BASE_URL}/session/${data.uuid}`);
         });
     } catch (e) {
       // console.error(e);
