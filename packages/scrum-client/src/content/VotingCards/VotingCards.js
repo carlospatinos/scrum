@@ -8,8 +8,8 @@ import ClickableCard from '../../components/ClickableCard';
 import './VotingCards.css';
 
 export default function Cards() {
-  const { id: roomId } = useParams();
-  const [cardDeck, setCardDeck] = useState([{ val: 1, image: 'card-decks/number-1.svg' }]);
+  const { roomId } = useParams();
+  const [cardDeck, setCardDeck] = useState([{ val: 1, image: '/card-decks/number-1.svg' }]);
   const [cardActive, setCardActive] = useState({ c1: false, c2: false, c3: false });
   const [sessionInformation, setSessionInformation] = useState({});
 
@@ -20,34 +20,34 @@ export default function Cards() {
     };
 
     try {
-      fetch(`${API_BASE_URL}/api/planningsession/5fdb9370d0aec94d8483ba95`, requestOptions)
+      fetch(`${API_BASE_URL}/api/planningsession/${roomId}`, requestOptions)
         .then(response => response.json())
         .then(data => {
           setSessionInformation(data.sessionInformation);
-          if (data.sessionInformation.cardDeck === 'power of two') {
+          if (data.sessionInformation.cardDeck === '0, 1, 2, 4, 8, 16, 32, 64, ?, I, C') {
             setCardDeck([
-              { val: 1, image: 'card-decks/number-1.svg' },
-              { val: 2, image: 'card-decks/number-2.svg' },
-              { val: 3, image: 'card-decks/number-4.svg' },
-              { val: 4, image: 'card-decks/number-8.svg' },
+              { val: 1, image: '/card-decks/number-1.svg' },
+              { val: 2, image: '/card-decks/number-2.svg' },
+              { val: 3, image: '/card-decks/number-4.svg' },
+              { val: 4, image: '/card-decks/number-8.svg' },
             ]);
           }
-          if (data.sessionInformation.cardDeck === 'fibbonaci') {
+          if (data.sessionInformation.cardDeck === '0, 1, 2, 3, 5, 8, 13, 21, 34, ?, I, C') {
             setCardDeck([
-              { val: 1, image: 'card-decks/number-1.svg' },
-              { val: 2, image: 'card-decks/number-2.svg' },
-              { val: 3, image: 'card-decks/number-3.svg' },
-              { val: 4, image: 'card-decks/number-5.svg' },
-              { val: 5, image: 'card-decks/number-8.svg' },
+              { val: 1, image: '/card-decks/number-1.svg' },
+              { val: 2, image: '/card-decks/number-2.svg' },
+              { val: 3, image: '/card-decks/number-3.svg' },
+              { val: 4, image: '/card-decks/number-5.svg' },
+              { val: 5, image: '/card-decks/number-8.svg' },
             ]);
           }
-          if (data.sessionInformation.cardDeck === 't-shirt sizing') {
+          if (data.sessionInformation.cardDeck === 'xs, s, m, l, xl, ?, I, C') {
             setCardDeck([
-              { val: 1, image: 'card-decks/size-xs.svg' },
-              { val: 2, image: 'card-decks/size-s.svg' },
-              { val: 3, image: 'card-decks/size-m.svg' },
-              { val: 4, image: 'card-decks/size-l.svg' },
-              { val: 5, image: 'card-decks/size-xl.svg' },
+              { val: 1, image: '/card-decks/size-xs.svg' },
+              { val: 2, image: '/card-decks/size-s.svg' },
+              { val: 3, image: '/card-decks/size-m.svg' },
+              { val: 4, image: '/card-decks/size-l.svg' },
+              { val: 5, image: '/card-decks/size-xl.svg' },
             ]);
           }
         });
@@ -75,6 +75,8 @@ export default function Cards() {
 
   return (
     <Container>
+      <br />
+      Room: {roomId}
       <br />
       Title: {sessionInformation.title}
       <br />
