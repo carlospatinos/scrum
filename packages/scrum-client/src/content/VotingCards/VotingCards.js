@@ -1,14 +1,41 @@
 /* eslint-disable react/style-prop-object */
 import React, { useState, useEffect } from 'react';
 import * as d3 from 'd3';
+import { useParams } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
+import { API_BASE_URL } from '../../constants/apiConstants';
+
 import './VotingCards.css';
 
 export default function Cards() {
+  const { id: roomId } = useParams();
   const [cardActive, setCardActive] = useState({ c1: false, c2: false, c3: false });
+  const [sessionInformation, setSessionInformation] = useState({});
+
+  function getSessionInformation() {
+    const requestOptions = {
+      method: 'GET',
+      headers: { 'Content-Type': 'application/json' },
+    };
+
+    try {
+      fetch(`${API_BASE_URL}/api/planningsession/5fdb9370d0aec94d8483ba95`, requestOptions)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data.sessionInformation.title);
+          setSessionInformation(data.sessionInformation);
+        });
+    } catch (e) {
+      // console.error(e);
+    }
+  }
+
+  useEffect(() => {
+    getSessionInformation();
+  }, []);
 
   const handleSpecificCardToggle = event => {
-    console.log(event.target.id);
+    console.log(event.target.id, roomId);
     setCardActive({ c1: true, c2: false, c3: true });
     // eslint-disable-next-line
     const a = cardActive.c1;
@@ -27,6 +54,9 @@ export default function Cards() {
   return (
     <Container>
       <br />
+      Title: {sessionInformation.title}
+      <br />
+      Card Deck: {sessionInformation.cardDeck}
       <br />
       <Row>
         <Col>

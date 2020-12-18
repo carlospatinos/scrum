@@ -99,8 +99,6 @@ router.get('/logout', auth, (req, res) => {
 
 router.post('/planningsession', function (req, res, next) {
   const newSession = new PlanningSessionSchema(req.body);
-  console.log(newSession);
-  console.log(req.body);
 
   newSession.save((err, docSession) => {
     if (err) {
@@ -113,7 +111,28 @@ router.post('/planningsession', function (req, res, next) {
       session: docSession
     });
   });
-
 });
+
+router.get('/planningsession/:id', function (req, res, next) {
+  const sessionId = req.params.id;
+  console.log(sessionId);
+   // TODO this never happens for the redirect
+  if (!sessionId) {
+    console.log("invalid session id");
+    return res.status(400).json({ success: false });
+  } 
+
+  PlanningSessionSchema.findOne({ _id: sessionId }, function (err, session) {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({ success: false });
+    } 
+    res.status(200).json({
+      success: true,
+      sessionInformation: session
+    });
+  });
+});
+
 
 module.exports = router;
