@@ -99,16 +99,15 @@ export default function Cards() {
     console.log(event.target.id, roomId);
   };
 
-  useEffect(() => {});
-
   return (
     <Container>
       <br />
+      <h1>{sessionInformation ? sessionInformation.title : ''}</h1>
       Room: {roomId}
       <br />
-      Title: {sessionInformation ? sessionInformation.title : ''}
-      <br />
       Card Deck: {sessionInformation ? sessionInformation.cardDeck : ''}
+      <br />
+      Current User story: Provided by Admin
       <br />
       <GridGenerator columns={4}>
         {cardDeck.map(card => {

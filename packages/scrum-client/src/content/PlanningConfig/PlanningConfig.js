@@ -6,6 +6,7 @@ import {
   FormControl,
   FormLabel,
   Container,
+  Col,
   Form,
   FormCheck,
 } from 'react-bootstrap';
@@ -20,6 +21,7 @@ export default function PlanningConfig() {
   const location = useLocation();
   const [title, setTitle] = useState('');
   const [sampleValues, setSampleValues] = useState('');
+  // const [userStoriesCreation] = useState('');
   const [cardDeck, setCardDeck] = useState('');
   const [secure, setSecure] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -110,6 +112,40 @@ export default function PlanningConfig() {
           <FormLabel>Values: </FormLabel>
           <FormControl value={sampleValues} name="sampleValues" disabled />
         </FormGroup>
+        <fieldset>
+          <Form.Group>
+            <Form.Label as="userStoriesCreation" column>
+              User Stories creation method:
+            </Form.Label>
+            <Col>
+              <Form.Check
+                type="radio"
+                label="Manual"
+                name="userStoriesCreation"
+                id="formHorizontalRadios1"
+                checked="checked"
+              />
+              <Form.Check
+                type="radio"
+                label="Github"
+                name="userStoriesCreation"
+                id="formHorizontalRadios2"
+              />
+              <Form.Check
+                type="radio"
+                label="GitLab"
+                name="userStoriesCreation"
+                id="formHorizontalRadios3"
+              />
+              <Form.Check
+                type="radio"
+                label="CSV"
+                name="userStoriesCreation"
+                id="formHorizontalRadios4"
+              />
+            </Col>
+          </Form.Group>
+        </fieldset>
         <FormGroup controlId="secure">
           <FormCheck
             type="checkbox"

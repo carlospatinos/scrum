@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as d3 from 'd3';
 import { Container } from 'react-bootstrap';
-import './ViewVotes.css';
+import './SessionDriverView.css';
 
 export default function Cards() {
   const [isActive, setActive] = useState('false');
