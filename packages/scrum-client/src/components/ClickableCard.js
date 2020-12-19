@@ -4,6 +4,7 @@ const ClickableCard = props => {
   const { clickableFunction } = props;
   const { keyboardFunction } = props;
   const { image } = props;
+  const { id } = props;
   return (
     <div
       onClick={clickableFunction}
@@ -12,7 +13,7 @@ const ClickableCard = props => {
       onKeyDown={keyboardFunction}
       style={{ display: 'inline-block' }}
     >
-      <img src={image} alt="Card" width="100" id="one" />
+      <img src={image} alt="Card" width="100" id={id} />
     </div>
   );
 };

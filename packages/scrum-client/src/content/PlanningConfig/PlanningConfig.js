@@ -113,7 +113,7 @@ export default function PlanningConfig() {
         <FormGroup controlId="secure">
           <FormCheck
             type="checkbox"
-            label="Secure"
+            label="Allow unauthenticated"
             onChange={e => setSecure(e.target.checked)}
             name="secure"
           />
