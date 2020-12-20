@@ -27,6 +27,7 @@ export default function ParticipateSession() {
       initiateSocket({ room: { id: roomId }, user: { name: email, email } });
     }
     subscribeToRoom((err, data) => {
+      // eslint-disable-next-line
       console.log('client--subscribeToRoom-cb', err, data);
       if (err) return;
       setRoom({ ...data.room });

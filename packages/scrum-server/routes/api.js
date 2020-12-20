@@ -10,6 +10,8 @@ const UserType = require('../models/userType');
 const PlanningSessionSchema = require('../models/planningSession');
 
 const uuid = require('uuid');
+const ObjectId = require('mongoose').Types.ObjectId;
+
 
 router.get('/', (req, res, next) => {
   res.json({ message: i18n.__('apiWorking') });
@@ -115,9 +117,8 @@ router.post('/planningsession', function (req, res, next) {
 
 router.get('/planningsession/:id', function (req, res, next) {
   const sessionId = req.params.id;
-  console.log(sessionId);
    // TODO this never happens for the redirect
-  if (!sessionId) {
+  if (!sessionId || !ObjectId.isValid(sessionId)) {
     console.log("invalid session id");
     return res.status(400).json({ success: false });
   } 

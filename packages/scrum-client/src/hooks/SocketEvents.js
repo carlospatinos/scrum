@@ -15,12 +15,15 @@ export const initiateSocket = data => {
   socket.emit('join', data);
 };
 export const disconnectSocket = () => {
+  // eslint-disable-next-line
   console.log('client--disconnectSocket');
   if (socket) socket.disconnect();
 };
 export const subscribeToRoom = cb => {
+  // eslint-disable-next-line
   console.log('client--subscribeToRoom');
   socket.on('send_message', data => {
+    // eslint-disable-next-line
     console.log('client--send_message', data);
 
     return cb(null, data);
