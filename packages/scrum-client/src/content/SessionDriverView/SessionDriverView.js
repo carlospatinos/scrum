@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import * as d3 from 'd3';
 import { Container } from 'react-bootstrap';
-import './ViewVotes.css';
+import './SessionDriverView.css';
 
 export default function Cards() {
   const [isActive, setActive] = useState('false');
@@ -18,6 +18,7 @@ export default function Cards() {
   };
 
   const handleSpecificCardToggle = event => {
+    // eslint-disable-next-line
     console.log(event.target.id);
     setCardActive({ c1: true, c2: false, c3: true });
     // eslint-disable-next-line

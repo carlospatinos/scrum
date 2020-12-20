@@ -10,7 +10,7 @@ const PATHS = {
   PLANNING_CONFIG: '/planningconfig',
   SESSION_STARTED: '/sessionstarted',
   SESSION_PARTICIPATE: '/session/:id',
-  VOTING_CARDS: '/votingcards',
+  VOTING_CARDS: '/votingcards/:roomId',
 };
 
 export default PATHS;

@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "start": "lerna run start --stream",
+    "localStart": "lerna run localStart --stream",
     "build": "lerna run build --stream",
     "profile": "lerna run profile --stream",
     "change": "lerna changed",

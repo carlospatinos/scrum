@@ -17,8 +17,8 @@ export default function ParticipateSession() {
   const email = params.get('email');
   const [room, setRoom] = useState({
     id: roomId,
-    title: 'Team',
-    subtitle: 'Lluvia de ideas',
+    title: 'Session 123',
+    subtitle: '....',
     users: [],
   });
 

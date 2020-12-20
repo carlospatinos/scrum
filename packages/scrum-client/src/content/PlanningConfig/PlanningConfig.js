@@ -6,6 +6,7 @@ import {
   FormControl,
   FormLabel,
   Container,
+  Col,
   Form,
   FormCheck,
 } from 'react-bootstrap';
@@ -19,6 +20,8 @@ export default function PlanningConfig() {
   const history = useHistory();
   const location = useLocation();
   const [title, setTitle] = useState('');
+  const [sampleValues, setSampleValues] = useState('');
+  // const [userStoriesCreation] = useState('');
   const [cardDeck, setCardDeck] = useState('');
   const [secure, setSecure] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
@@ -26,16 +29,16 @@ export default function PlanningConfig() {
   const redirectedFrom = location.state?.redirectedFrom?.pathname || PATHS.JOIN_SESSION;
 
   const cardDeckOptions = [
-    { key: 0, name: '', values: '-- select one --' },
+    { key: 0, name: '-- select one --', values: '' },
     { key: 1, name: 'power of two', values: '0, 1, 2, 4, 8, 16, 32, 64, ?, I, C' },
-    { key: 2, name: 'fibbonaci', values: '0,1, 2, 3, 5, 8, 13, 21, 34, ?, I, C' },
+    { key: 2, name: 'fibbonaci', values: '0, 1, 2, 3, 5, 8, 13, 21, 34, ?, I, C' },
     { key: 3, name: 't-shirt sizing', values: 'xs, s, m, l, xl, ?, I, C' },
-    { key: 4, name: 'custom', values: '...' },
+    // { key: 4, name: 'custom', values: '...' },
   ];
 
   useEffect(() => {
     const options1 = { year: 'numeric', month: 'long', day: 'numeric' };
-    const date1 = new Date(2012, 5, 10);
+    const date1 = new Date();
     const dateTimeFormat2 = new Intl.DateTimeFormat('en-GB', options1);
 
     setTitle(`Planning ${dateTimeFormat2.format(date1)}`);
@@ -64,7 +67,7 @@ export default function PlanningConfig() {
         .then(data => {
           if (data.success) {
             // eslint-disable-next-line
-            console.log(data);
+            console.log(API_BASE_URL);
             history.push({
               pathname: redirectedFrom,
             });
@@ -90,18 +93,63 @@ export default function PlanningConfig() {
         </FormGroup>
         <FormGroup controlId="cardDeck">
           <FormLabel>Card Deck</FormLabel>
-          <FormControl as="select" name="cardDeck" onChange={e => setCardDeck(e.target.value)}>
+          <FormControl
+            as="select"
+            name="cardDeck"
+            onChange={e => {
+              setCardDeck(e.target.value);
+              setSampleValues(e.target.value);
+            }}
+          >
             {cardDeckOptions.map(({ key, name, values }) => (
-              <option value={name} key={key}>
-                {values}
+              <option value={values} key={key}>
+                {name}
               </option>
             ))}
           </FormControl>
         </FormGroup>
+        <FormGroup controlId="sampleValues">
+          <FormLabel>Values: </FormLabel>
+          <FormControl value={sampleValues} name="sampleValues" disabled />
+        </FormGroup>
+        <fieldset>
+          <Form.Group>
+            <Form.Label as="userStoriesCreation" column>
+              User Stories creation method:
+            </Form.Label>
+            <Col>
+              <Form.Check
+                type="radio"
+                label="Manual"
+                name="userStoriesCreation"
+                id="formHorizontalRadios1"
+                checked="checked"
+              />
+              <Form.Check
+                type="radio"
+                label="Github"
+                name="userStoriesCreation"
+                id="formHorizontalRadios2"
+              />
+              <Form.Check
+                type="radio"
+                label="GitLab"
+                name="userStoriesCreation"
+                id="formHorizontalRadios3"
+              />
+              <Form.Check
+                type="radio"
+                label="CSV"
+                name="userStoriesCreation"
+                id="formHorizontalRadios4"
+              />
+            </Col>
+          </Form.Group>
+        </fieldset>
         <FormGroup controlId="secure">
           <FormCheck
             type="checkbox"
-            label="Secure"
+            label="Allow unauthenticated"
             onChange={e => setSecure(e.target.checked)}
             name="secure"
           />
