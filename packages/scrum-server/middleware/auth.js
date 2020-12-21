@@ -7,7 +7,9 @@ const auth = (req, res, next) => {
     if (err) throw err;
     if (!user) {
       return res.json({
-        error: true,
+        authenticated: false,
+        message: "user has not been authenticated",
+        error: true
       });
     }
 
