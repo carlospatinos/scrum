@@ -9,12 +9,12 @@ const flash = require('connect-flash');
 const passport = require('passport');
 const cors = require('cors');
 
-require('./config/passport')(passport);
-
-const db = require('./utils/db.js');
+require('./config/localStrategy')(passport);
+require('./config/googleStrategy')(passport);
+require('./utils/db.js');
 
 const indexRouter = require('./routes/index');
-// const usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
 const api = require('./routes/api');
 
 const app = express();
@@ -70,8 +70,8 @@ app.use((req, res, next) => {
 });
 
 app.use('/', indexRouter);
-
 app.use('/api', api);
+app.use('/auth', authRouter);
 
 // Handles any requests that don't match the ones above
 app.get('*', (req, res, next) => {

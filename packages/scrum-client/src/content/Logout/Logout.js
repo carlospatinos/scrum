@@ -5,7 +5,7 @@ import { API_BASE_URL } from '../../constants/apiConstants';
 import PATHS from '../../constants/paths';
 
 const requestOptions = {
-  method: 'POST',
+  method: 'GET',
   headers: { 'Content-Type': 'application/json' },
 };
 

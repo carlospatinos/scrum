@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 const salt = 10;
+// TODO extract this from env
 const SECRET = 'mysecretjwt';
 
 const UserSchema = new mongoose.Schema({
@@ -48,7 +49,15 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  twitterId: String,
+  googleId: String,
+  profileImageUrl: String,
 });
+
+// { id: '107784567939805735984',
+// @scrum/server:   displayName: 'Carlos ASAP',
+// @scrum/server:   image:
+// @scrum/server:    'https://lh3.googleusercontent.com/a-/AOh14GggNtU2-CHIiTs1dAVWI-mglFe-QG1huxuVlS2DU_I=s96-c' }
 
 UserSchema.pre('save', function (next) {
   const user = this;
@@ -81,11 +90,13 @@ UserSchema.methods.generateToken = function (cb) {
   const token = jwt.sign(user._id.toHexString(), SECRET);
 
   user.token = token;
-  // user.save((err, user) => {
-  //   if (err) return cb(err);
-  // cb(null, user);
-  // });
-  cb(null, user); // TODO remove when token is saved (code above)
+  // TODO FIX ======>>>
+  user.save((err, user) => {
+    console.log('save');
+    if (err) return cb(err);
+    cb(null, user);
+  });
+  // cb(null, user); // TODO remove when token is saved (code above)
 };
 
 UserSchema.statics.findByToken = function (token, cb) {
@@ -106,6 +117,7 @@ UserSchema.methods.deleteToken = function (token, cb) {
     if (err) return cb(err);
     cb(null, user);
   });
+  // cb(null, user); // TODO remove when token is saved (code above)
 };
 
 const User = mongoose.model('User', UserSchema);

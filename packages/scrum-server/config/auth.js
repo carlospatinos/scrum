@@ -1,11 +1,14 @@
 /* eslint-disable */
-module.exports = {
+module.exports = { 
   ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-      return next();
+    console.log(req.user);
+    if (!req.user) { // req.isAuthenticated()
+      res.status(401).json({
+        authenticated: false,
+        message: "user has not been authenticated"
+      });
+    } else {
+      next();
     }
-
-    req.flash('error_msg', 'please login to view this resource');
-    res.redirect('/expLogin');
   },
 };
