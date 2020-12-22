@@ -2,6 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const i18n = require('i18n');
 const User = require('../models/user.js');
+const keys = require('../config/keys');
 const router = express.Router();
 
 router.post('/local', (req, res, next) => {
@@ -69,7 +70,7 @@ router.get('/twitter/redirect',
   // }
   (req, res) => {
     console.log('-->', req.user.email);
-    return res.redirect("http://localhost:4000/home");
+    return res.redirect(`${keys.reactAppURL}/home`);
   }
 );
 
