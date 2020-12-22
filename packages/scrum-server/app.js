@@ -8,6 +8,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
 const cors = require('cors');
+const keys = require('./config/keys');
 
 require('./authStrategies/localStrategy')(passport);
 require('./authStrategies/googleStrategy')(passport);
@@ -34,10 +35,10 @@ i18n.configure({
 });
 
 const CLIENT_PATH = '/../scrum-client/build/';
-
+// TODO change this 
 // view engine setup
 app.use(cors({
-  origin: "http://localhost:4000", // allow to server to accept request from different origin
+  origin: keys.reactAppURL, // allow to server to accept request from different origin
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true // allow session cookie from browser to pass through
 }));

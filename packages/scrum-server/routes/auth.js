@@ -52,7 +52,8 @@ router.get('/google/redirect',
   }),
   (req, res) => {
     console.log('-->', req.user.email);
-    return res.redirect("http://localhost:4000/home");
+    console.log('redirect', keys.reactAppURL);
+    return res.redirect(`${keys.reactAppURL}/home`);
   }
 );
 
@@ -70,6 +71,7 @@ router.get('/twitter/redirect',
   // }
   (req, res) => {
     console.log('-->', req.user.email);
+    console.log('redirect', keys.reactAppURL);
     return res.redirect(`${keys.reactAppURL}/home`);
   }
 );
