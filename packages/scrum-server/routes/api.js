@@ -38,6 +38,7 @@ router.post('/signup', function (req, res, next) {
     if (user) return res.status(400).json({ success: false, message: i18n.__('apiEmailExist') });
 
     newUser.save((err, docUser) => {
+      // TODO propagate SchemaString.SchemaType.doValidate
       if (err) {
         console.log(err);
         return res.status(400).json({ success: false });
@@ -53,6 +54,7 @@ router.post('/signup', function (req, res, next) {
 
 
 router.get('/profile', auth, (req, res, next) => {
+  console.log('profile');
   res.json({
     isAuth: true,
     id: req.user._id,

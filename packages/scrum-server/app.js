@@ -11,6 +11,7 @@ const cors = require('cors');
 
 require('./config/localStrategy')(passport);
 require('./config/googleStrategy')(passport);
+require('./config/twitterStrategy')(passport);
 require('./utils/db.js');
 
 const indexRouter = require('./routes/index');
@@ -35,7 +36,11 @@ i18n.configure({
 const CLIENT_PATH = '/../scrum-client/build/';
 
 // view engine setup
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:4000", // allow to server to accept request from different origin
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true // allow session cookie from browser to pass through
+}));
 app.use(i18n.init);
 app.use(logger('dev'));
 app.use(express.json());

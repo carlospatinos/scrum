@@ -1,18 +1,27 @@
 const keys = require('../keys');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const User = require('../models/user');
 
 module.exports = function (passport) {
     function extractProfile(profile) {
-        let imageUrl = '';
-        if (profile.photos && profile.photos.length) {
-            imageUrl = profile.photos[0].value;
+        if (profile && profile._json) {
+            return {
+                googleId: profile._json.id_str,
+                firstName: profile._json.given_name,
+                lastName: profile._json.family_name,
+                email: profile._json.email,
+                profileImageUrl: profile._json.picture
+            }
+        } else {
+            return {
+                googleId: 'profile._json.id_str',
+                firstName: 'profile._json.given_name',
+                lastName: 'profile._json.family_name',
+                email: 'profile._json.email',
+                profileImageUrl: 'profile._json.picture'
+            };
         }
-        console.log(profile.displayName);
-        return {
-            id: profile.id,
-            displayName: profile.displayName,
-            image: imageUrl,
-        };
+        
     }
     passport.use(new GoogleStrategy({
         clientID: keys.google.clientID,
@@ -21,8 +30,28 @@ module.exports = function (passport) {
         accessType: 'offline',
         userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
     }, (accessToken, refreshToken, profile, doneCallBack) => {
-        console.log("access token: ", accessToken);
-        doneCallBack(null, extractProfile(profile));
+        User.findOne({ googleId: profile._json.sub }, function (err, currentUser) {
+            if (!currentUser) {
+                console.log('user not found in db for: ', profile._json.email);
+                new User({
+                    googleId: profile._json.sub,
+                    firstName: profile._json.given_name,
+                    lastName: profile._json.family_name,
+                    email: profile._json.email,
+                    profileImageUrl: profile._json.picture
+                }).save((err, docUser) => {
+                    if (err) {
+                        console.log(err);
+                        doneCallBack(null, extractProfile(profile));
+                    }
+                    doneCallBack(null, docUser);
+                });
+            } else {
+                console.log('user found in db for: ', currentUser.email);
+                doneCallBack(null, currentUser);
+            }
+        });
+        //doneCallBack(null, extractProfile(profile));
     }));
     // passport.serializeUser((user, doneCallBack) => {
     //     doneCallBack(null, user);

@@ -2,10 +2,10 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const keys = require('../keys');
 
 const salt = 10;
-// TODO extract this from env
-const SECRET = 'mysecretjwt';
+// TODO fix password was mandatory but with google/twitter oauth either we create 2 different collections or we find a way to persist all in the same
 
 const UserSchema = new mongoose.Schema({
   firstName: {
@@ -26,12 +26,12 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: false,
     minlength: 8,
   },
   password2: {
     type: String,
-    required: true,
+    required: false,
     minlength: 8,
   },
   token: {
@@ -49,15 +49,19 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  twitterId: String,
-  googleId: String,
-  profileImageUrl: String,
+  twitterId: {
+    type: String,
+    required: false
+  },
+  googleId: {
+    type: String,
+    required: false
+  },
+  profileImageUrl: {
+    type: String,
+    required: false
+  },
 });
-
-// { id: '107784567939805735984',
-// @scrum/server:   displayName: 'Carlos ASAP',
-// @scrum/server:   image:
-// @scrum/server:    'https://lh3.googleusercontent.com/a-/AOh14GggNtU2-CHIiTs1dAVWI-mglFe-QG1huxuVlS2DU_I=s96-c' }
 
 UserSchema.pre('save', function (next) {
   const user = this;
@@ -87,7 +91,7 @@ UserSchema.methods.comparePassword = function (password, cb) {
 
 UserSchema.methods.generateToken = function (cb) {
   const user = this;
-  const token = jwt.sign(user._id.toHexString(), SECRET);
+  const token = jwt.sign(user._id.toHexString(), keys.jwtSecret);
 
   user.token = token;
   // TODO FIX ======>>>
@@ -102,7 +106,7 @@ UserSchema.methods.generateToken = function (cb) {
 UserSchema.statics.findByToken = function (token, cb) {
   const user = this;
 
-  jwt.verify(token, SECRET, (err, decode) => {
+  jwt.verify(token, keys.jwtSecret, (err, decode) => {
     user.findOne({ _id: decode, token }, (err, user) => {
       if (err) return cb(err);
       cb(null, user);
