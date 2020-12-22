@@ -28,6 +28,18 @@ export default function Login() {
   const { userHasAuthenticated } = useAppContext();
   const redirectedFrom = location.state?.redirectedFrom?.pathname || PATHS.HOME;
 
+  function goToExternalURL(type) {
+    let redirection;
+    if (type === 'google') {
+      redirection = PATHS.GOOGLE_LOGIN;
+    } else if (type === 'facebook') {
+      redirection = PATHS.FACEBOOK_LOGIN;
+    } else if (type === 'twitter') {
+      redirection = PATHS.TWITTER_LOGIN;
+    }
+    window.location = redirection;
+  }
+
   function handleSubmit(event) {
     event.preventDefault();
 
@@ -38,7 +50,7 @@ export default function Login() {
     };
 
     try {
-      fetch(`${API_BASE_URL}/api/login`, requestOptions)
+      fetch(`${API_BASE_URL}/auth/local`, requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.isAuth) {
@@ -63,7 +75,7 @@ export default function Login() {
         <h3>Sign In</h3>
         <Form.Row>
           <Col className="text-right">
-            Do not have an account?
+            Do not have an account?.
             <Link
               to={{
                 pathname: PATHS.SIGNUP,
@@ -104,6 +116,39 @@ export default function Login() {
         <p className="forgot-password text-right">
           Forgot <a href={PATHS.FORGOT}>password?</a>
         </p>
+
+        <div className="separator"> OR </div>
+        <br />
+        <button
+          type="button"
+          className="loginBtn loginBtn--google btn-block"
+          onClick={() => {
+            goToExternalURL('google');
+          }}
+        >
+          Login with Google
+        </button>
+        <br />
+        <button
+          type="button"
+          className="loginBtn loginBtn--twitter btn-block"
+          onClick={() => {
+            goToExternalURL('twitter');
+          }}
+        >
+          Login with Twitter
+        </button>
+        <br />
+        <button
+          type="button"
+          className="loginBtn loginBtn--facebook btn-block"
+          onClick={() => {
+            goToExternalURL('facebook');
+          }}
+        >
+          Login with Facebook
+        </button>
+        <br />
       </Form>
     </Container>
   );

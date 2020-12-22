@@ -9,12 +9,13 @@ const flash = require('connect-flash');
 const passport = require('passport');
 const cors = require('cors');
 
-require('./config/passport')(passport);
-
-const db = require('./utils/db.js');
+require('./authStrategies/localStrategy')(passport);
+require('./authStrategies/googleStrategy')(passport);
+require('./authStrategies/twitterStrategy')(passport);
+require('./utils/db.js');
 
 const indexRouter = require('./routes/index');
-// const usersRouter = require('./routes/users');
+const authRouter = require('./routes/auth');
 const api = require('./routes/api');
 
 const app = express();
@@ -35,7 +36,11 @@ i18n.configure({
 const CLIENT_PATH = '/../scrum-client/build/';
 
 // view engine setup
-app.use(cors());
+app.use(cors({
+  origin: "http://localhost:4000", // allow to server to accept request from different origin
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+  credentials: true // allow session cookie from browser to pass through
+}));
 app.use(i18n.init);
 app.use(logger('dev'));
 app.use(express.json());
@@ -70,8 +75,8 @@ app.use((req, res, next) => {
 });
 
 app.use('/', indexRouter);
-
 app.use('/api', api);
+app.use('/auth', authRouter);
 
 // Handles any requests that don't match the ones above
 app.get('*', (req, res, next) => {

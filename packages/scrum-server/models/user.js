@@ -2,9 +2,10 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const keys = require('../config/keys');
 
 const salt = 10;
-const SECRET = 'mysecretjwt';
+// TODO fix password was mandatory but with google/twitter oauth either we create 2 different collections or we find a way to persist all in the same
 
 const UserSchema = new mongoose.Schema({
   firstName: {
@@ -25,12 +26,12 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: false,
     minlength: 8,
   },
   password2: {
     type: String,
-    required: true,
+    required: false,
     minlength: 8,
   },
   token: {
@@ -47,6 +48,18 @@ const UserSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now,
+  },
+  twitterId: {
+    type: String,
+    required: false
+  },
+  googleId: {
+    type: String,
+    required: false
+  },
+  profileImageUrl: {
+    type: String,
+    required: false
   },
 });
 
@@ -71,27 +84,29 @@ UserSchema.pre('save', function (next) {
 
 UserSchema.methods.comparePassword = function (password, cb) {
   bcrypt.compare(password, this.password, (err, isMatch) => {
-    if (err) return cb(next);
+    if (err) return cb(err);
     cb(null, isMatch);
   });
 };
 
 UserSchema.methods.generateToken = function (cb) {
   const user = this;
-  const token = jwt.sign(user._id.toHexString(), SECRET);
+  const token = jwt.sign(user._id.toHexString(), keys.jwtSecret);
 
   user.token = token;
-  // user.save((err, user) => {
-  //   if (err) return cb(err);
-  // cb(null, user);
-  // });
-  cb(null, user); // TODO remove when token is saved (code above)
+  // TODO FIX ======>>>
+  user.save((err, user) => {
+    console.log('save');
+    if (err) return cb(err);
+    cb(null, user);
+  });
+  // cb(null, user); // TODO remove when token is saved (code above)
 };
 
 UserSchema.statics.findByToken = function (token, cb) {
   const user = this;
 
-  jwt.verify(token, SECRET, (err, decode) => {
+  jwt.verify(token, keys.jwtSecret, (err, decode) => {
     user.findOne({ _id: decode, token }, (err, user) => {
       if (err) return cb(err);
       cb(null, user);
@@ -106,6 +121,7 @@ UserSchema.methods.deleteToken = function (token, cb) {
     if (err) return cb(err);
     cb(null, user);
   });
+  // cb(null, user); // TODO remove when token is saved (code above)
 };
 
 const User = mongoose.model('User', UserSchema);

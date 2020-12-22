@@ -41,7 +41,9 @@
     "mongoose": "^5.10.9",
     "morgan": "~1.9.0",
     "passport": "^0.4.1",
+    "passport-google-oauth20": "^2.0.0",
     "passport-local": "^1.0.0",
+    "passport-twitter": "^1.0.4",
     "socket.io": "^2.3.0",
     "static-favicon": "^2.0.0-alpha",
     "uuid": "^8.3.1"
@@ -59,7 +61,7 @@
     "eslint-plugin-jest": "^24.1.0",
     "eslint-plugin-prettier": "^3.1.4",
     "express.io": "^1.1.13",
-    "mocha": "^5.1.1",
+    "mocha": "^8.2.1",
     "nodemon": "^1.17.4",
     "prettier": "^2.1.2"
   }

@@ -1,4 +1,5 @@
 /* eslint-disable */
+// TODO DELETE
 const express = require('express');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
@@ -7,7 +8,7 @@ const i18n = require('i18n');
 
 const User = require('../models/user.js');
 
-const { ensureAuthenticated } = require('../config/auth.js');
+const { auth } = require('../middleware/auth');
 
 /* GET users listing. */
 router.post('/register', (req, res) => {
@@ -101,7 +102,7 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-router.get('/online', ensureAuthenticated, (req, res, next) => {
+router.get('/online', auth, (req, res, next) => {
   res.render('online', { user: req.user });
 });
 

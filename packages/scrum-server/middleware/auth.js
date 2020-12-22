@@ -7,7 +7,9 @@ const auth = (req, res, next) => {
     if (err) throw err;
     if (!user) {
       return res.json({
-        error: true,
+        authenticated: false,
+        message: "user has not been authenticated",
+        error: true
       });
     }
 
@@ -17,4 +19,16 @@ const auth = (req, res, next) => {
   });
 };
 
-module.exports = { auth };
+const auth2 = (req, res, next) => {
+  console.log(req.user);
+    if (!req.user) { // req.isAuthenticated()
+      res.status(401).json({
+        authenticated: false,
+        message: "user has not been authenticated 2"
+      });
+    } else {
+      next();
+    }
+};
+
+module.exports = { auth, auth2 };

@@ -38,6 +38,7 @@ router.post('/signup', function (req, res, next) {
     if (user) return res.status(400).json({ success: false, message: i18n.__('apiEmailExist') });
 
     newUser.save((err, docUser) => {
+      // TODO propagate SchemaString.SchemaType.doValidate
       if (err) {
         console.log(err);
         return res.status(400).json({ success: false });
@@ -51,38 +52,9 @@ router.post('/signup', function (req, res, next) {
 });
 
 
-router.post('/login', (req, res, next) => {
-  let token = req.cookies.auth;
-  User.findByToken(token, (err, user) => {
-    if (err) return res(err);
-    if (user) {
-      return res.status(400).json({
-        success: false,
-        message: i18n.__('apiUserAlreadyLoggedIn')
-      });
-    } else {
-      User.findOne({ 'email': req.body.email }, function (err, user) {
-        if (!user) return res.json({ isAuth: false, message: i18n.__('apiEmailNotFound') });
-
-        user.comparePassword(req.body.password, (err, isMatch) => {
-          if (!isMatch) return res.json({ isAuth: false, message: i18n.__('apiPasswordDoNotMatch') });
-
-          user.generateToken((err, user) => {
-            if (err) return res.status(400).send(err);
-            res.cookie('auth', user.token).json({
-              isAuth: true,
-              id: user._id,
-              email: user.email,
-              ACCESS_TOKEN: user.token
-            });
-          });
-        });
-      });
-    };
-  });
-});
 
 router.get('/profile', auth, (req, res, next) => {
+  console.log('profile');
   res.json({
     isAuth: true,
     id: req.user._id,
@@ -92,7 +64,9 @@ router.get('/profile', auth, (req, res, next) => {
 });
 
 router.get('/logout', auth, (req, res) => {
+  console.log('logout');
   req.user.deleteToken(req.token, (err, user) => {
+    req.logout();
     if (err) return res.status(400).send(err);
     res.sendStatus(200);
   });
@@ -117,17 +91,17 @@ router.post('/planningsession', function (req, res, next) {
 
 router.get('/planningsession/:id', function (req, res, next) {
   const sessionId = req.params.id;
-   // TODO this never happens for the redirect
+  // TODO this never happens for the redirect
   if (!sessionId || !ObjectId.isValid(sessionId)) {
     console.log("invalid session id");
     return res.status(400).json({ success: false });
-  } 
+  }
 
   PlanningSessionSchema.findOne({ _id: sessionId }, function (err, session) {
     if (err) {
       console.log(err);
       return res.status(400).json({ success: false });
-    } 
+    }
     res.status(200).json({
       success: true,
       sessionInformation: session
