@@ -1,4 +1,4 @@
-const keys = require('../keys');
+const keys = require('../config/keys');
 const TwitterStrategy = require('passport-twitter');
 const User = require('../models/user');
 

@@ -9,9 +9,9 @@ const flash = require('connect-flash');
 const passport = require('passport');
 const cors = require('cors');
 
-require('./config/localStrategy')(passport);
-require('./config/googleStrategy')(passport);
-require('./config/twitterStrategy')(passport);
+require('./authStrategies/localStrategy')(passport);
+require('./authStrategies/googleStrategy')(passport);
+require('./authStrategies/twitterStrategy')(passport);
 require('./utils/db.js');
 
 const indexRouter = require('./routes/index');

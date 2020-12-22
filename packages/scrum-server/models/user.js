@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const keys = require('../keys');
+const keys = require('../config/keys');
 
 const salt = 10;
 // TODO fix password was mandatory but with google/twitter oauth either we create 2 different collections or we find a way to persist all in the same
@@ -84,7 +84,7 @@ UserSchema.pre('save', function (next) {
 
 UserSchema.methods.comparePassword = function (password, cb) {
   bcrypt.compare(password, this.password, (err, isMatch) => {
-    if (err) return cb(next);
+    if (err) return cb(err);
     cb(null, isMatch);
   });
 };

@@ -1,5 +1,6 @@
 const express = require('express');
 const passport = require('passport');
+const i18n = require('i18n');
 const User = require('../models/user.js');
 const router = express.Router();
 
