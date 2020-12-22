@@ -12,7 +12,7 @@ const auth = (req, res, next) => {
         error: true
       });
     }
-
+    console.log("user found");
     req.token = token;
     req.user = user;
     next();

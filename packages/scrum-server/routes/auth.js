@@ -74,6 +74,7 @@ router.get('/twitter/redirect',
 );
 
 router.get("/login/success", (req, res, next) => {
+  console.log(req.user);
   if (req.user) {
     return res.json({
       success: true,

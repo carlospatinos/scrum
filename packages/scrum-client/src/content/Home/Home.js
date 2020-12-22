@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Col, Container, CardDeck, Card } from 'react-bootstrap';
 import { API_BASE_URL } from '../../constants/apiConstants';
 // import TagManager from 'react-gtm-module'
@@ -18,28 +18,34 @@ import { API_BASE_URL } from '../../constants/apiConstants';
 // }
 
 const Home = () => {
+  const [user, setUser] = useState('');
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        'Access-Control-Allow-Credentials': true,
+      },
     };
-    console.log('page loaded data');
     try {
       fetch(`${API_BASE_URL}/auth/login/success`, requestOptions)
         .then(response => response.json())
         .then(data => {
           console.log(data);
+          setUser(data.user);
         });
     } catch (e) {
       console.error(e);
     }
-  });
+  }, []);
   return (
     <Container>
       <Row>
         <Col>
           <div className="pricing-Home px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-            <h1 className="display-4">User: </h1>
+            <h1 className="display-4">User: {user.firstName}</h1>
             <p className="lead">
               Quickly build an pricing table for your potential customers with this Bootstrap
               example. Its built with default Bootstrap components and utilities with little

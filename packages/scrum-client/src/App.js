@@ -33,7 +33,7 @@ function App() {
               <Switch>
                 <TitledRoute exact path={PATHS.DEFAULT} component={Login} title="Login" />
                 <TitledRoute exact path={PATHS.NEW_LOGIN} component={NewLogin} title="Signup 2" />
-                <AuthenticatedRoute exact path={PATHS.HOME} component={Home} title="Home" />
+                <TitledRoute exact path={PATHS.HOME} component={Home} title="Home" />
                 <TitledRoute exact path={PATHS.LOGIN} component={Login} title="Login" />
                 <TitledRoute exact path={PATHS.SIGNUP} component={Signup} title="Signup" />
                 <TitledRoute exact path={PATHS.LOGOUT} component={Logout} title="Logout" />
