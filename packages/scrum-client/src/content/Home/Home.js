@@ -18,7 +18,7 @@ import { API_BASE_URL } from '../../constants/apiConstants';
 // }
 
 const Home = () => {
-  const [user, setUser] = useState('');
+  const [userName, setUserName] = useState('');
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
@@ -33,10 +33,14 @@ const Home = () => {
       fetch(`${API_BASE_URL}/auth/login/success`, requestOptions)
         .then(response => response.json())
         .then(data => {
+          // eslint-disable-next-line
           console.log(data);
-          setUser(data.user);
+          if (data && data.user) {
+            setUserName(data.user.firstName);
+          }
         });
     } catch (e) {
+      // eslint-disable-next-line
       console.error(e);
     }
   }, []);
@@ -45,7 +49,7 @@ const Home = () => {
       <Row>
         <Col>
           <div className="pricing-Home px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-            <h1 className="display-4">User: {user.firstName}</h1>
+            <h1 className="display-4">User: {userName}</h1>
             <p className="lead">
               Quickly build an pricing table for your potential customers with this Bootstrap
               example. Its built with default Bootstrap components and utilities with little

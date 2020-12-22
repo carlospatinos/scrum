@@ -32,7 +32,7 @@ module.exports = function (passport) {
     }, (accessToken, refreshToken, profile, doneCallBack) => {
         User.findOne({ googleId: profile._json.sub }, function (err, currentUser) {
             if (!currentUser) {
-                console.log('user not found in db for: ', profile._json.email);
+                console.log('user not found in db');
                 new User({
                     googleId: profile._json.sub,
                     firstName: profile._json.given_name,
@@ -47,7 +47,7 @@ module.exports = function (passport) {
                     doneCallBack(null, docUser);
                 });
             } else {
-                console.log('user found in db for: ', currentUser.email);
+                console.log('user found in db');
                 doneCallBack(null, currentUser);
             }
         });
