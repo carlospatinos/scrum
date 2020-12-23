@@ -15,7 +15,8 @@ export default function JoinSession() {
       fetch(`${API_BASE_URL}/api/uuid`, requestOptions)
         .then(response => response.json())
         .then(data => {
-          setSessionToJoin(`${API_BASE_URL}/session/${data.uuid}`);
+          const url = window.location.href.split('/').slice(0, 3).join('/'); // ${API_BASE_URL}
+          setSessionToJoin(`${url}/session/${data.uuid}`);
         });
     } catch (e) {
       // console.error(e);
