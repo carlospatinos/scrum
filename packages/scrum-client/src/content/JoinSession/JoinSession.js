@@ -1,30 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import QRCode from 'qrcode.react';
 import { Container } from 'react-bootstrap';
-import { API_BASE_URL } from '../../constants/apiConstants';
+import { PLANNING_ROOM_ID } from '../../constants/apiConstants';
 
 export default function JoinSession() {
   const [sessionToJoin, setSessionToJoin] = useState('');
-  function generateUUID() {
-    const requestOptions = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    };
-
-    try {
-      fetch(`${API_BASE_URL}/api/uuid`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          const url = window.location.href.split('/').slice(0, 3).join('/'); // ${API_BASE_URL}
-          setSessionToJoin(`${url}/session/${data.uuid}`);
-        });
-    } catch (e) {
-      // console.error(e);
-    }
+  function generateQR() {
+    const planningRoomId = localStorage.getItem(PLANNING_ROOM_ID);
+    // TODO DELETE roomid?
+    const url = window.location.href.split('/').slice(0, 3).join('/'); // ${API_BASE_URL}
+    setSessionToJoin(`${url}/session/${planningRoomId}`);
   }
 
   useEffect(() => {
-    generateUUID();
+    generateQR();
   }, []);
 
   return (
