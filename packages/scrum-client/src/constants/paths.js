@@ -11,6 +11,7 @@ const PATHS = {
   SESSION_STARTED: '/sessionstarted',
   SESSION_PARTICIPATE: '/session/:id',
   VOTING_CARDS: '/votingcards/:roomId',
+  PRIVACY_POLICY: '/privacypolicy',
   // TODO move to a common path to be used by client and server?
   GOOGLE_LOGIN: '/auth/google',
   TWITTER_LOGIN: '/auth/twitter',

@@ -15,6 +15,7 @@ import SessionStarted from './content/SessionStarted';
 import NewLogin from './content/NewLogin';
 import ParticipateSession from './content/ParticipateSession';
 import VotingCards from './content/VotingCards';
+import PrivacyPolicy from './content/PrivacyPolicy';
 
 import PATHS from './constants/paths';
 import { AppContext } from './lib/contextLib';
@@ -66,7 +67,12 @@ function App() {
                   component={VotingCards}
                   title="VotingCards"
                 />
-
+                <TitledRoute
+                  exact
+                  path={PATHS.PRIVACY_POLICY}
+                  component={PrivacyPolicy}
+                  title="PrivacyPolicy"
+                />
                 <NotFound />
               </Switch>
             </Router>

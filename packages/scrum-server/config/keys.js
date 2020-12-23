@@ -16,6 +16,11 @@ const config = {
     clientSecret: process.env.GOOGLE_CLIENT_SECRET || "clientSecret",
     callback: process.env.GOOGLE_CALLBACK ||  "http://localhost:3000/auth/google/redirect"
   },
+  facebook: {
+    clientID: process.env.FACEBOOK_CLIENT_ID || "clientID",
+    clientSecret: process.env.FACEBOOK_CLIENT_SECRET || "clientSecret",
+    callback: process.env.FACEBOOK_CALLBACK ||  "http://localhost:3000/auth/google/redirect"
+  },
   twitter: {
     consumerKey: process.env.TWITTER_CONSUMER_KEY || "consumerKey",
     consumerSecret: process.env.TWITTER_CONSUMER_SECRET || "consumerSecret",

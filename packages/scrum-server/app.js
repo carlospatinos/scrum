@@ -13,6 +13,7 @@ const keys = require('./config/keys');
 require('./authStrategies/localStrategy')(passport);
 require('./authStrategies/googleStrategy')(passport);
 require('./authStrategies/twitterStrategy')(passport);
+require('./authStrategies/facebookStrategy')(passport);
 require('./utils/db.js');
 
 const indexRouter = require('./routes/index');

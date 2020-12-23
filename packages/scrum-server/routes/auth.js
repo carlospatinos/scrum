@@ -57,6 +57,22 @@ router.get('/google/redirect',
   }
 );
 
+router.get("/facebook", passport.authenticate("facebook"));
+
+router.get("/facebook/redirect",
+  passport.authenticate("facebook"
+  // {
+  //   successRedirect: "/",
+  //   failureRedirect: "/fail"
+  // }
+  ),
+  (req, res) => {
+    console.log('-->', req.user);
+    console.log('redirect', keys.reactAppURL);
+    return res.redirect(`${keys.reactAppURL}/home`);
+  }
+);
+
 router.get('/twitter', passport.authenticate('twitter'), (req, res) => {
   console.log('twitter auth');
 });
