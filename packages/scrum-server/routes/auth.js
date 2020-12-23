@@ -29,6 +29,7 @@ router.post('/local', (req, res, next) => {
               isAuth: true,
               id: user._id,
               email: user.email,
+              fullName: `${user.firstName} ${user.lastName}`,
               ACCESS_TOKEN: user.token
             });
           });

@@ -11,7 +11,7 @@ const TeamList = props => {
       <Card.Subtitle className="mb-2 text-muted">{subtitle}</Card.Subtitle>
       <ListGroup variant="flush">
         {users.map(user => (
-          <ListGroup.Item key={user.name}>{user.name}</ListGroup.Item>
+          <ListGroup.Item key={user.fullName}>{user.fullName}</ListGroup.Item>
         ))}
       </ListGroup>
     </Card>
