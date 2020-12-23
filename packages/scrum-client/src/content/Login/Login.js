@@ -13,7 +13,7 @@ import { useHistory, useLocation, Link } from 'react-router-dom';
 import PATHS from '../../constants/paths';
 import { useAppContext } from '../../lib/contextLib';
 
-import { API_BASE_URL, ACCESS_TOKEN_NAME } from '../../constants/apiConstants';
+import { API_BASE_URL, ACCESS_TOKEN_NAME, USER } from '../../constants/apiConstants';
 import './Login.css';
 
 const validateForm = (email, password) => email.length > 0 && password.length > 0;
@@ -57,6 +57,8 @@ export default function Login() {
         .then(data => {
           if (data.isAuth) {
             localStorage.setItem(ACCESS_TOKEN_NAME, data.ACCESS_TOKEN);
+            localStorage.setItem(USER.FULL_NAME, data.fullName);
+            localStorage.setItem(USER.EMAIL, data.email);
             userHasAuthenticated(true);
             history.push({
               pathname: redirectedFrom,
