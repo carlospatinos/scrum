@@ -10,7 +10,7 @@ module.exports = function (passport) {
                 consumerSecret: keys.twitter.consumerSecret,
                 callbackURL: keys.twitter.callback
             },(accessToken, refreshToken, profile, doneCallBack) => { 
-                console.log('user not found in db for: ', profile);
+                console.log('user not found in db');
                 User.findOne({ twitterId: profile._json.id_str }, function (err, currentUser) {
                     if (!currentUser) {
                         console.log('user not found in db for: ', profile._json.screen_name);
@@ -29,7 +29,7 @@ module.exports = function (passport) {
                             doneCallBack(null, docUser);
                         });
                     } else {
-                        console.log('user found in db for: ', currentUser.email);
+                        console.log('user found in db');
                         doneCallBack(null, currentUser);
                     }
                 });

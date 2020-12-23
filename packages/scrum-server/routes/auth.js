@@ -2,6 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const i18n = require('i18n');
 const User = require('../models/user.js');
+const keys = require('../config/keys');
 const router = express.Router();
 
 router.post('/local', (req, res, next) => {
@@ -51,7 +52,24 @@ router.get('/google/redirect',
   }),
   (req, res) => {
     console.log('-->', req.user.email);
-    return res.redirect("http://localhost:4000/home");
+    console.log('redirect', keys.reactAppURL);
+    return res.redirect(`${keys.reactAppURL}/home`);
+  }
+);
+
+router.get("/facebook", passport.authenticate("facebook"));
+
+router.get("/facebook/redirect",
+  passport.authenticate("facebook"
+  // {
+  //   successRedirect: "/",
+  //   failureRedirect: "/fail"
+  // }
+  ),
+  (req, res) => {
+    console.log('-->', req.user);
+    console.log('redirect', keys.reactAppURL);
+    return res.redirect(`${keys.reactAppURL}/home`);
   }
 );
 
@@ -69,11 +87,13 @@ router.get('/twitter/redirect',
   // }
   (req, res) => {
     console.log('-->', req.user.email);
-    return res.redirect("http://localhost:4000/home");
+    console.log('redirect', keys.reactAppURL);
+    return res.redirect(`${keys.reactAppURL}/home`);
   }
 );
 
 router.get("/login/success", (req, res, next) => {
+  console.log(req.user);
   if (req.user) {
     return res.json({
       success: true,

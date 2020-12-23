@@ -31,12 +31,14 @@ export default function Login() {
   function goToExternalURL(type) {
     let redirection;
     if (type === 'google') {
-      redirection = PATHS.GOOGLE_LOGIN;
+      redirection = process.env.REACT_APP_API_URL + PATHS.GOOGLE_LOGIN;
     } else if (type === 'facebook') {
-      redirection = PATHS.FACEBOOK_LOGIN;
+      redirection = process.env.REACT_APP_API_URL + PATHS.FACEBOOK_LOGIN;
     } else if (type === 'twitter') {
-      redirection = PATHS.TWITTER_LOGIN;
+      redirection = process.env.REACT_APP_API_URL + PATHS.TWITTER_LOGIN;
     }
+    // eslint-disable-next-line
+    console.log('redirecting to:', redirection);
     window.location = redirection;
   }
 
