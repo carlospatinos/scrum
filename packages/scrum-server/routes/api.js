@@ -90,7 +90,6 @@ router.get('/planningsession/:id', function (req, res, next) {
     return res.status(400).json({ success: false });
   }
   PlanningSession.findOne({ _id: planningRoomId }, function (err, session) {
-    console.log(session);
     if (err || !session) {
       console.log(err);
       return res.status(400).json({ success: false });
