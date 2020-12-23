@@ -18,6 +18,7 @@ export default function Header() {
             {isAuthenticated ? (
               <Nav className="justify-content-end" activeKey={PATHS.LOGIN}>
                 <Nav.Link href={PATHS.HOME}>Home</Nav.Link>
+                <Nav.Link href={PATHS.PROFILE}>Profile</Nav.Link>
                 <Nav.Link href={PATHS.LOGOUT}>Logout</Nav.Link>
               </Nav>
             ) : (

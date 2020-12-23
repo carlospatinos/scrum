@@ -16,6 +16,7 @@ import NewLogin from './content/NewLogin';
 import ParticipateSession from './content/ParticipateSession';
 import VotingCards from './content/VotingCards';
 import PrivacyPolicy from './content/PrivacyPolicy';
+import Profile from './content/Profile';
 
 import PATHS from './constants/paths';
 import { AppContext } from './lib/contextLib';
@@ -38,6 +39,7 @@ function App() {
                 <TitledRoute exact path={PATHS.LOGIN} component={Login} title="Login" />
                 <TitledRoute exact path={PATHS.SIGNUP} component={Signup} title="Signup" />
                 <TitledRoute exact path={PATHS.LOGOUT} component={Logout} title="Logout" />
+                <AuthenticatedRoute path={PATHS.PROFILE} component={Profile} title="Profile" />
                 <TitledRoute
                   exact
                   path={PATHS.SESSION_STARTED}
