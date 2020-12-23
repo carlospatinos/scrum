@@ -1,6 +1,7 @@
+/* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import TeamList from '../../components/TeamList';
 import {
   initiateSocket,
@@ -8,13 +9,36 @@ import {
   subscribeToRoom,
   sendMessage,
 } from '../../hooks/SocketEvents';
+import { API_BASE_URL, USER } from '../../constants/apiConstants';
+
+const getPlanningSession = id => {
+  const requestOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  };
+
+  try {
+    fetch(`${API_BASE_URL}/api/planningsession/${id}`, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          // eslint-disable-next-line
+          console.log(data);
+        } else {
+          console.log('error');
+          // setApiResponse(data.message);
+        }
+      });
+  } catch (e) {
+    // console.error(`=====> error:${e}`);
+    console.log('error', e);
+    // TODO this erro happen if API is not available but business errors like length of password go above. how to handle and display those?
+  }
+};
 
 export default function ParticipateSession() {
   const { id: roomId } = useParams();
-  const location = useLocation();
   const [response, setResponse] = useState('');
-  const params = new URLSearchParams(location.search);
-  const email = params.get('email');
   const [room, setRoom] = useState({
     id: roomId,
     title: 'Session 123',
@@ -23,8 +47,12 @@ export default function ParticipateSession() {
   });
 
   useEffect(() => {
+    const email = localStorage.getItem(USER.EMAIL);
+    const fullName = localStorage.getItem(USER.FULL_NAME);
+
     if (roomId) {
-      initiateSocket({ room: { id: roomId }, user: { name: email, email } });
+      getPlanningSession(roomId);
+      initiateSocket({ room: { id: roomId }, user: { fullName, email } });
     }
     subscribeToRoom((err, data) => {
       // eslint-disable-next-line
@@ -38,7 +66,7 @@ export default function ParticipateSession() {
     return () => {
       disconnectSocket();
     };
-  }, [email, roomId]);
+  }, [roomId]);
 
   return (
     <Container className="NotFound">
