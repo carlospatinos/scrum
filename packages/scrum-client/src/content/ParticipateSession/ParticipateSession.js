@@ -10,6 +10,7 @@ import {
   sendMessage,
 } from '../../hooks/SocketEvents';
 import { API_BASE_URL, USER } from '../../constants/apiConstants';
+import './ParticipateSession.css';
 
 const getPlanningSession = id => {
   const requestOptions = {
@@ -69,9 +70,9 @@ export default function ParticipateSession() {
   }, [roomId]);
 
   return (
-    <Container className="NotFound">
-      Message from server: {response}
-      <br /> on group {roomId}
+    <Container className="ParticipateSession">
+      <br />
+      {response}
       <TeamList title={room.title} subtitle={room.subtitle} users={room.users} />
     </Container>
   );

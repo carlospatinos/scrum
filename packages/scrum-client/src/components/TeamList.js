@@ -6,7 +6,7 @@ const TeamList = props => {
   const { title, subtitle, users } = props;
 
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card>
       <Card.Title>{title}</Card.Title>
       <Card.Subtitle className="mb-2 text-muted">{subtitle}</Card.Subtitle>
       <ListGroup variant="flush">

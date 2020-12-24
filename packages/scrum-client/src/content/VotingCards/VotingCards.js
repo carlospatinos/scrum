@@ -102,12 +102,12 @@ export default function Cards() {
   return (
     <Container>
       <br />
-      <h1>{sessionInformation ? sessionInformation.title : ''}</h1>
+      <h4>{sessionInformation ? sessionInformation.title : ''}</h4>
       Room: {roomId}
       <br />
       Card Deck: {sessionInformation ? sessionInformation.cardDeck : ''}
       <br />
-      Current User story: Provided by Admin
+      Current User story: &lt;Provided by Admin&gt;
       <br />
       <GridGenerator columns={4}>
         {cardDeck.map(card => {
