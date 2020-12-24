@@ -27,7 +27,7 @@ export default function PlanningConfig() {
   const [userStoriesCreationMethod, setUserStoriesCreationMethod] = useState('manual');
   const [errorMessage, setErrorMessage] = useState('');
   const [apiResponse, setApiResponse] = useState('');
-  const redirectedFrom = location.state?.redirectedFrom?.pathname || PATHS.JOIN_SESSION;
+  const redirectedFrom = location.state?.redirectedFrom?.pathname || PATHS.SHARE_SESSION;
 
   const cardDeckOptions = [
     { key: 0, name: '-- select one --', values: '' },

@@ -9,7 +9,7 @@ import Login from './content/Login';
 import Signup from './content/Signup';
 import NotFound from './content/NotFound';
 import Logout from './content/Logout';
-import JoinSession from './content/JoinSession';
+import ShareSession from './content/ShareSession';
 import PlanningConfig from './content/PlanningConfig';
 import SessionStarted from './content/SessionStarted';
 import NewLogin from './content/NewLogin';
@@ -54,9 +54,9 @@ function App() {
                 />
                 <TitledRoute
                   exact
-                  path={PATHS.JOIN_SESSION}
-                  component={JoinSession}
-                  title="JoinSession"
+                  path={PATHS.SHARE_SESSION}
+                  component={ShareSession}
+                  title="ShareSession"
                 />
                 <AuthenticatedRoute
                   path={PATHS.SESSION_PARTICIPATE}
