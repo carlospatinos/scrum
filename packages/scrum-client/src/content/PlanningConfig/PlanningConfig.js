@@ -14,7 +14,7 @@ import './PlanningConfig.css';
 import { useHistory, useLocation } from 'react-router-dom';
 import PATHS from '../../constants/paths';
 
-import { API_BASE_URL } from '../../constants/apiConstants';
+import { API_BASE_URL, PLANNING_ROOM_ID } from '../../constants/apiConstants';
 
 export default function PlanningConfig() {
   const history = useHistory();
@@ -23,25 +23,25 @@ export default function PlanningConfig() {
   const [sampleValues, setSampleValues] = useState('');
   // const [userStoriesCreation] = useState('');
   const [cardDeck, setCardDeck] = useState('');
-  const [secure, setSecure] = useState(false);
+  const [allowUnauthenticated, setAllowUnauthenticated] = useState(false);
+  const [userStoriesCreationMethod, setUserStoriesCreationMethod] = useState('manual');
   const [errorMessage, setErrorMessage] = useState('');
   const [apiResponse, setApiResponse] = useState('');
-  const redirectedFrom = location.state?.redirectedFrom?.pathname || PATHS.JOIN_SESSION;
+  const redirectedFrom = location.state?.redirectedFrom?.pathname || PATHS.SHARE_SESSION;
 
   const cardDeckOptions = [
     { key: 0, name: '-- select one --', values: '' },
     { key: 1, name: 'power of two', values: '0, 1, 2, 4, 8, 16, 32, 64, ?, I, C' },
     { key: 2, name: 'fibbonaci', values: '0, 1, 2, 3, 5, 8, 13, 21, 34, ?, I, C' },
     { key: 3, name: 't-shirt sizing', values: 'xs, s, m, l, xl, ?, I, C' },
-    // { key: 4, name: 'custom', values: '...' },
   ];
 
   useEffect(() => {
     const options1 = { year: 'numeric', month: 'long', day: 'numeric' };
-    const date1 = new Date();
+    const currDate = new Date();
     const dateTimeFormat2 = new Intl.DateTimeFormat('en-GB', options1);
 
-    setTitle(`Planning ${dateTimeFormat2.format(date1)}`);
+    setTitle(`Planning ${dateTimeFormat2.format(currDate)}`);
   }, []);
 
   function validateForm() {
@@ -57,7 +57,8 @@ export default function PlanningConfig() {
       body: JSON.stringify({
         title,
         cardDeck,
-        secure,
+        allowUnauthenticated,
+        userStoriesCreationMethod,
       }),
     };
 
@@ -66,8 +67,7 @@ export default function PlanningConfig() {
         .then(response => response.json())
         .then(data => {
           if (data.success) {
-            // eslint-disable-next-line
-            console.log(API_BASE_URL);
+            localStorage.setItem(PLANNING_ROOM_ID, data.planningRoomId);
             history.push({
               pathname: redirectedFrom,
             });
@@ -114,44 +114,39 @@ export default function PlanningConfig() {
         </FormGroup>
         <fieldset>
           <Form.Group>
-            <Form.Label as="userStoriesCreation" column>
+            <Form.Label as="userStoriesCreationMethod" column>
               User Stories creation method:
             </Form.Label>
-            <Col>
+            <Col onChange={e => setUserStoriesCreationMethod(e.target.value)}>
               <Form.Check
                 type="radio"
                 label="Manual"
-                name="userStoriesCreation"
-                id="formHorizontalRadios1"
-                checked="checked"
+                name="userStoriesCreationMethod"
+                value="manual"
+                defaultChecked
               />
               <Form.Check
                 type="radio"
                 label="Github"
-                name="userStoriesCreation"
-                id="formHorizontalRadios2"
+                name="userStoriesCreationMethod"
+                value="github"
               />
               <Form.Check
                 type="radio"
                 label="GitLab"
-                name="userStoriesCreation"
-                id="formHorizontalRadios3"
+                name="userStoriesCreationMethod"
+                value="gitlab"
               />
-              <Form.Check
-                type="radio"
-                label="CSV"
-                name="userStoriesCreation"
-                id="formHorizontalRadios4"
-              />
+              <Form.Check type="radio" label="CSV" name="userStoriesCreationMethod" value="csv" />
             </Col>
           </Form.Group>
         </fieldset>
-        <FormGroup controlId="secure">
+        <FormGroup controlId="allowUnauthenticated">
           <FormCheck
             type="checkbox"
             label="Allow unauthenticated"
-            onChange={e => setSecure(e.target.checked)}
-            name="secure"
+            onChange={e => setAllowUnauthenticated(e.target.checked)}
+            name="allowUnauthenticated"
           />
         </FormGroup>
 

@@ -7,9 +7,8 @@ const i18n = require('i18n');
 const { auth } = require('../middleware/auth.js');
 const User = require('../models/user.js');
 const UserType = require('../models/userType');
-const PlanningSessionSchema = require('../models/planningSession');
+const PlanningSession = require('../models/planningSession');
 
-const uuid = require('uuid');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 
@@ -20,10 +19,6 @@ router.get('/', (req, res, next) => {
 router.post('/', (req, res, next) => {
   const { email } = req.body;
   res.json({ message: i18n.__('apiWorking') });
-});
-
-router.get('/uuid', (req, res, next) => {
-  res.json({ uuid: uuid.v1() });
 });
 
 router.post('/signup', function (req, res, next) {
@@ -74,8 +69,7 @@ router.get('/logout', auth, (req, res) => {
 
 
 router.post('/planningsession', function (req, res, next) {
-  const newSession = new PlanningSessionSchema(req.body);
-
+  const newSession = new PlanningSession(req.body);
   newSession.save((err, docSession) => {
     if (err) {
       console.log(err);
@@ -83,29 +77,28 @@ router.post('/planningsession', function (req, res, next) {
     }
     res.status(200).json({
       success: true,
-      uuid: uuid.v1(),
-      session: docSession
+      session: docSession,
+      planningRoomId: docSession._id
     });
   });
 });
 
 router.get('/planningsession/:id', function (req, res, next) {
-  const sessionId = req.params.id;
-  // TODO this never happens for the redirect
-  if (!sessionId || !ObjectId.isValid(sessionId)) {
+  const planningRoomId = req.params.id;
+  if (!planningRoomId || !ObjectId.isValid(planningRoomId)) {
     console.log("invalid session id");
     return res.status(400).json({ success: false });
   }
-
-  PlanningSessionSchema.findOne({ _id: sessionId }, function (err, session) {
-    if (err) {
+  PlanningSession.findOne({ _id: planningRoomId }, function (err, session) {
+    if (err || !session) {
       console.log(err);
       return res.status(400).json({ success: false });
+    } else {
+      return res.status(200).json({
+        success: true,
+        sessionInformation: session
+      });
     }
-    res.status(200).json({
-      success: true,
-      sessionInformation: session
-    });
   });
 });
 

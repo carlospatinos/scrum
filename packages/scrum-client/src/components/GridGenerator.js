@@ -13,7 +13,7 @@ const GridGenerator = props => {
         <Row>
           {cols.map(currentValue => (
             // TODO provide a key to the col
-            <Col sm={12} md={6} lg={colWidth}>
+            <Col sm={2} md={6} lg={colWidth}>
               {currentValue}
             </Col>
           ))}

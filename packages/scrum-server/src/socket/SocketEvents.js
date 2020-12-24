@@ -12,7 +12,7 @@ const SocketEvents = io => {
       const _room =  socketState.getRoom(room);
       const users =  Array.from(_room.users.values()); 
       // todo retrieve title, subtitle 
-      io.to(room.id).emit('send_message', { message: message, room:{id:_room.id, title:"Lluvia de ideas", subtitle:"", users:users} });
+      io.to(room.id).emit('send_message', { message: message, room:{id:_room.id, title:"Scrum Session " + room.id, subtitle:"", users:users} });
     };
 
     return { joinUserToRoom, sendMessageToRoom };

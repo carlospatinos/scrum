@@ -9,9 +9,13 @@ const PlanningSessionSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    secure: {
-        type: Boolean,
+    userStoriesCreationMethod:{
+        type: String,
+        required: true,
     },
+    allowUnauthenticated: {
+        type: Boolean,
+    }
 });
 const PlanningSession = mongoose.model('PlanningSession', PlanningSessionSchema);
 
