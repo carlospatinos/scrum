@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import { Alert, Button, FormGroup, FormControl, FormLabel, Container, Form } from 'react-bootstrap';
 import './Signup.css';
 import { useHistory, useLocation, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { API_BASE_URL } from '../../constants/apiConstants';
 import PATHS from '../../constants/paths';
 
 export default function Signup() {
   const history = useHistory();
   const location = useLocation();
+  const { t } = useTranslation();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -48,7 +50,7 @@ export default function Signup() {
       };
 
       try {
-        fetch(`${API_BASE_URL}/api/signup`, requestOptions)
+        fetch(`${API_BASE_URL}${PATHS.SIGN_UP}`, requestOptions)
           .then(response => response.json())
           .then(data => {
             if (data.success) {
@@ -71,16 +73,16 @@ export default function Signup() {
     <Container className="Signup">
       <Form onSubmit={handleSubmit}>
         <FormGroup controlId="firstName">
-          <FormLabel>First Name</FormLabel>
+          <FormLabel>{t('firstName')}</FormLabel>
           <FormControl value={firstName} onChange={e => setFirstName(e.target.value)} />
         </FormGroup>
         <FormGroup controlId="lastName">
-          <FormLabel>Last Name</FormLabel>
+          <FormLabel>{t('lastName')}</FormLabel>
           <FormControl value={lastName} onChange={e => setLastName(e.target.value)} />
         </FormGroup>
 
         <FormGroup controlId="email">
-          <FormLabel>Email</FormLabel>
+          <FormLabel>{t('email')}</FormLabel>
           <FormControl
             autoFocus
             type="email"
@@ -89,7 +91,7 @@ export default function Signup() {
           />
         </FormGroup>
         <FormGroup controlId="password">
-          <FormLabel>Password</FormLabel>
+          <FormLabel>{t('password')}</FormLabel>
           <FormControl
             value={password}
             onChange={e => setPassword(e.target.value)}
@@ -97,7 +99,7 @@ export default function Signup() {
           />
         </FormGroup>
         <FormGroup controlId="password2">
-          <FormLabel>Password2</FormLabel>
+          <FormLabel>{t('password2')}</FormLabel>
           <FormControl
             value={confirmPassword}
             onChange={e => setConfirmPassword(e.target.value)}
@@ -112,17 +114,17 @@ export default function Signup() {
           type="submit"
           variant={isValidForm ? 'primary' : 'secondary'}
         >
-          Sign up
+          {t('signup')}
         </Button>
         <p className="forgot-password text-right">
-          Already registered
+          {t('alreadyRegistered')}
           <Link
             to={{
               pathname: PATHS.LOGIN,
               state: { redirectedFrom: { pathname: redirectedFrom } },
             }}
           >
-            Sign In?
+            {t('signIn')}
           </Link>
         </p>
       </Form>

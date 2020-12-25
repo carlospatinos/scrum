@@ -1,4 +1,20 @@
 {
+    "donthaveaccount": "Do not have an account?",
+    "signup": "Sing Up",
+    "email": "Email",
+    "password": "Password",
+    "login": "Login",
+    "or": "OR",
+    "loginWithGoogle": "Login with Google",
+    "loginWithTwitter": "Login with Twitter",
+    "loginWithFacebook": "Login with Facebook",
+    "forgotPassword": "Forgot your password?",
+    "signIn": "Sign In",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "password2": "Password2",
+    "alreadyRegistered": "Already registered",
+    "signIn2": "Sign In?",
     "translations": {
         "paragraph": "Introduction",
         "author": {

@@ -10,6 +10,7 @@ import {
   Col,
 } from 'react-bootstrap';
 import { useHistory, useLocation, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import PATHS from '../../constants/paths';
 import { useAppContext } from '../../lib/contextLib';
 
@@ -19,6 +20,7 @@ import './Login.css';
 const validateForm = (email, password) => email.length > 0 && password.length > 0;
 
 export default function Login() {
+  const { t } = useTranslation();
   const history = useHistory();
   const location = useLocation();
 
@@ -52,7 +54,7 @@ export default function Login() {
     };
 
     try {
-      fetch(`${API_BASE_URL}/auth/local`, requestOptions)
+      fetch(`${API_BASE_URL}${PATHS.AUTH_LOCAL}`, requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.isAuth) {
@@ -76,22 +78,22 @@ export default function Login() {
   return (
     <Container className="Login">
       <Form onSubmit={handleSubmit}>
-        <h3>Sign In</h3>
+        <h3>{t('signIn')}</h3>
         <Form.Row>
           <Col className="text-right">
-            Do not have an account?.
+            {t('donthaveaccount')}
             <Link
               to={{
                 pathname: PATHS.SIGNUP,
                 state: { redirectedFrom: { pathname: redirectedFrom } },
               }}
             >
-              Sing Up.
+              {t('signup')}
             </Link>
           </Col>
         </Form.Row>
         <FormGroup controlId="email">
-          <FormLabel>Email</FormLabel>
+          <FormLabel>{t('email')}</FormLabel>
           <FormControl
             autoFocus
             type="email"
@@ -100,7 +102,7 @@ export default function Login() {
           />
         </FormGroup>
         <FormGroup controlId="password">
-          <FormLabel>Password</FormLabel>
+          <FormLabel>{t('password')}</FormLabel>
           <FormControl
             value={password}
             onChange={e => setPassword(e.target.value)}
@@ -114,14 +116,14 @@ export default function Login() {
           variant={isValidForm ? 'primary' : 'secondary'}
           type="submit"
         >
-          Login
+          {t('login')}
         </Button>
 
         <p className="forgot-password text-right">
-          Forgot <a href={PATHS.FORGOT}>password?</a>
+          <a href={PATHS.FORGOT}>{t('forgotPassword')}</a>
         </p>
 
-        <div className="separator"> OR </div>
+        <div className="separator"> {t('or')} </div>
         <br />
         <button
           type="button"
@@ -130,7 +132,7 @@ export default function Login() {
             goToExternalURL('google');
           }}
         >
-          Login with Google
+          {t('loginWithGoogle')}
         </button>
         <br />
         <button
@@ -140,7 +142,7 @@ export default function Login() {
             goToExternalURL('twitter');
           }}
         >
-          Login with Twitter
+          {t('loginWithTwitter')}
         </button>
         <br />
         <button
@@ -150,7 +152,7 @@ export default function Login() {
             goToExternalURL('facebook');
           }}
         >
-          Login with Facebook
+          {t('loginWithFacebook')}
         </button>
         <br />
       </Form>

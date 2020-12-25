@@ -158,7 +158,7 @@ export default function PlanningConfig() {
           type="submit"
           variant={isValidForm ? 'primary' : 'secondary'}
         >
-          Start Session
+          Create Session
         </Button>
       </Form>
     </Container>

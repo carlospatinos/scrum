@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Row, Col, Container, CardDeck, Card } from 'react-bootstrap';
 import { API_BASE_URL } from '../../constants/apiConstants';
+import PATHS from '../../constants/paths';
 // import TagManager from 'react-gtm-module'
 
 // if(process.env.NODE_ENV === "development" && !!process.env.REACT_APP_GTM_ID) {
@@ -30,7 +31,7 @@ const Home = () => {
       },
     };
     try {
-      fetch(`${API_BASE_URL}/auth/login/success`, requestOptions)
+      fetch(`${API_BASE_URL}${PATHS.LOGIN_SUCCESS}`, requestOptions)
         .then(response => response.json())
         .then(data => {
           // eslint-disable-next-line

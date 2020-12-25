@@ -17,6 +17,9 @@ const PATHS = {
   GOOGLE_LOGIN: '/auth/google',
   TWITTER_LOGIN: '/auth/twitter',
   FACEBOOK_LOGIN: '/auth/facebook',
+  AUTH_LOCAL: '/auth/local',
+  LOGIN_SUCCESS: '/auth/login/success',
+  SIGN_UP: '/api/signup',
 };
 
 export default PATHS;
