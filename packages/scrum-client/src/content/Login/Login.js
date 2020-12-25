@@ -78,22 +78,22 @@ export default function Login() {
   return (
     <Container className="Login">
       <Form onSubmit={handleSubmit}>
-        <h3>{t('signIn')}</h3>
+        <h3>{t('Login.lblSignIn')}</h3>
         <Form.Row>
           <Col className="text-right">
-            {t('donthaveaccount')}
+            {t('Login.lblDonthaveaccount')}
             <Link
               to={{
                 pathname: PATHS.SIGNUP,
                 state: { redirectedFrom: { pathname: redirectedFrom } },
               }}
             >
-              {t('signup')}
+              {t('Login.lnkSignup')}
             </Link>
           </Col>
         </Form.Row>
         <FormGroup controlId="email">
-          <FormLabel>{t('email')}</FormLabel>
+          <FormLabel>{t('Login.lblEmail')}</FormLabel>
           <FormControl
             autoFocus
             type="email"
@@ -102,7 +102,7 @@ export default function Login() {
           />
         </FormGroup>
         <FormGroup controlId="password">
-          <FormLabel>{t('password')}</FormLabel>
+          <FormLabel>{t('Login.lblPassword')}</FormLabel>
           <FormControl
             value={password}
             onChange={e => setPassword(e.target.value)}
@@ -116,14 +116,14 @@ export default function Login() {
           variant={isValidForm ? 'primary' : 'secondary'}
           type="submit"
         >
-          {t('login')}
+          {t('Login.btnLogin')}
         </Button>
 
         <p className="forgot-password text-right">
-          <a href={PATHS.FORGOT}>{t('forgotPassword')}</a>
+          <a href={PATHS.FORGOT}>{t('Login.lblForgotPassword')}</a>
         </p>
 
-        <div className="separator"> {t('or')} </div>
+        <div className="separator"> {t('Login.lblOr')} </div>
         <br />
         <button
           type="button"
@@ -132,7 +132,7 @@ export default function Login() {
             goToExternalURL('google');
           }}
         >
-          {t('loginWithGoogle')}
+          {t('Login.btnLoginWithGoogle')}
         </button>
         <br />
         <button
@@ -142,7 +142,7 @@ export default function Login() {
             goToExternalURL('twitter');
           }}
         >
-          {t('loginWithTwitter')}
+          {t('Login.btnLoginWithTwitter')}
         </button>
         <br />
         <button
@@ -152,7 +152,7 @@ export default function Login() {
             goToExternalURL('facebook');
           }}
         >
-          {t('loginWithFacebook')}
+          {t('Login.btnLoginWithFacebook')}
         </button>
         <br />
       </Form>

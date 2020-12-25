@@ -1,0 +1,24 @@
+{
+    "Signup": {
+        "lblFirstName": "Nombre",
+        "lblLastName": "Apellido",
+        "lblPassword2": "Confirma tu contraseña",
+        "lblAlreadyRegistered": "Ya tienes cuenta?",
+        "lnkSignIn": "Inicia sesion?",
+        "lblEmail": "Correo electronico",
+        "lblPassword": "Contraseña"
+    },
+    "Login": {
+        "lblSignIn": "Iniciar sesion",
+        "lblDonthaveaccount": "No tienes cuenta?",
+        "lnkSignup": "Crea cuenta",
+        "lblEmail": "Correo electronico",
+        "lblPassword": "Contraseña",
+        "btnLogin": "Inicia sesion",
+        "lblOr": "O",
+        "btnLoginWithGoogle": "Inicia con Google",
+        "btnLoginWithTwitter": "Inicia con Twitter",
+        "btnLoginWithFacebook": "Inicia con Facebook",
+        "lblForgotPassword": "Olvidaste tu contraseña?"
+    }
+}

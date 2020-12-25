@@ -3,6 +3,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 import XHR from 'i18next-xhr-backend';
 
 import translationEng from './locale/en/translate.json';
+import translationEsp from './locale/es/translate.json';
 
 i18n
   .use(XHR)
@@ -31,6 +32,9 @@ i18n
     resources: {
       en: {
         translation: translationEng,
+      },
+      es: {
+        translation: translationEsp,
       },
     },
     // have a common namespace used around the full app

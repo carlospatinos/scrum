@@ -73,16 +73,16 @@ export default function Signup() {
     <Container className="Signup">
       <Form onSubmit={handleSubmit}>
         <FormGroup controlId="firstName">
-          <FormLabel>{t('firstName')}</FormLabel>
+          <FormLabel>{t('Signup.lblFirstName')}</FormLabel>
           <FormControl value={firstName} onChange={e => setFirstName(e.target.value)} />
         </FormGroup>
         <FormGroup controlId="lastName">
-          <FormLabel>{t('lastName')}</FormLabel>
+          <FormLabel>{t('Signup.lblLastName')}</FormLabel>
           <FormControl value={lastName} onChange={e => setLastName(e.target.value)} />
         </FormGroup>
 
         <FormGroup controlId="email">
-          <FormLabel>{t('email')}</FormLabel>
+          <FormLabel>{t('Signup.lblEmail')}</FormLabel>
           <FormControl
             autoFocus
             type="email"
@@ -91,7 +91,7 @@ export default function Signup() {
           />
         </FormGroup>
         <FormGroup controlId="password">
-          <FormLabel>{t('password')}</FormLabel>
+          <FormLabel>{t('Signup.lblPassword')}</FormLabel>
           <FormControl
             value={password}
             onChange={e => setPassword(e.target.value)}
@@ -99,7 +99,7 @@ export default function Signup() {
           />
         </FormGroup>
         <FormGroup controlId="password2">
-          <FormLabel>{t('password2')}</FormLabel>
+          <FormLabel>{t('Signup.lblPassword2')}</FormLabel>
           <FormControl
             value={confirmPassword}
             onChange={e => setConfirmPassword(e.target.value)}
@@ -114,17 +114,17 @@ export default function Signup() {
           type="submit"
           variant={isValidForm ? 'primary' : 'secondary'}
         >
-          {t('signup')}
+          {t('Signup.btnSignup')}
         </Button>
         <p className="forgot-password text-right">
-          {t('alreadyRegistered')}
+          {t('Signup.lblAlreadyRegistered')}
           <Link
             to={{
               pathname: PATHS.LOGIN,
               state: { redirectedFrom: { pathname: redirectedFrom } },
             }}
           >
-            {t('signIn')}
+            {t('Signup.lnkSignIn')}
           </Link>
         </p>
       </Form>
