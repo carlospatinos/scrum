@@ -20,5 +20,19 @@
         "btnLoginWithTwitter": "Inicia con Twitter",
         "btnLoginWithFacebook": "Inicia con Facebook",
         "lblForgotPassword": "Olvidaste tu contraseña?"
+    },
+    "PlanningConfig": {
+        "lblTitle": "Nombre de la sesion",
+        "lblValues": "Valores:",
+        "lblCreationMethod": "Metodo de creacion de las historias:",
+        "btnCreateSession": "Crear sesion",
+        "lblAllowUnauthenticated": "Permitir usuarios anonimos"
+    },
+    "ShareSession": {
+        "lblInviteMembers": "Invita a los miembros",
+        "lblShareToJoin": "Comparte esta informacion y cuando estes listo",
+        "btnStartSession": "Inicia la sesion",
+        "lblLetScanQR": "Permiteles escanear la imagen QR",
+        "lblShareLink": "O comparte este link con ellos"
     }
 }

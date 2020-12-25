@@ -20,6 +20,7 @@ const PATHS = {
   AUTH_LOCAL: '/auth/local',
   LOGIN_SUCCESS: '/auth/login/success',
   SIGN_UP: '/api/signup',
+  PLANNING_SESSION: '/api/planningsession',
 };
 
 export default PATHS;

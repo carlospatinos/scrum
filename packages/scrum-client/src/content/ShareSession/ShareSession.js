@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import QRCode from 'qrcode.react';
 import { Container, ListGroup, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { PLANNING_ROOM_ID } from '../../constants/apiConstants';
 import './ShareSession.css';
 
@@ -10,6 +11,7 @@ export default function ShareSession() {
   const [fullUrlToJoin, setFullUrlToJoin] = useState('');
 
   const history = useHistory();
+  const { t } = useTranslation();
 
   const startSession = () => {
     history.push(sessionToJoin);
@@ -31,20 +33,20 @@ export default function ShareSession() {
     <Container className="ShareSession">
       <ListGroup as="ul">
         <ListGroup.Item as="li">
-          <h4>Invite members</h4>
-          <p>Share the information below and when you are ready</p>
+          <h4>{t('ShareSession.lblInviteMembers')}</h4>
+          <p>{t('ShareSession.lblShareToJoin')}</p>
           <Button variant="primary" size="lg" block onClick={startSession}>
-            Start session
+            {t('ShareSession.btnStartSession')}
           </Button>
         </ListGroup.Item>
         <ListGroup.Item as="li">
-          Let them scan the QR (If you are sharing the screen).
+          {t('ShareSession.lblLetScanQR')}
           <br />
           <br />
           <p className="ShareSessionQR">
             <QRCode value={fullUrlToJoin} />
           </p>
-          Or share this link with them.
+          {t('ShareSession.lblShareLink')}
           <br />
           <p>{fullUrlToJoin}</p>
         </ListGroup.Item>
