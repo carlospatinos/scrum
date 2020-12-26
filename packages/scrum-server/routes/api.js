@@ -75,6 +75,7 @@ router.post('/planningsession', function (req, res, next) {
       console.log(err);
       return res.status(400).json({ success: false });
     }
+    console.log('sucess');
     res.status(200).json({
       success: true,
       session: docSession,

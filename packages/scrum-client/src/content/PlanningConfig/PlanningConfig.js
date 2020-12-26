@@ -52,10 +52,11 @@ export default function PlanningConfig() {
 
   function handleSubmit(event) {
     event.preventDefault();
-
+    console.log('submit0');
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify({
         title,
         cardDeck,
@@ -65,9 +66,14 @@ export default function PlanningConfig() {
     };
 
     try {
+      console.log('submit1');
       fetch(`${API_BASE_URL}${PATHS.PLANNING_SESSION}`, requestOptions)
-        .then(response => response.json())
+        .then(response => {
+          console.log('submit2');
+          return response.json();
+        })
         .then(data => {
+          console.log('submit3');
           if (data.success) {
             localStorage.setItem(PLANNING_ROOM_ID, data.planningRoomId);
             history.push({

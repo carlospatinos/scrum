@@ -19,6 +19,7 @@ const getPlanningSession = id => {
   };
 
   try {
+    console.log('fetching');
     fetch(`${API_BASE_URL}/api/planningsession/${id}`, requestOptions)
       .then(response => response.json())
       .then(data => {
@@ -48,8 +49,8 @@ export default function ParticipateSession() {
   });
 
   useEffect(() => {
-    const email = localStorage.getItem(USER.EMAIL);
-    const fullName = localStorage.getItem(USER.FULL_NAME);
+    const email = localStorage.getItem(USER.EMAIL) || 'fake@email.com';
+    const fullName = localStorage.getItem(USER.FULL_NAME) || 'fake user';
 
     if (roomId) {
       getPlanningSession(roomId);
