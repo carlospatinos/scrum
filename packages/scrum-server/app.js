@@ -39,10 +39,10 @@ const CLIENT_PATH = '/../scrum-client/build/';
 var whitelist = [keys.reactAppURL, 'http://localhost:4000', 'http://localhost:3000'];
 var corsOptions = {
   origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'))
+      callback(new Error('Not allowed by CORS'));
     }
   },
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
