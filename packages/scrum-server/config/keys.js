@@ -10,7 +10,7 @@ const config = {
   sessionSecret: process.env.SESSION_SECRET || 'sessionSecret',
   port: process.env.PORT || 3000,
   jwtSecret: process.env.JWT_SECRET || "jwtSecret",
-  reactAppURL: process.env.REACT_APP_API_URL || "http://localhost:3000",
+  reactAppURL: process.env.REACT_APP_API_URL || "http://localhost:4000",
   google: {
     clientID: process.env.GOOGLE_CLIENT_ID || "clientID",
     clientSecret: process.env.GOOGLE_CLIENT_SECRET || "clientSecret",

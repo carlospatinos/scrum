@@ -77,9 +77,8 @@ export default function PlanningConfig() {
         }
       })
       .catch(e => {
-        console.log(e);
         // console.error(`=====> error:${e}`);
-        setErrorMessage('error');
+        setErrorMessage(e);
         // TODO this erro happen if API is not available but business errors like length of password go above. how to handle and display those?
       });
   }
