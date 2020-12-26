@@ -62,24 +62,24 @@ export default function PlanningConfig() {
       }),
     };
 
-    try {
-      fetch(`${API_BASE_URL}/api/planningsession`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            localStorage.setItem(PLANNING_ROOM_ID, data.planningRoomId);
-            history.push({
-              pathname: redirectedFrom,
-            });
-          } else {
-            setApiResponse(data.message);
-          }
-        });
-    } catch (e) {
-      // console.error(`=====> error:${e}`);
-      setErrorMessage({ error: e });
-      // TODO this erro happen if API is not available but business errors like length of password go above. how to handle and display those?
-    }
+    fetch(`${API_BASE_URL}/api/planningsession`, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          localStorage.setItem(PLANNING_ROOM_ID, data.planningRoomId);
+          history.push({
+            pathname: redirectedFrom,
+          });
+        } else {
+          setApiResponse(data.message);
+        }
+      })
+      .catch(e => {
+        console.log(e);
+        // console.error(`=====> error:${e}`);
+        setErrorMessage('error');
+        // TODO this erro happen if API is not available but business errors like length of password go above. how to handle and display those?
+      });
   }
 
   const isValidForm = validateForm();
