@@ -13,6 +13,7 @@ const PATHS = {
   VOTING_CARDS: '/votingcards/:roomId',
   PRIVACY_POLICY: '/privacypolicy',
   PROFILE: '/profile',
+  NOT_FOUND: '/*',
   // TODO move to a common path to be used by client and server?
   GOOGLE_LOGIN: '/auth/google',
   TWITTER_LOGIN: '/auth/twitter',

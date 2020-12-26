@@ -1,86 +1,34 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Switch, BrowserRouter as Router } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 
-import Header from './components/Header';
 import Footer from './components/Footer';
-import Home from './content/Home';
-import Login from './content/Login';
-import Signup from './content/Signup';
-import NotFound from './content/NotFound';
-import Logout from './content/Logout';
-import ShareSession from './content/ShareSession';
-import PlanningConfig from './content/PlanningConfig';
-import SessionStarted from './content/SessionStarted';
-import NewLogin from './content/NewLogin';
-import ParticipateSession from './content/ParticipateSession';
-import VotingCards from './content/VotingCards';
-import PrivacyPolicy from './content/PrivacyPolicy';
-import Profile from './content/Profile';
 
-import PATHS from './constants/paths';
-import { AppContext } from './lib/contextLib';
-import { TitledRoute, AuthenticatedRoute } from './components/router';
+import routes from './config/routes';
+import { AuthProvider } from './context';
+import AppRoute from './components/router/AppRoutes';
 
 function App() {
-  const [isAuthenticated, userHasAuthenticated] = useState(false);
-
   return (
     <div className="d-flex flex-column min-vh-100">
-      <AppContext.Provider value={{ isAuthenticated, userHasAuthenticated }}>
-        <Header />
+      <AuthProvider>
         <main className="flex-fill">
           <Container className="px-5">
             <Router>
               <Switch>
-                <TitledRoute exact path={PATHS.DEFAULT} component={Login} title="Login" />
-                <TitledRoute exact path={PATHS.NEW_LOGIN} component={NewLogin} title="Signup 2" />
-                <TitledRoute exact path={PATHS.HOME} component={Home} title="Home" />
-                <TitledRoute exact path={PATHS.LOGIN} component={Login} title="Login" />
-                <TitledRoute exact path={PATHS.SIGNUP} component={Signup} title="Signup" />
-                <TitledRoute exact path={PATHS.LOGOUT} component={Logout} title="Logout" />
-                <AuthenticatedRoute path={PATHS.PROFILE} component={Profile} title="Profile" />
-                <TitledRoute
-                  exact
-                  path={PATHS.SESSION_STARTED}
-                  component={SessionStarted}
-                  title="Session Started"
-                />
-                <TitledRoute
-                  exact
-                  path={PATHS.PLANNING_CONFIG}
-                  component={PlanningConfig}
-                  title="Planning Config"
-                />
-                <TitledRoute
-                  exact
-                  path={PATHS.SHARE_SESSION}
-                  component={ShareSession}
-                  title="ShareSession"
-                />
-                <TitledRoute
-                  path={PATHS.SESSION_PARTICIPATE}
-                  component={ParticipateSession}
-                  title="ParticipateSession"
-                />
-                <TitledRoute
-                  exact
-                  path={PATHS.VOTING_CARDS}
-                  component={VotingCards}
-                  title="VotingCards"
-                />
-                <TitledRoute
-                  exact
-                  path={PATHS.PRIVACY_POLICY}
-                  component={PrivacyPolicy}
-                  title="PrivacyPolicy"
-                />
-                <NotFound />
+                {routes.map(route => (
+                  <AppRoute
+                    key={route.path}
+                    path={route.path}
+                    component={route.component}
+                    isPrivate={route.isPrivate}
+                  />
+                ))}
               </Switch>
             </Router>
           </Container>
         </main>
-      </AppContext.Provider>
+      </AuthProvider>
       <Footer />
     </div>
   );

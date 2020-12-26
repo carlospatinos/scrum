@@ -12,9 +12,8 @@ import {
 import { useHistory, useLocation, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PATHS from '../../constants/paths';
-import { useAppContext } from '../../lib/contextLib';
+import { loginUser, useAuthState, useAuthDispatch } from '../../context';
 
-import { API_BASE_URL, ACCESS_TOKEN_NAME, USER } from '../../constants/apiConstants';
 import './Login.css';
 
 const validateForm = (email, password) => email.length > 0 && password.length > 0;
@@ -26,8 +25,8 @@ export default function Login() {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [apiResponse, setApiResponse] = useState('');
-  const { userHasAuthenticated } = useAppContext();
+  const dispatch = useAuthDispatch();
+  const { loading, errorMessage } = useAuthState();
   const redirectedFrom = location.state?.redirectedFrom?.pathname || PATHS.HOME;
 
   function goToExternalURL(type) {
@@ -44,41 +43,25 @@ export default function Login() {
     window.location = redirection;
   }
 
-  function handleSubmit(event) {
+  const handleSubmit = async event => {
     event.preventDefault();
 
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    };
-
     try {
-      fetch(`${API_BASE_URL}${PATHS.AUTH_LOCAL}`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          if (data.isAuth) {
-            localStorage.setItem(ACCESS_TOKEN_NAME, data.ACCESS_TOKEN);
-            localStorage.setItem(USER.FULL_NAME, data.fullName);
-            localStorage.setItem(USER.EMAIL, data.email);
-            userHasAuthenticated(true);
-            history.push({
-              pathname: redirectedFrom,
-            });
-          } else {
-            setApiResponse(data.message);
-          }
-        });
+      const response = await loginUser(dispatch, { email, password });
+      if (response.user === undefined) return;
+      console.log('going home');
+      history.push(PATHS.HOME);
     } catch (e) {
-      // console.error(e);
+      console.error(e);
     }
-  }
+  };
   const isValidForm = validateForm(email, password);
 
   return (
     <Container className="Login">
       <Form onSubmit={handleSubmit}>
         <h3>{t('Login.lblSignIn')}</h3>
+        {errorMessage ? <Alert variant="danger">{errorMessage}</Alert> : null}
         <Form.Row>
           <Col className="text-right">
             {t('Login.lblDonthaveaccount')}
@@ -109,10 +92,9 @@ export default function Login() {
             type="password"
           />
         </FormGroup>
-        {apiResponse && <Alert variant="danger">{apiResponse}</Alert>}
         <Button
           block
-          disabled={!isValidForm}
+          disabled={loading}
           variant={isValidForm ? 'primary' : 'secondary'}
           type="submit"
         >

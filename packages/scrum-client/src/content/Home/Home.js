@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { Row, Col, Container, CardDeck, Card } from 'react-bootstrap';
-import { API_BASE_URL } from '../../constants/apiConstants';
+import React from 'react';
+import { Row, Col, Container, CardDeck, Card, Button } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
+import { useAuthDispatch, logout, useAuthState } from '../../context';
+// import { API_BASE_URL } from '../../constants/apiConstants';
 import PATHS from '../../constants/paths';
 // import TagManager from 'react-gtm-module'
 
@@ -19,38 +21,46 @@ import PATHS from '../../constants/paths';
 // }
 
 const Home = () => {
-  const [userName, setUserName] = useState('');
-  useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'Access-Control-Allow-Credentials': true,
-      },
-    };
-    try {
-      fetch(`${API_BASE_URL}${PATHS.LOGIN_SUCCESS}`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          // eslint-disable-next-line
-          console.log(data);
-          if (data && data.user) {
-            setUserName(data.user.firstName);
-          }
-        });
-    } catch (e) {
-      // eslint-disable-next-line
-      console.error(e);
-    }
-  }, []);
+  // const [userName, setUserName] = useState('');
+  const dispatch = useAuthDispatch();
+  const userDetails = useAuthState();
+  const history = useHistory();
+  const handleLogout = () => {
+    logout(dispatch);
+    history.push(PATHS.HOME);
+  };
+
+  // useEffect(() => {
+  //   const requestOptions = {
+  //     method: 'GET',
+  //     credentials: 'include',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       Accept: 'application/json',
+  //       'Access-Control-Allow-Credentials': true,
+  //     },
+  //   };
+  //   try {
+  //     fetch(`${API_BASE_URL}${PATHS.LOGIN_SUCCESS}`, requestOptions)
+  //       .then(response => response.json())
+  //       .then(data => {
+  //         // eslint-disable-next-line
+  //         console.log(data);
+  //         if (data && data.user) {
+  //           setUserName(data.user.firstName);
+  //         }
+  //       });
+  //   } catch (e) {
+  //     // eslint-disable-next-line
+  //     console.error(e);
+  //   }
+  // }, []);
   return (
     <Container>
       <Row>
         <Col>
           <div className="pricing-Home px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-            <h1 className="display-4">User: {userName}</h1>
+            <h1 className="display-4">User: {userDetails.user.email}</h1>
             <p className="lead">
               Quickly build an pricing table for your potential customers with this Bootstrap
               example. Its built with default Bootstrap components and utilities with little
@@ -98,6 +108,7 @@ const Home = () => {
           className="py-5 mb-5 py-md-0 mb-md-0"
         />
       </Row>
+      <Button onClick={handleLogout}>Logout</Button>
     </Container>
   );
 };
