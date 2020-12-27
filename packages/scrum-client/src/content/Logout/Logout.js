@@ -20,6 +20,7 @@ function Logout(props) {
       fetch(`${API_BASE_URL}/api/logout`, requestOptions)
         .then(response => response.json())
         .then(data => {
+          // TODO remove this?
           console.log(data);
         });
     } catch (e) {

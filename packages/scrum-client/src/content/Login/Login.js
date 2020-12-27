@@ -49,7 +49,6 @@ export default function Login() {
     try {
       const response = await loginUser(dispatch, { email, password });
       if (response.user === undefined) return;
-      console.log('going home');
       history.push(PATHS.HOME);
     } catch (e) {
       console.error(e);
