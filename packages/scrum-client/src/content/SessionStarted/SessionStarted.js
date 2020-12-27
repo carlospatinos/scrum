@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, Container, Form } from 'react-bootstrap';
+import { END_POINTS } from 'scrum-common';
 import './SessionStarted.css';
 import { API_BASE_URL } from '../../constants/apiConstants';
 
@@ -17,7 +18,7 @@ export default function SessionStarted() {
     };
 
     try {
-      fetch(`${API_BASE_URL}/api/signup`, requestOptions)
+      fetch(`${API_BASE_URL}${END_POINTS.API}${END_POINTS.SIGN_UP}`, requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.success) {

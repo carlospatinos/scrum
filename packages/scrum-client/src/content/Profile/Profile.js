@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Alert, Button, Container, Form, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import { useHistory, useLocation } from 'react-router-dom';
+import { END_POINTS } from 'scrum-common';
 import PATHS from '../../constants/paths';
 
 import { API_BASE_URL, ACCESS_TOKEN_NAME } from '../../constants/apiConstants';
@@ -27,7 +28,7 @@ export default function Profile() {
     };
 
     try {
-      fetch(`${API_BASE_URL}/profile`, requestOptions)
+      fetch(`${API_BASE_URL}${END_POINTS.API}${END_POINTS.PROFILE}`, requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.isAuth) {

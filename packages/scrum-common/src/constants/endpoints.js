@@ -1,9 +1,10 @@
 const END_POINTS = {
   AUTH: '/auth',
   AUTH_LOCAL: '/local',
-  AUTH_GOOGLE: '/google',
-  AUTH_FACEBOOK: '/facebook',
-  AUTH_TWITTER: '/twitter',
+  GOOGLE_LOGIN: '/google',
+  FACEBOOK_LOGIN: '/facebook',
+  TWITTER_LOGIN: '/twitter',
+  LOGIN_SUCCESS: '/login/success',
   API: '/api',
   SIGN_UP: '/signup',
   PLANNING_SESSION: '/planningsession',

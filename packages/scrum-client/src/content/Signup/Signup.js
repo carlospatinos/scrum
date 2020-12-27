@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, Button, FormGroup, FormControl, FormLabel, Container, Form } from 'react-bootstrap';
+import { END_POINTS } from 'scrum-common';
 import './Signup.css';
 import { useHistory, useLocation, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -50,7 +51,7 @@ export default function Signup() {
       };
 
       try {
-        fetch(`${API_BASE_URL}${PATHS.SIGN_UP}`, requestOptions)
+        fetch(`${API_BASE_URL}${END_POINTS.API}${END_POINTS.SIGN_UP}`, requestOptions)
           .then(response => response.json())
           .then(data => {
             if (data.success) {

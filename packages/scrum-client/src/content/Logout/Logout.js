@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { Redirect, withRouter } from 'react-router-dom';
+import { END_POINTS } from 'scrum-common';
 import { API_BASE_URL } from '../../constants/apiConstants';
 import { useAuthDispatch, logout } from '../../context';
 
@@ -10,26 +11,28 @@ const requestOptions = {
   headers: { 'Content-Type': 'application/json' },
 };
 
+const handleLogout = dispatch => {
+  logout(dispatch);
+  try {
+    fetch(`${API_BASE_URL}${END_POINTS.API}${END_POINTS.LOGOUT}`, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        // TODO remove this?
+        // eslint-disable-next-line no-console
+        console.log(data);
+      });
+  } catch (e) {
+    // console.error(e);
+  }
+};
+
 function Logout(props) {
   const dispatch = useAuthDispatch();
   const { location } = props;
-  const handleLogout = () => {
-    logout(dispatch);
-    try {
-      fetch(`${API_BASE_URL}/api/logout`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          // TODO remove this?
-          console.log(data);
-        });
-    } catch (e) {
-      // console.error(e);
-    }
-  };
 
   useEffect(() => {
-    handleLogout();
-  }, []);
+    handleLogout(dispatch);
+  }, [dispatch]);
 
   return (
     <Redirect

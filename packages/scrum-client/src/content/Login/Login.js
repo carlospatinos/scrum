@@ -11,6 +11,7 @@ import {
 } from 'react-bootstrap';
 import { useHistory, useLocation, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { END_POINTS } from 'scrum-common';
 import PATHS from '../../constants/paths';
 import { loginUser, useAuthState, useAuthDispatch } from '../../context';
 
@@ -31,12 +32,13 @@ export default function Login() {
 
   function goToExternalURL(type) {
     let redirection;
+    const authUrl = process.env.REACT_APP_API_URL + END_POINTS.AUTH;
     if (type === 'google') {
-      redirection = process.env.REACT_APP_API_URL + PATHS.GOOGLE_LOGIN;
+      redirection = authUrl + END_POINTS.GOOGLE_LOGIN;
     } else if (type === 'facebook') {
-      redirection = process.env.REACT_APP_API_URL + PATHS.FACEBOOK_LOGIN;
+      redirection = authUrl + END_POINTS.FACEBOOK_LOGIN;
     } else if (type === 'twitter') {
-      redirection = process.env.REACT_APP_API_URL + PATHS.TWITTER_LOGIN;
+      redirection = authUrl + END_POINTS.TWITTER_LOGIN;
     }
     // eslint-disable-next-line
     console.log('redirecting to:', redirection);
@@ -51,6 +53,7 @@ export default function Login() {
       if (response.user === undefined) return;
       history.push(PATHS.HOME);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error(e);
     }
   };
