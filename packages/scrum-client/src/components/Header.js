@@ -23,7 +23,9 @@ export default function Header() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="justify-content-end" activeKey={PATHS.LOGIN}>
               {routes.filter(visibleRouteCriteria).map(route => (
-                <Nav.Link href={route.path}>{route.title}</Nav.Link>
+                <Nav.Link key={route.path} href={route.path}>
+                  {route.title}
+                </Nav.Link>
               ))}
             </Nav>
           </Navbar.Collapse>
