@@ -3,7 +3,7 @@ import { Redirect, withRouter } from 'react-router-dom';
 import TitledRoute from './TitledRoute';
 import PATHS from '../../constants/paths';
 import { ACCESS_TOKEN_NAME } from '../../constants/apiConstants';
-
+// TODO REMOVE ENTIRE FILE
 const AuthenticatedRoute = ({ authUserTypes, location, ...rest }) => {
   const isAuthenticated = !!localStorage.getItem(ACCESS_TOKEN_NAME);
   return isAuthenticated ? (

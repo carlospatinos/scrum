@@ -1,9 +1,6 @@
 import React from 'react';
-import { Row, Col, Container, CardDeck, Card, Button } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
-import { useAuthDispatch, logout, useAuthState } from '../../context';
-// import { API_BASE_URL } from '../../constants/apiConstants';
-import PATHS from '../../constants/paths';
+import { Row, Col, Container, CardDeck, Card } from 'react-bootstrap';
+import { useAuthState } from '../../context';
 // import TagManager from 'react-gtm-module'
 
 // if(process.env.NODE_ENV === "development" && !!process.env.REACT_APP_GTM_ID) {
@@ -21,40 +18,8 @@ import PATHS from '../../constants/paths';
 // }
 
 const Home = () => {
-  // const [userName, setUserName] = useState('');
-  const dispatch = useAuthDispatch();
   const userDetails = useAuthState();
-  const history = useHistory();
-  const handleLogout = () => {
-    logout(dispatch);
-    history.push(PATHS.HOME);
-  };
 
-  // useEffect(() => {
-  //   const requestOptions = {
-  //     method: 'GET',
-  //     credentials: 'include',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       Accept: 'application/json',
-  //       'Access-Control-Allow-Credentials': true,
-  //     },
-  //   };
-  //   try {
-  //     fetch(`${API_BASE_URL}${PATHS.LOGIN_SUCCESS}`, requestOptions)
-  //       .then(response => response.json())
-  //       .then(data => {
-  //         // eslint-disable-next-line
-  //         console.log(data);
-  //         if (data && data.user) {
-  //           setUserName(data.user.firstName);
-  //         }
-  //       });
-  //   } catch (e) {
-  //     // eslint-disable-next-line
-  //     console.error(e);
-  //   }
-  // }, []);
   return (
     <Container>
       <Row>
@@ -108,7 +73,6 @@ const Home = () => {
           className="py-5 mb-5 py-md-0 mb-md-0"
         />
       </Row>
-      <Button onClick={handleLogout}>Logout</Button>
     </Container>
   );
 };

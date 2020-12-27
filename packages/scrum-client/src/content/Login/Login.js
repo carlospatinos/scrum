@@ -94,7 +94,7 @@ export default function Login() {
         </FormGroup>
         <Button
           block
-          disabled={loading}
+          disabled={!isValidForm || loading}
           variant={isValidForm ? 'primary' : 'secondary'}
           type="submit"
         >

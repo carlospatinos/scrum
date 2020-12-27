@@ -9,7 +9,8 @@ import {
   subscribeToRoom,
   sendMessage,
 } from '../../hooks/SocketEvents';
-import { API_BASE_URL, USER } from '../../constants/apiConstants';
+import { API_BASE_URL } from '../../constants/apiConstants';
+import { useAuthState } from '../../context';
 import './ParticipateSession.css';
 
 const getPlanningSession = id => {
@@ -39,6 +40,8 @@ const getPlanningSession = id => {
 };
 
 export default function ParticipateSession() {
+  const userDetails = useAuthState();
+
   const { id: roomId } = useParams();
   const [response, setResponse] = useState('');
   const [room, setRoom] = useState({
@@ -49,8 +52,8 @@ export default function ParticipateSession() {
   });
 
   useEffect(() => {
-    const email = localStorage.getItem(USER.EMAIL) || 'fake@email.com';
-    const fullName = localStorage.getItem(USER.FULL_NAME) || 'fake user';
+    // TODO get this from context
+    const { email, fullName } = userDetails.user;
 
     if (roomId) {
       getPlanningSession(roomId);

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Route, withRouter } from 'react-router-dom';
-
+// TODO REMOVE ENTIRE FILE
 const TitledRoute = props => {
   const { title, pageView = () => {}, location, ...rest } = props;
 

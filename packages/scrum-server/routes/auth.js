@@ -6,7 +6,6 @@ const keys = require('../config/keys');
 const router = express.Router();
 
 router.post('/local', (req, res, next) => {
-  console.log(req.body);
   let token = req.cookies.auth;
   User.findByToken(token, (err, user) => {
     if (err) {

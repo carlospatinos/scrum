@@ -4,6 +4,7 @@ export async function loginUser(dispatch, loginPayload) {
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
+    // 'Access-Control-Allow-Credentials': true,
     body: JSON.stringify(loginPayload),
   };
 
@@ -33,4 +34,5 @@ export async function logout(dispatch) {
   dispatch({ type: 'LOGOUT' });
   localStorage.removeItem(CURRENT_USER);
   localStorage.removeItem(ACCESS_TOKEN_NAME);
+  // TODO is this needed? localStorage.clear();
 }
