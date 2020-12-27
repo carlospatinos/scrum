@@ -15,20 +15,16 @@ export default function Header() {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="justify-content-end" activeKey={PATHS.LOGIN}>
               {!userDetails.login_access_token
-                ? routes.map(route => {
-                    return route.isPrivate || !route.isVisibleOnMenu ? (
-                      <div />
-                    ) : (
-                      <Nav.Link href={route.path}>{route.title}</Nav.Link>
-                    );
-                  })
-                : routes.map(route => {
-                    return route.isPrivate && route.isVisibleOnMenu ? (
-                      <Nav.Link href={route.path}>{route.title}</Nav.Link>
-                    ) : (
-                      <div />
-                    );
-                  })}
+                ? routes
+                    .filter(route => {
+                      return !route.isPrivate && route.isVisibleOnMenu;
+                    })
+                    .map(route => <Nav.Link href={route.path}>{route.title}</Nav.Link>)
+                : routes
+                    .filter(route => {
+                      return route.isPrivate && route.isVisibleOnMenu;
+                    })
+                    .map(route => <Nav.Link href={route.path}>{route.title}</Nav.Link>)}
             </Nav>
           </Navbar.Collapse>
         </Navbar>
