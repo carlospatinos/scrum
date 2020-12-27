@@ -4,8 +4,16 @@ import PATHS from '../constants/paths';
 import routes from '../config/routes';
 import { useAuthState } from '../context';
 
+const visibleRoute = isUserLoggedIn => {
+  const privacy = isUserLoggedIn ? route => route.isPrivate : route => !route.isPrivate;
+  return route => privacy(route) && route.isVisibleOnMenu;
+};
+
 export default function Header() {
   const userDetails = useAuthState();
+  const isLoggedIn = userDetails.login_access_token;
+  const visibleRouteCriteria = visibleRoute(isLoggedIn);
+
   return (
     <header>
       <div>
@@ -14,17 +22,9 @@ export default function Header() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="justify-content-end" activeKey={PATHS.LOGIN}>
-              {!userDetails.login_access_token
-                ? routes
-                    .filter(route => {
-                      return !route.isPrivate && route.isVisibleOnMenu;
-                    })
-                    .map(route => <Nav.Link href={route.path}>{route.title}</Nav.Link>)
-                : routes
-                    .filter(route => {
-                      return route.isPrivate && route.isVisibleOnMenu;
-                    })
-                    .map(route => <Nav.Link href={route.path}>{route.title}</Nav.Link>)}
+              {routes.filter(visibleRouteCriteria).map(route => (
+                <Nav.Link href={route.path}>{route.title}</Nav.Link>
+              ))}
             </Nav>
           </Navbar.Collapse>
         </Navbar>
