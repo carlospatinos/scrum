@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import { Redirect, withRouter } from 'react-router-dom';
-import { useAppContext } from '../../lib/contextLib';
 import { API_BASE_URL } from '../../constants/apiConstants';
+import { useAuthDispatch, logout } from '../../context';
+
 import PATHS from '../../constants/paths';
 
 const requestOptions = {
@@ -10,27 +11,22 @@ const requestOptions = {
 };
 
 function Logout(props) {
-  const { userHasAuthenticated } = useAppContext();
+  const dispatch = useAuthDispatch();
   const { location } = props;
-
-  // const history = useHistory();
-
-  /* eslint-disable */
-
-  const handleLogout= ()  => {
-    userHasAuthenticated(false);
-    localStorage.clear();
+  const handleLogout = () => {
+    // userHasAuthenticated(false);
+    logout(dispatch);
     try {
       fetch(`${API_BASE_URL}/api/logout`, requestOptions)
         .then(response => response.json())
         .then(data => {
+          // TODO remove this?
           console.log(data);
-          // history.push('/login');
         });
     } catch (e) {
       // console.error(e);
     }
-  }
+  };
 
   useEffect(() => {
     handleLogout();

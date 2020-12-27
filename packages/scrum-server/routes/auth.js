@@ -27,10 +27,12 @@ router.post('/local', (req, res, next) => {
             if (err) return res.status(400).send(err);
             return res.cookie('auth', user.token).json({
               isAuth: true,
-              id: user._id,
-              email: user.email,
-              fullName: `${user.firstName} ${user.lastName}`,
-              ACCESS_TOKEN: user.token
+              login_access_token: user.token,
+              user: {
+                id: user._id,
+                email: user.email,
+                fullName: `${user.firstName} ${user.lastName}`,
+              }
             });
           });
         });

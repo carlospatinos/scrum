@@ -9,6 +9,6 @@ test('renders menu', () => {
       <App />
     </I18nextProvider>
   );
-  const linkElement = screen.getByText(/Signup/i);
+  const linkElement = screen.getByText(/Scrum/i);
   expect(linkElement).toBeInTheDocument();
 });

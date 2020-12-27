@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Row, Col, Container, CardDeck, Card } from 'react-bootstrap';
-import { API_BASE_URL } from '../../constants/apiConstants';
-import PATHS from '../../constants/paths';
+import { useAuthState } from '../../context';
 // import TagManager from 'react-gtm-module'
 
 // if(process.env.NODE_ENV === "development" && !!process.env.REACT_APP_GTM_ID) {
@@ -19,38 +18,14 @@ import PATHS from '../../constants/paths';
 // }
 
 const Home = () => {
-  const [userName, setUserName] = useState('');
-  useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-      credentials: 'include',
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'Access-Control-Allow-Credentials': true,
-      },
-    };
-    try {
-      fetch(`${API_BASE_URL}${PATHS.LOGIN_SUCCESS}`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          // eslint-disable-next-line
-          console.log(data);
-          if (data && data.user) {
-            setUserName(data.user.firstName);
-          }
-        });
-    } catch (e) {
-      // eslint-disable-next-line
-      console.error(e);
-    }
-  }, []);
+  const userDetails = useAuthState();
+
   return (
     <Container>
       <Row>
         <Col>
           <div className="pricing-Home px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-            <h1 className="display-4">User: {userName}</h1>
+            <h1 className="display-4">User: {userDetails.user.email}</h1>
             <p className="lead">
               Quickly build an pricing table for your potential customers with this Bootstrap
               example. Its built with default Bootstrap components and utilities with little
