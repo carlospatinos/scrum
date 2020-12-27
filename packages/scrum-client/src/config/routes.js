@@ -86,7 +86,7 @@ const routes = [
   {
     path: PATHS.DEFAULT,
     component: Login,
-    title: 'Login',
+    title: 'Root',
     isPrivate: false,
     isVisibleOnMenu: false,
   },
