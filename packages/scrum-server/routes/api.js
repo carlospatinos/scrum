@@ -87,7 +87,7 @@ router.get('/planningsession/:id', function (req, res, next) {
   const planningRoomId = req.params.id;
   if (!planningRoomId || !ObjectId.isValid(planningRoomId)) {
     console.log("invalid session id");
-    return res.status(400).json({ success: false });
+    return res.status(400).json({ success: false, message: 'invalid session id' });
   }
   PlanningSession.findOne({ _id: planningRoomId }, function (err, session) {
     if (err || !session) {

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Alert, Button, Container, Form, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import { useHistory, useLocation } from 'react-router-dom';
 import PATHS from '../../constants/paths';
-import { useAppContext } from '../../lib/contextLib';
 
 import { API_BASE_URL, ACCESS_TOKEN_NAME } from '../../constants/apiConstants';
 import './Profile.css';
@@ -16,7 +15,6 @@ export default function Profile() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [apiResponse, setApiResponse] = useState('');
-  const { userHasAuthenticated } = useAppContext();
   const redirectedFrom = location.state?.redirectedFrom?.pathname || PATHS.HOME;
 
   function handleSubmit(event) {
@@ -34,7 +32,6 @@ export default function Profile() {
         .then(data => {
           if (data.isAuth) {
             localStorage.getItem(ACCESS_TOKEN_NAME);
-            userHasAuthenticated(true);
             history.push({
               pathname: redirectedFrom,
             });

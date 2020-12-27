@@ -14,7 +14,6 @@ function Logout(props) {
   const dispatch = useAuthDispatch();
   const { location } = props;
   const handleLogout = () => {
-    // userHasAuthenticated(false);
     logout(dispatch);
     try {
       fetch(`${API_BASE_URL}/api/logout`, requestOptions)

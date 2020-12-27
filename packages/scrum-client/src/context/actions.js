@@ -36,4 +36,5 @@ export async function logout(dispatch) {
   localStorage.removeItem(CURRENT_USER);
   localStorage.removeItem(ACCESS_TOKEN_NAME);
   // TODO is this needed? localStorage.clear();
+  localStorage.clear();
 }
