@@ -1,13 +1,38 @@
 {
-    "translations": {
-        "paragraph": "Introduction",
-        "author": {
-            "title": "Author Name",
-            "value": "Tariqul"
-        },
-        "description": {
-            "title": "description",
-            "value": "Whenever I smell strong tobacco smoke when I'm in an enclosed space such as a room, train, or aircraft, I begin to get angry. There are several reasons. First, medical researchers have shown that secondhand smoke, that is, the smoke from other people's cigarettes, causes cancer and other health problems. If the smoke were car exhaust or burning trash, we would put out the fire and open the windows to get rid of the smoke. Second, it stinks. The smoke drifts away from the smoker and fills the room."
-        }
+    "Signup": {
+        "lblFirstName": "First Name",
+        "lblLastName": "Last Name",
+        "lblPassword2": "Confirm password",
+        "lblAlreadyRegistered": "Already registered",
+        "lnkSignIn": "Sign In?",
+        "lblEmail": "Email",
+        "lblPassword": "Password"
+    },
+    "Login": {
+        "lblSignIn": "Sign In",
+        "lblDonthaveaccount": "Do not have an account?",
+        "lnkSignup": "Sing Up",
+        "lblEmail": "Email",
+        "lblPassword": "Password",
+        "btnLogin": "Login",
+        "lblOr": "OR",
+        "btnLoginWithGoogle": "Login with Google",
+        "btnLoginWithTwitter": "Login with Twitter",
+        "btnLoginWithFacebook": "Login with Facebook",
+        "lblForgotPassword": "Forgot your password?"
+    },
+    "PlanningConfig": {
+        "lblTitle": "Session name",
+        "lblValues": "Values:",
+        "lblCreationMethod": "User Stories creation method:",
+        "btnCreateSession": "Create Session",
+        "lblAllowUnauthenticated": "Allow unauthenticated"
+    },
+    "ShareSession": {
+        "lblInviteMembers": "Invite members",
+        "lblShareToJoin": "Share the information below and when you are ready",
+        "btnStartSession": "Start session",
+        "lblLetScanQR": "Let them scan the QR (If you are sharing the screen).",
+        "lblShareLink": "Or share this link with them."
     }
 }

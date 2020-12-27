@@ -36,13 +36,20 @@ i18n.configure({
 });
 
 const CLIENT_PATH = '/../scrum-client/build/';
-// TODO change this 
-// view engine setup
-app.use(cors({
-  origin: keys.reactAppURL, // allow to server to accept request from different origin
+var whitelist = [keys.reactAppURL, 'http://localhost:4000', 'http://localhost:3000'];
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   credentials: true // allow session cookie from browser to pass through
-}));
+}
+
+app.use(cors(corsOptions));
 app.use(i18n.init);
 app.use(logger('dev'));
 app.use(express.json());

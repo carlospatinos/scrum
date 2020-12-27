@@ -58,7 +58,7 @@ function App() {
                   component={ShareSession}
                   title="ShareSession"
                 />
-                <AuthenticatedRoute
+                <TitledRoute
                   path={PATHS.SESSION_PARTICIPATE}
                   component={ParticipateSession}
                   title="ParticipateSession"

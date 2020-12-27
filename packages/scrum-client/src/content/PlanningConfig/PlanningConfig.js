@@ -11,6 +11,7 @@ import {
   FormCheck,
 } from 'react-bootstrap';
 import './PlanningConfig.css';
+import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import PATHS from '../../constants/paths';
 
@@ -19,6 +20,7 @@ import { API_BASE_URL, PLANNING_ROOM_ID } from '../../constants/apiConstants';
 export default function PlanningConfig() {
   const history = useHistory();
   const location = useLocation();
+  const { t } = useTranslation();
   const [title, setTitle] = useState('');
   const [sampleValues, setSampleValues] = useState('');
   // const [userStoriesCreation] = useState('');
@@ -50,10 +52,10 @@ export default function PlanningConfig() {
 
   function handleSubmit(event) {
     event.preventDefault();
-
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify({
         title,
         cardDeck,
@@ -62,24 +64,23 @@ export default function PlanningConfig() {
       }),
     };
 
-    try {
-      fetch(`${API_BASE_URL}/api/planningsession`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          if (data.success) {
-            localStorage.setItem(PLANNING_ROOM_ID, data.planningRoomId);
-            history.push({
-              pathname: redirectedFrom,
-            });
-          } else {
-            setApiResponse(data.message);
-          }
-        });
-    } catch (e) {
-      // console.error(`=====> error:${e}`);
-      setErrorMessage({ error: e });
-      // TODO this erro happen if API is not available but business errors like length of password go above. how to handle and display those?
-    }
+    fetch(`${API_BASE_URL}${PATHS.PLANNING_SESSION}`, requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          localStorage.setItem(PLANNING_ROOM_ID, data.planningRoomId);
+          history.push({
+            pathname: redirectedFrom,
+          });
+        } else {
+          setApiResponse(data.message);
+        }
+      })
+      .catch(e => {
+        // console.error(`=====> error:${e}`);
+        setErrorMessage(e);
+        // TODO this erro happen if API is not available but business errors like length of password go above. how to handle and display those?
+      });
   }
 
   const isValidForm = validateForm();
@@ -88,7 +89,7 @@ export default function PlanningConfig() {
     <Container className="Signup">
       <Form onSubmit={handleSubmit}>
         <FormGroup controlId="planningTitle">
-          <FormLabel>Planning title</FormLabel>
+          <FormLabel>{t('PlanningConfig.lblTitle')}</FormLabel>
           <FormControl value={title} onChange={e => setTitle(e.target.value)} name="title" />
         </FormGroup>
         <FormGroup controlId="cardDeck">
@@ -109,13 +110,13 @@ export default function PlanningConfig() {
           </FormControl>
         </FormGroup>
         <FormGroup controlId="sampleValues">
-          <FormLabel>Values: </FormLabel>
+          <FormLabel>{t('PlanningConfig.lblValues')} </FormLabel>
           <FormControl value={sampleValues} name="sampleValues" disabled />
         </FormGroup>
         <fieldset>
           <Form.Group>
             <Form.Label as="userStoriesCreationMethod" column>
-              User Stories creation method:
+              {t('PlanningConfig.lblCreationMethod')}
             </Form.Label>
             <Col onChange={e => setUserStoriesCreationMethod(e.target.value)}>
               <Form.Check
@@ -144,7 +145,7 @@ export default function PlanningConfig() {
         <FormGroup controlId="allowUnauthenticated">
           <FormCheck
             type="checkbox"
-            label="Allow unauthenticated"
+            label={t('PlanningConfig.lblAllowUnauthenticated')}
             onChange={e => setAllowUnauthenticated(e.target.checked)}
             name="allowUnauthenticated"
           />
@@ -158,7 +159,7 @@ export default function PlanningConfig() {
           type="submit"
           variant={isValidForm ? 'primary' : 'secondary'}
         >
-          Start Session
+          {t('PlanningConfig.btnCreateSession')}
         </Button>
       </Form>
     </Container>
