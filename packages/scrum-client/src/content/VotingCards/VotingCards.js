@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
+import { END_POINTS } from 'scrum-common';
 import { API_BASE_URL } from '../../constants/apiConstants';
 import ClickableCard from '../../components/ClickableCard';
 import GridGenerator from '../../components/GridGenerator';
@@ -20,7 +21,10 @@ export default function Cards() {
     };
 
     try {
-      fetch(`${API_BASE_URL}/api/planningsession/${roomIdParam}`, requestOptions)
+      fetch(
+        `${API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}/${roomIdParam}`,
+        requestOptions
+      )
         .then(response => response.json())
         .then(data => {
           if (data && data.success) {

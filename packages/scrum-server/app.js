@@ -8,6 +8,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
 const cors = require('cors');
+const { END_POINTS } = require('scrum-common');
 const keys = require('./config/keys');
 
 require('./authStrategies/localStrategy')(passport);
@@ -83,9 +84,9 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/', indexRouter);
-app.use('/api', api);
-app.use('/auth', authRouter);
+app.use(END_POINTS.ROOT, indexRouter);
+app.use(END_POINTS.API, api);
+app.use(END_POINTS.AUTH, authRouter);
 
 // Handles any requests that don't match the ones above
 app.get('*', (req, res, next) => {

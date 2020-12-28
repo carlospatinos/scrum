@@ -1,5 +1,6 @@
 {
     "Signup": {
+        "btnSignup": "Sing Up",
         "lblFirstName": "First Name",
         "lblLastName": "Last Name",
         "lblPassword2": "Confirm password",

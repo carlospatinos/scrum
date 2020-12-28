@@ -1,11 +1,12 @@
 const express = require('express');
 const passport = require('passport');
 const i18n = require('i18n');
+const { END_POINTS } = require('scrum-common');
 const User = require('../models/user.js');
 const keys = require('../config/keys');
 const router = express.Router();
 
-router.post('/local', (req, res, next) => {
+router.post(END_POINTS.AUTH_LOCAL, (req, res, next) => {
   let token = req.cookies.auth;
   User.findByToken(token, (err, user) => {
     if (err) {
@@ -41,13 +42,13 @@ router.post('/local', (req, res, next) => {
   });
 });
 
-router.get('/google', passport.authenticate('google', { scope: ['email', 'profile'] }), (req, res) => {
+router.get(END_POINTS.GOOGLE_LOGIN, passport.authenticate('google', { scope: ['email', 'profile'] }), (req, res) => {
   console.log('google auth');
 });
 // Api call back function
 // TODO verify how does this work with React
 // TODO drom the keys.js
-router.get('/google/redirect',
+router.get(`${END_POINTS.GOOGLE_LOGIN}/redirect`,
   passport.authenticate('google', {
     scope: ['email', 'profile'],
     // successRedirect: 'http://localhost:4000/planningconfig', 
@@ -60,9 +61,9 @@ router.get('/google/redirect',
   }
 );
 
-router.get("/facebook", passport.authenticate("facebook"));
+router.get(END_POINTS.FACEBOOK_LOGIN, passport.authenticate("facebook"));
 
-router.get("/facebook/redirect",
+router.get(`${END_POINTS.FACEBOOK_LOGIN}/redirect`,
   passport.authenticate("facebook"
   // {
   //   successRedirect: "/",
@@ -76,13 +77,13 @@ router.get("/facebook/redirect",
   }
 );
 
-router.get('/twitter', passport.authenticate('twitter'), (req, res) => {
+router.get(END_POINTS.TWITTER_LOGIN, passport.authenticate('twitter'), (req, res) => {
   console.log('twitter auth');
 });
 // Api call back function
 // TODO verify how does this work with React
 // TODO drom the keys.js
-router.get('/twitter/redirect',
+router.get(`${END_POINTS.TWITTER_LOGIN}/redirect`,
   passport.authenticate('twitter'),
   // {
   //   successRedirect: 'http://localhost:4000/planningconfig', 
@@ -95,7 +96,7 @@ router.get('/twitter/redirect',
   }
 );
 
-router.get("/login/success", (req, res, next) => {
+router.get(END_POINTS.LOGIN_SUCCESS, (req, res, next) => {
   console.log(req.user);
   if (req.user) {
     return res.json({

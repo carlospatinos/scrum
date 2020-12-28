@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+import { END_POINTS } from 'scrum-common';
 import { API_BASE_URL, ACCESS_TOKEN_NAME, CURRENT_USER } from '../constants/apiConstants';
 
 export async function loginUser(dispatch, loginPayload) {
@@ -10,7 +12,10 @@ export async function loginUser(dispatch, loginPayload) {
 
   try {
     dispatch({ type: 'REQUEST_LOGIN' });
-    const response = await fetch(`${API_BASE_URL}/auth/local`, requestOptions);
+    const response = await fetch(
+      `${API_BASE_URL}${END_POINTS.AUTH}${END_POINTS.AUTH_LOCAL}`,
+      requestOptions
+    );
     const data = await response.json();
 
     if (data.user) {

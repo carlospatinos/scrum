@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import { END_POINTS } from 'scrum-common';
 import TeamList from '../../components/TeamList';
 import {
   initiateSocket,
@@ -21,7 +22,7 @@ const getPlanningSession = id => {
 
   try {
     console.log('fetching');
-    fetch(`${API_BASE_URL}/api/planningsession/${id}`, requestOptions)
+    fetch(`${API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}/${id}`, requestOptions)
       .then(response => response.json())
       .then(data => {
         if (data.success) {
@@ -71,7 +72,7 @@ export default function ParticipateSession() {
     return () => {
       disconnectSocket();
     };
-  }, [roomId]);
+  }, [roomId, userDetails.user]);
 
   return (
     <Container className="ParticipateSession">

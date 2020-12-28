@@ -1,0 +1,29 @@
+{
+  "name": "scrum-common",
+  "version": "0.0.0",
+  "description": "Common files between server and client packages",
+  "author": "christopher-chavez <doncesarts@gmail.com>",
+  "homepage": "https://github.com/carlospatinos/scrum/tree/master/packages/scrum-common#readme",
+  "license": "ISC",
+  "main": "src/index.js",
+  "directories": {
+    "src": "src",
+    "test": "__tests__"
+  },
+  "files": [
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carlospatinos/scrum.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 0"
+  },
+  "bugs": {
+    "url": "https://github.com/carlospatinos/scrum/issues"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.7.0"
+  }
+}
