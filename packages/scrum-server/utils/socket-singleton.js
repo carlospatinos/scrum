@@ -1,4 +1,6 @@
 const socketIo = require('socket.io');
+const { EVENT } = require('scrum-common');
+
 const { SocketEvents } = require('../src/socket/SocketEvents');
 
 class SocketService {
@@ -8,13 +10,12 @@ class SocketService {
     console.log("--server--SocketService");
     const socketEventIO = SocketEvents(this.io);
 
-    this.io.on('connection', socket => {
+    this.io.on(EVENT.CONNECTION, socket => {
       console.log("--server--connection");
       const socketEvent  = socketEventIO(socket);
-      socket.on('join', socketEvent.joinUserToRoom);
-      socket.on('send_message', socketEvent.sendMessageToRoom);
-
-      socket.on('disconnect', () => {
+      socket.on(EVENT.JOIN, socketEvent.joinUserToRoom);
+      socket.on(EVENT.SEND_MESSAGE, socketEvent.sendMessageToRoom);
+      socket.on(EVENT.DISCONNECT, () => {
         console.log("--server--disconnect");
       });
 
