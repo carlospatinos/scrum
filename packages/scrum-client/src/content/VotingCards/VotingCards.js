@@ -11,7 +11,7 @@ import './VotingCards.css';
 
 export default function Cards() {
   const { roomId } = useParams();
-  const [cardDeck, setCardDeck] = useState([{ val: 1, image: '/card-decks/number-1.svg' }]);
+  const [cardDeck, setCardDeck] = useState([]);
   const [sessionInformation, setSessionInformation] = useState({});
 
   function getSessionInformation(setCardDeckParam, roomIdParam) {
