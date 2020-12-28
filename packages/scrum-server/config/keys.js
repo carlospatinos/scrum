@@ -10,23 +10,23 @@ const config = {
   sessionSecret: process.env.SESSION_SECRET || 'sessionSecret',
   port: process.env.PORT || 3000,
   jwtSecret: process.env.JWT_SECRET || "jwtSecret",
-  reactAppURL: process.env.REACT_APP_API_URL || "http://localhost:4000",
+  reactAppURL: process.env.REACT_APP_API_URL || "http://scrum-app-local.com:4000",
   google: {
     clientID: process.env.GOOGLE_CLIENT_ID || "clientID",
     clientSecret: process.env.GOOGLE_CLIENT_SECRET || "clientSecret",
-    callback: process.env.GOOGLE_CALLBACK ||  "http://localhost:3000/auth/google/redirect"
+    callback: process.env.GOOGLE_CALLBACK ||  "http://scrum-app-local.com:3000/auth/google/redirect"
   },
   facebook: {
     clientID: process.env.FACEBOOK_CLIENT_ID || "clientID",
     clientSecret: process.env.FACEBOOK_CLIENT_SECRET || "clientSecret",
-    callback: process.env.FACEBOOK_CALLBACK ||  "http://localhost:3000/auth/google/redirect"
+    callback: process.env.FACEBOOK_CALLBACK ||  "http://scrum-app-local.com:3000/auth/facebook/redirect"
   },
   twitter: {
     consumerKey: process.env.TWITTER_CONSUMER_KEY || "consumerKey",
     consumerSecret: process.env.TWITTER_CONSUMER_SECRET || "consumerSecret",
     accessToken: process.env.TWITTER_ACCESS_TOKEN || "accessToken",
     accessTokenSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET || "accessTokenSecret",
-    callback: process.env.TWITTER_CALLBACK || "http://localhost:3000/auth/twitter/redirect"
+    callback: process.env.TWITTER_CALLBACK || "http://scrum-app-local.com:3000/auth/twitter/redirect"
   }
 };
 

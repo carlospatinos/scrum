@@ -12,9 +12,6 @@ export async function loginUser(dispatch, loginPayload) {
     dispatch({ type: 'REQUEST_LOGIN' });
     const response = await fetch(`${API_BASE_URL}/auth/local`, requestOptions);
     const data = await response.json();
-    // TODO remove consoles?
-    console.log('loginPayload', loginPayload);
-    console.log('data: ', data);
 
     if (data.user) {
       dispatch({ type: 'LOGIN_SUCCESS', payload: data });

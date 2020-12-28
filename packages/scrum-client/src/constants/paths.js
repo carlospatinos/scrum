@@ -19,7 +19,6 @@ const PATHS = {
   TWITTER_LOGIN: '/auth/twitter',
   FACEBOOK_LOGIN: '/auth/facebook',
   AUTH_LOCAL: '/auth/local',
-  LOGIN_SUCCESS: '/auth/login/success',
   SIGN_UP: '/api/signup',
   PLANNING_SESSION: '/api/planningsession',
 };

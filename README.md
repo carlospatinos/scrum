@@ -25,6 +25,10 @@ npx lerna bootstrap
 
 ## Set up
 
+Before starting you need to set up couple of things
+1- Create a mongo db instance somewhere and store the information in your env variables following the template.env
+2- Set up scrum-app-local.com domain in your /etc/hosts pointing to localhost. Mandatory for facebook oauth
+
 There are 2 ways to start the app, the first one is for development purposes where 2 services run, the client and the server. In this mode all changes to the client or server are updated on the fly, and you can initiate it as follows:
 
 ```sh

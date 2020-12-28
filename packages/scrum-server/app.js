@@ -36,7 +36,7 @@ i18n.configure({
 });
 
 const CLIENT_PATH = '/../scrum-client/build/';
-var whitelist = [keys.reactAppURL, 'http://localhost:4000', 'http://localhost:3000'];
+var whitelist = [keys.reactAppURL, 'http://scrum-app-local.com:4000', 'http://scrum-app-local.com:3000'];
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {

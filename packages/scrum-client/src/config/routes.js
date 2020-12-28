@@ -30,7 +30,7 @@ const routes = [
     path: PATHS.HOME,
     component: Home,
     title: 'Home',
-    isPrivate: true,
+    isPrivate: false,
     isVisibleOnMenu: true,
   },
   {
