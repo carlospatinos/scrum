@@ -1,6 +1,8 @@
 /* eslint-disable */
 
 const express = require('express');
+const { END_POINTS } = require('scrum-common');
+
 const router = express.Router();
 const i18n = require('i18n');
 
@@ -12,16 +14,16 @@ const PlanningSession = require('../models/planningSession');
 const ObjectId = require('mongoose').Types.ObjectId;
 
 
-router.get('/', (req, res, next) => {
+router.get(END_POINTS.ROOT, (req, res, next) => {
   res.json({ message: i18n.__('apiWorking') });
 });
 
-router.post('/', (req, res, next) => {
+router.post(END_POINTS.ROOT, (req, res, next) => {
   const { email } = req.body;
   res.json({ message: i18n.__('apiWorking') });
 });
 
-router.post('/signup', function (req, res, next) {
+router.post(END_POINTS.SIGN_UP, function (req, res, next) {
   const newUser = new User(req.body);
   const typeForNewUser = new UserType();
   typeForNewUser.type = "admin";
@@ -47,8 +49,7 @@ router.post('/signup', function (req, res, next) {
 });
 
 
-
-router.get('/profile', auth, (req, res, next) => {
+router.get(END_POINTS.LOGOUT, auth, (req, res, next) => {
   console.log('profile');
   res.json({
     isAuth: true,
@@ -58,7 +59,7 @@ router.get('/profile', auth, (req, res, next) => {
   });
 });
 
-router.get('/logout', auth, (req, res) => {
+router.get(END_POINTS.PROFILE, auth, (req, res) => {
   console.log('logout');
   req.user.deleteToken(req.token, (err, user) => {
     req.logout();
@@ -68,7 +69,7 @@ router.get('/logout', auth, (req, res) => {
 });
 
 
-router.post('/planningsession', function (req, res, next) {
+router.post(END_POINTS.PLANNING_SESSION, function (req, res, next) {
   const newSession = new PlanningSession(req.body);
   newSession.save((err, docSession) => {
     if (err) {
@@ -83,7 +84,7 @@ router.post('/planningsession', function (req, res, next) {
   });
 });
 
-router.get('/planningsession/:id', function (req, res, next) {
+router.get(`${END_POINTS.PLANNING_SESSION}/:id`, function (req, res, next) {
   const planningRoomId = req.params.id;
   if (!planningRoomId || !ObjectId.isValid(planningRoomId)) {
     console.log("invalid session id");

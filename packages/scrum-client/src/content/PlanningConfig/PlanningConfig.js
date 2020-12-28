@@ -13,8 +13,8 @@ import {
 import './PlanningConfig.css';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
+import { END_POINTS } from 'scrum-common';
 import PATHS from '../../constants/paths';
-
 import { API_BASE_URL, PLANNING_ROOM_ID } from '../../constants/apiConstants';
 
 export default function PlanningConfig() {
@@ -64,7 +64,7 @@ export default function PlanningConfig() {
       }),
     };
 
-    fetch(`${API_BASE_URL}${PATHS.PLANNING_SESSION}`, requestOptions)
+    fetch(`${API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}`, requestOptions)
       .then(response => response.json())
       .then(data => {
         if (data.success) {
