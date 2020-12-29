@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Container, CardDeck, Card } from 'react-bootstrap';
 import { useAuthState } from '../../context';
 
@@ -20,11 +20,21 @@ import { useAuthState } from '../../context';
 
 const Home = () => {
   const userDetails = useAuthState();
+  const [fullUrlToJoin, setFullUrlToJoin] = useState('');
 
   const image =
     userDetails.user.profileImageUrl === undefined
       ? '/icons/default-profile.png'
       : userDetails.user.profileImageUrl;
+
+  function generateReferralLink() {
+    const url = window.location.href.split('/').slice(0, 3).join('/');
+    setFullUrlToJoin(`${url}/signup/${userDetails.user.id}`);
+  }
+
+  useEffect(() => {
+    generateReferralLink();
+  }, []);
 
   return (
     <Container>
@@ -33,11 +43,7 @@ const Home = () => {
           <img src={image} alt="new" />
           <div className="pricing-Home px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
             <h1 className="display-4">User: {userDetails.user.email}</h1>
-            <p className="lead">
-              Quickly build an pricing table for your potential customers with this Bootstrap
-              example. Its built with default Bootstrap components and utilities with little
-              customization.
-            </p>
+            <p className="lead">{fullUrlToJoin}</p>
           </div>
         </Col>
       </Row>

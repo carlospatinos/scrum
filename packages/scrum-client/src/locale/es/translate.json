@@ -7,7 +7,8 @@
         "lblAlreadyRegistered": "Ya tienes cuenta?",
         "lnkSignIn": "Inicia sesion?",
         "lblEmail": "Correo electronico",
-        "lblPassword": "Contraseña"
+        "lblPassword": "Contraseña",
+        "lblReferredBy": "Id de referencia"
     },
     "Login": {
         "lblSignIn": "Iniciar sesion",

@@ -4,7 +4,7 @@ const PATHS = {
   HOME: '/home',
   LOGIN: '/login',
   NEW_LOGIN: '/newlogin',
-  SIGNUP: '/signup',
+  SIGNUP: '/signup/:referrer?',
   LOGOUT: '/logout',
   SHARE_SESSION: '/sharesession',
   PLANNING_CONFIG: '/planningconfig',
