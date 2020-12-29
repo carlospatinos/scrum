@@ -1,6 +1,7 @@
 import React from 'react';
 import { Row, Col, Container, CardDeck, Card } from 'react-bootstrap';
 import { useAuthState } from '../../context';
+
 // import TagManager from 'react-gtm-module'
 
 // if(process.env.NODE_ENV === "development" && !!process.env.REACT_APP_GTM_ID) {
@@ -20,10 +21,16 @@ import { useAuthState } from '../../context';
 const Home = () => {
   const userDetails = useAuthState();
 
+  const image =
+    userDetails.user.profileImageUrl === undefined
+      ? '/icons/default-profile.png'
+      : userDetails.user.profileImageUrl;
+
   return (
     <Container>
       <Row>
         <Col>
+          <img src={image} alt="new" />
           <div className="pricing-Home px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
             <h1 className="display-4">User: {userDetails.user.email}</h1>
             <p className="lead">

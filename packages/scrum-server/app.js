@@ -15,6 +15,7 @@ require('./authStrategies/localStrategy')(passport);
 require('./authStrategies/googleStrategy')(passport);
 require('./authStrategies/twitterStrategy')(passport);
 require('./authStrategies/facebookStrategy')(passport);
+require('./authStrategies/passportPersistent')(passport);
 require('./utils/db.js');
 
 const indexRouter = require('./routes/index');
@@ -37,7 +38,7 @@ i18n.configure({
 });
 
 const CLIENT_PATH = '/../scrum-client/build/';
-var whitelist = [keys.reactAppURL, 'http://localhost:4000', 'http://localhost:3000'];
+var whitelist = [keys.reactAppURL, 'http://scrum-app-local.com:4000', 'http://scrum-app-local.com:3000'];
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
@@ -59,10 +60,10 @@ app.use(cookieParser());
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || 'defaultSecret',
-    resave: true,
-    saveUninitialized: true,
-    cookie: { maxAge: 60000 },
+    secret: keys.sessionSecret,
+    resave: false,
+    saveUninitialized: false,
+    // cookie: { expires: new Date(Date.now() + 3600000*24) , secure: false },
   })
 );
 

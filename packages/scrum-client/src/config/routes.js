@@ -10,6 +10,7 @@ import NotFound from '../content/NotFound';
 import PATHS from '../constants/paths';
 import ShareSession from '../content/ShareSession/ShareSession';
 import ParticipateSession from '../content/ParticipateSession/ParticipateSession';
+import OauthValidation from '../content/OauthValidation/OauthValidation';
 
 const routes = [
   {
@@ -74,6 +75,13 @@ const routes = [
     title: 'Privacy Policy',
     isPrivate: false,
     isVisibleOnMenu: true,
+  },
+  {
+    path: PATHS.OAUTH_VALIDATION,
+    component: OauthValidation,
+    title: 'Oauth Validation',
+    isPrivate: false,
+    isVisibleOnMenu: false,
   },
   {
     path: PATHS.LOGOUT,
