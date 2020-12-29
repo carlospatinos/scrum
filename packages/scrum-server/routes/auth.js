@@ -6,41 +6,59 @@ const User = require('../models/user.js');
 const keys = require('../config/keys');
 const router = express.Router();
 
-router.post(END_POINTS.AUTH_LOCAL, (req, res, next) => {
-  let token = req.cookies.auth;
-  User.findByToken(token, (err, user) => {
-    if (err) {
-      return res.status(400).json({ error: err });
-    }
-    if (user) {
-      return res.status(400).json({
-        success: false,
-        message: i18n.__('apiUserAlreadyLoggedIn')
-      });
-    } else {
-      User.findOne({ 'email': req.body.email }, function (err, user) {
-        if (!user) return res.json({ isAuth: false, message: i18n.__('apiEmailNotFound') });
+router.post(END_POINTS.AUTH_LOCAL,
+  passport.authenticate('local'),
+  (req, res, next) => {
+    console.log('Inside passport.authenticate() callback');
+    let token = req.cookies.auth;
+    User.findByToken(token, (err, user) => {
+      if (err) {
+        return res.status(400).json({ error: err });
+      }
+      if (user) {
+        return res.status(400).json({
+          success: false,
+          message: i18n.__('apiUserAlreadyLoggedIn')
+        });
+      } else {
+        User.findOne({ 'email': req.body.email }, function (err, user) {
+          if (!user) return res.json({ isAuth: false, message: i18n.__('apiEmailNotFound') });
 
-        user.comparePassword(req.body.password, (err, isMatch) => {
-          if (!isMatch) return res.json({ isAuth: false, message: i18n.__('apiPasswordDoNotMatch') });
+          user.comparePassword(req.body.password, (err, isMatch) => {
+            if (!isMatch) return res.json({ isAuth: false, message: i18n.__('apiPasswordDoNotMatch') });
 
-          user.generateToken((err, user) => {
-            if (err) return res.status(400).send(err);
-            return res.cookie('auth', user.token).json({
-              isAuth: true,
-              login_access_token: user.token,
-              user: {
-                id: user._id,
-                email: user.email,
-                fullName: `${user.firstName} ${user.lastName}`,
-              }
+            user.generateToken((err, user) => {
+              if (err) return res.status(400).send(err);
+
+              req.login(user, function (err) {
+                if (err) {
+                  return res.status(400).send(err);
+                } else {
+                  return res.cookie('auth', user.token).json({
+                    isAuth: true,
+                    login_access_token: user.token,
+                    user: {
+                      id: user._id,
+                      email: user.email,
+                      fullName: `${user.firstName} ${user.lastName}`,
+                    }
+                  });
+                  // return res.status(200).json({
+                  //   user: {
+                  //     id: user._id,
+                  //     email: user.email,
+                  //     fullName: `${user.firstName} ${user.lastName}`,
+                  //   }
+                  // });
+                }
+              });
             });
           });
         });
-      });
-    };
-  });
-});
+      };
+    });
+  }
+);
 
 router.get(END_POINTS.GOOGLE_LOGIN, passport.authenticate('google', { scope: ['email', 'profile'] }), (req, res) => {
   console.log('google auth');
@@ -55,9 +73,9 @@ router.get(`${END_POINTS.GOOGLE_LOGIN}/redirect`,
     // failureRedirect: "http://localhost:4000/sessionstarted"
   }),
   (req, res) => {
-    console.log('-->', req.user.email);
-    console.log('redirect', keys.reactAppURL);
-    return res.redirect(`${keys.reactAppURL}/home`);
+    req.session.save(function (err) {
+      res.redirect(`${keys.reactAppURL}/oauthvalidation`);
+    });
   }
 );
 
@@ -65,14 +83,12 @@ router.get(END_POINTS.FACEBOOK_LOGIN, passport.authenticate("facebook"));
 
 router.get(`${END_POINTS.FACEBOOK_LOGIN}/redirect`,
   passport.authenticate("facebook"
-  // {
-  //   successRedirect: "/",
-  //   failureRedirect: "/fail"
-  // }
+    // {
+    //   successRedirect: "/",
+    //   failureRedirect: "/fail"
+    // }
   ),
   (req, res) => {
-    console.log('-->', req.user);
-    console.log('redirect', keys.reactAppURL);
     return res.redirect(`${keys.reactAppURL}/home`);
   }
 );
@@ -90,24 +106,23 @@ router.get(`${END_POINTS.TWITTER_LOGIN}/redirect`,
   //   failureRedirect: "http://localhost:4000/"
   // }
   (req, res) => {
-    console.log('-->', req.user.email);
-    console.log('redirect', keys.reactAppURL);
     return res.redirect(`${keys.reactAppURL}/home`);
   }
 );
 
+// TODO difference with profile?
 router.get(END_POINTS.LOGIN_SUCCESS, (req, res, next) => {
-  console.log(req.user);
   if (req.user) {
     return res.json({
+      isAuth: true,
       success: true,
-      message: "user has successfully authenticated",
       user: req.user,
-      cookies: req.cookies
+      login_access_token: 'sadadasdas', // TODO fix this
     });
   } else {
     return res.status(400).json({
-      success: false
+      success: false,
+      message: "user not authenticated"
     })
   }
 });

@@ -15,6 +15,7 @@ require('./authStrategies/localStrategy')(passport);
 require('./authStrategies/googleStrategy')(passport);
 require('./authStrategies/twitterStrategy')(passport);
 require('./authStrategies/facebookStrategy')(passport);
+require('./authStrategies/passportPersistent')(passport);
 require('./utils/db.js');
 
 const indexRouter = require('./routes/index');
@@ -59,10 +60,10 @@ app.use(cookieParser());
 
 app.use(
   session({
-    secret: process.env.SESSION_SECRET || 'defaultSecret',
-    resave: true,
-    saveUninitialized: true,
-    cookie: { maxAge: 60000 },
+    secret: keys.sessionSecret,
+    resave: false,
+    saveUninitialized: false,
+    // cookie: { expires: new Date(Date.now() + 3600000*24) , secure: false },
   })
 );
 

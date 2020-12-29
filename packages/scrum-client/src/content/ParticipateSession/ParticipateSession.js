@@ -21,7 +21,6 @@ const getPlanningSession = id => {
   };
 
   try {
-    console.log('fetching');
     fetch(`${API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}/${id}`, requestOptions)
       .then(response => response.json())
       .then(data => {

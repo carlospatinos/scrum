@@ -20,7 +20,6 @@ const auth = (req, res, next) => {
 };
 
 const auth2 = (req, res, next) => {
-  console.log(req.user);
     if (!req.user) { // req.isAuthenticated()
       res.status(401).json({
         authenticated: false,

@@ -25,6 +25,36 @@ export async function loginUser(dispatch, loginPayload) {
     }
 
     dispatch({ type: 'LOGIN_ERROR', error: data.message });
+  } catch (error) {
+    dispatch({ type: 'LOGIN_ERROR', error });
+    console.log(error);
+  }
+  return undefined;
+}
+
+export async function login3ppUser(dispatch) {
+  const requestOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    // 'Access-Control-Allow-Credentials': true,
+    credentials: 'include',
+  };
+
+  try {
+    dispatch({ type: 'REQUEST_LOGIN' });
+    const response = await fetch(
+      `${API_BASE_URL}${END_POINTS.AUTH}${END_POINTS.LOGIN_SUCCESS}`,
+      requestOptions
+    );
+
+    const data = await response.json();
+    if (data.user) {
+      dispatch({ type: 'LOGIN_SUCCESS', payload: data });
+      localStorage.setItem(CURRENT_USER, JSON.stringify(data));
+      return data;
+    }
+
+    dispatch({ type: 'LOGIN_ERROR', error: data.message });
     console.log(data.message);
   } catch (error) {
     dispatch({ type: 'LOGIN_ERROR', error });

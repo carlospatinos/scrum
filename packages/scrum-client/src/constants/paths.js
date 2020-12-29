@@ -12,6 +12,7 @@ const PATHS = {
   SESSION_PARTICIPATE: '/session/:id',
   VOTING_CARDS: '/votingcards/:roomId',
   PRIVACY_POLICY: '/privacypolicy',
+  OAUTH_VALIDATION: '/oauthvalidation',
   NOT_FOUND: '/*',
 };
 
