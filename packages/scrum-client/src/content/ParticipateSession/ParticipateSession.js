@@ -4,12 +4,7 @@ import { Container } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { END_POINTS } from 'scrum-common';
 import TeamList from '../../components/TeamList';
-import {
-  initiateSocket,
-  disconnectSocket,
-  subscribeToRoom,
-  sendMessage,
-} from '../../hooks/SocketEvents';
+import SocketEvents from '../../hooks/SocketEvents';
 import { API_BASE_URL } from '../../constants/apiConstants';
 import { useAuthState } from '../../context';
 import './ParticipateSession.css';
@@ -54,19 +49,19 @@ export default function ParticipateSession() {
   useEffect(() => {
     // TODO get this from context
     const { email, fullName } = userDetails.user;
-
+    const { joinToRoom, disconnectSocket, onRoomMessages, sendMessageToRoom } = SocketEvents();
     if (roomId) {
       getPlanningSession(roomId);
-      initiateSocket({ room: { id: roomId }, user: { fullName, email } });
+      joinToRoom({ room: { id: roomId }, user: { fullName, email } });
     }
-    subscribeToRoom((err, data) => {
+    onRoomMessages((err, data) => {
       // eslint-disable-next-line
-      console.log('client--subscribeToRoom-cb', err, data);
+      console.log('client--onRoomMessages-cb', err, data);
       if (err) return;
       setRoom({ ...data.room });
       setResponse(data.message);
     });
-    sendMessage({ id: roomId }, 'Welcome to room');
+    sendMessageToRoom({ id: roomId }, 'Welcome to room');
 
     return () => {
       disconnectSocket();
