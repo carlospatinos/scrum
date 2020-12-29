@@ -4,8 +4,7 @@ import { END_POINTS } from 'scrum-common';
 import './Signup.css';
 import { useHistory, useLocation, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { API_BASE_URL } from '../../constants/apiConstants';
-import PATHS from '../../constants/paths';
+import { API_CONSTANTS, PATHS } from '../../constants';
 
 export default function Signup() {
   const history = useHistory();
@@ -51,7 +50,7 @@ export default function Signup() {
       };
 
       try {
-        fetch(`${API_BASE_URL}${END_POINTS.API}${END_POINTS.SIGN_UP}`, requestOptions)
+        fetch(`${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.SIGN_UP}`, requestOptions)
           .then(response => response.json())
           .then(data => {
             if (data.success) {

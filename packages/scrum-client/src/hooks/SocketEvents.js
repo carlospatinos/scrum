@@ -1,12 +1,12 @@
 import io from 'socket.io-client';
 import { EVENT } from 'scrum-common';
-import { API_BASE_URL } from '../constants/apiConstants';
+import { API_CONSTANTS } from '../constants';
 
 /**
  * Initiate socket communication.
  * @param {string} uri The uri of the IO server, default value is ${API_BASE_URL}
  */
-const SocketEvents = (ioUri = API_BASE_URL) => {
+const SocketEvents = (ioUri = API_CONSTANTS.API_BASE_URL) => {
   const socket = io(ioUri);
   /**
    * Joins a user to a room.

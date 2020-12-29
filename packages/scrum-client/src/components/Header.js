@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
-import PATHS from '../constants/paths';
+import { PATHS } from '../constants';
 import routes from '../config/routes';
 import { useAuthState } from '../context';
 

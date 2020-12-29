@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import PATHS from '../../constants/paths';
+import { PATHS } from '../../constants';
 import { useAuthState } from '../../context';
 
 const AppRoutes = ({ component: Component, path, isPrivate, ...rest }) => {

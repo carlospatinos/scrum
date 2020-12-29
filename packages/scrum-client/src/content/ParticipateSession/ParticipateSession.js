@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { END_POINTS } from 'scrum-common';
 import TeamList from '../../components/TeamList';
 import SocketEvents from '../../hooks/SocketEvents';
-import { API_BASE_URL } from '../../constants/apiConstants';
+import { API_CONSTANTS } from '../../constants';
 import { useAuthState } from '../../context';
 import './ParticipateSession.css';
 
@@ -17,7 +17,10 @@ const getPlanningSession = id => {
 
   try {
     console.log('fetching');
-    fetch(`${API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}/${id}`, requestOptions)
+    fetch(
+      `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}/${id}`,
+      requestOptions
+    )
       .then(response => response.json())
       .then(data => {
         if (data.success) {

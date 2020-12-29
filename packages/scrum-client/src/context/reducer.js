@@ -1,11 +1,11 @@
 /* eslint-disable no-shadow */
-import { CURRENT_USER } from '../constants/apiConstants';
+import { API_CONSTANTS } from '../constants';
 
-const user = localStorage.getItem(CURRENT_USER)
-  ? JSON.parse(localStorage.getItem(CURRENT_USER)).user
+const user = localStorage.getItem(API_CONSTANTS.CURRENT_USER)
+  ? JSON.parse(localStorage.getItem(API_CONSTANTS.CURRENT_USER)).user
   : '';
-const token = localStorage.getItem(CURRENT_USER)
-  ? JSON.parse(localStorage.getItem(CURRENT_USER)).login_access_token
+const token = localStorage.getItem(API_CONSTANTS.CURRENT_USER)
+  ? JSON.parse(localStorage.getItem(API_CONSTANTS.CURRENT_USER)).login_access_token
   : '';
 
 export const initialState = {

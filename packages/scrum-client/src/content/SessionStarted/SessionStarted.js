@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Alert, Container, Form } from 'react-bootstrap';
 import { END_POINTS } from 'scrum-common';
 import './SessionStarted.css';
-import { API_BASE_URL } from '../../constants/apiConstants';
+import { API_CONSTANTS } from '../../constants';
 
 export default function SessionStarted() {
   const [errorMessage, setErrorMessage] = useState('');
@@ -18,7 +18,7 @@ export default function SessionStarted() {
     };
 
     try {
-      fetch(`${API_BASE_URL}${END_POINTS.API}${END_POINTS.SIGN_UP}`, requestOptions)
+      fetch(`${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.SIGN_UP}`, requestOptions)
         .then(response => response.json())
         .then(data => {
           if (data.success) {

@@ -14,8 +14,7 @@ import './PlanningConfig.css';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import { END_POINTS } from 'scrum-common';
-import PATHS from '../../constants/paths';
-import { API_BASE_URL, PLANNING_ROOM_ID } from '../../constants/apiConstants';
+import { PATHS, API_CONSTANTS, DECKS } from '../../constants';
 
 export default function PlanningConfig() {
   const history = useHistory();
@@ -33,9 +32,9 @@ export default function PlanningConfig() {
 
   const cardDeckOptions = [
     { key: 0, name: '-- select one --', values: '' },
-    { key: 1, name: 'power of two', values: '0, 1, 2, 4, 8, 16, 32, 64, ?, I, C' },
-    { key: 2, name: 'fibbonaci', values: '0, 1, 2, 3, 5, 8, 13, 21, 34, ?, I, C' },
-    { key: 3, name: 't-shirt sizing', values: 'xs, s, m, l, xl, ?, I, C' },
+    DECKS.POWER_OF_TWO,
+    DECKS.FIBBONACI,
+    DECKS.TSHIRT,
   ];
 
   useEffect(() => {
@@ -64,11 +63,14 @@ export default function PlanningConfig() {
       }),
     };
 
-    fetch(`${API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}`, requestOptions)
+    fetch(
+      `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}`,
+      requestOptions
+    )
       .then(response => response.json())
       .then(data => {
         if (data.success) {
-          localStorage.setItem(PLANNING_ROOM_ID, data.planningRoomId);
+          localStorage.setItem(API_CONSTANTS.PLANNING_ROOM_ID, data.planningRoomId);
           history.push({
             pathname: redirectedFrom,
           });

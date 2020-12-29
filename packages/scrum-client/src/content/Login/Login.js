@@ -12,7 +12,7 @@ import {
 import { useHistory, useLocation, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { END_POINTS } from 'scrum-common';
-import PATHS from '../../constants/paths';
+import { PATHS } from '../../constants';
 import { loginUser, useAuthState, useAuthDispatch } from '../../context';
 
 import './Login.css';
