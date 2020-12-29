@@ -112,7 +112,7 @@ router.get(
   //   failureRedirect: "http://localhost:4000/"
   // }
   (req, res) => {
-    return res.redirect(`${keys.reactAppURL}/home`);
+    return res.redirect(`${keys.reactAppURL}/oauthvalidation`);
   }
 );
 
