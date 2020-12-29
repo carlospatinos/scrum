@@ -1,0 +1,16 @@
+{
+    "eslint.alwaysShowStatus": true,
+    "editor.formatOnSave": true,
+    "[javascript]": {
+        "editor.formatOnSave": false
+    },
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "eslint.validate": [
+        "javascript"
+    ],
+    "prettier.disableLanguages": [
+        "js"
+    ]
+}
