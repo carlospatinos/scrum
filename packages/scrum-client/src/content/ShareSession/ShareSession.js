@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import QRCode from 'qrcode.react';
-import { Container, ListGroup, Button, Link } from 'react-bootstrap';
+import { Container, ListGroup, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { PLANNING_ROOM_ID } from '../../constants/apiConstants';

@@ -8,6 +8,10 @@ import { useTranslation } from 'react-i18next';
 import { API_BASE_URL } from '../../constants/apiConstants';
 import PATHS from '../../constants/paths';
 
+const checkReferral = referrerValue => {
+  return referrerValue !== undefined && referrerValue !== '';
+};
+
 export default function Signup() {
   const history = useHistory();
   const location = useLocation();
@@ -32,13 +36,6 @@ export default function Signup() {
       password.length > 0 &&
       confirmPassword.length > 0
     );
-  }
-
-  function checkReferral() {
-    if (referrer !== undefined && referrer !== '') {
-      return true;
-    }
-    return false;
   }
 
   function handleSubmit(event) {
@@ -79,7 +76,7 @@ export default function Signup() {
   }
 
   const isValidForm = validateForm();
-  const isReferral = checkReferral();
+  const isReferral = checkReferral(referrer);
 
   return (
     <Container className="Signup">
