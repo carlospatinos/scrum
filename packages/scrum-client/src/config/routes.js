@@ -61,7 +61,7 @@ const routes = [
     title: 'Voting Cards',
     params: PATH_PARAMS.OPTIONAL_ROOM_ID,
     isPrivate: true,
-    isVisibleOnMenu: true,
+    isVisibleOnMenu: false,
   },
   {
     path: PATHS.SHARE_SESSION,
