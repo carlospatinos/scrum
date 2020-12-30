@@ -14,7 +14,6 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { END_POINTS } from 'scrum-common';
 import TeamList from '../../components/TeamList';
-// import SocketEvents from '../../hooks/SocketEvents';
 import useSocket from '../../hooks/useSocket';
 import { API_CONSTANTS } from '../../constants';
 import './ParticipateSession.css';
@@ -33,18 +32,9 @@ const getPlanningSession = (roomId, setSessionInformation) => {
       .then(response => response.json())
       .then(data => {
         if (data.success) {
-          // eslint-disable-next-line
-
           setSessionInformation(data.sessionInformation);
-          //           allowUnauthenticated: true
-          // cardDeck: "0, 1, 2, 4, 8, 16, 32, 64, ?, I, C"
-          // title: "Planning 27 December 2020"
-          // userStoriesCreationMethod: "manual"
-
-          console.log(data);
         } else {
           console.log('error');
-          // setApiResponse(data.message);
         }
       });
   } catch (e) {
@@ -63,7 +53,7 @@ export default function ParticipateSession() {
   const [storyTitle, setStoryTitle] = useState('');
   const [storyDescription, setStoryDescription] = useState('');
   const [sessionInformation, setSessionInformation] = useState();
-  const { socketEvents, messages, setStory, users } = useSocket(roomId);
+  const { socketEvents, setStory, users } = useSocket(roomId);
   useEffect(() => {
     getPlanningSession(roomId, setSessionInformation);
   }, [roomId]);

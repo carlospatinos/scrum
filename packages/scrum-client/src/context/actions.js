@@ -43,14 +43,14 @@ export async function login3ppUser(dispatch) {
   try {
     dispatch({ type: 'REQUEST_LOGIN' });
     const response = await fetch(
-      `${API_BASE_URL}${END_POINTS.AUTH}${END_POINTS.LOGIN_SUCCESS}`,
+      `${API_CONSTANTS.API_BASE_URL}${END_POINTS.AUTH}${END_POINTS.LOGIN_SUCCESS}`,
       requestOptions
     );
 
     const data = await response.json();
     if (data.user) {
       dispatch({ type: 'LOGIN_SUCCESS', payload: data });
-      localStorage.setItem(CURRENT_USER, JSON.stringify(data));
+      localStorage.setItem(API_CONSTANTS.CURRENT_USER, JSON.stringify(data));
       return data;
     }
 

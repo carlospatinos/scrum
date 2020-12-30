@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { API_CONSTANTS } from '../constants';
 import SocketEvents from './SocketEvents';
 import { useAuthState } from '../context';
@@ -11,7 +11,7 @@ const useSocket = (roomId, socketServerURL = API_CONSTANTS.API_BASE_URL) => {
   const [socketEvents, setSocketEvents] = useState();
   const userDetails = useAuthState();
 
-  // const setStory = _story => _setStory(_story);
+  // const setStory = _story => _setStory(_story); useRef
   // const setStoryVotes = _storyVotes => _setStoryVotes(_storyVotes);
 
   useEffect(() => {

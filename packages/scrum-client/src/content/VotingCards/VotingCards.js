@@ -7,9 +7,6 @@ import { API_CONSTANTS, DECKS } from '../../constants';
 import ClickableCard from '../../components/ClickableCard';
 import GridGenerator from '../../components/GridGenerator';
 import useSocket from '../../hooks/useSocket';
-
-import { useAuthState } from '../../context';
-
 import './VotingCards.css';
 
 const handleSpecificCardToggle = event => {
@@ -36,7 +33,6 @@ function getSessionInformation(setCardDeckParam, roomIdParam, setSessionInformat
       .then(response => response.json())
       .then(data => {
         if (data && data.success) {
-          console.log('getSessionInformation', data);
           setSessionInformation(data.sessionInformation);
           if (data.sessionInformation) {
             if (data.sessionInformation.cardDeck === DECKS.POWER_OF_TWO.values) {
@@ -90,11 +86,10 @@ function getSessionInformation(setCardDeckParam, roomIdParam, setSessionInformat
 }
 
 export default function Cards() {
-  const userDetails = useAuthState();
   const { roomId } = useParams();
   const [cardDeck, setCardDeck] = useState([]);
   const [sessionInformation, setSessionInformation] = useState({});
-  const { socketEvents, messages, setStory, story } = useSocket(roomId);
+  const { story } = useSocket(roomId);
 
   useEffect(() => {
     getSessionInformation(setCardDeck, roomId, setSessionInformation);
