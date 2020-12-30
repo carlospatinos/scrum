@@ -1,81 +1,41 @@
-import React, { useState } from 'react';
-import { Alert, Button, Container, Form, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
-import { useHistory, useLocation } from 'react-router-dom';
-import { END_POINTS } from 'scrum-common';
-import PATHS from '../../constants/paths';
-
-import { API_BASE_URL, ACCESS_TOKEN_NAME } from '../../constants/apiConstants';
+import React, { useState, useEffect } from 'react';
+import { Button, Container, Form, Card } from 'react-bootstrap';
+import { useAuthState } from '../../context';
 import './Profile.css';
 
-const validateForm = (email, password) => email.length > 0 && password.length > 0;
-
 export default function Profile() {
-  const history = useHistory();
-  const location = useLocation();
+  const [shareLink, setShareLink] = useState('');
+  const userDetails = useAuthState();
+  const image =
+    userDetails.user.profileImageUrl === undefined
+      ? '/icons/default-profile.png'
+      : userDetails.user.profileImageUrl;
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [apiResponse, setApiResponse] = useState('');
-  const redirectedFrom = location.state?.redirectedFrom?.pathname || PATHS.HOME;
-
-  function handleSubmit(event) {
-    event.preventDefault();
-
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
-    };
-
-    try {
-      fetch(`${API_BASE_URL}${END_POINTS.API}${END_POINTS.PROFILE}`, requestOptions)
-        .then(response => response.json())
-        .then(data => {
-          if (data.isAuth) {
-            localStorage.getItem(ACCESS_TOKEN_NAME);
-            history.push({
-              pathname: redirectedFrom,
-            });
-          } else {
-            setApiResponse(data.message);
-          }
-        });
-    } catch (e) {
-      // console.error(e);
-    }
+  function generateReferralLink(userInfo) {
+    const url = window.location.href.split('/').slice(0, 3).join('/');
+    setShareLink(`${url}/signup/${userInfo.user.id}`);
   }
-  const isValidForm = validateForm(email, password);
+
+  useEffect(() => {
+    generateReferralLink(userDetails);
+  }, [userDetails]);
 
   return (
     <Container className="Login">
-      <Form onSubmit={handleSubmit}>
-        <h3>Profile</h3>
-        <FormGroup controlId="email">
-          <FormLabel>Email</FormLabel>
-          <FormControl
-            autoFocus
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-          />
-        </FormGroup>
-        <FormGroup controlId="password">
-          <FormLabel>Password</FormLabel>
-          <FormControl
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            type="password"
-          />
-        </FormGroup>
-        {apiResponse && <Alert variant="danger">{apiResponse}</Alert>}
-        <Button
-          block
-          disabled={!isValidForm}
-          variant={isValidForm ? 'primary' : 'secondary'}
-          type="submit"
-        >
-          Delete
-        </Button>
+      <Form>
+        <Card style={{ width: '18rem' }}>
+          <Card.Img variant="top" src={image} />
+          <Card.Body>
+            <Card.Title>User: {userDetails.user.fullName}</Card.Title>
+            <Card.Text>
+              Email: {userDetails.user.email} <br />
+              Share the love: <br /> {shareLink}
+            </Card.Text>
+            <Button block variant="danger" type="submit">
+              Delete
+            </Button>
+          </Card.Body>
+        </Card>
       </Form>
     </Container>
   );

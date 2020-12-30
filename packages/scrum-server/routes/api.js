@@ -13,6 +13,10 @@ const PlanningSession = require('../models/planningSession');
 
 const ObjectId = require('mongoose').Types.ObjectId;
 
+const isUserAReferral = (referredBy) => {
+  return (referredBy !== undefined && referredBy !== '');
+}
+
 
 router.get(END_POINTS.ROOT, (req, res, next) => {
   res.json({ message: i18n.__('apiWorking') });
@@ -29,34 +33,47 @@ router.post(END_POINTS.SIGN_UP, function (req, res, next) {
   typeForNewUser.type = "admin";
   newUser.userType = typeForNewUser; // TODO fix
 
-  // TODO find referred
-  console.log('req.body', req.body);
-  const {referredBy} = req.body;
-  if (referredBy !== undefined && referredBy !== ''){
+  const { referredBy } = req.body;
+  if (isUserAReferral(referredBy)) {
     newUser.wasReferred = true;
-    console.log('referredBy', referredBy)
-    // TODO obtain this
-    // User.findOne({ _id: referredBy }, function (err, user) {
-      //newUser.referralList
-    // });
+    console.log('User was referredBy')
   }
 
   if (newUser.password != newUser.password2) return res.status(400).json({ success: false, message: i18n.__('apiPasswordDoNotMatch') });
 
   User.findOne({ email: newUser.email }, function (err, user) {
-    if (user) return res.status(400).json({ success: false, message: i18n.__('apiEmailExist') });
+    if (user) {
+      return res.status(400).json({ success: false, message: i18n.__('apiEmailExist') });
+    } else {
+      newUser.save((err, docUser) => {
+        // TODO propagate SchemaString.SchemaType.doValidate
+        if (err) {
+          console.log(err);
+          return res.status(400).json({ success: false });
+        } else {
+          if (isUserAReferral(referredBy)) {
+            // Async operation
+            User.findOne({ _id: referredBy }, function (err, refferedByUser) {
+              refferedByUser.referralList.push(newUser._id);
+              refferedByUser.save((err, updatedRefferedByUser) => {
+                if (err) {
+                  console.log(err);
+                }
+              });
+            });
+          }
+          return res.status(200).json({
+            success: true,
+            user: docUser
+          });
+        }
 
-    newUser.save((err, docUser) => {
-      // TODO propagate SchemaString.SchemaType.doValidate
-      if (err) {
-        console.log(err);
-        return res.status(400).json({ success: false });
-      }
-      res.status(200).json({
-        success: true,
-        user: docUser
       });
-    });
+
+    }
+
+
+
   });
 });
 

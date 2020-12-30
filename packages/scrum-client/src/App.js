@@ -21,7 +21,7 @@ function App() {
                 {routes.map(route => (
                   <AppRoute
                     key={route.path}
-                    path={route.path}
+                    path={route.path + route.params}
                     component={route.component}
                     isPrivate={route.isPrivate}
                   />
