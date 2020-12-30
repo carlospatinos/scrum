@@ -10,6 +10,8 @@ import NotFound from '../content/NotFound';
 import { PATHS } from '../constants';
 import ShareSession from '../content/ShareSession/ShareSession';
 import ParticipateSession from '../content/ParticipateSession/ParticipateSession';
+import OauthValidation from '../content/OauthValidation/OauthValidation';
+import Profile from '../content/Profile';
 
 const routes = [
   {
@@ -52,7 +54,7 @@ const routes = [
     component: VotingCards,
     title: 'Voting Cards',
     isPrivate: true,
-    isVisibleOnMenu: true,
+    isVisibleOnMenu: false,
   },
   {
     path: PATHS.SHARE_SESSION,
@@ -74,6 +76,20 @@ const routes = [
     title: 'Privacy Policy',
     isPrivate: false,
     isVisibleOnMenu: true,
+  },
+  {
+    path: PATHS.PROFILE,
+    component: Profile,
+    title: 'Profile',
+    isPrivate: true,
+    isVisibleOnMenu: true,
+  },
+  {
+    path: PATHS.OAUTH_VALIDATION,
+    component: OauthValidation,
+    title: 'Oauth Validation',
+    isPrivate: false,
+    isVisibleOnMenu: false,
   },
   {
     path: PATHS.LOGOUT,

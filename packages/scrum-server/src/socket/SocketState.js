@@ -1,3 +1,5 @@
+/* eslint-disable */
+// TODO fix eslint
 const SocketState = (initialState = []) => {
   const rooms = new Map(...initialState);
   console.log('--server--state-SocketState', rooms);

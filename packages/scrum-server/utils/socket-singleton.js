@@ -1,13 +1,14 @@
+/* eslint-disable */
+// TODO fix eslint
 const socketIo = require('socket.io');
 const { EVENT } = require('scrum-common');
 
 const { SocketEvents } = require('../src/socket/SocketEvents');
 
 class SocketService {
-
   constructor(server) {
     this.io = socketIo(server);
-    console.log("--server--SocketService");
+    console.log('--server--SocketService');
     const socketEventIO = SocketEvents(this.io);
 
     this.io.on(EVENT.CONNECTION, socket => {
@@ -21,17 +22,17 @@ class SocketService {
         console.log("--server--disconnect");
       });
 
-      socket.on('hi', async (jsonData) => {
-        console.log("--server--hi", JSON.stringify(jsonData));
+      socket.on('hi', async jsonData => {
+        console.log('--server--hi', JSON.stringify(jsonData));
         try {
-          this.io.sockets.in(userToGroupMap[jsonData.email]).emit('message', "big announcement");
+          // TODO userToGroupMap is undefined
+          this.io.sockets.in(userToGroupMap[jsonData.email]).emit('message', 'big announcement');
         } catch (e) {
           console.log(e);
         }
         socket.emit('message', 'hello friends!');
       });
     });
-
   }
 
   getInstance() {
@@ -39,8 +40,7 @@ class SocketService {
   }
 
   emiter(event, body) {
-    if (body)
-      this.io.emit(event, body);
+    if (body) this.io.emit(event, body);
   }
 }
 

@@ -3,9 +3,18 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const keys = require('../config/keys');
-
+const ObjectId = require('mongoose').Types.ObjectId;
 const salt = 10;
 // TODO fix password was mandatory but with google/twitter oauth either we create 2 different collections or we find a way to persist all in the same
+
+const validatePassword = (data) => {
+  if (data.length >= 8) {
+    return true; //validation success
+  }
+  else {
+    return false; // validation failure
+  }
+}
 
 const UserSchema = new mongoose.Schema({
   firstName: {
@@ -27,12 +36,18 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: false,
-    minlength: 8,
+    validate: {
+      validator: validatePassword,
+      message: "Length mismatch. Password lenght must be >=8"
+    }
   },
   password2: {
     type: String,
     required: false,
-    minlength: 8,
+    validate: {
+      validator: validatePassword,
+      message: "Length mismatch. Password lenght must be >=8"
+    }
   },
   token: {
     type: String,
@@ -61,6 +76,12 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: false
   },
+  wasReferred: {
+    type: Boolean,
+    required: true, 
+    default: false
+  },
+  referralList: [{ type: ObjectId, ref: 'User' }],
 });
 
 UserSchema.pre('save', function (next) {

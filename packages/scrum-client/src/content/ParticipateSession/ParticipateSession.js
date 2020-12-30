@@ -26,7 +26,6 @@ const getPlanningSession = (roomId, setSessionInformation) => {
   };
 
   try {
-    console.log('fetching');
     fetch(
       `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}/${roomId}`,
       requestOptions

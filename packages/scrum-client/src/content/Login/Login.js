@@ -129,7 +129,7 @@ export default function Login() {
           {t('Login.btnLoginWithTwitter')}
         </button>
         <br />
-        <button
+        {/* <button
           type="button"
           className="loginBtn loginBtn--facebook btn-block"
           onClick={() => {
@@ -137,7 +137,7 @@ export default function Login() {
           }}
         >
           {t('Login.btnLoginWithFacebook')}
-        </button>
+        </button> */}
         <br />
       </Form>
     </Container>

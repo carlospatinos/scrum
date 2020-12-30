@@ -100,49 +100,35 @@ export default function Cards() {
     getSessionInformation(setCardDeck, roomId, setSessionInformation);
   }, [setCardDeck, roomId]);
 
-  // useEffect(() => {
-  //   // TODO get this from context
-  //   const { email, fullName } = userDetails.user;
-  //   const { joinToRoom, disconnectSocket, onRoomMessages, sendMessageToRoom } = SocketEvents();
-  //   // getPlanningSession(roomId);
-  //   joinToRoom({ room: { id: roomId }, user: { fullName, email } });
-  //   onRoomMessages((err, data) => {
-  //     // eslint-disable-next-line
-  //     console.log('client--onRoomMessages-cb', err, data);
-  //     // if (err) return;
-  //     // setRoom({ ...data.room });
-  //     // setResponse(data.message);
-  //   });
-  //   // sendMessageToRoom({ id: roomId }, 'Welcome to room');
-
-  //   return () => {
-  //     disconnectSocket();
-  //   };
-  // }, [roomId, userDetails.user]);
-
   return (
     <Container>
       <br />
-      <h4>{sessionInformation ? sessionInformation.title : ''}</h4>
-      Room: {roomId}
-      <br />
-      Card Deck: {sessionInformation ? sessionInformation.cardDeck : ''}
-      <br />
-      Current User story: {story ? story.storyTitle : ' &lt;Provided by Admin&gt;'}
-      <br />
-      <GridGenerator columns={4}>
-        {cardDeck.map(card => {
-          return (
-            <ClickableCard
-              image={card.image}
-              clickableFunction={handleSpecificCardToggle}
-              keyboardFunction={handleSpecificCardToggleKeyboard}
-              key={card.val}
-              id={card.id}
-            />
-          );
-        })}
-      </GridGenerator>
+      {roomId === undefined ? (
+        <h1>Invalid room</h1>
+      ) : (
+        <>
+          <h4>{sessionInformation ? sessionInformation.title : ''}</h4>
+          Room: {roomId}
+          <br />
+          Card Deck: {sessionInformation ? sessionInformation.cardDeck : ''}
+          <br />
+          Current User story: {story ? story.storyTitle : ' &lt;Provided by Admin&gt;'}
+          <br />
+          <GridGenerator columns={4}>
+            {cardDeck.map(card => {
+              return (
+                <ClickableCard
+                  image={card.image}
+                  clickableFunction={handleSpecificCardToggle}
+                  keyboardFunction={handleSpecificCardToggleKeyboard}
+                  key={card.val}
+                  id={card.id}
+                />
+              );
+            })}
+          </GridGenerator>
+        </>
+      )}
     </Container>
   );
 }

@@ -1,3 +1,5 @@
+/* eslint-disable */
+// TODO fix eslint
 const { EVENT } = require('scrum-common');
 const { SocketState } = require('./SocketState');
 const SocketEvents = io => {
