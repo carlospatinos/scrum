@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { END_POINTS } from 'scrum-common';
-import { API_BASE_URL, ACCESS_TOKEN_NAME, CURRENT_USER } from '../constants/apiConstants';
+import { API_CONSTANTS } from '../constants';
 
 export async function loginUser(dispatch, loginPayload) {
   const requestOptions = {
@@ -13,14 +13,14 @@ export async function loginUser(dispatch, loginPayload) {
   try {
     dispatch({ type: 'REQUEST_LOGIN' });
     const response = await fetch(
-      `${API_BASE_URL}${END_POINTS.AUTH}${END_POINTS.AUTH_LOCAL}`,
+      `${API_CONSTANTS.API_BASE_URL}${END_POINTS.AUTH}${END_POINTS.AUTH_LOCAL}`,
       requestOptions
     );
     const data = await response.json();
 
     if (data.user) {
       dispatch({ type: 'LOGIN_SUCCESS', payload: data });
-      localStorage.setItem(CURRENT_USER, JSON.stringify(data));
+      localStorage.setItem(API_CONSTANTS.CURRENT_USER, JSON.stringify(data));
       return data;
     }
 
@@ -43,14 +43,14 @@ export async function login3ppUser(dispatch) {
   try {
     dispatch({ type: 'REQUEST_LOGIN' });
     const response = await fetch(
-      `${API_BASE_URL}${END_POINTS.AUTH}${END_POINTS.LOGIN_SUCCESS}`,
+      `${API_CONSTANTS.API_BASE_URL}${END_POINTS.AUTH}${END_POINTS.LOGIN_SUCCESS}`,
       requestOptions
     );
 
     const data = await response.json();
     if (data.user) {
       dispatch({ type: 'LOGIN_SUCCESS', payload: data });
-      localStorage.setItem(CURRENT_USER, JSON.stringify(data));
+      localStorage.setItem(API_CONSTANTS.CURRENT_USER, JSON.stringify(data));
       return data;
     }
 
@@ -65,8 +65,8 @@ export async function login3ppUser(dispatch) {
 
 export async function logout(dispatch) {
   dispatch({ type: 'LOGOUT' });
-  localStorage.removeItem(CURRENT_USER);
-  localStorage.removeItem(ACCESS_TOKEN_NAME);
+  localStorage.removeItem(API_CONSTANTS.CURRENT_USER);
+  localStorage.removeItem(API_CONSTANTS.ACCESS_TOKEN_NAME);
   // TODO is this needed? localStorage.clear();
   localStorage.clear();
 }

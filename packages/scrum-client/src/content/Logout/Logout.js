@@ -1,10 +1,8 @@
 import { useEffect } from 'react';
 import { Redirect, withRouter } from 'react-router-dom';
 import { END_POINTS } from 'scrum-common';
-import { API_BASE_URL } from '../../constants/apiConstants';
+import { API_CONSTANTS, PATHS } from '../../constants';
 import { useAuthDispatch, logout } from '../../context';
-
-import PATHS from '../../constants/paths';
 
 const requestOptions = {
   method: 'GET',
@@ -14,7 +12,7 @@ const requestOptions = {
 const handleLogout = dispatch => {
   logout(dispatch);
   try {
-    fetch(`${API_BASE_URL}${END_POINTS.API}${END_POINTS.LOGOUT}`, requestOptions)
+    fetch(`${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.LOGOUT}`, requestOptions)
       .then(response => response.json())
       .then(data => {
         // TODO remove this?

@@ -23,6 +23,15 @@
         "btnLoginWithFacebook": "Login with Facebook",
         "lblForgotPassword": "Forgot your password?"
     },
+    "ParticipateSession": {
+        "lblStory": "Story",
+        "lblStoryPlaceHolder": "#1234 Story",
+        "lblDescription": "Description",
+        "lblDescriptionPlaceHolder": "Short description of the story",
+        "btnDeleteSession": "Delete",
+        "btnStartSession": "Start",
+        "btnEndSession": "End"
+    },
     "PlanningConfig": {
         "lblTitle": "Session name",
         "lblValues": "Values:",

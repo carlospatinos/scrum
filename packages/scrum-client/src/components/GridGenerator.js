@@ -1,5 +1,5 @@
 import { chunk } from 'lodash';
-import * as React from 'react';
+import React from 'react';
 import { Col, Row, Container } from 'react-bootstrap';
 
 const GridGenerator = props => {
@@ -9,16 +9,18 @@ const GridGenerator = props => {
   const rows = chunk(React.Children.toArray(children), columns);
   return (
     <Container>
-      {rows.map(cols => (
-        <Row>
-          {cols.map(currentValue => (
-            // TODO provide a key to the col
-            <Col sm={2} md={6} lg={colWidth}>
-              {currentValue}
-            </Col>
-          ))}
-        </Row>
-      ))}
+      {rows.map((cols, index) => {
+        const key = `col-${index}`;
+        return (
+          <Row key={key}>
+            {cols.map(clickableCard => (
+              <Col key={clickableCard.props.id} sm={2} md={6} lg={colWidth}>
+                {clickableCard}
+              </Col>
+            ))}
+          </Row>
+        );
+      })}
     </Container>
   );
 };

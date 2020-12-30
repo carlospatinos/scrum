@@ -3,6 +3,9 @@ const EVENT = {
   SEND_MESSAGE: 'send_message',
   CONNECTION: 'connection',
   DISCONNECT: 'disconnect',
+  USER_JOINED: 'user_joined',
+  STORY_UPDATE: 'story_votes_update',
+  STORY_VOTES_UPDATE: 'story_votes_update',
 };
 
 module.exports = EVENT;

@@ -7,7 +7,7 @@ import SessionStarted from '../content/SessionStarted';
 import VotingCards from '../content/VotingCards';
 import PrivacyPolicy from '../content/PrivacyPolicy';
 import NotFound from '../content/NotFound';
-import PATHS from '../constants/paths';
+import { PATHS } from '../constants';
 import ShareSession from '../content/ShareSession/ShareSession';
 import ParticipateSession from '../content/ParticipateSession/ParticipateSession';
 import OauthValidation from '../content/OauthValidation/OauthValidation';

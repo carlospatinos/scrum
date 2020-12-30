@@ -3,37 +3,39 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { END_POINTS } from 'scrum-common';
-import { API_BASE_URL } from '../../constants/apiConstants';
+import { API_CONSTANTS, DECKS } from '../../constants';
 import ClickableCard from '../../components/ClickableCard';
 import GridGenerator from '../../components/GridGenerator';
-
+import useSocket from '../../hooks/useSocket';
 import './VotingCards.css';
 
-export default function Cards() {
-  const { roomId } = useParams();
-  const [cardDeck, setCardDeck] = useState([{ val: 1, image: '/card-decks/number-1.svg' }]);
-  const [sessionInformation, setSessionInformation] = useState({});
+const handleSpecificCardToggle = event => {
+  // eslint-disable-next-line
+  console.log(event.target.id);
+};
 
-  function getSessionInformation(setCardDeckParam, roomIdParam) {
-    const requestOptions = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    };
+const handleSpecificCardToggleKeyboard = event => {
+  // eslint-disable-next-line
+  console.log(event.target.id);
+};
 
-    try {
-      fetch(
-        `${API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}/${roomIdParam}`,
-        requestOptions
-      )
-        .then(response => response.json())
-        .then(data => {
-          if (data && data.success) {
-            setSessionInformation(data.sessionInformation);
-            if (
-              data &&
-              data.sessionInformation &&
-              data.sessionInformation.cardDeck === '0, 1, 2, 4, 8, 16, 32, 64, ?, I, C'
-            ) {
+function getSessionInformation(setCardDeckParam, roomIdParam, setSessionInformation) {
+  const requestOptions = {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+  };
+
+  try {
+    fetch(
+      `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}/${roomIdParam}`,
+      requestOptions
+    )
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.success) {
+          setSessionInformation(data.sessionInformation);
+          if (data.sessionInformation) {
+            if (data.sessionInformation.cardDeck === DECKS.POWER_OF_TWO.values) {
               setCardDeckParam([
                 { val: 1, image: '/card-decks/number-1.svg', id: 'number-1' },
                 { val: 2, image: '/card-decks/number-2.svg', id: 'number-2' },
@@ -47,11 +49,7 @@ export default function Cards() {
                 { val: 102, image: '/card-decks/coffee.svg', id: 'coffee' },
               ]);
             }
-            if (
-              data &&
-              data.sessionInformation &&
-              data.sessionInformation.cardDeck === '0, 1, 2, 3, 5, 8, 13, 21, 34, ?, I, C'
-            ) {
+            if (data.sessionInformation.cardDeck === DECKS.FIBBONACI.values) {
               setCardDeckParam([
                 { val: 1, image: '/card-decks/number-1.svg', id: 'number-1' },
                 { val: 2, image: '/card-decks/number-2.svg', id: 'number-2' },
@@ -66,11 +64,7 @@ export default function Cards() {
                 { val: 102, image: '/card-decks/coffee.svg', id: 'coffee' },
               ]);
             }
-            if (
-              data &&
-              data.sessionInformation &&
-              data.sessionInformation.cardDeck === 'xs, s, m, l, xl, ?, I, C'
-            ) {
+            if (data.sessionInformation.cardDeck === DECKS.TSHIRT.values) {
               setCardDeckParam([
                 { val: 1, image: '/card-decks/size-xs.svg', id: 'ize-xs' },
                 { val: 2, image: '/card-decks/size-s.svg', id: 'size-s' },
@@ -83,25 +77,23 @@ export default function Cards() {
               ]);
             }
           }
-        });
-    } catch (e) {
-      // console.error(e);
-    }
+          // TODO - handle error , sessionInformation not present
+        }
+      });
+  } catch (e) {
+    // console.error(e);
   }
+}
+
+export default function Cards() {
+  const { roomId } = useParams();
+  const [cardDeck, setCardDeck] = useState([]);
+  const [sessionInformation, setSessionInformation] = useState({});
+  const { story } = useSocket(roomId);
 
   useEffect(() => {
-    getSessionInformation(setCardDeck, roomId);
+    getSessionInformation(setCardDeck, roomId, setSessionInformation);
   }, [setCardDeck, roomId]);
-
-  const handleSpecificCardToggle = event => {
-    // eslint-disable-next-line
-    console.log(event.target.id);
-  };
-
-  const handleSpecificCardToggleKeyboard = event => {
-    // eslint-disable-next-line
-    console.log(event.target.id);
-  };
 
   return (
     <Container>
@@ -115,7 +107,7 @@ export default function Cards() {
           <br />
           Card Deck: {sessionInformation ? sessionInformation.cardDeck : ''}
           <br />
-          Current User story: &lt;Provided by Admin&gt;
+          Current User story: {story ? story.storyTitle : ' &lt;Provided by Admin&gt;'}
           <br />
           <GridGenerator columns={4}>
             {cardDeck.map(card => {

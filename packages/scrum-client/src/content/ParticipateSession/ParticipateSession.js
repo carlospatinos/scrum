@@ -1,30 +1,40 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
-import { Container } from 'react-bootstrap';
+import {
+  Container,
+  Row,
+  Col,
+  Button,
+  Spinner,
+  Form,
+  ButtonToolbar,
+  ButtonGroup,
+} from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { END_POINTS } from 'scrum-common';
 import TeamList from '../../components/TeamList';
-import SocketEvents from '../../hooks/SocketEvents';
-import { API_BASE_URL } from '../../constants/apiConstants';
-import { useAuthState } from '../../context';
+import useSocket from '../../hooks/useSocket';
+import { API_CONSTANTS } from '../../constants';
 import './ParticipateSession.css';
 
-const getPlanningSession = id => {
+const getPlanningSession = (roomId, setSessionInformation) => {
   const requestOptions = {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   };
 
   try {
-    fetch(`${API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}/${id}`, requestOptions)
+    fetch(
+      `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}/${roomId}`,
+      requestOptions
+    )
       .then(response => response.json())
       .then(data => {
         if (data.success) {
-          // eslint-disable-next-line
-          console.log(data);
+          setSessionInformation(data.sessionInformation);
         } else {
           console.log('error');
-          // setApiResponse(data.message);
         }
       });
   } catch (e) {
@@ -34,45 +44,94 @@ const getPlanningSession = id => {
   }
 };
 
+const handleDeleteSession = e => console.log(e);
+
 export default function ParticipateSession() {
-  const userDetails = useAuthState();
-
-  const { id: roomId } = useParams();
-  const [response, setResponse] = useState('');
-  const [room, setRoom] = useState({
-    id: roomId,
-    title: 'Session 123',
-    subtitle: '....',
-    users: [],
-  });
-
+  const { t } = useTranslation();
+  const { roomId } = useParams();
+  // const [response, setResponse] = useState('');
+  const [storyTitle, setStoryTitle] = useState('');
+  const [storyDescription, setStoryDescription] = useState('');
+  const [sessionInformation, setSessionInformation] = useState();
+  const { socketEvents, setStory, users } = useSocket(roomId);
   useEffect(() => {
-    // TODO get this from context
-    const { email, fullName } = userDetails.user;
-    const { joinToRoom, disconnectSocket, onRoomMessages, sendMessageToRoom } = SocketEvents();
-    if (roomId) {
-      getPlanningSession(roomId);
-      joinToRoom({ room: { id: roomId }, user: { fullName, email } });
-    }
-    onRoomMessages((err, data) => {
-      // eslint-disable-next-line
-      console.log('client--onRoomMessages-cb', err, data);
-      if (err) return;
-      setRoom({ ...data.room });
-      setResponse(data.message);
-    });
-    sendMessageToRoom({ id: roomId }, 'Welcome to room');
+    getPlanningSession(roomId, setSessionInformation);
+  }, [roomId]);
 
-    return () => {
-      disconnectSocket();
-    };
-  }, [roomId, userDetails.user]);
+  if (!sessionInformation || !users) {
+    return <Spinner animation="border" />;
+  }
+
+  const handleStartSession = e => {
+    socketEvents.setRoomStory({
+      room: { id: roomId },
+      story: { storyTitle, storyDescription },
+    });
+    setStory({ storyTitle, storyDescription });
+    console.log(e);
+  };
+  const handleEndSession = e => {
+    // setStory({storyTitle:"", storyDescription:""});
+    console.log(e);
+  };
 
   return (
     <Container className="ParticipateSession">
-      <br />
-      {response}
-      <TeamList title={room.title} subtitle={room.subtitle} users={room.users} />
+      <Row>
+        <Col>
+          <h1>{sessionInformation.title}</h1>{' '}
+          <Button variant="danger" onClick={handleDeleteSession}>
+            {t('ParticipateSession.btnDeleteSession')}
+          </Button>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <div>
+            <Form>
+              <Form.Group controlId="formStory">
+                <Form.Label> {t('ParticipateSession.lblStory')}</Form.Label>
+                <Form.Control
+                  placeholder={t('ParticipateSession.lblStoryPlaceHolder')}
+                  onChange={e => setStoryTitle(e.target.value)}
+                  value={storyTitle}
+                />
+              </Form.Group>
+              <Form.Group controlId="fromDescription">
+                <Form.Label>{t('ParticipateSession.lblDescription')}</Form.Label>
+                <Form.Control
+                  placeholder={t('ParticipateSession.lblDescriptionPlaceHolder')}
+                  onChange={e => setStoryDescription(e.target.value)}
+                  value={storyDescription}
+                />
+              </Form.Group>
+              <ButtonToolbar className="mb-2 mr-2">
+                <ButtonGroup className="mr-2">
+                  <Button variant="primary" type="button" onClick={handleStartSession}>
+                    {t('ParticipateSession.btnStartSession')}
+                  </Button>
+                </ButtonGroup>
+                <ButtonGroup className="mr-2">
+                  <Button variant="danger" type="button" onClick={handleEndSession}>
+                    {t('ParticipateSession.btnEndSession')}
+                  </Button>
+                </ButtonGroup>
+              </ButtonToolbar>
+            </Form>
+          </div>
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <div> Display voting results / list of users</div>
+          <TeamList title="Team members" users={users} />
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          <div> QR code to continue inviting?</div>
+        </Col>
+      </Row>
     </Container>
   );
 }

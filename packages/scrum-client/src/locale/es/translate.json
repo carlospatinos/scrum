@@ -23,6 +23,15 @@
         "btnLoginWithFacebook": "Inicia con Facebook",
         "lblForgotPassword": "Olvidaste tu contraseña?"
     },
+    "ParticipateSession": {
+        "lblStory": "Historia",
+        "lblStoryPlaceHolder": "#1234 Historia",
+        "lblDescription": "Descripcion",
+        "lblDescriptionPlaceHolder": "Breve descripcion de la historia",
+        "btnDeleteSession": "Eliminar",
+        "btnStartSession": "Iniciar",
+        "btnEndSession": "Finalizar"
+    },
     "PlanningConfig": {
         "lblTitle": "Nombre de la sesion",
         "lblValues": "Valores:",

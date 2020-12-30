@@ -3,7 +3,7 @@ import QRCode from 'qrcode.react';
 import { Container, ListGroup, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { PLANNING_ROOM_ID } from '../../constants/apiConstants';
+import { API_CONSTANTS } from '../../constants';
 import './ShareSession.css';
 
 export default function ShareSession() {
@@ -19,9 +19,9 @@ export default function ShareSession() {
   };
 
   function generateQR() {
-    const planningRoomId = localStorage.getItem(PLANNING_ROOM_ID);
+    const planningRoomId = localStorage.getItem(API_CONSTANTS.PLANNING_ROOM_ID);
     // TODO DELETE roomid?
-    const url = window.location.href.split('/').slice(0, 3).join('/'); // ${API_BASE_URL}
+    const url = window.location.href.split('/').slice(0, 3).join('/'); // ${API_CONSTANTS.API_BASE_URL}
     setSessionToJoin(`/session/${planningRoomId}`);
     setFullUrlToJoin(`${url}/session/${planningRoomId}`);
     setVotingUrlToJoin(`${url}/votingcards/${planningRoomId}`);

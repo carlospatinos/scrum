@@ -5,8 +5,7 @@ import { useParams, useHistory, useLocation, Link } from 'react-router-dom';
 import './Signup.css';
 
 import { useTranslation } from 'react-i18next';
-import { API_BASE_URL } from '../../constants/apiConstants';
-import PATHS from '../../constants/paths';
+import { API_CONSTANTS, PATHS } from '../../constants';
 
 const checkReferral = referrerValue => {
   return referrerValue !== undefined && referrerValue !== '';
@@ -58,7 +57,7 @@ export default function Signup() {
       };
 
       try {
-        fetch(`${API_BASE_URL}${END_POINTS.API}${END_POINTS.SIGN_UP}`, requestOptions)
+        fetch(`${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.SIGN_UP}`, requestOptions)
           .then(response => response.json())
           .then(data => {
             if (data.success) {
