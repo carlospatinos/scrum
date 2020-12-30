@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import { Alert, Button, FormGroup, FormControl, FormLabel, Container, Form } from 'react-bootstrap';
 import { END_POINTS } from 'scrum-common';
+import { useParams, useHistory, useLocation, Link } from 'react-router-dom';
 import './Signup.css';
-import { useHistory, useLocation, Link } from 'react-router-dom';
+
 import { useTranslation } from 'react-i18next';
 import { API_BASE_URL } from '../../constants/apiConstants';
 import PATHS from '../../constants/paths';
+
+const checkReferral = referrerValue => {
+  return referrerValue !== undefined && referrerValue !== '';
+};
 
 export default function Signup() {
   const history = useHistory();
   const location = useLocation();
   const { t } = useTranslation();
+  const { referrer } = useParams();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -47,6 +53,7 @@ export default function Signup() {
           email,
           password,
           password2: confirmPassword,
+          referredBy: referrer,
         }),
       };
 
@@ -69,6 +76,7 @@ export default function Signup() {
   }
 
   const isValidForm = validateForm();
+  const isReferral = checkReferral(referrer);
 
   return (
     <Container className="Signup">
@@ -107,6 +115,13 @@ export default function Signup() {
             type="password"
           />
         </FormGroup>
+        {isReferral && (
+          <FormGroup controlId="referredBy">
+            <FormLabel>{t('Signup.lblReferredBy')}</FormLabel>
+            <FormControl value={referrer} type="text" readOnly />
+          </FormGroup>
+        )}
+
         {apiResponse && <Alert variant="danger">{apiResponse}</Alert>}
         {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
         <Button

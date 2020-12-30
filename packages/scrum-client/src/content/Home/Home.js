@@ -1,6 +1,5 @@
 import React from 'react';
 import { Row, Col, Container, CardDeck, Card } from 'react-bootstrap';
-import { useAuthState } from '../../context';
 
 // import TagManager from 'react-gtm-module'
 
@@ -19,28 +18,10 @@ import { useAuthState } from '../../context';
 // }
 
 const Home = () => {
-  const userDetails = useAuthState();
-
-  const image =
-    userDetails.user.profileImageUrl === undefined
-      ? '/icons/default-profile.png'
-      : userDetails.user.profileImageUrl;
-
   return (
     <Container>
-      <Row>
-        <Col>
-          <img src={image} alt="new" />
-          <div className="pricing-Home px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-            <h1 className="display-4">User: {userDetails.user.email}</h1>
-            <p className="lead">
-              Quickly build an pricing table for your potential customers with this Bootstrap
-              example. Its built with default Bootstrap components and utilities with little
-              customization.
-            </p>
-          </div>
-        </Col>
-      </Row>
+      <br />
+      <br />
       <CardDeck className="mb-3 text-center">
         <Card className=" box-shadow">
           <Card.Header>

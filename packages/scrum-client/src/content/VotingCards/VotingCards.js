@@ -106,26 +106,32 @@ export default function Cards() {
   return (
     <Container>
       <br />
-      <h4>{sessionInformation ? sessionInformation.title : ''}</h4>
-      Room: {roomId}
-      <br />
-      Card Deck: {sessionInformation ? sessionInformation.cardDeck : ''}
-      <br />
-      Current User story: &lt;Provided by Admin&gt;
-      <br />
-      <GridGenerator columns={4}>
-        {cardDeck.map(card => {
-          return (
-            <ClickableCard
-              image={card.image}
-              clickableFunction={handleSpecificCardToggle}
-              keyboardFunction={handleSpecificCardToggleKeyboard}
-              key={card.val}
-              id={card.id}
-            />
-          );
-        })}
-      </GridGenerator>
+      {roomId === undefined ? (
+        <h1>Invalid room</h1>
+      ) : (
+        <>
+          <h4>{sessionInformation ? sessionInformation.title : ''}</h4>
+          Room: {roomId}
+          <br />
+          Card Deck: {sessionInformation ? sessionInformation.cardDeck : ''}
+          <br />
+          Current User story: &lt;Provided by Admin&gt;
+          <br />
+          <GridGenerator columns={4}>
+            {cardDeck.map(card => {
+              return (
+                <ClickableCard
+                  image={card.image}
+                  clickableFunction={handleSpecificCardToggle}
+                  keyboardFunction={handleSpecificCardToggleKeyboard}
+                  key={card.val}
+                  id={card.id}
+                />
+              );
+            })}
+          </GridGenerator>
+        </>
+      )}
     </Container>
   );
 }

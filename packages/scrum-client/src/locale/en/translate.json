@@ -7,7 +7,8 @@
         "lblAlreadyRegistered": "Already registered",
         "lnkSignIn": "Sign In?",
         "lblEmail": "Email",
-        "lblPassword": "Password"
+        "lblPassword": "Password",
+        "lblReferredBy": "Referral id"
     },
     "Login": {
         "lblSignIn": "Sign In",
