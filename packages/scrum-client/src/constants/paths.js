@@ -9,7 +9,7 @@ const PATHS = {
   SHARE_SESSION: '/sharesession',
   PLANNING_CONFIG: '/planningconfig',
   SESSION_STARTED: '/sessionstarted',
-  SESSION_PARTICIPATE: '/session/:id',
+  SESSION_PARTICIPATE: '/session/:roomId',
   VOTING_CARDS: '/votingcards/:roomId',
   PRIVACY_POLICY: '/privacypolicy',
   NOT_FOUND: '/*',

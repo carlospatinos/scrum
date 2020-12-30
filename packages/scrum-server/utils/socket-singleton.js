@@ -15,6 +15,8 @@ class SocketService {
       const socketEvent  = socketEventIO(socket);
       socket.on(EVENT.JOIN, socketEvent.joinUserToRoom);
       socket.on(EVENT.SEND_MESSAGE, socketEvent.sendMessageToRoom);
+      socket.on(EVENT.STORY_UPDATE, socketEvent.onStoryUpdate);
+      socket.on(EVENT.STORY_VOTES_UPDATE, socketEvent.onStoryVotesUpdate);
       socket.on(EVENT.DISCONNECT, () => {
         console.log("--server--disconnect");
       });

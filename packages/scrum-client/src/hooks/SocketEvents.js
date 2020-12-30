@@ -27,16 +27,42 @@ const SocketEvents = (ioUri = API_CONSTANTS.API_BASE_URL) => {
     console.log('client--onRoomMessages');
     socket.on(EVENT.SEND_MESSAGE, data => {
       // eslint-disable-next-line
-      console.log('client--send_message', data);
-
+      console.log('client--SEND_MESSAGE', data);
       return cb(null, data);
     });
   };
-  const sendMessageToRoom = (room, message) => {
-    if (socket) socket.emit(EVENT.SEND_MESSAGE, { room, message });
+  const onUserJoined = cb => {
+    socket.on(EVENT.USER_JOINED, data => cb(data.users));
+  };
+  const onStoryUpdate = cb => {
+    socket.on(EVENT.STORY_UPDATE, data => cb(data.story));
+  };
+  const onStoryVotesUpdate = cb => {
+    socket.on(EVENT.STORY_VOTES_UPDATE, data => cb(data.storyVotes));
+  };
+  const setRoomStory = ({ room, story }) => {
+    socket.emit(EVENT.STORY_UPDATE, { room, story });
+  };
+  const setRoomStoryVote = ({ room, user, vote }) => {
+    socket.emit(EVENT.STORY_VOTES_UPDATE, { room, user, vote });
   };
 
-  return { joinToRoom, disconnectSocket, onRoomMessages, sendMessageToRoom };
+  const sendMessageToRoom = (room, message) => {
+    socket.emit(EVENT.SEND_MESSAGE, { room, message });
+  };
+
+  return {
+    socket,
+    onUserJoined,
+    joinToRoom,
+    disconnectSocket,
+    onRoomMessages,
+    sendMessageToRoom,
+    onStoryUpdate,
+    onStoryVotesUpdate,
+    setRoomStoryVote,
+    setRoomStory,
+  };
 };
 
 export default SocketEvents;
