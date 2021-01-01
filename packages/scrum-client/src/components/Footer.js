@@ -25,7 +25,6 @@ const Footer = () => {
       })
       .then(data => {
         if (data.success) {
-          console.log(data);
           setTipList(data.tips);
         } else {
           console.log(data.message);
