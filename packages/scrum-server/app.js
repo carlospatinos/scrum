@@ -38,7 +38,7 @@ i18n.configure({
 });
 
 const CLIENT_PATH = '/../scrum-client/build/';
-var whitelist = [keys.reactAppURL, 'http://scrum-app-local.com:4000', 'http://scrum-app-local.com:3000'];
+var whitelist = [keys.reactAppURL, 'http://scrum-app-local.com:4000', 'http://scrum-app-local.com:3000', 'http://localhost:4000', 'http://localhost:3000'];
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
@@ -105,7 +105,8 @@ app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
+  // TODO is this needed?
+  console.log(err);
   // render the error page
   res.status(err.status || 500);
   res.json('error');

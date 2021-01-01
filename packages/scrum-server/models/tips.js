@@ -10,6 +10,6 @@ const TipsSchema = new mongoose.Schema({
     required: true,
   },
 });
-const Tips = mongoose.model('PlanningSession', TipsSchema);
+const Tips = mongoose.model('Tips', TipsSchema);
 
 module.exports = Tips;
