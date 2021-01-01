@@ -32,7 +32,7 @@ const routes = [
     path: PATHS.HOME,
     component: Home,
     title: 'Home',
-    isPrivate: false,
+    isPrivate: true,
     isVisibleOnMenu: true,
   },
   {
