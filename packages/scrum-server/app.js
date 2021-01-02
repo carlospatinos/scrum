@@ -25,6 +25,7 @@ const app = express();
 const i18n = require('i18n');
 const { TipsRoutes } = require('./src/api/components/tips');
 const { UserRoutes } = require('./src/api/components/user');
+const { PlanningSessionRoutes } = require('./src/api/components/planningSession');
 
 i18n.configure({
   locales: ['es', 'en'],
@@ -91,6 +92,7 @@ app.use(END_POINTS.API, api);
 app.use(END_POINTS.AUTH, authRouter);
 app.use(END_POINTS.API, UserRoutes);
 app.use(END_POINTS.API, TipsRoutes);
+app.use(END_POINTS.API, PlanningSessionRoutes);
 
 // Handles any requests that don't match the ones above
 app.get('*', (req, res, next) => {
