@@ -6,7 +6,7 @@ const { END_POINTS } = require('scrum-common');
 const router = express.Router();
 const i18n = require('i18n');
 
-const { auth } = require('../src/api/middleware/auth'); 
+const { auth } = require('../src/api/middleware/auth');
 const PlanningSession = require('../models/planningSession');
 const Tips = require('../models/tips');
 const UserService = require('../src/api/components/user/service');
@@ -22,12 +22,18 @@ router.post(END_POINTS.ROOT, (req, res, next) => {
   res.json({ message: i18n.__('apiWorking') });
 });
 
-router.post(END_POINTS.SIGN_UP, function (req, res, next) { 
-  const serviceResponse = UserService.signUp(req);
-  // TODO remove from serviceResponse any HTTP code
-  return  res.status(response.status).json({ ...serviceResponse });
+router.post(END_POINTS.SIGN_UP, function (req, res, next) {
+  UserService.signUp(req, serviceResponse => {
+    // TODO remove from serviceResponse any HTTP code
+    return res
+      .status(serviceResponse.status)
+      .json({
+        success: serviceResponse.success,
+        user: serviceResponse.user,
+        message: serviceResponse.message,
+      });
   });
-
+});
 
 router.get(END_POINTS.LOGOUT, auth, (req, res, next) => {
   console.log('profile');
@@ -48,7 +54,6 @@ router.get(END_POINTS.PROFILE, auth, (req, res) => {
   });
 });
 
-
 router.post(END_POINTS.PLANNING_SESSION, function (req, res, next) {
   const newSession = new PlanningSession(req.body);
   newSession.save((err, docSession) => {
@@ -59,7 +64,7 @@ router.post(END_POINTS.PLANNING_SESSION, function (req, res, next) {
     res.status(200).json({
       success: true,
       session: docSession,
-      planningRoomId: docSession._id
+      planningRoomId: docSession._id,
     });
   });
 });
@@ -67,7 +72,7 @@ router.post(END_POINTS.PLANNING_SESSION, function (req, res, next) {
 router.get(`${END_POINTS.PLANNING_SESSION}/:id`, function (req, res, next) {
   const planningRoomId = req.params.id;
   if (!planningRoomId || !ObjectId.isValid(planningRoomId)) {
-    console.log("invalid session id");
+    console.log('invalid session id');
     return res.status(400).json({ success: false, message: 'invalid session id' });
   }
   PlanningSession.findOne({ _id: planningRoomId }, function (err, session) {
@@ -77,7 +82,7 @@ router.get(`${END_POINTS.PLANNING_SESSION}/:id`, function (req, res, next) {
     } else {
       return res.status(200).json({
         success: true,
-        sessionInformation: session
+        sessionInformation: session,
       });
     }
   });
@@ -92,19 +97,20 @@ router.get(`${END_POINTS.TIPS_FOR_THE_SESSION}`, (req, res, next) => {
     pageSize = MAX_PAGE_SIZE;
   }
 
-  Tips.find().limit(pageSize).exec(function (err, tipDocs) {
-    // console.log(tipDocs);
-    if (err) {
-      console.log(err);
-      return res.status(400).json({ success: false, message: "tips not found" });
-    } else {
-      return res.status(200).json({
-        success: true,
-        tips: tipDocs
-      })
-    }
-  });
-}
-);
+  Tips.find()
+    .limit(pageSize)
+    .exec(function (err, tipDocs) {
+      // console.log(tipDocs);
+      if (err) {
+        console.log(err);
+        return res.status(400).json({ success: false, message: 'tips not found' });
+      } else {
+        return res.status(200).json({
+          success: true,
+          tips: tipDocs,
+        });
+      }
+    });
+});
 
 module.exports = router;

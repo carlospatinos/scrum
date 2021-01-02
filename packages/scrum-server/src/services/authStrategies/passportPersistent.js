@@ -1,6 +1,5 @@
 /* eslint-disable */
-const User = require('../src/api/components/user/model');
-
+const User = require('../../api/components/user/model');
 module.exports = function (passport) {
   passport.serializeUser((user, doneCallBack) => {
     // console.log("serialize user: ", user);

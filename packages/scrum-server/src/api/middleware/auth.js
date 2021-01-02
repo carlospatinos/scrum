@@ -1,6 +1,5 @@
 /* eslint-disable */
-const User = require('../src/api/components/user/model');
-
+const User = require('../../api/components/user/model');
 const auth = (req, res, next) => {
   const token = req.cookies.auth;
   User.findByToken(token, (err, user) => {

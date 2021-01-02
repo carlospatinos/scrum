@@ -4,14 +4,14 @@
 
 const express = require('express');
 const i18n = require('i18n');
-const User = require('../src/api/components/user/model');
+const User = require('./model');
 const UserType = require('../../../../models/userType');
 
 const isUserAReferral = referredBy => {
   return referredBy !== undefined && referredBy !== '';
 };
 
-const signUp = (req, next) => {
+const signUp = (req, cb) => {
   const newUser = new User(req.body);
   const typeForNewUser = new UserType();
   typeForNewUser.type = 'admin';
@@ -24,17 +24,17 @@ const signUp = (req, next) => {
   }
 
   if (newUser.password != newUser.password2)
-    return { status: 400, success: false, message: i18n.__('apiPasswordDoNotMatch') };
+    return cb({ status: 400, success: false, message: i18n.__('apiPasswordDoNotMatch') });
 
   User.findOne({ email: newUser.email }, function (err, user) {
     if (user) {
-      return { status: 400, success: false, message: i18n.__('apiEmailExist') };
+      return cb({ status: 400, success: false, message: i18n.__('apiEmailExist') });
     } else {
       newUser.save((err, docUser) => {
         // TODO propagate SchemaString.SchemaType.doValidate
         if (err) {
           console.log(err);
-          return { status: 400, success: false };
+          return cb({ status: 400, success: false });
         } else {
           if (isUserAReferral(referredBy)) {
             // Async operation
@@ -47,7 +47,7 @@ const signUp = (req, next) => {
               });
             });
           }
-          return { status: 200, success: true, user: docUser };
+          return cb({ status: 200, success: true, user: docUser });
         }
       });
     }
