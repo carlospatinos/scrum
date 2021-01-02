@@ -5,7 +5,7 @@
 const express = require('express');
 const i18n = require('i18n');
 const User = require('./model');
-const UserType = require('../../../../models/userType');
+const UserType = require('./userType');
 
 const isUserAReferral = referredBy => {
   return referredBy !== undefined && referredBy !== '';

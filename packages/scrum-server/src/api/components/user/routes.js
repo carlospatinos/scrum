@@ -11,8 +11,9 @@ const i18n = require('i18n');
 const { END_POINTS } = require('scrum-common');
 const User = require('./model');
 const UserService = require('./service');
+const { auth } = require('../../middleware/auth');
 
-// BEGIN - DELETE  TODO 
+// BEGIN - DELETE  TODO  -------------------- --------------------
 /* GET users listing. */
 router.post('/register', (req, res) => {
   const { name, email, password, password2, type } = req.body;
@@ -99,12 +100,30 @@ router.post('/expLogin', (req, res, next) => {
   })(req, res, next);
 });
 
-router.get('/logout', (req, res) => {
-  req.logout();
-  req.flash('success_msg', i18n.__('apiNowLoggedOut'));
-  res.redirect('/');
+// END - DELETE -------------------- --------------------
+
+// TODO - should be this removed?
+router.get(END_POINTS.PROFILE, auth, (req, res) => {
+  console.log('logout');
+  req.user.deleteToken(req.token, (err, user) => {
+    req.logout();
+    if (err) return res.status(400).send(err);
+    res.sendStatus(200);
+  });
 });
-// END - DELETE 
+
+// TODO - should be this removed?
+router.get(END_POINTS.LOGOUT, auth, (req, res, next) => {
+  res.json({
+    isAuth: true,
+    id: req.user._id,
+    email: req.user.email,
+    name: req.user.firstname + req.user.lastname,
+  });
+});
+
+
+
 router.post(END_POINTS.SIGN_UP, function (req, res, next) {
   UserService.signUp(req, serviceResponse => {
     // TODO remove from serviceResponse any HTTP code
