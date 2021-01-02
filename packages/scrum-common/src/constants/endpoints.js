@@ -8,6 +8,7 @@ const END_POINTS = {
   API: '/api',
   SIGN_UP: '/signup',
   PLANNING_SESSION: '/planningsession',
+  TIPS_FOR_THE_SESSION: '/tipsforthesession',
   LOGOUT: '/logout',
   PROFILE: '/profile',
   ROOT: '/',

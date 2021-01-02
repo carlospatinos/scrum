@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, Container, CardDeck, Card } from 'react-bootstrap';
+import { Container, CardDeck, Card } from 'react-bootstrap';
 
 // import TagManager from 'react-gtm-module'
 
@@ -53,14 +53,6 @@ const Home = () => {
           </Card.Body>
         </Card>
       </CardDeck>
-      <Row noGutters className="pt-2 pt-md-5 w-100 px-4 px-xl-0 position-relative">
-        <Col
-          xs={{ order: 1 }}
-          md={{ size: 7, offset: 1 }}
-          tag="section"
-          className="py-5 mb-5 py-md-0 mb-md-0"
-        />
-      </Row>
     </Container>
   );
 };
