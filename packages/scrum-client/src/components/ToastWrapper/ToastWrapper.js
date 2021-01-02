@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Toast } from 'react-bootstrap';
 import './ToastWrapper.css';
 
+const TIMEOUT = 10000;
 const DELAY = 5000;
 // TODO make toasts stacked
 const ToastWrapper = props => {
@@ -12,7 +13,7 @@ const ToastWrapper = props => {
     function displayTip() {
       setShow(true);
     }
-    setTimeout(displayTip, timeOut);
+    setTimeout(displayTip, timeOut * TIMEOUT);
   }, [timeOut]);
   return (
     <>

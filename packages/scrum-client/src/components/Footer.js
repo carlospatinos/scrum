@@ -6,8 +6,6 @@ import { END_POINTS } from 'scrum-common';
 import ToastWrapper from './ToastWrapper/ToastWrapper';
 import { API_CONSTANTS } from '../constants';
 
-const TIMEOUT = 10000;
-
 const Footer = () => {
   const [tipList, setTipList] = useState([]);
   useEffect(() => {
@@ -49,12 +47,7 @@ const Footer = () => {
           </Col>
         </Row>
         {tipList.map((tip, i) => (
-          <ToastWrapper
-            message={tip}
-            timeOut={(i + 1) * TIMEOUT}
-            position="bottom-right"
-            key={tip._id}
-          />
+          <ToastWrapper message={tip} timeOut={i + 1} position="bottom-right" key={tip._id} />
         ))}
       </Container>
     </footer>
