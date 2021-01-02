@@ -4,7 +4,7 @@ const EVENT = {
   CONNECTION: 'connection',
   DISCONNECT: 'disconnect',
   USER_JOINED: 'user_joined',
-  STORY_UPDATE: 'story_votes_update',
+  STORY_UPDATE: 'story_update',
   STORY_VOTES_UPDATE: 'story_votes_update',
 };
 

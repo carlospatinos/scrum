@@ -7,79 +7,26 @@ import { API_CONSTANTS, DECKS } from '../../constants';
 import ClickableCard from '../../components/ClickableCard';
 import GridGenerator from '../../components/GridGenerator';
 import useSocket from '../../hooks/useSocket';
+import { Request } from '../../util';
 import './VotingCards.css';
-
-const handleSpecificCardToggle = event => {
-  // eslint-disable-next-line
-  console.log(event.target.id);
-};
+import { useAuthState } from '../../context';
 
 const handleSpecificCardToggleKeyboard = event => {
   // eslint-disable-next-line
   console.log(event.target.id);
 };
 
-function getSessionInformation(setCardDeckParam, roomIdParam, setSessionInformation) {
-  const requestOptions = {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-  };
-
+function getPlanningSession(setCardDeckParam, roomId, setSessionInformation) {
   try {
-    fetch(
-      `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}/${roomIdParam}`,
-      requestOptions
-    )
-      .then(response => response.json())
-      .then(data => {
-        if (data && data.success) {
-          setSessionInformation(data.sessionInformation);
-          if (data.sessionInformation) {
-            if (data.sessionInformation.cardDeck === DECKS.POWER_OF_TWO.values) {
-              setCardDeckParam([
-                { val: 1, image: '/card-decks/number-1.svg', id: 'number-1' },
-                { val: 2, image: '/card-decks/number-2.svg', id: 'number-2' },
-                { val: 4, image: '/card-decks/number-4.svg', id: 'number-4' },
-                { val: 8, image: '/card-decks/number-8.svg', id: 'number-8' },
-                { val: 16, image: '/card-decks/number-16.svg', id: 'number-16' },
-                { val: 32, image: '/card-decks/number-32.svg', id: 'number-32' },
-                { val: 64, image: '/card-decks/number-64.svg', id: 'number-64' },
-                { val: 100, image: '/card-decks/question-mark.svg', id: 'question-mark' },
-                { val: 101, image: '/card-decks/infinity.svg', id: 'infinity' },
-                { val: 102, image: '/card-decks/coffee.svg', id: 'coffee' },
-              ]);
-            }
-            if (data.sessionInformation.cardDeck === DECKS.FIBBONACI.values) {
-              setCardDeckParam([
-                { val: 1, image: '/card-decks/number-1.svg', id: 'number-1' },
-                { val: 2, image: '/card-decks/number-2.svg', id: 'number-2' },
-                { val: 3, image: '/card-decks/number-3.svg', id: 'number-3' },
-                { val: 5, image: '/card-decks/number-5.svg', id: 'number-5' },
-                { val: 8, image: '/card-decks/number-8.svg', id: 'number-8' },
-                { val: 13, image: '/card-decks/number-13.svg', id: 'number-13' },
-                { val: 21, image: '/card-decks/number-21.svg', id: 'number-21' },
-                { val: 34, image: '/card-decks/number-34.svg', id: 'number-34' },
-                { val: 100, image: '/card-decks/question-mark.svg', id: 'question-mark' },
-                { val: 101, image: '/card-decks/infinity.svg', id: 'infinity' },
-                { val: 102, image: '/card-decks/coffee.svg', id: 'coffee' },
-              ]);
-            }
-            if (data.sessionInformation.cardDeck === DECKS.TSHIRT.values) {
-              setCardDeckParam([
-                { val: 1, image: '/card-decks/size-xs.svg', id: 'ize-xs' },
-                { val: 2, image: '/card-decks/size-s.svg', id: 'size-s' },
-                { val: 3, image: '/card-decks/size-m.svg', id: 'size-m' },
-                { val: 4, image: '/card-decks/size-l.svg', id: 'size-l' },
-                { val: 5, image: '/card-decks/size-xl.svg', id: 'size-xl' },
-                { val: 100, image: '/card-decks/question-mark.svg', id: 'question-mark' },
-                { val: 101, image: '/card-decks/infinity.svg', id: 'infinity' },
-                { val: 102, image: '/card-decks/coffee.svg', id: 'coffee' },
-              ]);
-            }
-          }
-          // TODO - handle error , sessionInformation not present
-        }
-      });
+    Request.get(
+      `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}/${roomId}`
+    ).then(data => {
+      if (data && data.success && data.sessionInformation) {
+        setSessionInformation(data.sessionInformation);
+        setCardDeckParam(DECKS.byLabels(data.sessionInformation.cardDeck).values);
+        // TODO - handle error , sessionInformation not present
+      }
+    });
   } catch (e) {
     // console.error(e);
   }
@@ -89,11 +36,20 @@ export default function Cards() {
   const { roomId } = useParams();
   const [cardDeck, setCardDeck] = useState([]);
   const [sessionInformation, setSessionInformation] = useState({});
-  const { story } = useSocket(roomId);
+  const { story, socketEvents } = useSocket(roomId);
+  const userDetails = useAuthState();
 
   useEffect(() => {
-    getSessionInformation(setCardDeck, roomId, setSessionInformation);
+    getPlanningSession(setCardDeck, roomId, setSessionInformation);
   }, [setCardDeck, roomId]);
+
+  const handleSpecificCardToggle = event => {
+    socketEvents.setRoomStoryVote({
+      room: { id: roomId },
+      user: userDetails.user,
+      vote: event.target.id,
+    });
+  };
 
   return (
     <Container>

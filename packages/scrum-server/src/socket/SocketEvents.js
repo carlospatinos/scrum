@@ -7,7 +7,6 @@ const SocketEvents = io => {
 
   return socket => {
     const joinUserToRoom = ({ room, user }) => {
-      console.log("joinUserToRoom", room, user);
       socket.join(room.id);
       const roomUpdated = socketState.joinUserToRoom(room, user);
       const users =  Array.from(roomUpdated.users.values());
@@ -15,7 +14,6 @@ const SocketEvents = io => {
     };
 
     const sendMessageToRoom = ({ room, message }) => {
-      console.log("sendMessageToRoom", room, message);
       const _room = socketState.getRoom(room);
       const users = Array.from(_room.users.values());
       // todo retrieve title, subtitle
@@ -25,14 +23,13 @@ const SocketEvents = io => {
       });
     };
     const onStoryUpdate = ({ room, story }) => {
-      console.log("onStoryUpdate", room, story);
       const _room = socketState.setRoomStory(room, story);
       io.to(room.id).emit(EVENT.STORY_UPDATE, {room:_room, story});
+
     };
     const onStoryVotesUpdate = ({ room, user, vote }) => {
-      console.log("onStoryVotesUpdate", room, user, vote);
-      // const storyVotes = socketState.setRoomStoryVote(room, user, vote);
-      // io.to(room.id).emit(EVENT.STORY_VOTES_UPDATE, {room, storyVotes});
+      const storyVotes = socketState.setRoomStoryVote(room, user, vote);
+      io.to(room.id).emit(EVENT.STORY_VOTES_UPDATE, {room, storyVotes});
     };
 
     return { joinUserToRoom, sendMessageToRoom, onStoryUpdate, onStoryVotesUpdate };
