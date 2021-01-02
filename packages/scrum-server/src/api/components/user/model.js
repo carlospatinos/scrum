@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const keys = require('../config/keys');
+const keys = require('../../../config/keys');
 const ObjectId = require('mongoose').Types.ObjectId;
 const salt = 10;
 // TODO fix password was mandatory but with google/twitter oauth either we create 2 different collections or we find a way to persist all in the same
@@ -16,6 +16,11 @@ const validatePassword = (data) => {
   }
 }
 
+/**
+ * User Schema
+ *
+ * @namespace User
+ */
 const UserSchema = new mongoose.Schema({
   firstName: {
     type: String,
@@ -145,6 +150,11 @@ UserSchema.methods.deleteToken = function (token, cb) {
   // cb(null, user); // TODO remove when token is saved (code above)
 };
 
+/**
+ * The model for the user object.
+ *
+ * @namespace User
+ */
 const User = mongoose.model('User', UserSchema);
 
 module.exports = User;

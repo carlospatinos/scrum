@@ -4,9 +4,8 @@ const express = require('express');
 const passport = require('passport');
 const i18n = require('i18n');
 const { END_POINTS } = require('scrum-common');
-const User = require('../models/user.js');
-const keys = require('../config/keys');
-
+const User = require('../src/api/components/user/model');
+const keys = require('../src/config/keys');
 const router = express.Router();
 
 router.post(END_POINTS.AUTH_LOCAL, passport.authenticate('local'), (req, res, next) => {

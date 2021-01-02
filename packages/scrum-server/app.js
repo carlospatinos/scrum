@@ -9,14 +9,14 @@ const flash = require('connect-flash');
 const passport = require('passport');
 const cors = require('cors');
 const { END_POINTS } = require('scrum-common');
-const keys = require('./config/keys');
+const keys = require('./src/config/keys');
 
-require('./authStrategies/localStrategy')(passport);
-require('./authStrategies/googleStrategy')(passport);
-require('./authStrategies/twitterStrategy')(passport);
-require('./authStrategies/facebookStrategy')(passport);
-require('./authStrategies/passportPersistent')(passport);
-require('./utils/db.js');
+require('./src/services/authStrategies/localStrategy')(passport);
+require('./src/services/authStrategies/googleStrategy')(passport);
+require('./src/services/authStrategies/twitterStrategy')(passport);
+require('./src/services/authStrategies/facebookStrategy')(passport);
+require('./src/services/authStrategies/passportPersistent')(passport);
+require('./src/services/db.js');
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');

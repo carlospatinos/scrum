@@ -6,18 +6,12 @@ const { END_POINTS } = require('scrum-common');
 const router = express.Router();
 const i18n = require('i18n');
 
-const { auth } = require('../middleware/auth.js');
-const User = require('../models/user.js');
-const UserType = require('../models/userType');
+const { auth } = require('../src/api/middleware/auth'); 
 const PlanningSession = require('../models/planningSession');
 const Tips = require('../models/tips');
+const UserService = require('../src/api/components/user/service');
 
 const ObjectId = require('mongoose').Types.ObjectId;
-
-const isUserAReferral = (referredBy) => {
-  return (referredBy !== undefined && referredBy !== '');
-}
-
 
 router.get(END_POINTS.ROOT, (req, res, next) => {
   res.json({ message: i18n.__('apiWorking') });
@@ -28,55 +22,11 @@ router.post(END_POINTS.ROOT, (req, res, next) => {
   res.json({ message: i18n.__('apiWorking') });
 });
 
-router.post(END_POINTS.SIGN_UP, function (req, res, next) {
-  const newUser = new User(req.body);
-  const typeForNewUser = new UserType();
-  typeForNewUser.type = "admin";
-  newUser.userType = typeForNewUser; // TODO fix
-
-  const { referredBy } = req.body;
-  if (isUserAReferral(referredBy)) {
-    newUser.wasReferred = true;
-    console.log('User was referredBy')
-  }
-
-  if (newUser.password != newUser.password2) return res.status(400).json({ success: false, message: i18n.__('apiPasswordDoNotMatch') });
-
-  User.findOne({ email: newUser.email }, function (err, user) {
-    if (user) {
-      return res.status(400).json({ success: false, message: i18n.__('apiEmailExist') });
-    } else {
-      newUser.save((err, docUser) => {
-        // TODO propagate SchemaString.SchemaType.doValidate
-        if (err) {
-          console.log(err);
-          return res.status(400).json({ success: false });
-        } else {
-          if (isUserAReferral(referredBy)) {
-            // Async operation
-            User.findOne({ _id: referredBy }, function (err, refferedByUser) {
-              refferedByUser.referralList.push(newUser._id);
-              refferedByUser.save((err, updatedRefferedByUser) => {
-                if (err) {
-                  console.log(err);
-                }
-              });
-            });
-          }
-          return res.status(200).json({
-            success: true,
-            user: docUser
-          });
-        }
-
-      });
-
-    }
-
-
-
+router.post(END_POINTS.SIGN_UP, function (req, res, next) { 
+  const serviceResponse = UserService.signUp(req);
+  // TODO remove from serviceResponse any HTTP code
+  return  res.status(response.status).json({ ...serviceResponse });
   });
-});
 
 
 router.get(END_POINTS.LOGOUT, auth, (req, res, next) => {

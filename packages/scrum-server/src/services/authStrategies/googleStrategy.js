@@ -1,8 +1,8 @@
 /* eslint-disable */
 // TODO fix eslint
-const keys = require('../config/keys');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const User = require('../models/user');
+const keys = require('../../config/keys');
+const User = require('../../api/components/user/model');
 
 module.exports = function (passport) {
   function extractProfile(profile) {

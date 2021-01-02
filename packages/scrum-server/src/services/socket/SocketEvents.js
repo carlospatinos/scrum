@@ -35,4 +35,4 @@ const SocketEvents = io => {
     return { joinUserToRoom, sendMessageToRoom, onStoryUpdate, onStoryVotesUpdate };
   };
 };
-module.exports = { SocketEvents };
+module.exports = SocketEvents;

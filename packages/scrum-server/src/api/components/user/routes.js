@@ -1,4 +1,7 @@
 /* eslint-disable */
+// routes.ts
+// Here we define our API endpoints for the corresponding component and assign the controller methods to them. Moreover we can do things like authorization (e.g. JWT), permission validation (e.g. ACL) or add component specific middleware.
+
 // TODO DELETE
 const express = require('express');
 const bcrypt = require('bcrypt');
@@ -6,9 +9,9 @@ const passport = require('passport');
 const router = express.Router();
 const i18n = require('i18n');
 
-const User = require('../models/user.js');
+const User = require('./model');
 
-const { auth } = require('../middleware/auth');
+const { auth } = require('../../middleware/'); 
 
 /* GET users listing. */
 router.post('/register', (req, res) => {
