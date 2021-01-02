@@ -1,5 +1,7 @@
 const User = require('./model');
-const routes = require('./routes');
+const UserRoutes = require('./routes');
+const UserService = require('./service');
 
 exports.User = User;
-exports.routes = routes;
+exports.UserRoutes = UserRoutes;
+exports.UserService = UserService;

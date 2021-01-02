@@ -21,10 +21,10 @@ require('./src/services/db.js');
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
 const api = require('./routes/api');
-const userRouter = require('./src/api/components/user/routes');
-
 const app = express();
 const i18n = require('i18n');
+const { TipsRoutes } = require('./src/api/components/tips');
+const { UserRoutes } = require('./src/api/components/user');
 
 i18n.configure({
   locales: ['es', 'en'],
@@ -89,7 +89,8 @@ app.use((req, res, next) => {
 app.use(END_POINTS.ROOT, indexRouter);
 app.use(END_POINTS.API, api);
 app.use(END_POINTS.AUTH, authRouter);
-app.use(END_POINTS.API, userRouter);
+app.use(END_POINTS.API, UserRoutes);
+app.use(END_POINTS.API, TipsRoutes);
 
 // Handles any requests that don't match the ones above
 app.get('*', (req, res, next) => {
