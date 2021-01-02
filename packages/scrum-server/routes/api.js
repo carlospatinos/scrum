@@ -8,9 +8,7 @@ const i18n = require('i18n');
 
 const { auth } = require('../src/api/middleware/auth');
 const PlanningSession = require('../models/planningSession');
-const Tips = require('../models/tips');
-const UserService = require('../src/api/components/user/service');
-
+const Tips = require('../models/tips'); 
 const ObjectId = require('mongoose').Types.ObjectId;
 
 router.get(END_POINTS.ROOT, (req, res, next) => {
@@ -20,19 +18,6 @@ router.get(END_POINTS.ROOT, (req, res, next) => {
 router.post(END_POINTS.ROOT, (req, res, next) => {
   const { email } = req.body;
   res.json({ message: i18n.__('apiWorking') });
-});
-
-router.post(END_POINTS.SIGN_UP, function (req, res, next) {
-  UserService.signUp(req, serviceResponse => {
-    // TODO remove from serviceResponse any HTTP code
-    return res
-      .status(serviceResponse.status)
-      .json({
-        success: serviceResponse.success,
-        user: serviceResponse.user,
-        message: serviceResponse.message,
-      });
-  });
 });
 
 router.get(END_POINTS.LOGOUT, auth, (req, res, next) => {

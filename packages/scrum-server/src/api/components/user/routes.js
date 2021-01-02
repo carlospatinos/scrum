@@ -8,11 +8,11 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const router = express.Router();
 const i18n = require('i18n');
-
+const { END_POINTS } = require('scrum-common');
 const User = require('./model');
+const UserService = require('./service');
 
-const { auth } = require('../../middleware/'); 
-
+// BEGIN - DELETE  TODO 
 /* GET users listing. */
 router.post('/register', (req, res) => {
   const { name, email, password, password2, type } = req.body;
@@ -104,9 +104,18 @@ router.get('/logout', (req, res) => {
   req.flash('success_msg', i18n.__('apiNowLoggedOut'));
   res.redirect('/');
 });
-
-router.get('/online', auth, (req, res, next) => {
-  res.render('online', { user: req.user });
+// END - DELETE 
+router.post(END_POINTS.SIGN_UP, function (req, res, next) {
+  UserService.signUp(req, serviceResponse => {
+    // TODO remove from serviceResponse any HTTP code
+    return res
+      .status(serviceResponse.status)
+      .json({
+        success: serviceResponse.success,
+        user: serviceResponse.user,
+        message: serviceResponse.message,
+      });
+  });
 });
 
 module.exports = router;
