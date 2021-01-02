@@ -31,10 +31,10 @@ export default function PlanningConfig() {
   const redirectedFrom = location.state?.redirectedFrom?.pathname || PATHS.SHARE_SESSION;
 
   const cardDeckOptions = [
-    { key: 0, name: '-- select one --', values: '' },
-    DECKS.POWER_OF_TWO,
-    DECKS.FIBBONACI,
-    DECKS.TSHIRT,
+    { key: 0, name: '-- select one --', labels: '' },
+    { ...DECKS.POWER_OF_TWO },
+    { ...DECKS.FIBBONACI },
+    { ...DECKS.TSHIRT },
   ];
 
   useEffect(() => {
@@ -104,8 +104,8 @@ export default function PlanningConfig() {
               setSampleValues(e.target.value);
             }}
           >
-            {cardDeckOptions.map(({ key, name, values }) => (
-              <option value={values} key={key}>
+            {cardDeckOptions.map(({ key, name, labels }) => (
+              <option value={labels} key={key}>
                 {name}
               </option>
             ))}

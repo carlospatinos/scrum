@@ -16,31 +16,17 @@ import { END_POINTS } from 'scrum-common';
 import TeamList from '../../components/TeamList';
 import useSocket from '../../hooks/useSocket';
 import { API_CONSTANTS } from '../../constants';
+import { Request } from '../../util';
 import './ParticipateSession.css';
 
 const getPlanningSession = (roomId, setSessionInformation) => {
-  const requestOptions = {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-  };
-
   try {
-    fetch(
-      `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}/${roomId}`,
-      requestOptions
-    )
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          setSessionInformation(data.sessionInformation);
-        } else {
-          console.log('error');
-        }
-      });
+    Request.get(
+      `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}/${roomId}`
+    ).then(data => setSessionInformation(data.sessionInformation));
   } catch (e) {
-    // console.error(`=====> error:${e}`);
     console.log('error', e);
-    // TODO this erro happen if API is not available but business errors like length of password go above. how to handle and display those?
+    // TODO this error happen if API is not available but business errors like length of password go above. how to handle and display those?
   }
 };
 
@@ -53,7 +39,7 @@ export default function ParticipateSession() {
   const [storyTitle, setStoryTitle] = useState('');
   const [storyDescription, setStoryDescription] = useState('');
   const [sessionInformation, setSessionInformation] = useState();
-  const { socketEvents, setStory, users } = useSocket(roomId);
+  const { socketEvents, setStory, users, storyVotes } = useSocket(roomId);
   useEffect(() => {
     getPlanningSession(roomId, setSessionInformation);
   }, [roomId]);
@@ -124,7 +110,7 @@ export default function ParticipateSession() {
       <Row>
         <Col>
           <div> Display voting results / list of users</div>
-          <TeamList title="Team members" users={users} />
+          <TeamList title="Team members" users={users} storyVotes={storyVotes} />
         </Col>
       </Row>
       <Row>

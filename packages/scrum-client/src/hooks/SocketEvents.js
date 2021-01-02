@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import io from 'socket.io-client';
 import { EVENT } from 'scrum-common';
 import { API_CONSTANTS } from '../constants';
@@ -18,36 +19,39 @@ const SocketEvents = (ioUri = API_CONSTANTS.API_BASE_URL) => {
     socket.emit(EVENT.JOIN, data);
   };
   const disconnectSocket = () => {
-    // eslint-disable-next-line
     console.log('client--disconnectSocket');
     if (socket) socket.disconnect();
   };
   const onRoomMessages = cb => {
-    // eslint-disable-next-line
     console.log('client--onRoomMessages');
     socket.on(EVENT.SEND_MESSAGE, data => {
-      // eslint-disable-next-line
       console.log('client--SEND_MESSAGE', data);
       return cb(null, data);
     });
   };
   const onUserJoined = cb => {
+    console.log('client--onRoomMessages');
     socket.on(EVENT.USER_JOINED, data => cb(data.users));
   };
   const onStoryUpdate = cb => {
+    console.log('client--onStoryUpdate');
     socket.on(EVENT.STORY_UPDATE, data => cb(data.story));
   };
   const onStoryVotesUpdate = cb => {
+    console.log('client--onStoryVotesUpdate');
     socket.on(EVENT.STORY_VOTES_UPDATE, data => cb(data.storyVotes));
   };
   const setRoomStory = ({ room, story }) => {
+    console.log('client--setRoomStory', room, story);
     socket.emit(EVENT.STORY_UPDATE, { room, story });
   };
   const setRoomStoryVote = ({ room, user, vote }) => {
+    console.log('client--setRoomStoryVote', room, user, vote);
     socket.emit(EVENT.STORY_VOTES_UPDATE, { room, user, vote });
   };
 
   const sendMessageToRoom = (room, message) => {
+    console.log('client--sendMessageToRoom', room, message);
     socket.emit(EVENT.SEND_MESSAGE, { room, message });
   };
 
