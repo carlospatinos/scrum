@@ -11,11 +11,7 @@ const cors = require('cors');
 const { END_POINTS } = require('scrum-common');
 const keys = require('./src/config/keys');
 
-require('./src/services/authStrategies/localStrategy')(passport);
-require('./src/services/authStrategies/googleStrategy')(passport);
-require('./src/services/authStrategies/twitterStrategy')(passport);
-require('./src/services/authStrategies/facebookStrategy')(passport);
-require('./src/services/authStrategies/passportPersistent')(passport);
+const AuthStrategies = require('./src/services/authStrategies/');
 require('./src/services/db.js');
 
 const indexRouter = require('./routes/index');
@@ -27,6 +23,7 @@ const { TipsRoutes } = require('./src/api/components/tips');
 const { UserRoutes } = require('./src/api/components/user');
 const { PlanningSessionRoutes } = require('./src/api/components/planningSession');
 
+AuthStrategies.configure(passport);
 i18n.configure({
   locales: ['es', 'en'],
   cookie: 'locale',
