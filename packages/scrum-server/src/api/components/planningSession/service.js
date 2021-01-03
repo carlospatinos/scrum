@@ -9,36 +9,31 @@ const ObjectId = require('mongoose').Types.ObjectId;
 const DEFAULT_PAGE_SIZE = 10;
 const MAX_PAGE_SIZE = 50;
 
-const save = (req, cb) => {
-  const newSession = new PlanningSession(req.body);
-  newSession.save((err, docSession) => {
-    if (err) {
-      console.log(err);
-      return cb({ status: 400, success: false });
-    }
-    cb({
-      status: 200,
-      success: true,
-      session: docSession,
+const save = async req => {
+  try {
+    const newSession = new PlanningSession(req.body);
+    const docSession = await newSession.save();
+    return {
+      planningSession: docSession,
       planningRoomId: docSession._id,
-    });
-  });
+    };
+  } catch (e) {
+    console.log(e);
+    throw Error(i18n.__('serviceSaveError'));
+  }
 };
 
-const find = (req, cb) => {
+const find = async req => {
   const planningRoomId = req.params.id;
   if (!planningRoomId || !ObjectId.isValid(planningRoomId)) {
-    console.log('invalid session id');
-    return cb({ status: 400, success: false, message: 'invalid session id' });
+    throw Error(i18n.__('apiPlanningSessionInvalidId'));
   }
-  PlanningSession.findOne({ _id: planningRoomId }, function (err, session) {
-    if (err || !session) {
-      console.log(err);
-      return cb({ status: 400, success: false });
-    } else {
-      return cb({ status: 200, success: true, sessionInformation: session });
-    }
-  });
+  const planningSession = await PlanningSession.findOne({ _id: planningRoomId });
+  if (!planningSession) {
+    throw Error(i18n.__('apiPlanningSessionNotFound'));
+  } else {
+    return { planningSession };
+  }
 };
 
 module.exports = { save, find };
