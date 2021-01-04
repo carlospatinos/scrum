@@ -2,7 +2,6 @@
 // service.ts
 // The service class acts like a wrapper for the database. Here we read and write data to the database. Furthermore, we can implement caching for example.
 
-const express = require('express');
 const i18n = require('i18n');
 const User = require('./model');
 const UserType = require('./userType');
@@ -47,4 +46,73 @@ const signUp = async req => {
   }
 };
 
-module.exports = { signUp };
+const localAuth = async req => {
+  console.log('Inside passport.authenticate() callback');
+  const token = req.cookies.auth;
+  try {
+    const loggedUser = await User.findByToken(token);
+    if (loggedUser) {
+      throw Error(i18n.__('apiUserAlreadyLoggedIn'));
+    }
+
+    const freshUser = await User.findOne({ email: req.body.email });
+    if (!freshUser){
+      throw Error(i18n.__('apiEmailNotFound'));
+    }
+    //const isMatch = await freshUser.comparePassword(req.body.password);
+    // if (!isMatch) {
+    //   throw Error(i18n.__('apiPasswordDoNotMatch'));
+    // }
+
+    // const newToken = await freshUser.generateToken();
+    // if (!newToken) {
+    //   throw Error('Token was not generated');
+    // }
+
+    // return res.status(200).json({
+          //   user: {
+          //     id: user._id,
+          //     email: user.email,
+          //     fullName: `${user.firstName} ${user.lastName}`,
+          //   }
+          // });
+
+    user.comparePassword(req.body.password, (err, isMatch) => {
+      if (!isMatch) throw Error(i18n.__('apiPasswordDoNotMatch'));
+
+      user.generateToken((err, user) => {
+        if (err) {throw Error('Token was not generated')};
+
+        req.login(user, function (err) {
+          if (err) {
+            throw Error('Token was not generated');
+          }
+          return {
+            isAuth: true,
+            login_access_token: user.token,
+            user: {
+              id: user._id,
+              email: user.email,
+              fullName: `${user.firstName} ${user.lastName}`,
+            },
+          };
+          
+        });
+      });
+    });
+    return {
+      isAuth: true,
+      login_access_token: newToken,
+      user: {
+        id: freshUser._id,
+        email: freshUser.email,
+        fullName: `${freshUser.firstName} ${freshUser.lastName}`,
+      },
+    };
+  } catch (e) {
+    console.log(e.message);
+    throw Error(e.message);
+  }
+};
+
+module.exports = { signUp, localAuth };

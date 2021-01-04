@@ -70,9 +70,7 @@ router.get(
 router.get(
   `${END_POINTS.GOOGLE_LOGIN}/redirect`,
   passport.authenticate('google', {
-    scope: ['email', 'profile'],
-    // successRedirect: 'http://localhost:4000/planningconfig',
-    // failureRedirect: "http://localhost:4000/sessionstarted"
+    scope: ['email', 'profile']
   }),
   (req, res) => {
     req.session.save(function (err) {
@@ -87,10 +85,6 @@ router.get(
   `${END_POINTS.FACEBOOK_LOGIN}/redirect`,
   passport.authenticate(
     'facebook'
-    // {
-    //   successRedirect: "/",
-    //   failureRedirect: "/fail"
-    // }
   ),
   (req, res) => {
     return res.redirect(`${keys.reactAppURL}/home`);

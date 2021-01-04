@@ -120,7 +120,7 @@ UserSchema.methods.generateToken = function (cb) {
   const token = jwt.sign(user._id.toHexString(), keys.jwtSecret);
 
   user.token = token;
-  // TODO FIX ======>>>
+  // TODO FIX ======>>> do we need TTL?
   user.save((err, user) => {
     console.log('save');
     if (err) return cb(err);
