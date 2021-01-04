@@ -1,7 +1,3 @@
-const Tips = require('./model');
-const TipsRoutes = require('./routes');
-const TipsService = require('./service');
-
-exports.Tips = Tips;
-exports.TipsRoutes = TipsRoutes;
-exports.TipsService = TipsService;
+exports.Tips = require('./model');
+exports.TipsRoutes = require('./routes');
+exports.TipsService = require('./service');

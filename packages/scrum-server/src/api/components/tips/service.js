@@ -8,24 +8,19 @@ const Tips = require('./model');
 const DEFAULT_PAGE_SIZE = 10;
 const MAX_PAGE_SIZE = 50;
 
-const find = (req, cb) => {
+const find = async (req) => {
   let pageSize = req.params.pageSize || DEFAULT_PAGE_SIZE;
   if (pageSize > MAX_PAGE_SIZE) {
-    console.log(`invalid pageSize using MAX_PAGE_SIZE as ${MAX_PAGE_SIZE}`);
+    throw Error(`invalid pageSize using MAX_PAGE_SIZE as ${MAX_PAGE_SIZE}`);
     pageSize = MAX_PAGE_SIZE;
   }
+  const data = await Tips.find({}, null, {limit: 50});
+  if (!data) {
+    throw Error('Tips not found' );
+  } else {
+    return { data };
+  }
 
-  Tips.find()
-    .limit(pageSize)
-    .exec(function (err, tipDocs) {
-      // console.log(tipDocs);
-      if (err) {
-        console.log(err);
-        return cb({ status: 400, success: false, message: 'tips not found' });
-      } else {
-        return cb({ status: 200, success: true, tips: tipDocs });
-      }
-    });
 };
 
 module.exports = { find };
