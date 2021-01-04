@@ -8,6 +8,7 @@
     "start": "node ./bin/www",
     "localStart": "node ./bin/www",
     "dev": "nodemon --exec babel-node --presets babel-preset-env ./bin/www",
+    "debug": "nodemon --inspect-brk --exec babel-node --presets babel-preset-env ./bin/www",
     "profile": "node --inspect ./bin/www",
     "lint": "eslint \"./**/*.js\" ",
     "lint-fix": "eslint --fix \"./**/*.js\""

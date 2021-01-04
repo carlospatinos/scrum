@@ -115,6 +115,10 @@ UserSchema.methods.comparePassword = function (password, cb) {
   });
 };
 
+UserSchema.methods.comparePassword2 = async function(password) {
+  return bcrypt.compare(password, this.password);
+}
+
 UserSchema.methods.generateToken = function (cb) {
   const user = this;
   const token = jwt.sign(user._id.toHexString(), keys.jwtSecret);
@@ -138,6 +142,26 @@ UserSchema.statics.findByToken = function (token, cb) {
       cb(null, user);
     });
   });
+};
+
+UserSchema.statics.findByToken2 = async function (token) {
+  const user = this;
+  console.log('token', token);
+  let isVerified = undefined;
+  try{
+    isVerified = await jwt.verify(token, keys.jwtSecret);
+  } catch(e){
+    throw Error(e);
+  }
+  console.log(isVerified);
+  if (!isVerified) {
+    throw Error('jwt not verified');
+  }
+  let userFromDB = await user.findOne({ _id: isVerified, token });
+  if (!userFromDB) {
+    throw Error('user not found');
+  }
+  return userFromDB;
 };
 
 UserSchema.methods.deleteToken = function (token, cb) {
