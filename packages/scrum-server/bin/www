@@ -1,45 +1,14 @@
 #!/usr/bin/env node
+/* eslint-disable no-var */
 
 /**
  * Module dependencies.
  */
 
 var app = require('../app');
-var debug = require('debug')('scrum:server');
-var http = require('http');
 var pjson = require('../package.json');
-
-
-/**
- * Get port from environment and store in Express.
- */
-
-var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
-
-/**
- * Create HTTP server.
- */
-
-var server = http.createServer(app);
-
-var SocketService = require('../utils/socket-singleton');
-app.set("socketService", new SocketService(server));
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-// server.listen(port);
-server.listen(port, () => {
-  console.log(`Server App v. ${pjson.version} listening at http://scrum-app-local.com:${port}`);
-  process.env.REACT_APP_VERSION = pjson.version;
-
-  const used = process.memoryUsage().heapUsed / 1024 / 1024;
-  console.log(`The script uses approximately ${Math.round(used * 100) / 100} MB`);
-});
-server.on('error', onError);
-server.on('listening', onListening);
+var HttpServer = require('../src/api/server');
+var SocketService = require('../src/services/socket/socket-singleton');
 
 /**
  * Normalize a port into a number, string, or false.
@@ -62,41 +31,10 @@ function normalizePort(val) {
 }
 
 /**
- * Event listener for HTTP server "error" event.
+ * Get port from environment and store in Express.
  */
 
-function onError(error) {
-  if (error.syscall !== 'listen') {
-    throw error;
-  }
-
-  var bind = typeof port === 'string'
-    ? 'Pipe ' + port
-    : 'Port ' + port;
-
-  // handle specific listen errors with friendly messages
-  switch (error.code) {
-    case 'EACCES':
-      console.error(bind + ' requires elevated privileges');
-      process.exit(1);
-      break;
-    case 'EADDRINUSE':
-      console.error(bind + ' is already in use');
-      process.exit(1);
-      break;
-    default:
-      throw error;
-  }
-}
-
-/**
- * Event listener for HTTP server "listening" event.
- */
-
-function onListening() {
-  var addr = server.address();
-  var bind = typeof addr === 'string'
-    ? 'pipe ' + addr
-    : 'port ' + addr.port;
-  debug('Listening on ' + bind);
-}
+var port = normalizePort(process.env.PORT || '3000');
+var server = HttpServer({ app, port, pjson });
+app.set('port', port);
+app.set('socketService', new SocketService(server));

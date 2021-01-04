@@ -16,7 +16,10 @@ export async function loginUser(dispatch, loginPayload) {
       `${API_CONSTANTS.API_BASE_URL}${END_POINTS.AUTH}${END_POINTS.AUTH_LOCAL}`,
       requestOptions
     );
+    console.log(response);
+
     const data = await response.json();
+    console.log(data);
 
     if (data.user) {
       dispatch({ type: 'LOGIN_SUCCESS', payload: data });

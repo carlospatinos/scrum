@@ -5,34 +5,19 @@ import { Row, Col, Container } from 'react-bootstrap';
 import { END_POINTS } from 'scrum-common';
 import ToastWrapper from './ToastWrapper/ToastWrapper';
 import { API_CONSTANTS } from '../constants';
+import { Request } from '../util';
 
 const Footer = () => {
   const [tipList, setTipList] = useState([]);
   useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-    };
-
-    fetch(
-      `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.TIPS_FOR_THE_SESSION}`,
-      requestOptions
-    )
-      .then(response => {
-        return response.json();
-      })
-      .then(data => {
-        if (data.success) {
-          setTipList(data.tips);
-        } else {
-          console.log(data.message);
-        }
-      })
-      .catch(e => {
-        // console.error(`=====> error:${e}`);
-        console.log(e);
-        // TODO this erro happen if API is not available but business errors like length of password go above. how to handle and display those?
-      });
+    try {
+      Request.get(
+        `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.TIPS_FOR_THE_SESSION}`
+      ).then(response => setTipList(response.data));
+    } catch (e) {
+      console.log('error', e);
+      // TODO this error happen if API is not available but business errors like length of password go above. how to handle and display those?
+    }
   }, []);
 
   return (

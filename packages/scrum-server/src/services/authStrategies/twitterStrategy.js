@@ -1,8 +1,8 @@
 /* eslint-disable */
 // TODO fix eslint
 const TwitterStrategy = require('passport-twitter');
-const keys = require('../config/keys');
-const User = require('../models/user');
+const keys = require('../../config/keys');
+const User = require('../../api/components/user/model');
 
 module.exports = function (passport) {
   passport.use(

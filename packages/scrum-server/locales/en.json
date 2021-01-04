@@ -9,5 +9,8 @@
     "apiPasswordMinLength": "Password must be at least 6 characters",
     "apiEmailAlreadyRegistered": "Email already ",
     "apiSuccessRegister": "You have now ",
-    "apiNowLoggedOut": "Now logged out"
+    "apiNowLoggedOut": "Now logged out",
+    "serviceSaveError": "Error while saving document",
+    "apiPlanningSessionInvalidId": "Invalid session id",
+    "apiPlanningSessionNotFound": "Planning session not found."
 }

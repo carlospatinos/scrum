@@ -2,8 +2,7 @@
 // TODO fix eslint
 const socketIo = require('socket.io');
 const { EVENT } = require('scrum-common');
-
-const { SocketEvents } = require('../src/socket/SocketEvents');
+const SocketEvents  = require('./SocketEvents');
 
 class SocketService {
   constructor(server) {

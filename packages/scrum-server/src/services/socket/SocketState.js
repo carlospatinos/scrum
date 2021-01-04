@@ -10,7 +10,6 @@ const buildRoom = ({ id, users = new Map(), storyVotes = new Map(), story = '' }
 const SocketState = (initialState = []) => {
   const rooms = new Map(...initialState);
   console.log('--server--state-SocketState', rooms);
-
   const addRoom = room => {
     if (!rooms.has(room.id)) {
       rooms.set(room.id, buildRoom(room.id));
@@ -42,7 +41,6 @@ const SocketState = (initialState = []) => {
     console.log('--server--state-voteStory', room, user, vote);
     const _room = rooms.get(room.id);
     _room.storyVotes.set(user.email, vote);
-    // _room.storyVotes = new Map();
     return _room.storyVotes;
   };
   const getRoom = room => {

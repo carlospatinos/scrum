@@ -1,8 +1,8 @@
 /* eslint-disable */
 // TODO fix eslint
 const FacebookStrategy = require('passport-facebook').Strategy;
-const keys = require('../config/keys');
-const User = require('../models/user');
+const keys = require('../../config/keys');
+const User = require('../../api/components/user/model');
 
 const fbCallback = (accessToken, refreshToken, profile, done) => {
   const { email, first_name, last_name } = profile._json;

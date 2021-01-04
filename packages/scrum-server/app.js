@@ -9,22 +9,19 @@ const flash = require('connect-flash');
 const passport = require('passport');
 const cors = require('cors');
 const { END_POINTS } = require('scrum-common');
-const keys = require('./config/keys');
+const keys = require('./src/config/keys');
 
-require('./authStrategies/localStrategy')(passport);
-require('./authStrategies/googleStrategy')(passport);
-require('./authStrategies/twitterStrategy')(passport);
-require('./authStrategies/facebookStrategy')(passport);
-require('./authStrategies/passportPersistent')(passport);
-require('./utils/db.js');
+const AuthStrategies = require('./src/services/authStrategies/');
+require('./src/services/db.js');
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
-const api = require('./routes/api');
 
 const app = express();
 const i18n = require('i18n');
+const { TipsRoutes, UserRoutes, PlanningSessionRoutes, AuthRoutes  } = require('./src/api/routes');
 
+AuthStrategies.configure(passport);
 i18n.configure({
   locales: ['es', 'en'],
   cookie: 'locale',
@@ -86,8 +83,11 @@ app.use((req, res, next) => {
 });
 
 app.use(END_POINTS.ROOT, indexRouter);
-app.use(END_POINTS.API, api);
 app.use(END_POINTS.AUTH, authRouter);
+app.use(END_POINTS.AUTH, AuthRoutes);
+app.use(END_POINTS.API, UserRoutes);
+app.use(END_POINTS.API, TipsRoutes);
+app.use(END_POINTS.API, PlanningSessionRoutes);
 
 // Handles any requests that don't match the ones above
 app.get('*', (req, res, next) => {
