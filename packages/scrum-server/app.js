@@ -19,7 +19,7 @@ const authRouter = require('./routes/auth');
 const api = require('./routes/api');
 const app = express();
 const i18n = require('i18n');
-const { TipsRoutes, UserRoutes, PlanningSessionRoutes  } = require('./src/api/routes');
+const { TipsRoutes, UserRoutes, PlanningSessionRoutes, AuthRoutes  } = require('./src/api/routes');
 
 AuthStrategies.configure(passport);
 i18n.configure({
@@ -85,6 +85,7 @@ app.use((req, res, next) => {
 app.use(END_POINTS.ROOT, indexRouter);
 app.use(END_POINTS.API, api);
 app.use(END_POINTS.AUTH, authRouter);
+app.use(END_POINTS.AUTH, AuthRoutes);
 app.use(END_POINTS.API, UserRoutes);
 app.use(END_POINTS.API, TipsRoutes);
 app.use(END_POINTS.API, PlanningSessionRoutes);

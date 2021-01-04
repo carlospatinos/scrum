@@ -8,7 +8,7 @@ const passport = require('passport');
 const { END_POINTS } = require('scrum-common');
 const AuthController = require('./controller');
 
-router.post(END_POINTS.AUTH_LOCAL, AuthController.authUserLocal);
+// router.post(END_POINTS.AUTH_LOCAL, AuthController.authUserLocal);
 router.get(END_POINTS.GOOGLE_LOGIN, passport.authenticate('google', { scope: ['email', 'profile'] }), AuthController.authUserGoogle);
 router.get(`${END_POINTS.GOOGLE_LOGIN}/redirect`, passport.authenticate('google', {
     scope: ['email', 'profile']
