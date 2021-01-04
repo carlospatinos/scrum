@@ -16,7 +16,7 @@ require('./src/services/db.js');
 
 const indexRouter = require('./routes/index');
 const authRouter = require('./routes/auth');
-const api = require('./routes/api');
+
 const app = express();
 const i18n = require('i18n');
 const { TipsRoutes, UserRoutes, PlanningSessionRoutes, AuthRoutes  } = require('./src/api/routes');
@@ -83,7 +83,6 @@ app.use((req, res, next) => {
 });
 
 app.use(END_POINTS.ROOT, indexRouter);
-app.use(END_POINTS.API, api);
 app.use(END_POINTS.AUTH, authRouter);
 app.use(END_POINTS.AUTH, AuthRoutes);
 app.use(END_POINTS.API, UserRoutes);
