@@ -11,7 +11,7 @@ const isUserAReferral = referredBy => {
   return referredBy !== undefined && referredBy !== '';
 };
 
-const signUp = (req, cb) => {
+const signUp = async req => {
   const newUser = new User(req.body);
   const typeForNewUser = new UserType();
   typeForNewUser.type = 'admin';
@@ -23,35 +23,28 @@ const signUp = (req, cb) => {
     console.log('User was referredBy');
   }
 
-  if (newUser.password != newUser.password2)
-    return cb({ status: 400, success: false, message: i18n.__('apiPasswordDoNotMatch') });
+  if (newUser.password != newUser.password2) throw Error(i18n.__('apiPasswordDoNotMatch'));
+  try {
+    const user = await User.findOne({ email: newUser.email });
+    if (user) throw Error(i18n.__('apiEmailExist'));
 
-  User.findOne({ email: newUser.email }, function (err, user) {
-    if (user) {
-      return cb({ status: 400, success: false, message: i18n.__('apiEmailExist') });
-    } else {
-      newUser.save((err, docUser) => {
-        // TODO propagate SchemaString.SchemaType.doValidate
+    const docUser = await newUser.save();
+    // TODO propagate SchemaString.SchemaType.doValidate
+    if (isUserAReferral(referredBy)) {
+      // Async operation
+      const referredByUser = User.findOne({ _id: referredBy });
+      referredByUser.referralList.push(newUser._id);
+      referredByUser.save((err, updatedReferredByUser) => {
         if (err) {
           console.log(err);
-          return cb({ status: 400, success: false });
-        } else {
-          if (isUserAReferral(referredBy)) {
-            // Async operation
-            User.findOne({ _id: referredBy }, function (err, referredByUser) {
-              referredByUser.referralList.push(newUser._id);
-              referredByUser.save((err, updatedReferredByUser) => {
-                if (err) {
-                  console.log(err);
-                }
-              });
-            });
-          }
-          return cb({ status: 200, success: true, user: docUser });
         }
       });
     }
-  });
+    return { user: docUser };
+  } catch (e) {
+    console.log(e.message);
+    throw Error(e.message);
+  }
 };
 
 module.exports = { signUp };
