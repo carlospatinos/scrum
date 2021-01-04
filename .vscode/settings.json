@@ -13,5 +13,8 @@
     "prettier.disableLanguages": [
         "js"
     ],
-    "svg.preview.background": "custom"
+    "svg.preview.background": "custom",
+    "cSpell.words": [
+        "pjson"
+    ]
 }
