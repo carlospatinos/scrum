@@ -19,9 +19,7 @@ const authRouter = require('./routes/auth');
 const api = require('./routes/api');
 const app = express();
 const i18n = require('i18n');
-const { TipsRoutes } = require('./src/api/components/tips');
-const { UserRoutes } = require('./src/api/components/user');
-const { PlanningSessionRoutes } = require('./src/api/components/planningSession');
+const { TipsRoutes, UserRoutes, PlanningSessionRoutes  } = require('./src/api/routes');
 
 AuthStrategies.configure(passport);
 i18n.configure({
