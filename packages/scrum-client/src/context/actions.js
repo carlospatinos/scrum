@@ -1,36 +1,28 @@
 /* eslint-disable no-console */
 import { END_POINTS } from 'scrum-common';
 import { API_CONSTANTS } from '../constants';
+import { Request } from '../util';
 
+import ContextUtil from './utils';
+import LOGIN_ACTIONS from './actionTypes';
+
+const loginUserPost = loginPayload => {
+  return Request.post(
+    `${API_CONSTANTS.API_BASE_URL}${END_POINTS.AUTH}${END_POINTS.AUTH_LOCAL}`,
+    loginPayload
+  );
+};
 export async function loginUser(dispatch, loginPayload) {
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    // 'Access-Control-Allow-Credentials': true,
-    body: JSON.stringify(loginPayload),
-  };
-
   try {
-    dispatch({ type: 'REQUEST_LOGIN' });
-    const response = await fetch(
-      `${API_CONSTANTS.API_BASE_URL}${END_POINTS.AUTH}${END_POINTS.AUTH_LOCAL}`,
-      requestOptions
-    );
-    console.log(response);
-
-    const data = await response.json();
-    console.log(data);
-
+    const loginUserAction = ContextUtil.generateAction(dispatch, loginUserPost, LOGIN_ACTIONS);
+    const response = await loginUserAction(loginPayload);
+    const { data } = response;
     if (data.user) {
-      dispatch({ type: 'LOGIN_SUCCESS', payload: data });
       localStorage.setItem(API_CONSTANTS.CURRENT_USER, JSON.stringify(data));
       return data;
     }
-
-    dispatch({ type: 'LOGIN_ERROR', error: data.message });
   } catch (error) {
-    dispatch({ type: 'LOGIN_ERROR', error });
-    console.log(error);
+    console.log(error.message);
   }
   return undefined;
 }

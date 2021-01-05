@@ -34,7 +34,7 @@ router.post(END_POINTS.AUTH_LOCAL, passport.authenticate('local'), (req, res, ne
             if (err) {
               return res.status(400).send(err);
             }
-            return res.cookie('auth', user.token).json({
+            return res.cookie('auth', user.token).json({data:{
               isAuth: true,
               login_access_token: user.token,
               user: {
@@ -42,7 +42,7 @@ router.post(END_POINTS.AUTH_LOCAL, passport.authenticate('local'), (req, res, ne
                 email: user.email,
                 fullName: `${user.firstName} ${user.lastName}`,
               },
-            });
+            }});
             // return res.status(200).json({
             //   user: {
             //     id: user._id,
