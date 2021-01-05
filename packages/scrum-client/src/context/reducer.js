@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
 import { API_CONSTANTS } from '../constants';
+import LOGIN_ACTIONS from './actionTypes';
 
 const user = localStorage.getItem(API_CONSTANTS.CURRENT_USER)
   ? JSON.parse(localStorage.getItem(API_CONSTANTS.CURRENT_USER)).user
@@ -17,12 +18,12 @@ export const initialState = {
 
 export const AuthReducer = (initialState, action) => {
   switch (action.type) {
-    case 'REQUEST_LOGIN':
+    case LOGIN_ACTIONS.baseAction:
       return {
         ...initialState,
         loading: true,
       };
-    case 'LOGIN_SUCCESS':
+    case LOGIN_ACTIONS.successAction:
       return {
         ...initialState,
         user: action.payload.user,
@@ -36,7 +37,7 @@ export const AuthReducer = (initialState, action) => {
         login_access_token: '',
       };
 
-    case 'LOGIN_ERROR':
+    case LOGIN_ACTIONS.failureAction:
       return {
         ...initialState,
         loading: false,
