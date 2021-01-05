@@ -50,7 +50,7 @@ export default function Login() {
 
     try {
       const response = await loginUser(dispatch, { email, password });
-      if (response.user === undefined) return;
+      if (response && response.user === undefined) return;
       history.push(PATHS.HOME);
     } catch (e) {
       // eslint-disable-next-line no-console

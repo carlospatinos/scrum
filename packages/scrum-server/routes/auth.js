@@ -29,7 +29,6 @@ const router = express.Router();
 
 //         user.generateToken((err, user) => {
 //           if (err) return res.status(400).send(err);
-
 //           req.login(user, function (err) {
 //             if (err) {
 //               return res.status(400).send(err);
