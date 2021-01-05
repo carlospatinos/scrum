@@ -83,7 +83,7 @@ const UserSchema = new mongoose.Schema({
   },
   wasReferred: {
     type: Boolean,
-    required: true, 
+    required: true,
     default: false
   },
   referralList: [{ type: ObjectId, ref: 'User' }],
@@ -115,7 +115,7 @@ UserSchema.methods.comparePassword = function (password, cb) {
   });
 };
 
-UserSchema.methods.comparePassword2 = async function(password) {
+UserSchema.methods.comparePassword2 = async function (password) {
   return bcrypt.compare(password, this.password);
 }
 
@@ -133,6 +133,20 @@ UserSchema.methods.generateToken = function (cb) {
   // cb(null, user); // TODO remove when token is saved (code above)
 };
 
+UserSchema.methods.generateToken2 = async function () {
+  const user = this;
+  const token = jwt.sign(user._id.toHexString(), keys.jwtSecret);
+
+  user.token = token;
+  // TODO FIX ======>>> do we need TTL?
+  let savedUser = await user.save((err, user));
+  console.log('save');
+  if (!savedUser) {
+    throw Error('user not saved');
+  }
+  return { user };
+};
+
 UserSchema.statics.findByToken = function (token, cb) {
   const user = this;
 
@@ -148,18 +162,19 @@ UserSchema.statics.findByToken2 = async function (token) {
   const user = this;
   console.log('token', token);
   let isVerified = undefined;
-  try{
+  try {
     isVerified = await jwt.verify(token, keys.jwtSecret);
-  } catch(e){
-    throw Error(e);
+    console.log(isVerified);
+    if (!isVerified) {
+      console.err('jwt not verified');
+    }
+  } catch (e) {
+    console.log(e);
   }
-  console.log(isVerified);
-  if (!isVerified) {
-    throw Error('jwt not verified');
-  }
+
   let userFromDB = await user.findOne({ _id: isVerified, token });
   if (!userFromDB) {
-    throw Error('user not found');
+    return undefined;
   }
   return userFromDB;
 };
