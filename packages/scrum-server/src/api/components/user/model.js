@@ -156,14 +156,9 @@ UserSchema.statics.findByToken2 = async function (token) {
   return userFromDB;
 };
 
-UserSchema.methods.deleteToken = function (token, cb) {
+UserSchema.methods.deleteToken = async function (token) {
   const user = this;
-
-  user.update({ $unset: { token: 1 } }, (err, user) => {
-    if (err) return cb(err);
-    cb(null, user);
-  });
-  // cb(null, user); // TODO remove when token is saved (code above)
+  return await user.updateOne({ $unset: { token: 1 } });
 };
 
 /**
