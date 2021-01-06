@@ -69,16 +69,19 @@ const localAuth = async req => {
 
     const newToken = await freshUser.generateToken2();
     if (!newToken) {
-      throw Error('Token was not generated');
+      throw Error('Token was not generated. User not aithenticated');
     }
 
-    return res.status(200).json({
-      user: {
-        id: user._id,
-        email: user.email,
-        fullName: `${user.firstName} ${user.lastName}`,
+    return {
+      data: {
+        login_access_token: newToken,
+        user: {
+          id: user._id,
+          email: user.email,
+          fullName: `${user.firstName} ${user.lastName}`,
+        }
       }
-    });
+    };
   } catch (e) {
     console.log(e.message);
     throw Error(e.message);
