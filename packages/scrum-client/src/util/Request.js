@@ -5,6 +5,7 @@ const defaultHeaders = {
 const requestGetOptions = {
   method: 'GET',
   ...defaultHeaders,
+  credentials: 'include',
 };
 const requestPostOptions = {
   method: 'POST',

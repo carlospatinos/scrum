@@ -5,5 +5,8 @@ const LOGIN_ACTIONS = ContextUtil.generateActionTypes({
   featureName: 'LOGIN',
   restVerb: ACTIONS_POST,
 });
+const LOGOUT_ACTIONS = ContextUtil.generateActionTypes({
+  featureName: 'LOGOUT',
+});
 
-export default LOGIN_ACTIONS;
+export { LOGIN_ACTIONS, LOGOUT_ACTIONS };
