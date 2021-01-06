@@ -58,9 +58,11 @@ const authLoginSucess = async (req, res) => {
   if (req.user) {
     return res.status(200).json({
       success: true,
-      isAuth: true,
-      user: req.user,
-      login_access_token: 'sadadasdas', // TODO fix this
+      data: {
+        isAuth: true,
+        user: req.user,
+        login_access_token: req.cookies.auth,
+      },
     });
   }
   return res.status(400).json({
