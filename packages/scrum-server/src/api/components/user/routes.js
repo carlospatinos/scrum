@@ -14,9 +14,7 @@ const UserController = require('./controller');
 
 const { auth } = require('../../middleware/auth');
 
-// TODO - should be this removed?
-router.get(END_POINTS.PROFILE, auth, (req, res) => {
-  console.log('logout');
+router.get(END_POINTS.LOGOUT, auth, (req, res) => {
   req.user.deleteToken(req.token, (err, user) => {
     req.logout();
     if (err) return res.status(400).send(err);
@@ -25,7 +23,7 @@ router.get(END_POINTS.PROFILE, auth, (req, res) => {
 });
 
 // TODO - should be this removed?
-router.get(END_POINTS.LOGOUT, auth, (req, res, next) => {
+router.get(END_POINTS.PROFILE, auth, (req, res, next) => {
   res.json({
     isAuth: true,
     id: req.user._id,

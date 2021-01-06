@@ -60,7 +60,7 @@ const generateAction = (dispatchFxn, apiFxn, action) => async req => {
       type: action.failureAction,
       error: e.message,
     });
-    throw new Error(e.message);
+    return undefined;
   }
 };
 
