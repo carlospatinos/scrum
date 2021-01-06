@@ -1,6 +1,6 @@
 /* eslint-disable */
 const User = require('../../api/components/user/model');
-const auth = async (req, res, next) => {
+const auth = (req, res, next) => {
   const token = req.cookies.auth;
   User.findByToken(token, (err, user) => {
     if (err) throw err;

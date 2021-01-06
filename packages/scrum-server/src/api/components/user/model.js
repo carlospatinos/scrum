@@ -138,7 +138,6 @@ UserSchema.statics.findByToken = function (token, cb) {
 
 UserSchema.statics.findByToken2 = async function (token) {
   const user = this;
-  console.log('token', token);
   let isVerified = undefined;
   try {
     isVerified = await jwt.verify(token, keys.jwtSecret);
