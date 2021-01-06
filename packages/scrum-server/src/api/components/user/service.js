@@ -57,28 +57,24 @@ const localAuth = async req => {
 
   try {
     const freshUser = await User.findOne({ email: req.body.email });
-    console.log('freshUser', freshUser);
     if (!freshUser) {
       throw Error(i18n.__('apiEmailNotFound'));
     }
     const isMatch = await freshUser.comparePassword2(req.body.password);
-    console.log(isMatch);
     if (!isMatch) {
       throw Error(i18n.__('apiPasswordDoNotMatch'));
     }
 
-    const newToken = await freshUser.generateToken2();
-    if (!newToken) {
-      throw Error('Token was not generated. User not aithenticated');
-    }
-
+    const updatedUser = await freshUser.generateToken2();
+    console.log('updatedUser', updatedUser);
+    // TODO return full user without pass?
     return {
       data: {
-        login_access_token: newToken,
+        login_access_token: updatedUser.token,
         user: {
-          id: user._id,
-          email: user.email,
-          fullName: `${user.firstName} ${user.lastName}`,
+          id: updatedUser._id,
+          email: updatedUser.email,
+          fullName: `${updatedUser.firstName} ${updatedUser.lastName}`,
         }
       }
     };

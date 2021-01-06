@@ -2,9 +2,9 @@
     "configurations": [
         {
             "type": "pwa-chrome",
-            "name": "ws://127.0.0.1:9229/9746a308-6431-4490-a59f-25885e6da818",
+            "name": "local-debug",
             "request": "launch",
-            "url": "ws://127.0.0.1:9229/9746a308-6431-4490-a59f-25885e6da818"
+            "url": "ws://127.0.0.1:9229/d58a1b91-2a89-4734-b723-fe7ce40eeabf"
         }
     ]
 }

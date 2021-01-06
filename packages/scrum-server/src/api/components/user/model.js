@@ -108,43 +108,21 @@ UserSchema.pre('save', function (next) {
   }
 });
 
-UserSchema.methods.comparePassword = function (password, cb) {
-  bcrypt.compare(password, this.password, (err, isMatch) => {
-    if (err) return cb(err);
-    cb(null, isMatch);
-  });
-};
-
 UserSchema.methods.comparePassword2 = async function (password) {
   return bcrypt.compare(password, this.password);
 }
 
-UserSchema.methods.generateToken = function (cb) {
-  const user = this;
-  const token = jwt.sign(user._id.toHexString(), keys.jwtSecret);
-
-  user.token = token;
-  // TODO FIX ======>>> do we need TTL?
-  user.save((err, user) => {
-    console.log('save');
-    if (err) return cb(err);
-    cb(null, user);
-  });
-  // cb(null, user); // TODO remove when token is saved (code above)
-};
-
 UserSchema.methods.generateToken2 = async function () {
   const user = this;
-  const token = jwt.sign(user._id.toHexString(), keys.jwtSecret);
-
-  user.token = token;
-  // TODO FIX ======>>> do we need TTL?
-  let savedUser = await user.save((err, user));
-  console.log('save');
-  if (!savedUser) {
-    throw Error('user not saved');
+  try {
+    const token = jwt.sign(user._id.toHexString(), keys.jwtSecret);
+    user.token = token;
+    // TODO do we need TTL? If user abruptilibly goes offline? 
+    let updatedUser = await user.save();
+    return updatedUser;
+  } catch (e) {
+    throw Error(e);
   }
-  return { user };
 };
 
 UserSchema.statics.findByToken = function (token, cb) {
