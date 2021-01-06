@@ -4,64 +4,51 @@ import { API_CONSTANTS } from '../constants';
 import { Request } from '../util';
 
 import ContextUtil from './utils';
-import LOGIN_ACTIONS from './actionTypes';
+import { LOGIN_ACTIONS, LOGOUT_ACTIONS } from './actionTypes';
 
-const loginUserPost = loginPayload => {
-  return Request.post(
+// Move to UserAPICalls or something
+const loginUserPost = loginPayload =>
+  Request.post(
     `${API_CONSTANTS.API_BASE_URL}${END_POINTS.AUTH}${END_POINTS.AUTH_LOCAL}`,
     loginPayload
   );
-};
-export async function loginUser(dispatch, loginPayload) {
+const login3ppUserGet = () =>
+  Request.get(`${API_CONSTANTS.API_BASE_URL}${END_POINTS.AUTH}${END_POINTS.LOGIN_SUCCESS}`);
+
+const logoutUserGet = () =>
+  Request.get(`${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.LOGOUT}`);
+
+const loginUserGeneric = async (dispatch, loginApiFxn, loginPayload) => {
   try {
-    const loginUserAction = ContextUtil.generateAction(dispatch, loginUserPost, LOGIN_ACTIONS);
+    const loginUserAction = ContextUtil.generateAction(dispatch, loginApiFxn, LOGIN_ACTIONS);
     const response = await loginUserAction(loginPayload);
     const { data } = response;
     if (data.user) {
       localStorage.setItem(API_CONSTANTS.CURRENT_USER, JSON.stringify(data));
-      return data;
     }
+    return data;
   } catch (error) {
     console.log(error.message);
+    return undefined;
   }
-  return undefined;
+};
+
+export async function loginUser(dispatch, loginPayload) {
+  return loginUserGeneric(dispatch, loginUserPost, loginPayload);
 }
 
 export async function login3ppUser(dispatch) {
-  const requestOptions = {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-    // 'Access-Control-Allow-Credentials': true,
-    credentials: 'include',
-  };
-
-  try {
-    dispatch({ type: 'REQUEST_LOGIN' });
-    const response = await fetch(
-      `${API_CONSTANTS.API_BASE_URL}${END_POINTS.AUTH}${END_POINTS.LOGIN_SUCCESS}`,
-      requestOptions
-    );
-
-    const data = await response.json();
-    if (data.user) {
-      dispatch({ type: 'LOGIN_SUCCESS', payload: data });
-      localStorage.setItem(API_CONSTANTS.CURRENT_USER, JSON.stringify(data));
-      return data;
-    }
-
-    dispatch({ type: 'LOGIN_ERROR', error: data.message });
-    console.log(data.message);
-  } catch (error) {
-    dispatch({ type: 'LOGIN_ERROR', error });
-    console.log(error);
-  }
-  return undefined;
+  return loginUserGeneric(dispatch, login3ppUserGet);
 }
 
 export async function logout(dispatch) {
-  dispatch({ type: 'LOGOUT' });
+  const logoutUserAction = ContextUtil.generateAction(dispatch, logoutUserGet, LOGOUT_ACTIONS);
+  const response = await logoutUserAction();
   localStorage.removeItem(API_CONSTANTS.CURRENT_USER);
   localStorage.removeItem(API_CONSTANTS.ACCESS_TOKEN_NAME);
   // TODO is this needed? localStorage.clear();
   localStorage.clear();
+  // TODO  do we need the response?
+  console.log('logout-response', response);
+  return response;
 }
