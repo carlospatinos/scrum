@@ -108,11 +108,11 @@ UserSchema.pre('save', function (next) {
   }
 });
 
-UserSchema.methods.comparePassword2 = async function (password) {
+UserSchema.methods.comparePassword = async function (password) {
   return bcrypt.compare(password, this.password);
 }
 
-UserSchema.methods.generateToken2 = async function () {
+UserSchema.methods.generateToken = async function () {
   const user = this;
   try {
     const token = jwt.sign(user._id.toHexString(), keys.jwtSecret);

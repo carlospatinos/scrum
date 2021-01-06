@@ -19,6 +19,6 @@ router.get(`${END_POINTS.FACEBOOK_LOGIN}/redirect`, passport.authenticate(
   ), AuthController.authUserFacebookRedirect);
 router.get(END_POINTS.TWITTER_LOGIN, passport.authenticate('twitter'), AuthController.authUserTwitter);
 router.get(`${END_POINTS.TWITTER_LOGIN}/redirect`, passport.authenticate('twitter'), AuthController.authUserTwitterRedirect);
-//router.get(END_POINTS.LOGIN_SUCCESS, AuthController.retrieveUserInfo);
+router.get(END_POINTS.LOGIN_SUCCESS, AuthController.authLoginSucess);
 
 module.exports = router;

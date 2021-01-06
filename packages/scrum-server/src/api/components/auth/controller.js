@@ -6,7 +6,6 @@ const keys = require('../../../config/keys');
 const authUserLocal = async (req, res) => {
   try {
     const serviceResponse = await UserService.localAuth(req);
-    console.log(serviceResponse);
     return res.status(200).json({
       success: true,
       data: serviceResponse.data,
@@ -55,8 +54,24 @@ const authUserFacebookRedirect = async (req, res) => {
   });
 };
 
+const authLoginSucess = async (req, res) => {
+  if (req.user) {
+    return res.status(200).json({
+      success: true,
+      isAuth: true,
+      user: req.user,
+      login_access_token: 'sadadasdas', // TODO fix this
+    });
+  }
+  return res.status(400).json({
+    success: false,
+    message: 'user not authenticated',
+  });
+};
+
 module.exports = {
   authUserLocal,
+  authLoginSucess,
   authUserGoogle,
   authUserGoogleRedirect,
   authUserTwitter,
