@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "pwa-chrome",
+            "name": "local-debug",
+            "request": "launch",
+            "url": "ws://127.0.0.1:9229/d58a1b91-2a89-4734-b723-fe7ce40eeabf"
+        }
+    ]
+}

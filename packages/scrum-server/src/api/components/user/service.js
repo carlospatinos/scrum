@@ -47,67 +47,36 @@ const signUp = async req => {
 };
 
 const localAuth = async req => {
-  console.log('Inside passport.authenticate() callback');
   const token = req.cookies.auth;
-  try {
-    const loggedUser = await User.findByToken(token);
-    if (loggedUser) {
-      throw Error(i18n.__('apiUserAlreadyLoggedIn'));
-    }
 
+  const loggedUser = await User.findByToken2(token);
+  console.log('loggedUser', loggedUser);
+  if (loggedUser) {
+    throw Error(i18n.__('apiUserAlreadyLoggedIn'));
+  }
+
+  try {
     const freshUser = await User.findOne({ email: req.body.email });
-    if (!freshUser){
+    if (!freshUser) {
       throw Error(i18n.__('apiEmailNotFound'));
     }
-    //const isMatch = await freshUser.comparePassword(req.body.password);
-    // if (!isMatch) {
-    //   throw Error(i18n.__('apiPasswordDoNotMatch'));
-    // }
+    const isMatch = await freshUser.comparePassword2(req.body.password);
+    if (!isMatch) {
+      throw Error(i18n.__('apiPasswordDoNotMatch'));
+    }
 
-    // const newToken = await freshUser.generateToken();
-    // if (!newToken) {
-    //   throw Error('Token was not generated');
-    // }
-
-    // return res.status(200).json({
-          //   user: {
-          //     id: user._id,
-          //     email: user.email,
-          //     fullName: `${user.firstName} ${user.lastName}`,
-          //   }
-          // });
-
-    user.comparePassword(req.body.password, (err, isMatch) => {
-      if (!isMatch) throw Error(i18n.__('apiPasswordDoNotMatch'));
-
-      user.generateToken((err, user) => {
-        if (err) {throw Error('Token was not generated')};
-
-        req.login(user, function (err) {
-          if (err) {
-            throw Error('Token was not generated');
-          }
-          return {
-            isAuth: true,
-            login_access_token: user.token,
-            user: {
-              id: user._id,
-              email: user.email,
-              fullName: `${user.firstName} ${user.lastName}`,
-            },
-          };
-          
-        });
-      });
-    });
+    const updatedUser = await freshUser.generateToken2();
+    console.log('updatedUser', updatedUser);
+    // TODO return full user without pass?
     return {
-      isAuth: true,
-      login_access_token: newToken,
-      user: {
-        id: freshUser._id,
-        email: freshUser.email,
-        fullName: `${freshUser.firstName} ${freshUser.lastName}`,
-      },
+      data: {
+        login_access_token: updatedUser.token,
+        user: {
+          id: updatedUser._id,
+          email: updatedUser.email,
+          fullName: `${updatedUser.firstName} ${updatedUser.lastName}`,
+        }
+      }
     };
   } catch (e) {
     console.log(e.message);

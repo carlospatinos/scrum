@@ -83,7 +83,7 @@ const UserSchema = new mongoose.Schema({
   },
   wasReferred: {
     type: Boolean,
-    required: true, 
+    required: true,
     default: false
   },
   referralList: [{ type: ObjectId, ref: 'User' }],
@@ -108,25 +108,21 @@ UserSchema.pre('save', function (next) {
   }
 });
 
-UserSchema.methods.comparePassword = function (password, cb) {
-  bcrypt.compare(password, this.password, (err, isMatch) => {
-    if (err) return cb(err);
-    cb(null, isMatch);
-  });
-};
+UserSchema.methods.comparePassword2 = async function (password) {
+  return bcrypt.compare(password, this.password);
+}
 
-UserSchema.methods.generateToken = function (cb) {
+UserSchema.methods.generateToken2 = async function () {
   const user = this;
-  const token = jwt.sign(user._id.toHexString(), keys.jwtSecret);
-
-  user.token = token;
-  // TODO FIX ======>>> do we need TTL?
-  user.save((err, user) => {
-    console.log('save');
-    if (err) return cb(err);
-    cb(null, user);
-  });
-  // cb(null, user); // TODO remove when token is saved (code above)
+  try {
+    const token = jwt.sign(user._id.toHexString(), keys.jwtSecret);
+    user.token = token;
+    // TODO do we need TTL? If user abruptilibly goes offline? 
+    let updatedUser = await user.save();
+    return updatedUser;
+  } catch (e) {
+    throw Error(e);
+  }
 };
 
 UserSchema.statics.findByToken = function (token, cb) {
@@ -138,6 +134,27 @@ UserSchema.statics.findByToken = function (token, cb) {
       cb(null, user);
     });
   });
+};
+
+UserSchema.statics.findByToken2 = async function (token) {
+  const user = this;
+  console.log('token', token);
+  let isVerified = undefined;
+  try {
+    isVerified = await jwt.verify(token, keys.jwtSecret);
+    console.log(isVerified);
+    if (!isVerified) {
+      console.err('jwt not verified');
+    }
+  } catch (e) {
+    console.log(e);
+  }
+
+  let userFromDB = await user.findOne({ _id: isVerified, token });
+  if (!userFromDB) {
+    return undefined;
+  }
+  return userFromDB;
 };
 
 UserSchema.methods.deleteToken = function (token, cb) {
