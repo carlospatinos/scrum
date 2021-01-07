@@ -22,7 +22,7 @@ const signUp = async req => {
     console.log('User was referredBy');
   }
 
-  if (newUser.password != newUser.password2) throw Error(i18n.__('apiPasswordDoNotMatch'));
+  if (newUser.password != newUser.confirmPassword) throw Error(i18n.__('apiPasswordDoNotMatch'));
   try {
     const user = await User.findOne({ email: newUser.email }).exec();
     if (user) throw Error(i18n.__('apiEmailExist'));
@@ -33,11 +33,10 @@ const signUp = async req => {
       // Async operation
       const referredByUser = await User.findOne({ _id: referredBy }).exec();
       referredByUser.referralList.push(newUser._id);
-      referredByUser.save((err, updatedReferredByUser) => {
-        if (err) {
-          console.log(err);
-        }
-      });
+      const updatedReferredByUser = await referredByUser.save();
+      if (!updatedReferredByUser) {
+        console.log(err);
+      }
     }
     return { user: docUser };
   } catch (e) {

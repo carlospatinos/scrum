@@ -55,7 +55,7 @@ export default function Signup() {
         lastName,
         email,
         password,
-        password2: confirmPassword,
+        confirmPassword,
         referredBy: referrer,
       };
       if (!isReferral) {
@@ -115,7 +115,7 @@ export default function Signup() {
             type="password"
           />
         </FormGroup>
-        <FormGroup controlId="password2">
+        <FormGroup controlId="confirmPassword">
           <FormLabel>{t('Signup.lblPassword2')}</FormLabel>
           <FormControl
             value={confirmPassword}

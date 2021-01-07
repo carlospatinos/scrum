@@ -46,7 +46,7 @@ const UserSchema = new mongoose.Schema({
       message: "Length mismatch. Password lenght must be >=8"
     }
   },
-  password2: {
+  confirmPassword: {
     type: String,
     required: false,
     validate: {
@@ -99,7 +99,7 @@ UserSchema.pre('save', function (next) {
       bcrypt.hash(user.password, salt, (err, hash) => {
         if (err) return next(err);
         user.password = hash;
-        user.password2 = hash; // TODO remove
+        user.confirmPassword = hash; // TODO remove
         next();
       });
     });
