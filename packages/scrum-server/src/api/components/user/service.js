@@ -80,7 +80,6 @@ const localAuth = async req => {
     throw Error(e.message);
   }
 };
-//5fe1acd7bf3051a8f6db8e66
 const deleteProfileById = async userId => {
   try {
     const user = await User.findOneAndDelete({ _id: userId });
