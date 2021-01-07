@@ -71,6 +71,8 @@ const localAuth = async req => {
         user: {
           id: updatedUser._id,
           email: updatedUser.email,
+          firstName: updatedUser.firstName,
+          lastName: updatedUser.lastName,
           fullName: `${updatedUser.firstName} ${updatedUser.lastName}`,
         }
       }

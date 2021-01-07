@@ -8,20 +8,14 @@ module.exports = function (passport) {
   function extractProfile(profile) {
     if (profile && profile._json) {
       return {
-        googleId: profile._json.id_str,
+        googleId: profile._json.sub,
         firstName: profile._json.given_name,
         lastName: profile._json.family_name,
         email: profile._json.email,
         profileImageUrl: profile._json.picture,
       };
     }
-    return {
-      googleId: 'profile._json.id_str',
-      firstName: 'profile._json.given_name',
-      lastName: 'profile._json.family_name',
-      email: 'profile._json.email',
-      profileImageUrl: 'profile._json.picture',
-    };
+    return undefined;
   }
   passport.use(
     new GoogleStrategy(
@@ -32,36 +26,22 @@ module.exports = function (passport) {
         accessType: 'offline',
         userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
       },
-      (accessToken, refreshToken, profile, doneCallBack) => {
-        User.findOne({ googleId: profile._json.sub }, function (err, currentUser) {
-          if (!currentUser) {
-            console.log('user not found in db');
-            new User({
-              googleId: profile._json.sub,
-              firstName: profile._json.given_name,
-              lastName: profile._json.family_name,
-              email: profile._json.email,
-              profileImageUrl: profile._json.picture,
-            }).save((err, docUser) => {
-              if (err) {
-                console.log(err);
-                doneCallBack(null, extractProfile(profile));
-              }
-              doneCallBack(null, docUser);
-            });
-          } else {
-            console.log('user found in db');
-            doneCallBack(null, currentUser);
+      async (accessToken, refreshToken, profile, doneCallBack) => {
+        const googleProfileInfo = extractProfile(profile);
+        const existingUser = await User.findOne({ googleId: googleProfileInfo.googleId }).exec();
+        if (!existingUser) {
+          console.log('user not found in db');
+          const newUser = await new User(googleProfileInfo).save();
+          if (!newUser) {
+            console.log('error user not saved');
+            doneCallBack(null, profile);
           }
-        });
-        // doneCallBack(null, extractProfile(profile));
+          doneCallBack(null, newUser);
+        } else {
+          console.log('user found in db');
+          doneCallBack(null, existingUser);
+        }
       }
     )
   );
-  // passport.serializeUser((user, doneCallBack) => {
-  //     doneCallBack(null, user);
-  // });
-  // passport.deserializeUser((obj, doneCallBack) => {
-  //     doneCallBack(null, obj);
-  // });
 };
