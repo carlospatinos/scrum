@@ -41,7 +41,9 @@ export default function ParticipateSession() {
   const [sessionInformation, setSessionInformation] = useState();
   const { socketEvents, setStory, users, storyVotes } = useSocket(roomId);
   useEffect(() => {
-    getPlanningSession(roomId, setSessionInformation);
+    if (roomId && roomId !== ':roomId') {
+      getPlanningSession(roomId, setSessionInformation);
+    }
   }, [roomId]);
 
   if (!sessionInformation || !users) {
