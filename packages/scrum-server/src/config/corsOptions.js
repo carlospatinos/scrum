@@ -1,7 +1,6 @@
 const keys = require('./keys');
 
-const corsWhiteListUrl = process.env.CORS_WHITELIST_URL.split(' ');
-const whitelist = [keys.reactAppURL, ...corsWhiteListUrl];
+const whitelist = [keys.reactAppURL, ...keys.corsWhiteListUrl.split(' ')];
 const corsOptions = {
   origin(origin, callback) {
     if (whitelist.indexOf(origin) !== -1 || !origin) {
