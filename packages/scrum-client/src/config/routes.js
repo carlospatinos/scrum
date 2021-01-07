@@ -1,17 +1,19 @@
-import Login from '../content/Login';
-import Signup from '../content/Signup';
-import Logout from '../content/Logout';
-import Home from '../content/Home';
-import PlanningConfig from '../content/PlanningConfig';
-import SessionStarted from '../content/SessionStarted';
-import VotingCards from '../content/VotingCards';
-import PrivacyPolicy from '../content/PrivacyPolicy';
-import NotFound from '../content/NotFound';
+import { lazy } from 'react';
 import { PATHS } from '../constants';
-import ShareSession from '../content/ShareSession/ShareSession';
-import ParticipateSession from '../content/ParticipateSession/ParticipateSession';
-import OauthValidation from '../content/OauthValidation/OauthValidation';
-import Profile from '../content/Profile';
+
+const Login = lazy(() => import('../content/Login'));
+const Signup = lazy(() => import('../content/Signup'));
+const Logout = lazy(() => import('../content/Logout'));
+const Home = lazy(() => import('../content/Home'));
+const PlanningConfig = lazy(() => import('../content/PlanningConfig'));
+const SessionStarted = lazy(() => import('../content/SessionStarted'));
+const VotingCards = lazy(() => import('../content/VotingCards'));
+const PrivacyPolicy = lazy(() => import('../content/PrivacyPolicy'));
+const NotFound = lazy(() => import('../content/NotFound'));
+const ShareSession = lazy(() => import('../content/ShareSession/ShareSession'));
+const ParticipateSession = lazy(() => import('../content/ParticipateSession/ParticipateSession'));
+const OauthValidation = lazy(() => import('../content/OauthValidation/OauthValidation'));
+const Profile = lazy(() => import('../content/Profile'));
 
 const routes = [
   {
