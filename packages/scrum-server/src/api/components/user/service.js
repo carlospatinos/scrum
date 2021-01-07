@@ -50,7 +50,6 @@ const localAuth = async req => {
   const token = req.cookies.auth;
 
   const loggedUser = await User.findByToken2(token);
-  console.log('loggedUser', loggedUser);
   if (loggedUser) {
     throw Error(i18n.__('apiUserAlreadyLoggedIn'));
   }
@@ -60,13 +59,12 @@ const localAuth = async req => {
     if (!freshUser) {
       throw Error(i18n.__('apiEmailNotFound'));
     }
-    const isMatch = await freshUser.comparePassword2(req.body.password);
+    const isMatch = await freshUser.comparePassword(req.body.password);
     if (!isMatch) {
       throw Error(i18n.__('apiPasswordDoNotMatch'));
     }
 
-    const updatedUser = await freshUser.generateToken2();
-    console.log('updatedUser', updatedUser);
+    const updatedUser = await freshUser.generateToken();
     // TODO return full user without pass?
     return {
       data: {

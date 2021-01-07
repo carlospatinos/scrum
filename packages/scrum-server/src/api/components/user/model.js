@@ -108,11 +108,11 @@ UserSchema.pre('save', function (next) {
   }
 });
 
-UserSchema.methods.comparePassword2 = async function (password) {
+UserSchema.methods.comparePassword = async function (password) {
   return bcrypt.compare(password, this.password);
 }
 
-UserSchema.methods.generateToken2 = async function () {
+UserSchema.methods.generateToken = async function () {
   const user = this;
   try {
     const token = jwt.sign(user._id.toHexString(), keys.jwtSecret);
@@ -138,7 +138,6 @@ UserSchema.statics.findByToken = function (token, cb) {
 
 UserSchema.statics.findByToken2 = async function (token) {
   const user = this;
-  console.log('token', token);
   let isVerified = undefined;
   try {
     isVerified = await jwt.verify(token, keys.jwtSecret);
@@ -157,14 +156,9 @@ UserSchema.statics.findByToken2 = async function (token) {
   return userFromDB;
 };
 
-UserSchema.methods.deleteToken = function (token, cb) {
+UserSchema.methods.deleteToken = async function (token) {
   const user = this;
-
-  user.update({ $unset: { token: 1 } }, (err, user) => {
-    if (err) return cb(err);
-    cb(null, user);
-  });
-  // cb(null, user); // TODO remove when token is saved (code above)
+  return await user.updateOne({ $unset: { token: 1 } });
 };
 
 /**
