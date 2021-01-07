@@ -12,6 +12,7 @@
     "dev": "lerna run dev --stream",
     "debug": "lerna run debug --stream",
     "test": "lerna run test",
+    "test-coverage": "lerna run test-coverage",
     "postinstall": "lerna bootstrap",
     "release": "lerna publish",
     "heroku-postbuild-skip": "cd packages/scrum-client/ && npm install --only=dev && npm install && npm run build",

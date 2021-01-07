@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --require babel-core/register tests/*.js --exit",
+    "test-coverage": "nyc mocha --require babel-core/register tests/*.js --exit",
     "start": "node ./bin/www",
     "localStart": "node ./bin/www",
     "dev": "nodemon --exec babel-node --presets babel-preset-env ./bin/www",
@@ -68,6 +69,12 @@
     "express.io": "^1.1.13",
     "mocha": "^8.2.1",
     "nodemon": "^1.17.4",
+    "nyc": "^15.1.0",
     "prettier": "^2.1.2"
+  },
+  "nyc": {
+    "check-coverage": true,
+    "lines": 52,
+    "statements": 53
   }
 }
