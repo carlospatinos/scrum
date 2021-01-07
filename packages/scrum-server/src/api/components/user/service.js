@@ -82,4 +82,14 @@ const localAuth = async req => {
   }
 };
 
-module.exports = { signUp, localAuth };
+const deleteProfile = async id => {
+  try {
+    const user = await User.findOneAndDelete({ email: id });
+    console.log('user deleted', user);
+  } catch (e) {
+    console.log(e.message);
+    throw Error(e.message);
+  }
+};
+
+module.exports = { signUp, localAuth, deleteProfile };
