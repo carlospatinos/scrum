@@ -24,14 +24,14 @@ const signUp = async req => {
 
   if (newUser.password != newUser.password2) throw Error(i18n.__('apiPasswordDoNotMatch'));
   try {
-    const user = await User.findOne({ email: newUser.email });
+    const user = await User.findOne({ email: newUser.email }).exec();
     if (user) throw Error(i18n.__('apiEmailExist'));
 
     const docUser = await newUser.save();
     // TODO propagate SchemaString.SchemaType.doValidate
     if (isUserAReferral(referredBy)) {
       // Async operation
-      const referredByUser = User.findOne({ _id: referredBy });
+      const referredByUser = await User.findOne({ _id: referredBy }).exec();
       referredByUser.referralList.push(newUser._id);
       referredByUser.save((err, updatedReferredByUser) => {
         if (err) {
@@ -81,15 +81,25 @@ const localAuth = async req => {
     throw Error(e.message);
   }
 };
-
-const deleteProfile = async id => {
+//5fe1acd7bf3051a8f6db8e66
+const deleteProfileById = async userId => {
   try {
-    const user = await User.findOneAndDelete({ email: id });
-    console.log('user deleted', user);
+    const user = await User.findOneAndDelete({ _id: userId });
+    return user;
   } catch (e) {
     console.log(e.message);
     throw Error(e.message);
   }
 };
 
-module.exports = { signUp, localAuth, deleteProfile };
+const deleteProfileByEmail = async email => {
+  try {
+    const user = await User.findOneAndDelete({ email: email });
+    return user;
+  } catch (e) {
+    console.log(e.message);
+    throw Error(e.message);
+  }
+};
+
+module.exports = { signUp, localAuth, deleteProfileById, deleteProfileByEmail };

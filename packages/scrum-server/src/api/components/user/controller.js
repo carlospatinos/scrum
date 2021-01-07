@@ -33,11 +33,12 @@ const logout = async (req, res) => {
 
 const deleteProfile = async (req, res) => {
   try {
-    const result = await UserService.deleteProfile(req.user.email);
+    const { id } = req.body.user;
+    console.log('userId to delete', id);
+    const result = await UserService.deleteProfileById(id);
     if (result) {
       return res.status(200).json({
         success: true,
-        user: undefined,
       });
     }
     return res.status(400).json({ success: false, message: 'user not deleted' });

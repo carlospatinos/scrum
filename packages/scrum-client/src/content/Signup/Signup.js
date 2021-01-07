@@ -8,7 +8,12 @@ import { useTranslation } from 'react-i18next';
 import { API_CONSTANTS, PATHS } from '../../constants';
 
 const checkReferral = referrerValue => {
-  return referrerValue !== undefined && referrerValue !== '';
+  return (
+    referrerValue !== undefined &&
+    referrerValue !== '' &&
+    referrerValue !== ':referrer' &&
+    referrerValue !== ':referrer?'
+  );
 };
 
 export default function Signup() {
@@ -36,6 +41,8 @@ export default function Signup() {
       confirmPassword.length > 0
     );
   }
+  const isValidForm = validateForm();
+  const isReferral = checkReferral(referrer);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -43,17 +50,22 @@ export default function Signup() {
     if (password !== confirmPassword) {
       setErrorMessage("Passwords don't match");
     } else {
+      const payload = {
+        firstName,
+        lastName,
+        email,
+        password,
+        password2: confirmPassword,
+        referredBy: referrer,
+      };
+      if (!isReferral) {
+        delete payload.referredBy;
+      }
+
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          firstName,
-          lastName,
-          email,
-          password,
-          password2: confirmPassword,
-          referredBy: referrer,
-        }),
+        body: JSON.stringify(payload),
       };
 
       try {
@@ -73,9 +85,6 @@ export default function Signup() {
       }
     }
   }
-
-  const isValidForm = validateForm();
-  const isReferral = checkReferral(referrer);
 
   return (
     <Container className="Signup">
