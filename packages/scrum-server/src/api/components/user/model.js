@@ -125,18 +125,7 @@ UserSchema.methods.generateToken = async function () {
   }
 };
 
-UserSchema.statics.findByToken = function (token, cb) {
-  const user = this;
-
-  jwt.verify(token, keys.jwtSecret, (err, decode) => {
-    user.findOne({ _id: decode, token }, (err, user) => {
-      if (err) return cb(err);
-      cb(null, user);
-    });
-  });
-};
-
-UserSchema.statics.findByToken2 = async function (token) {
+UserSchema.statics.findByToken = async function (token) {
   const user = this;
   let isVerified = undefined;
   try {

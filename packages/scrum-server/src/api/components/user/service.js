@@ -49,7 +49,7 @@ const signUp = async req => {
 const localAuth = async req => {
   const token = req.cookies.auth;
 
-  const loggedUser = await User.findByToken2(token);
+  const loggedUser = await User.findByToken(token);
   if (loggedUser) {
     throw Error(i18n.__('apiUserAlreadyLoggedIn'));
   }
