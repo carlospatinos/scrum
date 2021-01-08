@@ -1,6 +1,9 @@
 require('dotenv').config();
 
 const config = {
+  corsWhiteListUrl:
+    process.env.CORS_WHITELIST_URL ||
+    'http://scrum-app-local.com:4000 http://scrum-app-local.com:3000 http://localhost:4000 http://localhost:3000',
   mongodb: {
     dbURI: process.env.DB_URL || 'dburi',
     dbUser: process.env.DB_USER || 'user',

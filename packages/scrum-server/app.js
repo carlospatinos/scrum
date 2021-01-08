@@ -10,15 +10,14 @@ const passport = require('passport');
 const cors = require('cors');
 const { END_POINTS } = require('scrum-common');
 const keys = require('./src/config/keys');
+const corsOptions = require('./src/config/corsOptions');
 
 const AuthStrategies = require('./src/services/authStrategies/');
 require('./src/services/db.js');
 
-const indexRouter = require('./routes/index');
-
 const app = express();
 const i18n = require('i18n');
-const { TipsRoutes, UserRoutes, PlanningSessionRoutes, AuthRoutes  } = require('./src/api/routes');
+const { TipsRoutes, UserRoutes, PlanningSessionRoutes, AuthRoutes , DefaultRoute } = require('./src/api/routes');
 
 AuthStrategies.configure(passport);
 i18n.configure({
@@ -34,19 +33,6 @@ i18n.configure({
 });
 
 const CLIENT_PATH = '/../scrum-client/build/';
-var whitelist = [keys.reactAppURL, 'http://scrum-app-local.com:4000', 'http://scrum-app-local.com:3000', 'http://localhost:4000', 'http://localhost:3000'];
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  credentials: true // allow session cookie from browser to pass through
-}
-
 app.use(cors(corsOptions));
 app.use(i18n.init);
 app.use(logger('dev'));
@@ -81,7 +67,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(END_POINTS.ROOT, indexRouter);
+app.use(END_POINTS.ROOT, DefaultRoute);
 app.use(END_POINTS.AUTH, AuthRoutes);
 app.use(END_POINTS.API, UserRoutes);
 app.use(END_POINTS.API, TipsRoutes);
