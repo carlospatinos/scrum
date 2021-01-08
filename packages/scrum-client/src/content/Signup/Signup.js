@@ -62,16 +62,17 @@ export default function Signup() {
         if (!isReferral) {
           delete payload.referredBy;
         }
-        Request.post(
-          `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.SIGN_UP}`,
-          payload
-        ).then(data => {
-          if (data.success) {
-            history.push(redirectedFrom);
-          } else {
-            setApiResponse(data.message);
-          }
-        });
+        Request.post(`${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.SIGN_UP}`, payload)
+          .then(data => {
+            if (data.success) {
+              history.push(redirectedFrom);
+            } else {
+              setApiResponse(data.message);
+            }
+          })
+          .catch(e => {
+            setApiResponse(e.message);
+          });
       } catch (e) {
         // console.error(`=====> error:${e}`);
         setErrorMessage({ error: e });

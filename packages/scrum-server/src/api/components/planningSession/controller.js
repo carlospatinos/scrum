@@ -4,7 +4,7 @@ const PlanningSessionService = require('./service');
 
 const planningSessionSave = async (req, res) => {
   try {
-    const serviceResponse = await PlanningSessionService.save(req);
+    const serviceResponse = await PlanningSessionService.save(req.body);
     return res.status(200).json({
       success: true,
       // TODO HERE IT IS CALLED session, in other api is sessionInformation, and the model PlanningSession
@@ -18,7 +18,7 @@ const planningSessionSave = async (req, res) => {
 
 const planningSessionFind = async (req, res) => {
   try {
-    const serviceResponse = await PlanningSessionService.find(req);
+    const serviceResponse = await PlanningSessionService.find(req.params.id);
     return res.status(200).json({
       success: true,
       sessionInformation: serviceResponse.planningSession,

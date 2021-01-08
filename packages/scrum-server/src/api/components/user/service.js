@@ -10,16 +10,16 @@ const isUserAReferral = referredBy => {
   return referredBy !== undefined && referredBy !== '';
 };
 
-const signUp = async req => {
-  const newUser = new User(req.body);
+const signUp = async jsonData => {
+  const newUser = new User(jsonData);
   const typeForNewUser = new UserType();
   typeForNewUser.type = 'admin';
   newUser.userType = typeForNewUser; // TODO fix
 
-  const { referredBy } = req.body;
+  const { referredBy } = jsonData;
   if (isUserAReferral(referredBy)) {
     newUser.wasReferred = true;
-    console.log('User was referredBy');
+    console.log('User was referredBy', referredBy);
   }
 
   if (newUser.password != newUser.confirmPassword) throw Error(i18n.__('apiPasswordDoNotMatch'));
@@ -45,6 +45,7 @@ const signUp = async req => {
   }
 };
 
+// TODO remove the req 
 const localAuth = async req => {
   const token = req.cookies.auth;
 

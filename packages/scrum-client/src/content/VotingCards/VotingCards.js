@@ -20,10 +20,10 @@ function getPlanningSession(setCardDeckParam, roomId, setSessionInformation) {
   try {
     Request.get(
       `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}/${roomId}`
-    ).then(data => {
-      if (data && data.success && data.sessionInformation) {
-        setSessionInformation(data.sessionInformation);
-        setCardDeckParam(DECKS.byLabels(data.sessionInformation.cardDeck).values);
+    ).then(serviceResponse => {
+      if (serviceResponse && serviceResponse.success && serviceResponse.sessionInformation) {
+        setSessionInformation(serviceResponse.sessionInformation);
+        setCardDeckParam(DECKS.byLabels(serviceResponse.sessionInformation.cardDeck).values);
         // TODO - handle error , sessionInformation not present
       }
     });

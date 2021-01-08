@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const keys = require('../../../config/keys');
-const ObjectId = require('mongoose').Types.ObjectId;
+const { ObjectId } = require('mongoose').Types;
 const salt = 10;
 // TODO fix password was mandatory but with google/twitter oauth either we create 2 different collections or we find a way to persist all in the same
 
@@ -58,16 +58,13 @@ const UserSchema = new mongoose.Schema({
     type: String,
   },
   userType: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: ObjectId,
     ref: 'UserType',
   },
+  // TODO do we need teams? 
   team: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: ObjectId,
     ref: 'Team',
-  },
-  date: {
-    type: Date,
-    default: Date.now,
   },
   twitterId: {
     type: String,
@@ -87,6 +84,10 @@ const UserSchema = new mongoose.Schema({
     default: false
   },
   referralList: [{ type: ObjectId, ref: 'User' }],
+  creationDate: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 UserSchema.pre('save', function (next) {
@@ -130,7 +131,7 @@ UserSchema.statics.findByToken = async function (token) {
   let isVerified = undefined;
   try {
     isVerified = await jwt.verify(token, keys.jwtSecret);
-    console.log(isVerified);
+    //console.log(isVerified);
     if (!isVerified) {
       console.err('jwt not verified');
     }

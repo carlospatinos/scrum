@@ -9,6 +9,10 @@ const TipsSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  creationDate: {
+    type: Date,
+    default: Date.now,
+  },
 });
 const Tips = mongoose.model('Tips', TipsSchema);
 

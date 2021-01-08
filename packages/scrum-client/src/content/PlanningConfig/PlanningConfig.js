@@ -62,14 +62,15 @@ export default function PlanningConfig() {
       `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}`,
       payload
     )
-      .then(data => {
-        if (data.success) {
-          localStorage.setItem(API_CONSTANTS.PLANNING_ROOM_ID, data.planningRoomId);
+      .then(serviceResponse => {
+        // TODO since the request util throws exceptions, is the sucesss needed?
+        if (serviceResponse.success) {
+          localStorage.setItem(API_CONSTANTS.PLANNING_ROOM_ID, serviceResponse.planningRoomId);
           history.push({
             pathname: redirectedFrom,
           });
         } else {
-          setApiResponse(data.message);
+          setApiResponse(serviceResponse.message);
         }
       })
       .catch(e => {
