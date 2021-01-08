@@ -53,7 +53,7 @@ export default function Profile() {
   };
 
   return (
-    <Container className="Login">
+    <Container>
       <Modal show={showModal} onHide={modalClose}>
         <Modal.Header closeButton>
           <Modal.Title>Sure?</Modal.Title>

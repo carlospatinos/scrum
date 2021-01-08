@@ -61,16 +61,18 @@ const Home = () => {
             {' '}
             <h4>Looking for more?</h4>
           </Card.Header>
-          <Card.Img
-            variant="top"
-            src="https://play-lh.googleusercontent.com/AECLjXX7mj2l13K2oOA3B9cSgEbIn30gs2UrT5vmOWjFuFbXGpyc_2vcwOmCjEVp=s140-rw"
-          />
+
           <Card.Body>
             <Card.Title>We have also an android app</Card.Title>
             <Card.Text>
               <a href="https://play.google.com/store/apps/details?id=com.kinnettik.scrumtools">
-                Scrum Tools
+                <img
+                  alt="logo"
+                  width="100px"
+                  src="https://play-lh.googleusercontent.com/AECLjXX7mj2l13K2oOA3B9cSgEbIn30gs2UrT5vmOWjFuFbXGpyc_2vcwOmCjEVp=s140-rw"
+                />
               </a>
+              <br />
             </Card.Text>
           </Card.Body>
         </Card>
