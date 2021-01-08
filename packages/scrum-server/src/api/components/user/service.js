@@ -92,14 +92,4 @@ const deleteProfileById = async userId => {
   }
 };
 
-const deleteProfileByEmail = async email => {
-  try {
-    const user = await User.findOneAndDelete({ email: email });
-    return user;
-  } catch (e) {
-    console.log(e.message);
-    throw Error(e.message);
-  }
-};
-
-module.exports = { signUp, localAuth, deleteProfileById, deleteProfileByEmail };
+module.exports = { signUp, localAuth, deleteProfileById };

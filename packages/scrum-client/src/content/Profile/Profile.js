@@ -33,7 +33,7 @@ export default function Profile() {
     generateReferralLink(userDetails);
   }, [userDetails]);
 
-  const deleteProfile = async event => {
+  const handleDeleteProfile = async event => {
     event.preventDefault();
     try {
       Request.post(
@@ -60,7 +60,7 @@ export default function Profile() {
         </Modal.Header>
         <Modal.Body>This operation is final and unreversible, chose wisely!</Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={deleteProfile}>
+          <Button variant="danger" onClick={handleDeleteProfile}>
             Delete
           </Button>
           <Button variant="primary" onClick={modalClose}>

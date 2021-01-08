@@ -56,10 +56,10 @@ const authUserFacebookRedirect = async (req, res) => {
 
 const authLoginSucess = async (req, res) => {
   const { user } = req;
-  const copy = user.toJSON();
-  // eslint-disable-next-line no-underscore-dangle
-  copy.id = copy._id;
   if (user) {
+    const copy = user.toJSON();
+    // eslint-disable-next-line no-underscore-dangle
+    copy.id = copy._id;
     return res.status(200).json({
       success: true,
       data: {
