@@ -3,9 +3,9 @@ import { Alert, Button, FormGroup, FormControl, FormLabel, Container, Form } fro
 import { END_POINTS } from 'scrum-common';
 import { useParams, useHistory, useLocation, Link } from 'react-router-dom';
 import './Signup.css';
-
 import { useTranslation } from 'react-i18next';
 import { API_CONSTANTS, PATHS } from '../../constants';
+import { Request } from '../../util';
 
 const checkReferral = referrerValue => {
   return (
@@ -50,34 +50,28 @@ export default function Signup() {
     if (password !== confirmPassword) {
       setErrorMessage("Passwords don't match");
     } else {
-      const payload = {
-        firstName,
-        lastName,
-        email,
-        password,
-        confirmPassword,
-        referredBy: referrer,
-      };
-      if (!isReferral) {
-        delete payload.referredBy;
-      }
-
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      };
-
       try {
-        fetch(`${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.SIGN_UP}`, requestOptions)
-          .then(response => response.json())
-          .then(data => {
-            if (data.success) {
-              history.push(redirectedFrom);
-            } else {
-              setApiResponse(data.message);
-            }
-          });
+        const payload = {
+          firstName,
+          lastName,
+          email,
+          password,
+          confirmPassword,
+          referredBy: referrer,
+        };
+        if (!isReferral) {
+          delete payload.referredBy;
+        }
+        Request.post(
+          `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.SIGN_UP}`,
+          payload
+        ).then(data => {
+          if (data.success) {
+            history.push(redirectedFrom);
+          } else {
+            setApiResponse(data.message);
+          }
+        });
       } catch (e) {
         // console.error(`=====> error:${e}`);
         setErrorMessage({ error: e });

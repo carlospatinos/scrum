@@ -15,6 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import { END_POINTS } from 'scrum-common';
 import { PATHS, API_CONSTANTS, DECKS } from '../../constants';
+import { Request } from '../../util';
 
 export default function PlanningConfig() {
   const history = useHistory();
@@ -51,23 +52,16 @@ export default function PlanningConfig() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify({
-        title,
-        cardDeck,
-        allowUnauthenticated,
-        userStoriesCreationMethod,
-      }),
+    const payload = {
+      title,
+      cardDeck,
+      allowUnauthenticated,
+      userStoriesCreationMethod,
     };
-
-    fetch(
+    Request.post(
       `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}`,
-      requestOptions
+      payload
     )
-      .then(response => response.json())
       .then(data => {
         if (data.success) {
           localStorage.setItem(API_CONSTANTS.PLANNING_ROOM_ID, data.planningRoomId);
