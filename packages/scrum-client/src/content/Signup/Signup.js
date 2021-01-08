@@ -8,7 +8,12 @@ import { API_CONSTANTS, PATHS } from '../../constants';
 import { Request } from '../../util';
 
 const checkReferral = referrerValue => {
-  return referrerValue !== undefined && referrerValue !== '';
+  return (
+    referrerValue !== undefined &&
+    referrerValue !== '' &&
+    referrerValue !== ':referrer' &&
+    referrerValue !== ':referrer?'
+  );
 };
 
 export default function Signup() {
@@ -36,6 +41,8 @@ export default function Signup() {
       confirmPassword.length > 0
     );
   }
+  const isValidForm = validateForm();
+  const isReferral = checkReferral(referrer);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -49,9 +56,12 @@ export default function Signup() {
           lastName,
           email,
           password,
-          password2: confirmPassword,
+          confirmPassword,
           referredBy: referrer,
         };
+        if (!isReferral) {
+          delete payload.referredBy;
+        }
         Request.post(
           `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.SIGN_UP}`,
           payload
@@ -69,9 +79,6 @@ export default function Signup() {
       }
     }
   }
-
-  const isValidForm = validateForm();
-  const isReferral = checkReferral(referrer);
 
   return (
     <Container className="Signup">
@@ -102,7 +109,7 @@ export default function Signup() {
             type="password"
           />
         </FormGroup>
-        <FormGroup controlId="password2">
+        <FormGroup controlId="confirmPassword">
           <FormLabel>{t('Signup.lblPassword2')}</FormLabel>
           <FormControl
             value={confirmPassword}

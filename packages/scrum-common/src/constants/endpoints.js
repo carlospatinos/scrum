@@ -7,6 +7,7 @@ const END_POINTS = {
   LOGIN_SUCCESS: '/login/success',
   API: '/api',
   SIGN_UP: '/signup',
+  DELETE_PROFILE: '/deleteprofile',
   PLANNING_SESSION: '/planningsession',
   TIPS_FOR_THE_SESSION: '/tipsforthesession',
   LOGOUT: '/logout',

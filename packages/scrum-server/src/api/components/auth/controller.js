@@ -55,12 +55,16 @@ const authUserFacebookRedirect = async (req, res) => {
 };
 
 const authLoginSucess = async (req, res) => {
-  if (req.user) {
+  const { user } = req;
+  if (user) {
+    const copy = user.toJSON();
+    // eslint-disable-next-line no-underscore-dangle
+    copy.id = copy._id;
     return res.status(200).json({
       success: true,
       data: {
         isAuth: true,
-        user: req.user,
+        user: copy,
         login_access_token: req.cookies.auth,
       },
     });

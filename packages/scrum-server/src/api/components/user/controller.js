@@ -31,4 +31,20 @@ const logout = async (req, res) => {
   }
 };
 
-module.exports = { signUp, logout };
+const deleteProfile = async (req, res) => {
+  try {
+    const { id } = req.body.user;
+    console.log('userId to delete', id);
+    const result = await UserService.deleteProfileById(id);
+    if (result) {
+      return res.status(200).json({
+        success: true,
+      });
+    }
+    return res.status(400).json({ success: false, message: 'user not deleted' });
+  } catch (e) {
+    return res.status(400).json({ success: false, message: e.message });
+  }
+};
+
+module.exports = { signUp, logout, deleteProfile };

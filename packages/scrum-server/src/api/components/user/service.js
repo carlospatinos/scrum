@@ -22,22 +22,21 @@ const signUp = async req => {
     console.log('User was referredBy');
   }
 
-  if (newUser.password != newUser.password2) throw Error(i18n.__('apiPasswordDoNotMatch'));
+  if (newUser.password != newUser.confirmPassword) throw Error(i18n.__('apiPasswordDoNotMatch'));
   try {
-    const user = await User.findOne({ email: newUser.email });
+    const user = await User.findOne({ email: newUser.email }).exec();
     if (user) throw Error(i18n.__('apiEmailExist'));
 
     const docUser = await newUser.save();
     // TODO propagate SchemaString.SchemaType.doValidate
     if (isUserAReferral(referredBy)) {
       // Async operation
-      const referredByUser = User.findOne({ _id: referredBy });
+      const referredByUser = await User.findOne({ _id: referredBy }).exec();
       referredByUser.referralList.push(newUser._id);
-      referredByUser.save((err, updatedReferredByUser) => {
-        if (err) {
-          console.log(err);
-        }
-      });
+      const updatedReferredByUser = await referredByUser.save();
+      if (!updatedReferredByUser) {
+        console.log(err);
+      }
     }
     return { user: docUser };
   } catch (e) {
@@ -72,6 +71,8 @@ const localAuth = async req => {
         user: {
           id: updatedUser._id,
           email: updatedUser.email,
+          firstName: updatedUser.firstName,
+          lastName: updatedUser.lastName,
           fullName: `${updatedUser.firstName} ${updatedUser.lastName}`,
         }
       }
@@ -81,5 +82,14 @@ const localAuth = async req => {
     throw Error(e.message);
   }
 };
+const deleteProfileById = async userId => {
+  try {
+    const user = await User.findOneAndDelete({ _id: userId });
+    return user;
+  } catch (e) {
+    console.log(e.message);
+    throw Error(e.message);
+  }
+};
 
-module.exports = { signUp, localAuth };
+module.exports = { signUp, localAuth, deleteProfileById };
