@@ -38,10 +38,10 @@ const getResponse = async response => {
 const get = (url, requestOptions = requestGetOptions) =>
   fetch(url, requestOptions).then(getResponse);
 
-const post = (url, data, requestOptions = requestPostOptions) =>
+const post = (url, data = {}, requestOptions = requestPostOptions) =>
   fetch(url, { ...requestOptions, body: JSON.stringify(data) }).then(getResponse);
 
-const put = (url, data, requestOptions = requestPutOptions) =>
+const put = (url, data = {}, requestOptions = requestPutOptions) =>
   fetch(url, { ...requestOptions, body: JSON.stringify(data) }).then(getResponse);
 
 const del = (url, data, requestOptions = requestDeleteOptions) =>
