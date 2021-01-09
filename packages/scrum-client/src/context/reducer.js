@@ -1,5 +1,6 @@
 /* eslint-disable no-shadow */
-import { API_CONSTANTS, CommonFunctions } from '../constants';
+import { API_CONSTANTS } from '../constants';
+import { CommonFunctions } from '../util';
 import { LOGIN_ACTIONS, LOGOUT_ACTIONS } from './actionTypes';
 
 const user = CommonFunctions.getValueFromLocalStorage(API_CONSTANTS.CURRENT_USER, 'user');

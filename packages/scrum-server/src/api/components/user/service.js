@@ -48,7 +48,6 @@ const signUp = async jsonData => {
 // TODO remove the req 
 const localAuth = async req => {
   const token = req.cookies.auth;
-  console.log('token', token);
   const loggedUser = await User.findByToken(token);
   if (loggedUser) {
     throw Error(i18n.__('apiUserAlreadyLoggedIn'));

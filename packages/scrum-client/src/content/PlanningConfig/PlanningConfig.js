@@ -14,8 +14,8 @@ import './PlanningConfig.css';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import { END_POINTS } from 'scrum-common';
-import { PATHS, API_CONSTANTS, DECKS, CommonFunctions } from '../../constants';
-import { Request } from '../../util';
+import { PATHS, API_CONSTANTS, DECKS } from '../../constants';
+import { Request, CommonFunctions } from '../../util';
 
 export default function PlanningConfig() {
   const history = useHistory();

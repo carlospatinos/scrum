@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { END_POINTS } from 'scrum-common';
-import { API_CONSTANTS, CommonFunctions } from '../constants';
-import { Request } from '../util';
+import { API_CONSTANTS } from '../constants';
+import { Request, CommonFunctions } from '../util';
 
 import ContextUtil from './utils';
 import { LOGIN_ACTIONS, LOGOUT_ACTIONS } from './actionTypes';

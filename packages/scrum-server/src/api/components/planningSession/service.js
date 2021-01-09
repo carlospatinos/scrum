@@ -20,11 +20,11 @@ const save = async jsonData => {
   }
 };
 
-const find = async objectId => {
-  if (!objectId || !ObjectId.isValid(objectId)) {
+const find = async planningRoomId => {
+  if (!planningRoomId || !ObjectId.isValid(planningRoomId)) {
     throw Error(i18n.__('serviceInvalidId'));
   }
-  const planningSession = await PlanningSession.findOne({ _id: objectId });
+  const planningSession = await PlanningSession.findOne({ _id: planningRoomId });
   if (!planningSession) {
     throw Error(i18n.__('serviceFindError'));
   } else {
