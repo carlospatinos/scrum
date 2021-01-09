@@ -5,12 +5,14 @@ const UserService = require('./service');
 
 const signUp = async (req, res) => {
   try {
-    const serviceResponse = await UserService.signUp(req);
+    const serviceResponse = await UserService.signUp(req.body);
     return res.status(200).json({
       success: true,
+      // TODO wrap data into data field?
       user: serviceResponse.user,
     });
   } catch (e) {
+    // TODO why the error is not progagated
     return res.status(400).json({ success: false, message: e.message });
   }
 };

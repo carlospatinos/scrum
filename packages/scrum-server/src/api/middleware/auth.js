@@ -3,6 +3,7 @@ const User = require('../../api/components/user/model');
 const auth = async (req, res, next) => {
   try {
     const token = req.cookies.auth;
+    console.log('token2', token);
     const user = await User.findByToken(token);
     if (!user) {
       return res.json({

@@ -15,7 +15,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import { END_POINTS } from 'scrum-common';
 import { PATHS, API_CONSTANTS, DECKS } from '../../constants';
-import { Request } from '../../util';
+import { Request, CommonFunctions } from '../../util';
 
 export default function PlanningConfig() {
   const history = useHistory();
@@ -62,14 +62,18 @@ export default function PlanningConfig() {
       `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}`,
       payload
     )
-      .then(data => {
-        if (data.success) {
-          localStorage.setItem(API_CONSTANTS.PLANNING_ROOM_ID, data.planningRoomId);
+      .then(serviceResponse => {
+        // TODO since the request util throws exceptions, is the sucesss needed?
+        if (serviceResponse.success) {
+          CommonFunctions.setValueToLocalStorage(
+            API_CONSTANTS.PLANNING_ROOM_ID,
+            serviceResponse.planningRoomId
+          );
           history.push({
             pathname: redirectedFrom,
           });
         } else {
-          setApiResponse(data.message);
+          setApiResponse(serviceResponse.message);
         }
       })
       .catch(e => {

@@ -23,7 +23,7 @@ const getPlanningSession = (roomId, setSessionInformation) => {
   try {
     Request.get(
       `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}/${roomId}`
-    ).then(data => setSessionInformation(data.sessionInformation));
+    ).then(serviceResponse => setSessionInformation(serviceResponse.sessionInformation));
   } catch (e) {
     console.log('error', e);
     // TODO this error happen if API is not available but business errors like length of password go above. how to handle and display those?

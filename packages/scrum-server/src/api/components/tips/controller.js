@@ -4,7 +4,7 @@ const TipsService = require('./service');
 
 const tipFind = async (req, res) => {
   try {
-    const serviceResponse = await TipsService.find(req);
+    const serviceResponse = await TipsService.find(req.params.pageSize);
     return res.status(200).json({
       success: true,
       data: serviceResponse.data,

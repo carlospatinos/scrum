@@ -1,13 +1,13 @@
 /* eslint-disable no-shadow */
 import { API_CONSTANTS } from '../constants';
+import { CommonFunctions } from '../util';
 import { LOGIN_ACTIONS, LOGOUT_ACTIONS } from './actionTypes';
 
-const user = localStorage.getItem(API_CONSTANTS.CURRENT_USER)
-  ? JSON.parse(localStorage.getItem(API_CONSTANTS.CURRENT_USER)).user
-  : '';
-const token = localStorage.getItem(API_CONSTANTS.CURRENT_USER)
-  ? JSON.parse(localStorage.getItem(API_CONSTANTS.CURRENT_USER)).login_access_token
-  : '';
+const user = CommonFunctions.getValueFromLocalStorage(API_CONSTANTS.CURRENT_USER, 'user');
+const token = CommonFunctions.getValueFromLocalStorage(
+  API_CONSTANTS.CURRENT_USER,
+  'login_access_token'
+);
 
 export const initialState = {
   user: '' || user,
