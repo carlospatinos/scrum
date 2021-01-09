@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { END_POINTS } from 'scrum-common';
-import { API_CONSTANTS } from '../constants';
+import { API_CONSTANTS, CommonFunctions } from '../constants';
 import { Request } from '../util';
 
 import ContextUtil from './utils';
@@ -24,7 +24,7 @@ const loginUserGeneric = async (dispatch, loginApiFxn, loginPayload) => {
     const response = await loginUserAction(loginPayload);
     const { data } = response;
     if (data.user) {
-      localStorage.setItem(API_CONSTANTS.CURRENT_USER, JSON.stringify(data));
+      CommonFunctions.setValueToLocalStorage(API_CONSTANTS.CURRENT_USER, JSON.stringify(data));
     }
     return data;
   } catch (error) {

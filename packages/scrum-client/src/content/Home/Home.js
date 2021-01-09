@@ -56,7 +56,7 @@ const Home = () => {
             </Card.Text>
           </Card.Body>
         </Card>
-        <Card style={{ width: '10rem' }}>
+        <Card>
           <Card.Header>
             {' '}
             <h4>Looking for more?</h4>

@@ -14,7 +14,7 @@ import './PlanningConfig.css';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
 import { END_POINTS } from 'scrum-common';
-import { PATHS, API_CONSTANTS, DECKS } from '../../constants';
+import { PATHS, API_CONSTANTS, DECKS, CommonFunctions } from '../../constants';
 import { Request } from '../../util';
 
 export default function PlanningConfig() {
@@ -65,7 +65,10 @@ export default function PlanningConfig() {
       .then(serviceResponse => {
         // TODO since the request util throws exceptions, is the sucesss needed?
         if (serviceResponse.success) {
-          localStorage.setItem(API_CONSTANTS.PLANNING_ROOM_ID, serviceResponse.planningRoomId);
+          CommonFunctions.setValueToLocalStorage(
+            API_CONSTANTS.PLANNING_ROOM_ID,
+            serviceResponse.planningRoomId
+          );
           history.push({
             pathname: redirectedFrom,
           });
