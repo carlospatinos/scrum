@@ -1,4 +1,8 @@
 {
+    "CookieConsent": {
+        "message": "This website uses cookies to enhance the user experience.",
+        "buttonText": "I understand"
+    },
     "Signup": {
         "btnSignup": "Sing Up",
         "lblFirstName": "First Name",

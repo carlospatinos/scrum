@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha --require babel-core/register tests/*.js --exit",
-    "test-coverage": "nyc mocha --require babel-core/register tests/*.js --exit",
+    "testcoverage": "nyc mocha --require babel-core/register tests/*.js --exit",
     "start": "node ./bin/www",
     "localStart": "node ./bin/www",
     "dev": "nodemon --exec babel-node --presets babel-preset-env ./bin/www",
@@ -53,6 +53,7 @@
     "static-favicon": "^2.0.0-alpha"
   },
   "devDependencies": {
+    "braces": "^2.3.2",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.6.0",
