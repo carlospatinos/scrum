@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListGroup, Card, Accordion, ListGroupItem } from 'react-bootstrap';
+import { Card, Accordion } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import GridGenerator from '../GridGenerator';
 import './TeamList.css';
@@ -7,6 +7,11 @@ import './TeamList.css';
 const getUserVote = (storyVotes, user) => {
   const storyVote = storyVotes.find(([email]) => email === user.email);
   return storyVote ? storyVote[1] : '...';
+};
+
+const getMaxVote = storyVotes => {
+  console.log(storyVotes);
+  return '7';
 };
 
 const TeamList = props => {
@@ -37,7 +42,7 @@ const TeamList = props => {
             </GridGenerator>
           </Card.Body>
         </Accordion.Collapse>
-        <Card.Footer>Average [5] | Max [5] | Min [5]</Card.Footer>
+        <Card.Footer>Average [5] | Max [{getMaxVote(storyVotes)}] | Min [5]</Card.Footer>
       </Card>
     </Accordion>
   );
