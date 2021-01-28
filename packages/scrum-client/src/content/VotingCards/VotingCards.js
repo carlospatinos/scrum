@@ -1,7 +1,7 @@
 /* eslint-disable react/style-prop-object */
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container } from 'react-bootstrap';
+import { Container, ListGroup } from 'react-bootstrap';
 import { END_POINTS } from 'scrum-common';
 import { API_CONSTANTS, DECKS } from '../../constants';
 import ClickableCard from '../../components/ClickableCard';
@@ -58,14 +58,24 @@ export default function Cards() {
         <h1>Invalid room</h1>
       ) : (
         <>
-          <h4>{sessionInformation ? sessionInformation.title : ''}</h4>
-          Room: {roomId}
+          <ListGroup>
+            <ListGroup.Item>
+              <h4>{sessionInformation ? sessionInformation.title : ''}</h4>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              User story: {story ? story.storyTitle : ' &lt;Provided by Admin&gt;'}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              Description: {story ? story.storyDescription : ' &lt;Provided by Admin&gt;'}
+            </ListGroup.Item>
+          </ListGroup>
+
+          {/* Room: {roomId}
           <br />
           Card Deck: {sessionInformation ? sessionInformation.cardDeck : ''}
-          <br />
-          Current User story: {story ? story.storyTitle : ' &lt;Provided by Admin&gt;'}
-          <br />
-          <GridGenerator columns={4}>
+          <br /> */}
+
+          <GridGenerator columns={6}>
             {cardDeck.map(card => {
               return (
                 <ClickableCard
