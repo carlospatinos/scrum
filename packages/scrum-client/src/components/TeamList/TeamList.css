@@ -1,0 +1,10 @@
+table td+td {
+    border-left: 2px solid red;
+}
+
+
+table.dataCentered {
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+}

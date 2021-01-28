@@ -68,51 +68,49 @@ export default function ParticipateSession() {
       <Row>
         <Col>
           <h1>{sessionInformation.title}</h1>{' '}
-          <Button variant="danger" onClick={handleDeleteSession}>
-            {t('ParticipateSession.btnDeleteSession')}
-          </Button>
         </Col>
       </Row>
       <Row>
         <Col>
           <div>
             <Form>
-              <Form.Group controlId="formStory">
-                <Form.Label> {t('ParticipateSession.lblStory')}</Form.Label>
-                <Form.Control
-                  placeholder={t('ParticipateSession.lblStoryPlaceHolder')}
-                  onChange={e => setStoryTitle(e.target.value)}
-                  value={storyTitle}
-                />
-              </Form.Group>
-              <Form.Group controlId="fromDescription">
-                <Form.Label>{t('ParticipateSession.lblDescription')}</Form.Label>
-                <Form.Control
-                  placeholder={t('ParticipateSession.lblDescriptionPlaceHolder')}
-                  onChange={e => setStoryDescription(e.target.value)}
-                  value={storyDescription}
-                />
-              </Form.Group>
-              <ButtonToolbar className="mb-2 mr-2">
-                <ButtonGroup className="mr-2">
-                  <Button variant="primary" type="button" onClick={handleStartSession}>
-                    {t('ParticipateSession.btnStartSession')}
-                  </Button>
-                </ButtonGroup>
-                <ButtonGroup className="mr-2">
-                  <Button variant="danger" type="button" onClick={handleEndSession}>
-                    {t('ParticipateSession.btnEndSession')}
-                  </Button>
-                </ButtonGroup>
-              </ButtonToolbar>
+              <Row>
+                <Col>
+                  <Form.Control
+                    placeholder={t('ParticipateSession.lblStory')}
+                    onChange={e => setStoryTitle(e.target.value)}
+                    value={storyTitle}
+                  />
+                </Col>
+                <Col>
+                  <Form.Control
+                    placeholder={t('ParticipateSession.lblDescription')}
+                    onChange={e => setStoryDescription(e.target.value)}
+                    value={storyDescription}
+                  />
+                </Col>
+                <Col>
+                  <ButtonToolbar className="mb-2 mr-2">
+                    <ButtonGroup className="mr-2">
+                      <Button variant="primary" type="button" onClick={handleStartSession}>
+                        {t('ParticipateSession.btnStartSession')}
+                      </Button>
+                    </ButtonGroup>
+                    <ButtonGroup className="mr-2">
+                      <Button variant="danger" type="button" onClick={handleEndSession}>
+                        {t('ParticipateSession.btnEndSession')}
+                      </Button>
+                    </ButtonGroup>
+                  </ButtonToolbar>
+                </Col>
+              </Row>
             </Form>
           </div>
         </Col>
       </Row>
       <Row>
         <Col>
-          <div> Display voting results / list of users</div>
-          <TeamList title="Team members" users={users} storyVotes={storyVotes} />
+          <TeamList title="Team Summary" users={users} storyVotes={storyVotes} />
         </Col>
       </Row>
       <Row>
