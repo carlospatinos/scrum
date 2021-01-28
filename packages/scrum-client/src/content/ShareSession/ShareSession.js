@@ -3,7 +3,7 @@ import QRCode from 'qrcode.react';
 import { Container, ListGroup, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { API_CONSTANTS } from '../../constants';
+import { API_CONSTANTS, PATHS } from '../../constants';
 import './ShareSession.css';
 
 export default function ShareSession() {
@@ -22,9 +22,14 @@ export default function ShareSession() {
     const planningRoomId = localStorage.getItem(API_CONSTANTS.PLANNING_ROOM_ID);
     // TODO DELETE roomid?
     const url = window.location.href.split('/').slice(0, 3).join('/'); // ${API_CONSTANTS.API_BASE_URL}
-    setSessionToJoin(`/session/${planningRoomId}`);
-    setFullUrlToJoin(`${url}/session/${planningRoomId}`);
-    setVotingUrlToJoin(`${url}/votingcards/${planningRoomId}`);
+    const joinSessionPath = PATHS.SESSION_JOIN.replace(':roomId?', planningRoomId);
+
+    // TODO - delete once JoinSessionRoute is done.
+    const votingCardsPath = PATHS.VOTING_CARDS.replace(':roomId?', planningRoomId);
+
+    setSessionToJoin(`${joinSessionPath}`);
+    setFullUrlToJoin(`${url}${joinSessionPath}`);
+    setVotingUrlToJoin(`${votingCardsPath}`);
   }
 
   useEffect(() => {
