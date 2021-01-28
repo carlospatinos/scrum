@@ -5,6 +5,7 @@ import './SessionStarted.css';
 import { API_CONSTANTS } from '../../constants';
 import { Request } from '../../util';
 
+// TODO - DELETE THIS FILE
 export default function SessionStarted() {
   const [errorMessage, setErrorMessage] = useState('');
   const [apiResponse, setApiResponse] = useState('');

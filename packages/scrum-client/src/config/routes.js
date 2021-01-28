@@ -1,12 +1,12 @@
 import { lazy } from 'react';
 import { PATHS } from '../constants';
+import { JoinSessionRoute } from '../components/router';
 
 const Login = lazy(() => import('../content/Login'));
 const Signup = lazy(() => import('../content/Signup'));
 const Logout = lazy(() => import('../content/Logout'));
 const Home = lazy(() => import('../content/Home'));
 const PlanningConfig = lazy(() => import('../content/PlanningConfig'));
-const SessionStarted = lazy(() => import('../content/SessionStarted'));
 const VotingCards = lazy(() => import('../content/VotingCards'));
 const PrivacyPolicy = lazy(() => import('../content/PrivacyPolicy'));
 const NotFound = lazy(() => import('../content/NotFound'));
@@ -45,13 +45,6 @@ const routes = [
     isVisibleOnMenu: true,
   },
   {
-    path: PATHS.SESSION_STARTED,
-    component: SessionStarted,
-    title: 'Session Started',
-    isPrivate: true,
-    isVisibleOnMenu: true,
-  },
-  {
     path: PATHS.VOTING_CARDS,
     component: VotingCards,
     title: 'Voting Cards',
@@ -66,9 +59,16 @@ const routes = [
     isVisibleOnMenu: true,
   },
   {
+    path: PATHS.SESSION_JOIN,
+    component: JoinSessionRoute,
+    title: 'Join Session',
+    isPrivate: true,
+    isVisibleOnMenu: true,
+  },
+  {
     path: PATHS.SESSION_PARTICIPATE,
     component: ParticipateSession,
-    title: 'Participate Session',
+    title: 'Participate Session (admin)',
     isPrivate: true,
     isVisibleOnMenu: true,
   },
