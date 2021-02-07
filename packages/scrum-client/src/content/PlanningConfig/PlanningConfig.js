@@ -90,10 +90,15 @@ export default function PlanningConfig() {
       <Form onSubmit={handleSubmit}>
         <FormGroup controlId="planningTitle">
           <FormLabel>{t('PlanningConfig.lblTitle')}</FormLabel>
-          <FormControl value={title} onChange={e => setTitle(e.target.value)} name="title" />
+          <FormControl
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+            placeholder={t('PlanningConfig.phrTitle')}
+            name="title"
+          />
         </FormGroup>
         <FormGroup controlId="cardDeck">
-          <FormLabel>Card Deck</FormLabel>
+          <FormLabel>{t('PlanningConfig.lblCardDeck')}</FormLabel>
           <FormControl
             as="select"
             name="cardDeck"

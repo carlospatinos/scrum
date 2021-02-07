@@ -8,7 +8,11 @@
         "lnkSignIn": "Inicia sesion?",
         "lblEmail": "Correo electronico",
         "lblPassword": "Contraseña",
-        "lblReferredBy": "Id de referencia"
+        "lblReferredBy": "Id de referencia",
+        "phrFirstName": "Introduzca nombre",
+        "phrLastName": "Introduzca apellido",
+        "phrEmail": "Introduzca correo electronico",
+        "phrPassword": "Introduzca contraseña"
     },
     "Login": {
         "lblSignIn": "Iniciar sesion",
@@ -21,7 +25,9 @@
         "btnLoginWithGoogle": "Inicia con Google",
         "btnLoginWithTwitter": "Inicia con Twitter",
         "btnLoginWithFacebook": "Inicia con Facebook",
-        "lblForgotPassword": "Olvidaste tu contraseña?"
+        "lblForgotPassword": "Olvidaste tu contraseña?",
+        "phrEmail": "Introduzca correo electronico",
+        "phrPassword": "Introduzca contraseña"
     },
     "ParticipateSession": {
         "lblStory": "Historia",
@@ -34,10 +40,12 @@
     },
     "PlanningConfig": {
         "lblTitle": "Nombre de la sesion",
+        "lblCardDeck": "Card Deck",
         "lblValues": "Valores:",
         "lblCreationMethod": "Metodo de creacion de las historias:",
         "btnCreateSession": "Crear sesion",
-        "lblAllowUnauthenticated": "Permitir usuarios anonimos"
+        "lblAllowUnauthenticated": "Permitir usuarios anonimos",
+        "phrTitle": "Introduzca nombre de la sesion"
     },
     "ShareSession": {
         "lblInviteMembers": "Invita a los miembros",

@@ -86,11 +86,19 @@ export default function Signup() {
       <Form onSubmit={handleSubmit}>
         <FormGroup controlId="firstName">
           <FormLabel>{t('Signup.lblFirstName')}</FormLabel>
-          <FormControl value={firstName} onChange={e => setFirstName(e.target.value)} />
+          <FormControl
+            value={firstName}
+            onChange={e => setFirstName(e.target.value)}
+            placeholder={t('Signup.phrFirstName')}
+          />
         </FormGroup>
         <FormGroup controlId="lastName">
           <FormLabel>{t('Signup.lblLastName')}</FormLabel>
-          <FormControl value={lastName} onChange={e => setLastName(e.target.value)} />
+          <FormControl
+            value={lastName}
+            onChange={e => setLastName(e.target.value)}
+            placeholder={t('Signup.phrLastName')}
+          />
         </FormGroup>
 
         <FormGroup controlId="email">
@@ -100,6 +108,7 @@ export default function Signup() {
             type="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
+            placeholder={t('Signup.phrEmail')}
           />
         </FormGroup>
         <FormGroup controlId="password">
@@ -108,6 +117,7 @@ export default function Signup() {
             value={password}
             onChange={e => setPassword(e.target.value)}
             type="password"
+            placeholder={t('Signup.phrPassword')}
           />
         </FormGroup>
         <FormGroup controlId="confirmPassword">
@@ -116,6 +126,7 @@ export default function Signup() {
             value={confirmPassword}
             onChange={e => setConfirmPassword(e.target.value)}
             type="password"
+            placeholder={t('Signup.phrPassword')}
           />
         </FormGroup>
         {isReferral && (

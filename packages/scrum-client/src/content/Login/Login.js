@@ -84,6 +84,7 @@ export default function Login() {
             type="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
+            placeholder={t('Login.phrEmail')}
           />
         </FormGroup>
         <FormGroup controlId="password">
@@ -92,6 +93,7 @@ export default function Login() {
             value={password}
             onChange={e => setPassword(e.target.value)}
             type="password"
+            placeholder={t('Login.phrPassword')}
           />
         </FormGroup>
         <Button
