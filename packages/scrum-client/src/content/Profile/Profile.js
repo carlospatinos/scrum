@@ -44,11 +44,11 @@ export default function Profile() {
           logout(dispatch);
         } else {
           // TODO what to do?
-          console.log('profile not deleted?');
+          // console.log('profile not deleted?');
         }
       });
     } catch (e) {
-      console.log('error', e);
+      // console.log('error', e);
     }
   };
 

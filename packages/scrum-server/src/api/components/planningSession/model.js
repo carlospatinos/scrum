@@ -18,6 +18,7 @@ const PlanningSessionSchema = new mongoose.Schema({
     type: Boolean,
   },
   userStoryList: [{ type: ObjectId, ref: 'UserStory' }],
+  userAdmin: { type: ObjectId, ref: 'User' },
   creationDate: {
     type: Date,
     default: Date.now,

@@ -12,25 +12,20 @@ import {
 } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { END_POINTS } from 'scrum-common';
 import TeamList from '../../components/TeamList';
 import useSocket from '../../hooks/useSocket';
-import { API_CONSTANTS } from '../../constants';
-import { Request } from '../../util';
+import { PlanningSessionAPI } from '../../api';
+
 import './ParticipateSession.css';
 
 const getPlanningSession = (roomId, setSessionInformation) => {
   try {
-    Request.get(
-      `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}/${roomId}`
-    ).then(serviceResponse => setSessionInformation(serviceResponse.sessionInformation));
+    PlanningSessionAPI.get(roomId).then(setSessionInformation);
   } catch (e) {
     console.log('error', e);
     // TODO this error happen if API is not available but business errors like length of password go above. how to handle and display those?
   }
 };
-
-const handleDeleteSession = e => console.log(e);
 
 export default function ParticipateSession() {
   const { t } = useTranslation();
