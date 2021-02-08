@@ -16,7 +16,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { PATHS, API_CONSTANTS, DECKS } from '../../constants';
 import { CommonFunctions } from '../../util';
 import { useAuthState } from '../../context';
-import PlanningSession from '../../api/PlanningSession';
+import { PlanningSessionAPI } from '../../api';
 
 export default function PlanningConfig() {
   const history = useHistory();
@@ -63,7 +63,7 @@ export default function PlanningConfig() {
       userAdmin: userDetails.user.id,
     };
 
-    PlanningSession.post(payload)
+    PlanningSessionAPI.post(payload)
       .then(serviceResponse => {
         // TODO since the request util throws exceptions, is the sucesss needed?
         if (serviceResponse.success) {

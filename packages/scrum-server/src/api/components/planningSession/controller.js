@@ -7,7 +7,7 @@ const planningSessionSave = async (req, res) => {
     const serviceResponse = await PlanningSessionService.save(req.body);
     return res.status(200).json({
       success: true,
-      // TODO HERE IT IS CALLED session, in other api is sessionInformation, and the model PlanningSession
+      // TODO HERE IT IS CALLED session, in other api is data, and the model PlanningSession
       session: serviceResponse.planningSession,
       planningRoomId: serviceResponse.planningRoomId,
     });
@@ -21,7 +21,7 @@ const planningSessionFind = async (req, res) => {
     const serviceResponse = await PlanningSessionService.find(req.params.id);
     return res.status(200).json({
       success: true,
-      sessionInformation: serviceResponse.planningSession,
+      data: serviceResponse.planningSession,
     });
   } catch (e) {
     return res.status(400).json({ success: false, message: e.message });

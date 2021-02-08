@@ -8,7 +8,7 @@ import GridGenerator from '../../components/GridGenerator';
 import useSocket from '../../hooks/useSocket';
 import './VotingCards.css';
 import { useAuthState } from '../../context';
-import PlanningSession from '../../api/PlanningSession';
+import { PlanningSessionAPI } from '../../api';
 
 const handleSpecificCardToggleKeyboard = event => {
   // eslint-disable-next-line
@@ -17,10 +17,10 @@ const handleSpecificCardToggleKeyboard = event => {
 
 function getPlanningSession(setCardDeckParam, roomId, setSessionInformation) {
   try {
-    PlanningSession.get(roomId).then(sessionInformation => {
-      setSessionInformation(sessionInformation);
-      setCardDeckParam(DECKS.byLabels(sessionInformation.cardDeck).values);
-      // TODO - handle error , sessionInformation not present
+    PlanningSessionAPI.get(roomId).then(data => {
+      setSessionInformation(data);
+      setCardDeckParam(DECKS.byLabels(data.cardDeck).values);
+      // TODO - handle error , data not present
     });
   } catch (e) {
     // console.error(e);

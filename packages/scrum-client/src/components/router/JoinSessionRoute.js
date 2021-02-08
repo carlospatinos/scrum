@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { Redirect, withRouter, useParams } from 'react-router-dom';
 import { PATHS } from '../../constants';
 import { useAuthState } from '../../context';
-import PlanningSession from '../../api/PlanningSession';
+import { PlanningSessionAPI } from '../../api';
 
 const isUserAdminForSession = async (userId, roomId) => {
-  const sessionInformation = await PlanningSession.get(roomId);
-  return sessionInformation.userAdmin === userId;
+  const data = await PlanningSessionAPI.get(roomId);
+  return data.userAdmin === userId;
 };
 
 const JoinSessionRoute = ({ location }) => {

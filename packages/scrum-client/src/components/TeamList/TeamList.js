@@ -10,6 +10,7 @@ const getUserVote = (storyVotes, user) => {
 };
 
 const getMaxVote = storyVotes => {
+  // eslint-disable-next-line no-console
   console.log(storyVotes);
   return '7';
 };

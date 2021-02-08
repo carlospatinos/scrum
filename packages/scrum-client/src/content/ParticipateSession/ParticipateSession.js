@@ -14,15 +14,13 @@ import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import TeamList from '../../components/TeamList';
 import useSocket from '../../hooks/useSocket';
-import PlanningSession from '../../api/PlanningSession';
+import { PlanningSessionAPI } from '../../api';
 
 import './ParticipateSession.css';
 
 const getPlanningSession = (roomId, setSessionInformation) => {
   try {
-    PlanningSession.get(roomId).then(sessionInformation =>
-      setSessionInformation(sessionInformation)
-    );
+    PlanningSessionAPI.get(roomId).then(setSessionInformation);
   } catch (e) {
     console.log('error', e);
     // TODO this error happen if API is not available but business errors like length of password go above. how to handle and display those?
