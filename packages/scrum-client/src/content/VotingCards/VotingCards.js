@@ -2,14 +2,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, ListGroup } from 'react-bootstrap';
-import { END_POINTS } from 'scrum-common';
-import { API_CONSTANTS, DECKS } from '../../constants';
+import { DECKS } from '../../constants';
 import ClickableCard from '../../components/ClickableCard';
 import GridGenerator from '../../components/GridGenerator';
 import useSocket from '../../hooks/useSocket';
-import { Request } from '../../util';
 import './VotingCards.css';
 import { useAuthState } from '../../context';
+import PlanningSession from '../../api/PlanningSession';
 
 const handleSpecificCardToggleKeyboard = event => {
   // eslint-disable-next-line
@@ -18,14 +17,10 @@ const handleSpecificCardToggleKeyboard = event => {
 
 function getPlanningSession(setCardDeckParam, roomId, setSessionInformation) {
   try {
-    Request.get(
-      `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}/${roomId}`
-    ).then(serviceResponse => {
-      if (serviceResponse && serviceResponse.success && serviceResponse.sessionInformation) {
-        setSessionInformation(serviceResponse.sessionInformation);
-        setCardDeckParam(DECKS.byLabels(serviceResponse.sessionInformation.cardDeck).values);
-        // TODO - handle error , sessionInformation not present
-      }
+    PlanningSession.get(roomId).then(sessionInformation => {
+      setSessionInformation(sessionInformation);
+      setCardDeckParam(DECKS.byLabels(sessionInformation.cardDeck).values);
+      // TODO - handle error , sessionInformation not present
     });
   } catch (e) {
     // console.error(e);

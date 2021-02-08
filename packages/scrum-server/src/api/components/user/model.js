@@ -11,9 +11,7 @@ const validatePassword = (data) => {
   if (data.length >= 8) {
     return true; //validation success
   }
-  else {
     return false; // validation failure
-  }
 }
 
 /**

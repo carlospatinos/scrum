@@ -13,9 +13,10 @@ import {
 import './PlanningConfig.css';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useLocation } from 'react-router-dom';
-import { END_POINTS } from 'scrum-common';
 import { PATHS, API_CONSTANTS, DECKS } from '../../constants';
-import { Request, CommonFunctions } from '../../util';
+import { CommonFunctions } from '../../util';
+import { useAuthState } from '../../context';
+import PlanningSession from '../../api/PlanningSession';
 
 export default function PlanningConfig() {
   const history = useHistory();
@@ -29,6 +30,8 @@ export default function PlanningConfig() {
   const [userStoriesCreationMethod, setUserStoriesCreationMethod] = useState('manual');
   const [errorMessage, setErrorMessage] = useState('');
   const [apiResponse, setApiResponse] = useState('');
+  const userDetails = useAuthState();
+
   const redirectedFrom = location.state?.redirectedFrom?.pathname || PATHS.SHARE_SESSION;
 
   const cardDeckOptions = [
@@ -50,18 +53,17 @@ export default function PlanningConfig() {
     return title.length > 0 && cardDeck.length > 0;
   }
 
-  function handleSubmit(event) {
+  const handleSubmit = event => {
     event.preventDefault();
     const payload = {
       title,
       cardDeck,
       allowUnauthenticated,
       userStoriesCreationMethod,
+      userAdmin: userDetails.user.id,
     };
-    Request.post(
-      `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.PLANNING_SESSION}`,
-      payload
-    )
+
+    PlanningSession.post(payload)
       .then(serviceResponse => {
         // TODO since the request util throws exceptions, is the sucesss needed?
         if (serviceResponse.success) {
@@ -81,7 +83,7 @@ export default function PlanningConfig() {
         setErrorMessage(e);
         // TODO this erro happen if API is not available but business errors like length of password go above. how to handle and display those?
       });
-  }
+  };
 
   const isValidForm = validateForm();
 
