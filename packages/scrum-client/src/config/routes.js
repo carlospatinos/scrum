@@ -63,14 +63,14 @@ const routes = [
     component: JoinSessionRoute,
     title: 'Join Session',
     isPrivate: true,
-    isVisibleOnMenu: true,
+    isVisibleOnMenu: false,
   },
   {
     path: PATHS.SESSION_PARTICIPATE,
     component: ParticipateSession,
     title: 'Participate Session (admin)',
     isPrivate: true,
-    isVisibleOnMenu: true,
+    isVisibleOnMenu: false,
   },
   {
     path: PATHS.PRIVACY_POLICY,

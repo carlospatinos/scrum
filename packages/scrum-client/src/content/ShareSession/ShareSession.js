@@ -9,7 +9,6 @@ import './ShareSession.css';
 export default function ShareSession() {
   const [sessionToJoin, setSessionToJoin] = useState('');
   const [fullUrlToJoin, setFullUrlToJoin] = useState('');
-  const [votingUrlToJoin, setVotingUrlToJoin] = useState('');
 
   const history = useHistory();
   const { t } = useTranslation();
@@ -24,12 +23,8 @@ export default function ShareSession() {
     const url = window.location.href.split('/').slice(0, 3).join('/'); // ${API_CONSTANTS.API_BASE_URL}
     const joinSessionPath = PATHS.SESSION_JOIN.replace(':roomId?', planningRoomId);
 
-    // TODO - delete once JoinSessionRoute is done.
-    const votingCardsPath = PATHS.VOTING_CARDS.replace(':roomId?', planningRoomId);
-
     setSessionToJoin(`${joinSessionPath}`);
     setFullUrlToJoin(`${url}${joinSessionPath}`);
-    setVotingUrlToJoin(`${votingCardsPath}`);
   }
 
   useEffect(() => {
@@ -57,8 +52,6 @@ export default function ShareSession() {
           <br />
           <p>
             {fullUrlToJoin} <a href={fullUrlToJoin}>Go Join</a>
-            <br />
-            {votingUrlToJoin} <a href={votingUrlToJoin}>Go Voting</a>
           </p>
         </ListGroup.Item>
       </ListGroup>

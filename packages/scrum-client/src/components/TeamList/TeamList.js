@@ -3,20 +3,26 @@ import { Card, Accordion } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import GridGenerator from '../GridGenerator';
 import './TeamList.css';
+import { DECKS } from '../../constants';
 
 const getUserVote = (storyVotes, user) => {
   const storyVote = storyVotes.find(([email]) => email === user.email);
   return storyVote ? storyVote[1] : '...';
 };
 
-const getMaxVote = storyVotes => {
-  // eslint-disable-next-line no-console
-  console.log(storyVotes);
-  return '7';
-};
-
 const TeamList = props => {
-  const { title, subtitle, users, storyVotes } = props;
+  const { title, subtitle, users, storyVotes, sessionInformation } = props;
+  const cardDeck = DECKS.byLabels(sessionInformation.cardDeck);
+
+  const getMaxVote = () => {
+    return cardDeck.getMaxVote(storyVotes);
+  };
+  const getMinVote = () => {
+    return cardDeck.getMinVote(storyVotes);
+  };
+  const getAvgVote = () => {
+    return cardDeck.getAvgVote(storyVotes);
+  };
   return (
     <Accordion defaultActiveKey="0">
       <Card className="text-center">
@@ -43,7 +49,9 @@ const TeamList = props => {
             </GridGenerator>
           </Card.Body>
         </Accordion.Collapse>
-        <Card.Footer>Average [5] | Max [{getMaxVote(storyVotes)}] | Min [5]</Card.Footer>
+        <Card.Footer>
+          Average [{getAvgVote()}] | Max [{getMaxVote()}] | Min [{getMinVote()}]
+        </Card.Footer>
       </Card>
     </Accordion>
   );
