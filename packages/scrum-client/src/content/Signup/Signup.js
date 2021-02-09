@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Alert, Button, FormGroup, FormControl, FormLabel, Container, Form } from 'react-bootstrap';
-import { END_POINTS } from 'scrum-common';
 import { useParams, useHistory, useLocation, Link } from 'react-router-dom';
 import './Signup.css';
 import { useTranslation } from 'react-i18next';
-import { API_CONSTANTS, PATHS } from '../../constants';
-import { Request } from '../../util';
+import { PATHS } from '../../constants';
+import { AuthAPI } from '../../api';
 
 const checkReferral = referrerValue => {
   return (
@@ -62,7 +61,7 @@ export default function Signup() {
         if (!isReferral) {
           delete payload.referredBy;
         }
-        Request.post(`${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.SIGN_UP}`, payload)
+        AuthAPI.signUp(payload)
           .then(data => {
             if (data.success) {
               history.push(redirectedFrom);
