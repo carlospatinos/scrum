@@ -105,7 +105,12 @@ export default function ParticipateSession() {
       </Row>
       <Row>
         <Col>
-          <TeamList title="Team Summary" users={users} storyVotes={storyVotes} />
+          <TeamList
+            title="Team Summary"
+            sessionInformation={sessionInformation}
+            users={users}
+            storyVotes={storyVotes}
+          />
         </Col>
       </Row>
       <Row>

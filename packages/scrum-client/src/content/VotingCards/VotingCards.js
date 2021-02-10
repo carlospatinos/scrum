@@ -27,7 +27,7 @@ function getPlanningSession(setCardDeckParam, roomId, setSessionInformation) {
   }
 }
 
-export default function Cards() {
+export default function VotingCards() {
   const { roomId } = useParams();
   const [cardDeck, setCardDeck] = useState([]);
   const [sessionInformation, setSessionInformation] = useState({});
@@ -42,7 +42,7 @@ export default function Cards() {
     socketEvents.setRoomStoryVote({
       room: { id: roomId },
       user: userDetails.user,
-      vote: event.target.id,
+      vote: cardDeck.find(card => card.id === event.target.id).val,
     });
   };
 

@@ -1,3 +1,26 @@
+const tshirtValues = [
+  { val: 1, image: '/card-decks/size-xs.svg', id: 'size-xs' },
+  { val: 2, image: '/card-decks/size-s.svg', id: 'size-s' },
+  { val: 3, image: '/card-decks/size-m.svg', id: 'size-m' },
+  { val: 4, image: '/card-decks/size-l.svg', id: 'size-l' },
+  { val: 5, image: '/card-decks/size-xl.svg', id: 'size-xl' },
+  { val: 100, image: '/card-decks/question-mark.svg', id: 'question-mark' },
+  { val: 101, image: '/card-decks/infinity.svg', id: 'infinity' },
+  { val: 102, image: '/card-decks/coffee.svg', id: 'coffee' },
+];
+// Votes are passed in an array of arrays. "user, vote"
+const userVotesToVotes = (values = [['user', 0]]) =>
+  values.map(valArr => valArr[1]).filter(value => value < 100);
+
+const getMaxValue = values => Math.max(...userVotesToVotes(values));
+
+const getMinValue = values => Math.min(...userVotesToVotes(values));
+
+const getAvgValue = values => {
+  const arr = userVotesToVotes(values);
+  return arr.reduce((a, b) => a + b, 0) / arr.length;
+};
+
 const DECKS = {
   POWER_OF_TWO: {
     key: 1,
@@ -15,6 +38,9 @@ const DECKS = {
       { val: 101, image: '/card-decks/infinity.svg', id: 'infinity' },
       { val: 102, image: '/card-decks/coffee.svg', id: 'coffee' },
     ],
+    getMaxVote: getMaxValue,
+    getMinVote: getMinValue,
+    getAvgVote: getAvgValue,
   },
   FIBBONACI: {
     key: 2,
@@ -33,23 +59,27 @@ const DECKS = {
       { val: 101, image: '/card-decks/infinity.svg', id: 'infinity' },
       { val: 102, image: '/card-decks/coffee.svg', id: 'coffee' },
     ],
+    getMaxVote: getMaxValue,
+    getMinVote: getMinValue,
+    getAvgVote: getAvgValue,
   },
   TSHIRT: {
     key: 3,
     name: 't-shirt sizing',
     labels: 'xs, s, m, l, xl, ?, I, C',
-    values: [
-      { val: 1, image: '/card-decks/size-xs.svg', id: 'ize-xs' },
-      { val: 2, image: '/card-decks/size-s.svg', id: 'size-s' },
-      { val: 3, image: '/card-decks/size-m.svg', id: 'size-m' },
-      { val: 4, image: '/card-decks/size-l.svg', id: 'size-l' },
-      { val: 5, image: '/card-decks/size-xl.svg', id: 'size-xl' },
-      { val: 100, image: '/card-decks/question-mark.svg', id: 'question-mark' },
-      { val: 101, image: '/card-decks/infinity.svg', id: 'infinity' },
-      { val: 102, image: '/card-decks/coffee.svg', id: 'coffee' },
-    ],
+    values: [...tshirtValues],
+    getMaxVote: values => {
+      const maxValue = getMaxValue(values);
+      return tshirtValues.find(card => card.val === maxValue).id.replace('size-', '');
+    },
+    getMinValue: values => {
+      const maxValue = getMinValue(values);
+      return tshirtValues.find(card => card.val === maxValue).id.replace('size-', '');
+    },
+    getAvgVote: getMinValue,
   },
 };
+// TODO - to implement  TSHIRT
 
 const byLabels = labels => Object.values(DECKS).find(deck => deck.labels === labels);
 export default { ...DECKS, byLabels };
