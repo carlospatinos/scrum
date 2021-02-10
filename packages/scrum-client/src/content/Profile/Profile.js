@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Container, Form, Card, Modal } from 'react-bootstrap';
-import { END_POINTS } from 'scrum-common';
 import { useAuthState, useAuthDispatch, logout } from '../../context';
-import { Request } from '../../util';
-import { API_CONSTANTS } from '../../constants';
+import { ProfileAPI } from '../../api';
 
 import './Profile.css';
 
@@ -36,10 +34,7 @@ export default function Profile() {
   const handleDeleteProfile = async event => {
     event.preventDefault();
     try {
-      Request.post(
-        `${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.DELETE_PROFILE}`,
-        userDetails
-      ).then(response => {
+      ProfileAPI.remove(userDetails).then(response => {
         if (response) {
           logout(dispatch);
         } else {

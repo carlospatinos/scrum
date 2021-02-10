@@ -5,7 +5,7 @@ import './SessionSummary.css';
 import { API_CONSTANTS } from '../../constants';
 import { Request } from '../../util';
 
-export default function SessionStarted() {
+export default function SessionSummary() {
   const [errorMessage, setErrorMessage] = useState('');
   const [apiResponse, setApiResponse] = useState('');
 
