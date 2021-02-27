@@ -6,6 +6,7 @@ class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
     this.state = { hasError: false };
+    // this.onClickHandler = this.onClickHandler.bind(this);
   }
 
   static getDerivedStateFromError(error) {
@@ -18,15 +19,21 @@ class ErrorBoundary extends React.Component {
     logError(error, errorInfo);
   }
 
+  static onClickHandler(event) {
+    event.preventDefault();
+    window.location.reload();
+  }
+
   render() {
     const { children } = this.props;
     const { hasError } = this.state;
     if (hasError) {
-      // You can render any custom fallback UI
-
       return (
         <Alert variant="danger">
-          <h1>Something went wrong.</h1>
+          Something went wrong.
+          <Alert.Link href="/" onClick={ErrorBoundary.onClickHandler}>
+            Try again
+          </Alert.Link>
         </Alert>
       );
     }
