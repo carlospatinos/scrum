@@ -14,7 +14,7 @@ const get = async roomId => {
 };
 
 const post = async payload => {
-  return Request.post(`${getBaseURI()}`, payload);
+  return Request.post(getBaseURI(), payload);
 };
 
 export default {
