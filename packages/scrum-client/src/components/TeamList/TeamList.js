@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Accordion } from 'react-bootstrap';
+import { Card, Accordion, Badge } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import GridGenerator from '../GridGenerator';
 import './TeamList.css';
@@ -15,13 +15,33 @@ const TeamList = props => {
   const cardDeck = DECKS.byLabels(sessionInformation.cardDeck);
 
   const getMaxVote = () => {
-    return cardDeck.getMaxVote(storyVotes);
+    const maxVote = cardDeck.getMaxVote(storyVotes);
+    if (maxVote > 0) {
+      return maxVote;
+    }
+    return 0;
   };
   const getMinVote = () => {
-    return cardDeck.getMinVote(storyVotes);
+    const minVote = cardDeck.getMinVote(storyVotes);
+    if (minVote > 0) {
+      return minVote;
+    }
+    return 0;
   };
   const getAvgVote = () => {
-    return cardDeck.getAvgVote(storyVotes);
+    const avgVote = cardDeck.getAvgVote(storyVotes);
+    if (avgVote > 0) {
+      return avgVote;
+    }
+    return 0;
+  };
+
+  const generateUserStatusBadge = () => {
+    const randomStatus = Math.random();
+    if (randomStatus > 0.5) {
+      return <Badge variant="success">Online</Badge>;
+    }
+    return <Badge variant="danger">Offline</Badge>;
   };
   return (
     <Accordion defaultActiveKey="0">
@@ -42,7 +62,7 @@ const TeamList = props => {
                     <Card.Body>
                       <Card.Title>{getUserVote(storyVotes, user)}</Card.Title>
                     </Card.Body>
-                    <Card.Footer className="text-muted">Online | Offline</Card.Footer>
+                    <Card.Footer className="text-muted">{generateUserStatusBadge()}</Card.Footer>
                   </Card>
                 );
               })}

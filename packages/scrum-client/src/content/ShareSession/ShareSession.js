@@ -17,6 +17,7 @@ export default function ShareSession() {
     history.push(sessionToJoin);
   };
 
+  // Is this a common function? Where to put it?
   function generateQR() {
     const planningRoomId = localStorage.getItem(API_CONSTANTS.PLANNING_ROOM_ID);
     // TODO DELETE roomid?
