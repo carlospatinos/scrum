@@ -9,12 +9,14 @@ import {
   Form,
   ButtonToolbar,
   ButtonGroup,
+  Badge,
 } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import TeamList from '../../components/TeamList';
 import useSocket from '../../hooks/useSocket';
 import { PlanningSessionAPI } from '../../api';
+import { API_CONSTANTS, PATHS } from '../../constants';
 
 import './ParticipateSession.css';
 
@@ -35,9 +37,16 @@ export default function ParticipateSession() {
   const [storyDescription, setStoryDescription] = useState('');
   const [sessionInformation, setSessionInformation] = useState();
   const { socketEvents, setStory, users, storyVotes } = useSocket(roomId);
+
+  const [fullUrlToJoin, setFullUrlToJoin] = useState('');
+
   useEffect(() => {
     if (roomId && roomId !== ':roomId') {
       getPlanningSession(roomId, setSessionInformation);
+      const url = window.location.href.split('/').slice(0, 3).join('/'); // ${API_CONSTANTS.API_BASE_URL}
+      const joinSessionPath = PATHS.SESSION_JOIN.replace(':roomId?', roomId);
+      setFullUrlToJoin(`${url}${joinSessionPath}`);
+      console.log(url + joinSessionPath);
     }
   }, [roomId]);
 
@@ -62,7 +71,9 @@ export default function ParticipateSession() {
     <Container className="ParticipateSession">
       <Row>
         <Col>
-          <h1>{sessionInformation.title}</h1>{' '}
+          <h4>
+            {sessionInformation.title} <Badge variant="secondary">Admin view</Badge>
+          </h4>{' '}
         </Col>
       </Row>
       <Row>
@@ -115,7 +126,9 @@ export default function ParticipateSession() {
       </Row>
       <Row>
         <Col>
-          <div> QR code to continue inviting?</div>
+          <div>
+            URL to join: <a href={fullUrlToJoin}>{fullUrlToJoin}</a>
+          </div>
         </Col>
       </Row>
     </Container>

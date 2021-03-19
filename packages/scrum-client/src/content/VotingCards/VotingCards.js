@@ -1,7 +1,7 @@
 /* eslint-disable react/style-prop-object */
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Container, ListGroup } from 'react-bootstrap';
+import { Container, ListGroup, Badge } from 'react-bootstrap';
 import { DECKS } from '../../constants';
 import ClickableCard from '../../components/ClickableCard';
 import GridGenerator from '../../components/GridGenerator';
@@ -55,7 +55,10 @@ export default function VotingCards() {
         <>
           <ListGroup>
             <ListGroup.Item>
-              <h4>{sessionInformation ? sessionInformation.title : ''}</h4>
+              <h4>
+                {sessionInformation ? sessionInformation.title : ''}{' '}
+                <Badge variant="secondary">Member view</Badge>
+              </h4>
             </ListGroup.Item>
             <ListGroup.Item>
               User story: {story ? story.storyTitle : ' &lt;Provided by Admin&gt;'}
