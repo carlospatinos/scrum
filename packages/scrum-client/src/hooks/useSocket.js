@@ -21,8 +21,7 @@ const useSocket = (roomId, socketServerURL = API_CONSTANTS.API_BASE_URL) => {
       onStoryUpdate,
       onStoryVotesUpdate,
     } = socketEventsRef;
-    const { email, fullName } = userDetails.user;
-    joinToRoom({ room: { id: roomId }, user: { fullName, email } });
+    joinToRoom({ room: { id: roomId }, user: userDetails.user });
     onRoomMessages((err, data) => {
       setMessages(data);
     });

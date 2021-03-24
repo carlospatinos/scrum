@@ -16,7 +16,8 @@ import { useTranslation } from 'react-i18next';
 import TeamList from '../../components/TeamList';
 import useSocket from '../../hooks/useSocket';
 import { PlanningSessionAPI } from '../../api';
-import { API_CONSTANTS, PATHS } from '../../constants';
+import { PATHS } from '../../constants';
+import { useAuthState } from '../../context';
 
 import './ParticipateSession.css';
 
@@ -37,8 +38,8 @@ export default function ParticipateSession() {
   const [storyDescription, setStoryDescription] = useState('');
   const [sessionInformation, setSessionInformation] = useState();
   const { socketEvents, setStory, users, storyVotes } = useSocket(roomId);
-
   const [fullUrlToJoin, setFullUrlToJoin] = useState('');
+  const userDetails = useAuthState();
 
   useEffect(() => {
     if (roomId && roomId !== ':roomId') {
@@ -120,6 +121,7 @@ export default function ParticipateSession() {
             title="Team Summary"
             sessionInformation={sessionInformation}
             users={users}
+            admin={{ id: userDetails.user.id }}
             storyVotes={storyVotes}
           />
         </Col>
