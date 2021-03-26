@@ -57,12 +57,14 @@ const TeamList = props => {
               {users.map(user => {
                 return (
                   <Card style={{ width: '12rem' }}>
-                    <Card.Header>{user.fullName}</Card.Header>
                     <Card.Img variant="top" src="/icons/unknown.png" />
                     <Card.Body>
                       <Card.Title>{getUserVote(storyVotes, user)}</Card.Title>
                     </Card.Body>
-                    <Card.Footer className="text-muted">{generateUserStatusBadge()}</Card.Footer>
+                    <Card.Footer className="text-muted">
+                      {user.fullName}
+                      <br /> {generateUserStatusBadge()}
+                    </Card.Footer>
                   </Card>
                 );
               })}

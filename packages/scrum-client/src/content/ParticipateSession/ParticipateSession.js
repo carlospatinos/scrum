@@ -16,7 +16,7 @@ import { useTranslation } from 'react-i18next';
 import TeamList from '../../components/TeamList';
 import useSocket from '../../hooks/useSocket';
 import { PlanningSessionAPI } from '../../api';
-import { API_CONSTANTS, PATHS } from '../../constants';
+import { PATHS } from '../../constants';
 
 import './ParticipateSession.css';
 
