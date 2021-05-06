@@ -6,12 +6,12 @@ import './TeamList.css';
 import { DECKS } from '../../constants';
 
 const getUserVote = (storyVotes, user) => {
-  const storyVote = storyVotes.find(([email]) => email === user.email);
+  const storyVote = storyVotes.find(([id]) => id === user.id);
   return storyVote ? storyVote[1] : '...';
 };
 
 const TeamList = props => {
-  const { title, subtitle, users, storyVotes, sessionInformation } = props;
+  const { title, subtitle, users, storyVotes, sessionInformation, admin } = props;
   const cardDeck = DECKS.byLabels(sessionInformation.cardDeck);
 
   const getMaxVote = () => {
@@ -54,20 +54,22 @@ const TeamList = props => {
         <Accordion.Collapse eventKey="0">
           <Card.Body>
             <GridGenerator columns={2}>
-              {users.map(user => {
-                return (
-                  <Card style={{ width: '12rem' }}>
-                    <Card.Img variant="top" src="/icons/unknown.png" />
-                    <Card.Body>
-                      <Card.Title>{getUserVote(storyVotes, user)}</Card.Title>
-                    </Card.Body>
-                    <Card.Footer className="text-muted">
-                      {user.fullName}
-                      <br /> {generateUserStatusBadge()}
-                    </Card.Footer>
-                  </Card>
-                );
-              })}
+              {users
+                .filter(user => user.id !== admin.id)
+                .map(user => {
+                  return (
+                    <Card style={{ width: '12rem' }}>
+                      <Card.Img variant="top" src="/icons/unknown.png" />
+                      <Card.Body>
+                        <Card.Title>{getUserVote(storyVotes, user)}</Card.Title>
+                      </Card.Body>
+                      <Card.Footer className="text-muted">
+                        {user.fullName}
+                        <br /> {generateUserStatusBadge()}
+                      </Card.Footer>
+                    </Card>
+                  );
+                })}
             </GridGenerator>
           </Card.Body>
         </Accordion.Collapse>
@@ -85,6 +87,12 @@ TeamList.propTypes = {
   users: PropTypes.arrayOf(
     PropTypes.shape({
       name: PropTypes.string,
+      id: PropTypes.string,
+    })
+  ),
+  admin: PropTypes.objectOf(
+    PropTypes.shape({
+      id: PropTypes.string,
     })
   ),
 };
@@ -92,6 +100,7 @@ TeamList.propTypes = {
 TeamList.defaultProps = {
   subtitle: undefined,
   users: [],
+  admin: { id: undefined },
 };
 
 export default TeamList;
