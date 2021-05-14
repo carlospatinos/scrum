@@ -9,6 +9,7 @@ import {
   Form,
   ButtonToolbar,
   ButtonGroup,
+  Modal,
   Badge,
 } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
@@ -33,7 +34,10 @@ export default function ParticipateSession() {
   const { t } = useTranslation();
   const { roomId } = useParams();
   // const [response, setResponse] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const handleClose = () => setShowModal(false);
   const [storyTitle, setStoryTitle] = useState('');
+  const [validUserStory, setValidUserStory] = useState(false);
   const [storyDescription, setStoryDescription] = useState('');
   const [sessionInformation, setSessionInformation] = useState();
   const { socketEvents, setStory, users, storyVotes } = useSocket(roomId);
@@ -54,6 +58,14 @@ export default function ParticipateSession() {
     return <Spinner animation="border" />;
   }
 
+  const handleUserStoryTitle = e => {
+    setStoryTitle(e);
+    if (e !== '') {
+      setValidUserStory(true);
+    } else {
+      setValidUserStory(false);
+    }
+  };
   const handleStartSession = e => {
     socketEvents.setRoomStory({
       room: { id: roomId },
@@ -63,12 +75,23 @@ export default function ParticipateSession() {
     console.log(e);
   };
   const handleEndSession = e => {
-    // setStory({storyTitle:"", storyDescription:""});
+    setShowModal(true);
     console.log(e);
   };
 
   return (
     <Container className="ParticipateSession">
+      <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>{t('ParticipateSession.mdlTtlEndSession')}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{t('ParticipateSession.mdlMsgEndSession')}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="danger" onClick={handleClose}>
+            {t('ParticipateSession.mdlBtnEndSession')}
+          </Button>
+        </Modal.Footer>
+      </Modal>
       <Row>
         <Col>
           <h4>
@@ -84,7 +107,7 @@ export default function ParticipateSession() {
                 <Col>
                   <Form.Control
                     placeholder={t('ParticipateSession.lblStory')}
-                    onChange={e => setStoryTitle(e.target.value)}
+                    onChange={e => handleUserStoryTitle(e.target.value)}
                     value={storyTitle}
                   />
                 </Col>
@@ -98,7 +121,12 @@ export default function ParticipateSession() {
                 <Col>
                   <ButtonToolbar className="mb-2 mr-2">
                     <ButtonGroup className="mr-2">
-                      <Button variant="primary" type="button" onClick={handleStartSession}>
+                      <Button
+                        variant="primary"
+                        type="button"
+                        onClick={handleStartSession}
+                        disabled={!validUserStory}
+                      >
                         {t('ParticipateSession.btnStartSession')}
                       </Button>
                     </ButtonGroup>
@@ -116,6 +144,7 @@ export default function ParticipateSession() {
       </Row>
       <Row>
         <Col>
+          {/* TODO admin.id is null? error in console */}
           <TeamList
             title="Team Summary"
             sessionInformation={sessionInformation}

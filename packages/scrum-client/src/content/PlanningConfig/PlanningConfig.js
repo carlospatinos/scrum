@@ -8,6 +8,7 @@ import {
   Container,
   Col,
   Form,
+  Badge,
   FormCheck,
 } from 'react-bootstrap';
 import './PlanningConfig.css';
@@ -32,6 +33,7 @@ export default function PlanningConfig() {
   const [apiResponse, setApiResponse] = useState('');
   const userDetails = useAuthState();
 
+  // TODO what to do here?
   const redirectedFrom = location.state?.redirectedFrom?.pathname || PATHS.SHARE_SESSION;
 
   const cardDeckOptions = [
@@ -138,14 +140,23 @@ export default function PlanningConfig() {
                 label="Github"
                 name="userStoriesCreationMethod"
                 value="github"
+                disabled
               />
               <Form.Check
                 type="radio"
                 label="GitLab"
                 name="userStoriesCreationMethod"
                 value="gitlab"
+                disabled
               />
-              <Form.Check type="radio" label="CSV" name="userStoriesCreationMethod" value="csv" />
+
+              <Form.Check
+                type="radio"
+                label="CSV"
+                name="userStoriesCreationMethod"
+                value="csv"
+                disabled
+              />
             </Col>
           </Form.Group>
         </fieldset>
