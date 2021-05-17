@@ -39,8 +39,11 @@
         "lblDescription": "Description",
         "lblDescriptionPlaceHolder": "Short description of the story",
         "btnDeleteSession": "Delete",
-        "btnStartSession": "Start",
-        "btnEndSession": "End"
+        "btnStartSession": "Start Voting",
+        "btnEndSession": "End Session",
+        "mdlTtlEndSession": "Finish session",
+        "mdlMsgEndSession": "Are you sure?",
+        "mdlBtnEndSession": "Totally"
     },
     "PlanningConfig": {
         "lblTitle": "Session name",

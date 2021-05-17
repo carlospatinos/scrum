@@ -35,8 +35,11 @@
         "lblDescription": "Descripcion",
         "lblDescriptionPlaceHolder": "Breve descripcion de la historia",
         "btnDeleteSession": "Eliminar",
-        "btnStartSession": "Iniciar",
-        "btnEndSession": "Finalizar"
+        "btnStartSession": "Iniciar Votacion",
+        "btnEndSession": "Finalizar Session",
+        "mdlTtlEndSession": "Terminar session",
+        "mdlMsgEndSession": "Esta seguro?",
+        "mdlBtnEndSession": "Estoy seguro"
     },
     "PlanningConfig": {
         "lblTitle": "Nombre de la sesion",
