@@ -38,7 +38,7 @@
         "btnStartSession": "Iniciar Votacion",
         "btnEndSession": "Finalizar Session",
         "mdlTtlEndSession": "Terminar session",
-        "mdlMsgEndSession": "Estas seguro?",
+        "mdlMsgEndSession": "Esta seguro?",
         "mdlBtnEndSession": "Estoy seguro"
     },
     "PlanningConfig": {
