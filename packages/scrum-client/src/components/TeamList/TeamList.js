@@ -13,28 +13,7 @@ const getUserVote = (storyVotes, user) => {
 const TeamList = props => {
   const { title, subtitle, users, storyVotes, sessionInformation, admin } = props;
   const cardDeck = DECKS.byLabels(sessionInformation.cardDeck);
-
-  const getMaxVote = () => {
-    const maxVote = cardDeck.getMaxVote(storyVotes);
-    if (maxVote > 0) {
-      return maxVote;
-    }
-    return 0;
-  };
-  const getMinVote = () => {
-    const minVote = cardDeck.getMinVote(storyVotes);
-    if (minVote > 0) {
-      return minVote;
-    }
-    return 0;
-  };
-  const getAvgVote = () => {
-    const avgVote = cardDeck.getAvgVote(storyVotes);
-    if (avgVote > 0) {
-      return avgVote;
-    }
-    return 0;
-  };
+  const summaryVotes = cardDeck.getSummaryVote(storyVotes);
 
   const generateUserStatusBadge = () => {
     const randomStatus = Math.random();
@@ -74,7 +53,9 @@ const TeamList = props => {
           </Card.Body>
         </Accordion.Collapse>
         <Card.Footer>
-          Average [{getAvgVote()}] | Max [{getMaxVote()}] | Min [{getMinVote()}]
+          Average [{summaryVotes.avgVote}] | Max [{summaryVotes.maxVote}] | Min [
+          {summaryVotes.minVote}] | Question [{summaryVotes.question}] | Infinity [
+          {summaryVotes.infinity}] | Coffee [{summaryVotes.coffee}]
         </Card.Footer>
       </Card>
     </Accordion>

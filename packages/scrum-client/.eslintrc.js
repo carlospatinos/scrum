@@ -22,5 +22,6 @@ module.exports = {
     'testing-library/prefer-screen-queries': 'error',
     'testing-library/prefer-wait-for': 'error',
     'no-unused-vars': 'warn',
+    'import/named': 'off',
   },
 };
