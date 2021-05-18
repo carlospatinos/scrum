@@ -8,7 +8,6 @@ import {
   Container,
   Col,
   Form,
-  Badge,
   FormCheck,
 } from 'react-bootstrap';
 import './PlanningConfig.css';
