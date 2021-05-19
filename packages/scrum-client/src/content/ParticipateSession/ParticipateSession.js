@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
+import Timer from 'react-compound-timer';
 import {
   Container,
   Row,
@@ -70,6 +71,7 @@ export default function ParticipateSession() {
       setValidUserStory(false);
     }
   };
+
   const handleStartVoting = e => {
     socketEvents.setRoomStory({
       room: { id: roomId },
@@ -82,6 +84,7 @@ export default function ParticipateSession() {
   const handleEndVoting = e => {
     setStoryTitle('');
     setStoryDescription('');
+    setValidUserStory(false);
     setShowStartUserStory(true);
     console.log(e);
   };
@@ -113,7 +116,13 @@ export default function ParticipateSession() {
             <Badge variant="secondary">{t('ParticipateSession.badgeAdminView')}</Badge>
           </h4>{' '}
         </Col>
+        <Col>
+          <Button variant="danger" type="button" onClick={handleEndSession}>
+            {t('ParticipateSession.btnEndSession')}
+          </Button>
+        </Col>
       </Row>
+      <br />
       <Row>
         <Col>
           <div>
@@ -163,14 +172,16 @@ export default function ParticipateSession() {
                               {t('ParticipateSession.btnEndVoting')}
                             </Button>
                           </span>
-                        </OverlayTrigger>
+                        </OverlayTrigger>{' '}
+                        <h3>
+                          <Timer formatValue={value => `${value < 10 ? `0${value}` : value} `}>
+                            <Timer.Hours />:
+                            <Timer.Minutes />:
+                            <Timer.Seconds />
+                          </Timer>
+                        </h3>
                       </ButtonGroup>
                     )}
-                    <ButtonGroup className="mr-2">
-                      <Button variant="danger" type="button" onClick={handleEndSession}>
-                        {t('ParticipateSession.btnEndSession')}
-                      </Button>
-                    </ButtonGroup>
                   </ButtonToolbar>
                 </Col>
               </Row>
