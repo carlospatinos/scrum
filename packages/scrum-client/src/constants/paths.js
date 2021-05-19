@@ -11,6 +11,7 @@ const PATHS = {
   PLANNING_CONFIG: '/planningconfig',
   SESSION_JOIN: '/session/:roomId?',
   SESSION_PARTICIPATE: '/sessionparticipate/:roomId?',
+  SESSION_SUMMARY: '/sessionsummary/:roomId?',
   VOTING_CARDS: '/votingcards/:roomId?',
   PRIVACY_POLICY: '/privacypolicy',
   PROFILE: '/profile',

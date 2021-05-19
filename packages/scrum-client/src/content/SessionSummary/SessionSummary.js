@@ -32,9 +32,13 @@ export default function SessionSummary() {
   return (
     <Container>
       <Form onSubmit={handleSubmit}>
-        <p>Session Summary</p>
-        <p>Usuarios mas acertados</p>
-        <p>Eliminar la Session</p>
+        <p>Session Summary:</p>
+        <p>Total number of user stories</p>
+        <p>Deviation of estimation in general</p>
+        <p>Fastest user`s response</p>
+        <p>Most accurate user</p>
+        <br />
+        <p>Delete session?</p>
         {apiResponse && <Alert variant="danger">{apiResponse}</Alert>}
         {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
       </Form>
