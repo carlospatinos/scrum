@@ -196,7 +196,7 @@ export default function ParticipateSession() {
             title="Team Summary"
             sessionInformation={sessionInformation}
             users={users}
-            admin={{ id: userDetails.user.id }}
+            admin={{ id: userDetails.user }}
             storyVotes={storyVotes}
           />
         </Col>
