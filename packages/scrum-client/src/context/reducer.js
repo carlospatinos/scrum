@@ -1,4 +1,3 @@
-/* eslint-disable no-shadow */
 import { API_CONSTANTS } from '../constants';
 import { CommonFunctions } from '../util';
 import { LOGIN_ACTIONS, LOGOUT_ACTIONS } from './actionTypes';
@@ -9,7 +8,7 @@ const token = CommonFunctions.getValueFromLocalStorage(
   'login_access_token'
 );
 
-export const initialState = {
+export const authInitialState = {
   user: '' || user,
   login_access_token: '' || token,
   loading: false,
@@ -19,6 +18,7 @@ export const initialState = {
 export const AuthReducer = (initialState, action) => {
   switch (action.type) {
     case LOGIN_ACTIONS.baseAction:
+    case LOGOUT_ACTIONS.baseAction:
       return {
         ...initialState,
         loading: true,
@@ -31,15 +31,11 @@ export const AuthReducer = (initialState, action) => {
         loading: false,
       };
     case LOGIN_ACTIONS.failureAction:
+    case LOGOUT_ACTIONS.failureAction:
       return {
         ...initialState,
         loading: false,
         errorMessage: action.error,
-      };
-    case LOGOUT_ACTIONS.baseAction:
-      return {
-        ...initialState,
-        loading: true,
       };
     case LOGOUT_ACTIONS.successAction:
       return {
@@ -47,12 +43,6 @@ export const AuthReducer = (initialState, action) => {
         user: '',
         login_access_token: '',
         loading: false,
-      };
-    case LOGOUT_ACTIONS.failureAction:
-      return {
-        ...initialState,
-        loading: false,
-        errorMessage: action.error,
       };
     default:
       throw new Error(`Unhandled action type: ${action.type}`);

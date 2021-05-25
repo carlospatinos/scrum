@@ -36,7 +36,6 @@ const getPlanningSession = (roomId, setSessionInformation) => {
 export default function ParticipateSession() {
   const { t } = useTranslation();
   const { roomId } = useParams();
-  // const [response, setResponse] = useState('');
   const [showModal, setShowModal] = useState(false);
   const [showStartUserStory, setShowStartUserStory] = useState(true);
   const [storyTitle, setStoryTitle] = useState('');
@@ -75,7 +74,7 @@ export default function ParticipateSession() {
   const handleStartVoting = e => {
     socketEvents.setRoomStory({
       room: { id: roomId },
-      story: { storyTitle, storyDescription },
+      story: { storyTitle, storyDescription, isStoryActive: true },
     });
     setStory({ storyTitle, storyDescription });
     setShowStartUserStory(false);

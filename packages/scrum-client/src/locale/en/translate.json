@@ -63,5 +63,14 @@
         "btnStartSession": "Start session",
         "lblLetScanQR": "Let them scan the QR (If you are sharing the screen).",
         "lblShareLink": "Or share this link with them."
+    },
+    "VotingCards": {
+        "invalidRoomTitle": "Invalid room",
+        "lblMemberView": "Member view",
+        "lblStoryTitle": "User story:",
+        "lblStoryDescription": "Description:",
+        "plcHdlStoryTitle": "Provided by Admin",
+        "plcHdlStoryDescription": "Provided by Admin",
+        "storyNotProvided": "Waiting for admin to provide a story to vote."
     }
 }
