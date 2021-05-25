@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Container, ListGroup, Badge } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { DECKS } from '../../constants';
 import ClickableCard from '../../components/ClickableCard';
 import GridGenerator from '../../components/GridGenerator';
@@ -28,6 +29,7 @@ function getPlanningSession(setCardDeckParam, roomId, setSessionInformation) {
 }
 
 export default function VotingCards() {
+  const { t } = useTranslation();
   const { roomId } = useParams();
   const [cardDeck, setCardDeck] = useState([]);
   const [sessionInformation, setSessionInformation] = useState({});
@@ -45,48 +47,54 @@ export default function VotingCards() {
       vote: cardDeck.find(card => card.id === event.target.id).val,
     });
   };
+  const isStoryActive = story && story.isStoryActive;
+  if (roomId === undefined) {
+    return (
+      <Container>
+        <h1>{t('VotingCards.invalidRoomTitle')}</h1>
+      </Container>
+    );
+  }
 
   return (
     <Container>
-      <br />
-      {roomId === undefined ? (
-        <h1>Invalid room</h1>
-      ) : (
-        <>
-          <ListGroup>
-            <ListGroup.Item>
-              <h4>
-                {sessionInformation ? sessionInformation.title : ''}{' '}
-                <Badge variant="secondary">Member view</Badge>
-              </h4>
-            </ListGroup.Item>
-            <ListGroup.Item>
-              User story: {story ? story.storyTitle : ' &lt;Provided by Admin&gt;'}
-            </ListGroup.Item>
-            <ListGroup.Item>
-              Description: {story ? story.storyDescription : ' &lt;Provided by Admin&gt;'}
-            </ListGroup.Item>
-          </ListGroup>
+      <ListGroup>
+        <ListGroup.Item>
+          <h4>
+            {sessionInformation ? sessionInformation.title : ''}{' '}
+            <Badge variant="secondary">{t('VotingCards.lblMemberView')}</Badge>
+          </h4>
+        </ListGroup.Item>
+        <ListGroup.Item>
+          {t('VotingCards.lblStoryTitle')}{' '}
+          {isStoryActive ? story.storyTitle : t('VotingCards.plcHdlStoryTitle')}
+        </ListGroup.Item>
+        <ListGroup.Item>
+          {t('VotingCards.lblStoryDescription')}{' '}
+          {isStoryActive ? story.storyDescription : t('VotingCards.plcHdlStoryDescription')}
+        </ListGroup.Item>
+      </ListGroup>
 
-          {/* Room: {roomId}
+      {/* Room: {roomId}
           <br />
           Card Deck: {sessionInformation ? sessionInformation.cardDeck : ''}
           <br /> */}
-
-          <GridGenerator columns={6}>
-            {cardDeck.map(card => {
-              return (
-                <ClickableCard
-                  image={card.image}
-                  clickableFunction={handleSpecificCardToggle}
-                  keyboardFunction={handleSpecificCardToggleKeyboard}
-                  key={card.val}
-                  id={card.id}
-                />
-              );
-            })}
-          </GridGenerator>
-        </>
+      {isStoryActive ? (
+        <GridGenerator columns={6}>
+          {cardDeck.map(card => {
+            return (
+              <ClickableCard
+                image={card.image}
+                clickableFunction={handleSpecificCardToggle}
+                keyboardFunction={handleSpecificCardToggleKeyboard}
+                key={card.val}
+                id={card.id}
+              />
+            );
+          })}
+        </GridGenerator>
+      ) : (
+        <div>{t('VotingCards.storyNotProvided')}</div>
       )}
     </Container>
   );

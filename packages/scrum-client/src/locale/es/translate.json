@@ -59,5 +59,14 @@
         "btnStartSession": "Inicia la sesion",
         "lblLetScanQR": "Permiteles escanear la imagen QR",
         "lblShareLink": "O comparte este link con ellos"
+    },
+    "VotingCards": {
+        "invalidRoomTitle": "Cuarto invalido",
+        "lblMemberView": "Vista como Usuario",
+        "lblStoryTitle": "Historia de usuario:",
+        "lblStoryDescription": "Descripcion:",
+        "plcHdlStoryTitle": "Proporcionada por el administrador",
+        "plcHdlStoryDescription": "Proporcionada por el administrador",
+        "storyNotProvided": "Esperando que el administrador proporcione una historia para votar."
     }
 }
