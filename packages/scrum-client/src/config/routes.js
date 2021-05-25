@@ -12,6 +12,7 @@ const PrivacyPolicy = lazy(() => import('../content/PrivacyPolicy'));
 const NotFound = lazy(() => import('../content/NotFound'));
 const ShareSession = lazy(() => import('../content/ShareSession/ShareSession'));
 const ParticipateSession = lazy(() => import('../content/ParticipateSession/ParticipateSession'));
+const SessionSummary = lazy(() => import('../content/SessionSummary'));
 const OauthValidation = lazy(() => import('../content/OauthValidation/OauthValidation'));
 const Profile = lazy(() => import('../content/Profile'));
 
@@ -69,6 +70,13 @@ const routes = [
     path: PATHS.SESSION_PARTICIPATE,
     component: ParticipateSession,
     title: 'Participate Session (admin)',
+    isPrivate: true,
+    isVisibleOnMenu: false,
+  },
+  {
+    path: PATHS.SESSION_SUMMARY,
+    component: SessionSummary,
+    title: 'Session Summary (admin)',
     isPrivate: true,
     isVisibleOnMenu: false,
   },

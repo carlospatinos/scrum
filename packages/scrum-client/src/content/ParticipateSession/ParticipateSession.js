@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState } from 'react';
+import Timer from 'react-compound-timer';
 import {
   Container,
   Row,
@@ -11,8 +12,10 @@ import {
   ButtonGroup,
   Modal,
   Badge,
+  OverlayTrigger,
+  Tooltip,
 } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import TeamList from '../../components/TeamList';
 import useSocket from '../../hooks/useSocket';
@@ -35,14 +38,16 @@ export default function ParticipateSession() {
   const { roomId } = useParams();
   // const [response, setResponse] = useState('');
   const [showModal, setShowModal] = useState(false);
-  const handleClose = () => setShowModal(false);
+  const [showStartUserStory, setShowStartUserStory] = useState(true);
   const [storyTitle, setStoryTitle] = useState('');
-  const [validUserStory, setValidUserStory] = useState(false);
   const [storyDescription, setStoryDescription] = useState('');
+  const [validUserStory, setValidUserStory] = useState(false);
   const [sessionInformation, setSessionInformation] = useState();
   const { socketEvents, setStory, users, storyVotes } = useSocket(roomId);
   const [fullUrlToJoin, setFullUrlToJoin] = useState('');
   const userDetails = useAuthState();
+  const history = useHistory();
+  const handleClose = () => setShowModal(false);
 
   useEffect(() => {
     if (roomId && roomId !== ':roomId') {
@@ -66,17 +71,29 @@ export default function ParticipateSession() {
       setValidUserStory(false);
     }
   };
-  const handleStartSession = e => {
+
+  const handleStartVoting = e => {
     socketEvents.setRoomStory({
       room: { id: roomId },
       story: { storyTitle, storyDescription },
     });
     setStory({ storyTitle, storyDescription });
+    setShowStartUserStory(false);
+    console.log(e);
+  };
+  const handleEndVoting = e => {
+    setStoryTitle('');
+    setStoryDescription('');
+    setValidUserStory(false);
+    setShowStartUserStory(true);
     console.log(e);
   };
   const handleEndSession = e => {
     setShowModal(true);
     console.log(e);
+  };
+  const handleConfirmEndSession = () => {
+    history.push(PATHS.SESSION_SUMMARY);
   };
 
   return (
@@ -87,7 +104,7 @@ export default function ParticipateSession() {
         </Modal.Header>
         <Modal.Body>{t('ParticipateSession.mdlMsgEndSession')}</Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={handleClose}>
+          <Button variant="danger" onClick={handleConfirmEndSession}>
             {t('ParticipateSession.mdlBtnEndSession')}
           </Button>
         </Modal.Footer>
@@ -95,10 +112,17 @@ export default function ParticipateSession() {
       <Row>
         <Col>
           <h4>
-            {sessionInformation.title} <Badge variant="secondary">Admin view</Badge>
+            {sessionInformation.title}{' '}
+            <Badge variant="secondary">{t('ParticipateSession.badgeAdminView')}</Badge>
           </h4>{' '}
         </Col>
+        <Col>
+          <Button variant="danger" type="button" onClick={handleEndSession}>
+            {t('ParticipateSession.btnEndSession')}
+          </Button>
+        </Col>
       </Row>
+      <br />
       <Row>
         <Col>
           <div>
@@ -108,6 +132,7 @@ export default function ParticipateSession() {
                   <Form.Control
                     placeholder={t('ParticipateSession.lblStory')}
                     onChange={e => handleUserStoryTitle(e.target.value)}
+                    readOnly={!showStartUserStory}
                     value={storyTitle}
                   />
                 </Col>
@@ -115,26 +140,48 @@ export default function ParticipateSession() {
                   <Form.Control
                     placeholder={t('ParticipateSession.lblDescription')}
                     onChange={e => setStoryDescription(e.target.value)}
+                    readOnly={!showStartUserStory}
                     value={storyDescription}
                   />
                 </Col>
                 <Col>
                   <ButtonToolbar className="mb-2 mr-2">
-                    <ButtonGroup className="mr-2">
-                      <Button
-                        variant="primary"
-                        type="button"
-                        onClick={handleStartSession}
-                        disabled={!validUserStory}
-                      >
-                        {t('ParticipateSession.btnStartSession')}
-                      </Button>
-                    </ButtonGroup>
-                    <ButtonGroup className="mr-2">
-                      <Button variant="danger" type="button" onClick={handleEndSession}>
-                        {t('ParticipateSession.btnEndSession')}
-                      </Button>
-                    </ButtonGroup>
+                    {showStartUserStory && (
+                      <ButtonGroup className="mr-2">
+                        <Button
+                          variant="primary"
+                          type="button"
+                          onClick={handleStartVoting}
+                          disabled={!validUserStory}
+                        >
+                          {t('ParticipateSession.btnStartVoting')}
+                        </Button>
+                      </ButtonGroup>
+                    )}
+                    {!showStartUserStory && (
+                      <ButtonGroup className="mr-2">
+                        <OverlayTrigger
+                          overlay={
+                            <Tooltip id="tooltip-disabled">
+                              {t('ParticipateSession.tooltipEndSession')}
+                            </Tooltip>
+                          }
+                        >
+                          <span className="d-inline-block">
+                            <Button variant="secondary" type="button" onClick={handleEndVoting}>
+                              {t('ParticipateSession.btnEndVoting')}
+                            </Button>
+                          </span>
+                        </OverlayTrigger>{' '}
+                        <h3>
+                          <Timer formatValue={value => `${value < 10 ? `0${value}` : value} `}>
+                            <Timer.Hours />:
+                            <Timer.Minutes />:
+                            <Timer.Seconds />
+                          </Timer>
+                        </h3>
+                      </ButtonGroup>
+                    )}
                   </ButtonToolbar>
                 </Col>
               </Row>
@@ -149,7 +196,7 @@ export default function ParticipateSession() {
             title="Team Summary"
             sessionInformation={sessionInformation}
             users={users}
-            admin={{ id: userDetails.user.id }}
+            admin={{ id: userDetails.user }}
             storyVotes={storyVotes}
           />
         </Col>
