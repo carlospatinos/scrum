@@ -3,7 +3,15 @@
 const { UserRoutes } = require('./components/user');
 const { TipsRoutes } = require('./components/tips');
 const { PlanningSessionRoutes } = require('./components/planningSession');
+const { UserStoryRoutes } = require('./components/userStory');
 const { AuthRoutes } = require('./components/auth');
 const DefaultRoute = require('./defaultRoute');
 
-module.exports = { UserRoutes, TipsRoutes, PlanningSessionRoutes, AuthRoutes, DefaultRoute };
+module.exports = {
+  UserRoutes,
+  UserStoryRoutes,
+  TipsRoutes,
+  PlanningSessionRoutes,
+  AuthRoutes,
+  DefaultRoute,
+};

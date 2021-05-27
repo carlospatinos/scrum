@@ -19,8 +19,9 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import TeamList from '../../components/TeamList';
 import useSocket from '../../hooks/useSocket';
-import { PlanningSessionAPI } from '../../api';
-import { PATHS } from '../../constants';
+import { PlanningSessionAPI, UserStoryAPI } from '../../api';
+import { DECKS, PATHS } from '../../constants';
+
 import { useAuthState } from '../../context';
 import './ParticipateSession.css';
 
@@ -46,6 +47,9 @@ export default function ParticipateSession() {
   const [fullUrlToJoin, setFullUrlToJoin] = useState('');
   const userDetails = useAuthState();
   const history = useHistory();
+  const cardDeck = DECKS.byLabels(sessionInformation.cardDeck);
+  const summaryVotes = cardDeck.getSummaryVote(storyVotes);
+
   const handleClose = () => setShowModal(false);
 
   useEffect(() => {
@@ -81,6 +85,18 @@ export default function ParticipateSession() {
     console.log(e);
   };
   const handleEndVoting = e => {
+    try {
+      UserStoryAPI.post({
+        title: storyTitle,
+        description: storyDescription,
+        choosedEstimatedValue: summaryVotes.avgVote,
+        minEstimatedValue: summaryVotes.minVote,
+        maxEstimatedValue: summaryVotes.maxVote,
+      });
+    } catch (error) {
+      console.log('error', MediaError);
+    }
+
     setStoryTitle('');
     setStoryDescription('');
     setValidUserStory(false);
