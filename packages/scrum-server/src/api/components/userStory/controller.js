@@ -4,6 +4,7 @@ const UserStoryService = require('./service');
 
 const userStoryServiceSave = async (req, res) => {
   try {
+    console.log(req.body);
     // TODO save the planningSession with the user story ref
     const serviceResponse = await UserStoryService.save(req.body);
     return res.status(200).json({
