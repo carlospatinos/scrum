@@ -19,6 +19,6 @@ test('unauthorized user visible menu', () => {
       <App />
     </I18nextProvider>
   );
-  const loginMenuElement = screen.getByText(/Sign In/i);
+  const loginMenuElement = screen.getByText(/Sign in/i);
   expect(loginMenuElement).toBeInTheDocument();
 });

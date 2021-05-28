@@ -1,6 +1,7 @@
 {
     "Signup": {
         "btnSignup": "Crea cuenta",
+        "lblSignup": "Crea cuenta",
         "lblFirstName": "Nombre",
         "lblLastName": "Apellido",
         "lblPassword2": "Confirma tu contraseña",
@@ -8,11 +9,7 @@
         "lnkSignIn": "Inicia sesion?",
         "lblEmail": "Correo electronico",
         "lblPassword": "Contraseña",
-        "lblReferredBy": "Id de referencia",
-        "phrFirstName": "Introduzca nombre",
-        "phrLastName": "Introduzca apellido",
-        "phrEmail": "Introduzca correo electronico",
-        "phrPassword": "Introduzca contraseña"
+        "lblReferredBy": "Id de referencia"
     },
     "Login": {
         "lblSignIn": "Iniciar sesion",

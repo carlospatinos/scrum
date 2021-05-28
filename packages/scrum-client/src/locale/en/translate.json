@@ -4,7 +4,8 @@
         "buttonText": "I understand"
     },
     "Signup": {
-        "btnSignup": "Sing Up",
+        "btnSignup": "Sing up",
+        "lblSignup": "Sing up",
         "lblFirstName": "First Name",
         "lblLastName": "Last Name",
         "lblPassword2": "Confirm password",
@@ -12,14 +13,10 @@
         "lnkSignIn": "Sign In?",
         "lblEmail": "Email",
         "lblPassword": "Password",
-        "lblReferredBy": "Referral id",
-        "phrFirstName": "Enter first name",
-        "phrLastName": "Enter last name",
-        "phrEmail": "Enter email",
-        "phrPassword": "Enter password"
+        "lblReferredBy": "Referral id"
     },
     "Login": {
-        "lblSignIn": "Sign In",
+        "lblSignIn": "Sign in",
         "lblDonthaveaccount": "Do not have an account?",
         "lnkSignup": "Sing Up",
         "lblEmail": "Email",

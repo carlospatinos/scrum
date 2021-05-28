@@ -83,49 +83,45 @@ export default function Signup() {
   return (
     <Container className="Signup">
       <Form onSubmit={handleSubmit}>
+        <h1 className="text-center">{t('Signup.lblSignup')}</h1>
         <FormGroup controlId="firstName">
-          <FormLabel>{t('Signup.lblFirstName')}</FormLabel>
           <FormControl
             value={firstName}
             onChange={e => setFirstName(e.target.value)}
-            placeholder={t('Signup.phrFirstName')}
+            placeholder={t('Signup.lblFirstName')}
           />
         </FormGroup>
         <FormGroup controlId="lastName">
-          <FormLabel>{t('Signup.lblLastName')}</FormLabel>
           <FormControl
             value={lastName}
             onChange={e => setLastName(e.target.value)}
-            placeholder={t('Signup.phrLastName')}
+            placeholder={t('Signup.lblLastName')}
           />
         </FormGroup>
 
         <FormGroup controlId="email">
-          <FormLabel>{t('Signup.lblEmail')}</FormLabel>
           <FormControl
             autoFocus
             type="email"
             value={email}
             onChange={e => setEmail(e.target.value)}
-            placeholder={t('Signup.phrEmail')}
+            placeholder={t('Signup.lblEmail')}
           />
         </FormGroup>
         <FormGroup controlId="password">
-          <FormLabel>{t('Signup.lblPassword')}</FormLabel>
           <FormControl
             value={password}
             onChange={e => setPassword(e.target.value)}
             type="password"
-            placeholder={t('Signup.phrPassword')}
+            placeholder={t('Signup.lblPassword')}
           />
         </FormGroup>
         <FormGroup controlId="confirmPassword">
-          <FormLabel>{t('Signup.lblPassword2')}</FormLabel>
           <FormControl
             value={confirmPassword}
             onChange={e => setConfirmPassword(e.target.value)}
             type="password"
-            placeholder={t('Signup.phrPassword')}
+            placeholder={t('Signup.lblPassword2')}
           />
         </FormGroup>
         {isReferral && (
@@ -146,14 +142,13 @@ export default function Signup() {
           {t('Signup.btnSignup')}
         </Button>
         <p className="forgot-password text-right">
-          {t('Signup.lblAlreadyRegistered')}
           <Link
             to={{
               pathname: PATHS.LOGIN,
               state: { redirectedFrom: { pathname: redirectedFrom } },
             }}
           >
-            {t('Signup.lnkSignIn')}
+            {t('Signup.lblAlreadyRegistered')} {t('Signup.lnkSignIn')}
           </Link>
         </p>
       </Form>

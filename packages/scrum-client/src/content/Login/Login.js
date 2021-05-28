@@ -1,14 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Alert,
-  Button,
-  Container,
-  Form,
-  FormGroup,
-  FormControl,
-  FormLabel,
-  Col,
-} from 'react-bootstrap';
+import { Alert, Button, Container, Form, FormGroup, FormControl, Col } from 'react-bootstrap';
 import { useHistory, useLocation, Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { END_POINTS } from 'scrum-common';
@@ -62,23 +53,9 @@ export default function Login() {
   return (
     <Container className="Login">
       <Form onSubmit={handleSubmit}>
-        <h3>{t('Login.lblSignIn')}</h3>
+        <h1 className="text-center">{t('Login.lblSignIn')}</h1>
         {errorMessage ? <Alert variant="danger">{errorMessage}</Alert> : null}
-        <Form.Row>
-          <Col className="text-right">
-            {t('Login.lblDonthaveaccount')}
-            <Link
-              to={{
-                pathname: PATHS.SIGNUP,
-                state: { redirectedFrom: { pathname: redirectedFrom } },
-              }}
-            >
-              {t('Login.lnkSignup')}
-            </Link>
-          </Col>
-        </Form.Row>
         <FormGroup controlId="email">
-          <FormLabel>{t('Login.lblEmail')}</FormLabel>
           <FormControl
             autoFocus
             type="email"
@@ -88,7 +65,18 @@ export default function Login() {
           />
         </FormGroup>
         <FormGroup controlId="password">
-          <FormLabel>{t('Login.lblPassword')}</FormLabel>
+          <Form.Row>
+            <Col className="forgot-password text-right">
+              <Link
+                to={{
+                  pathname: PATHS.FORGOT,
+                  state: { redirectedFrom: { pathname: redirectedFrom } },
+                }}
+              >
+                {t('Login.lblForgotPassword')}
+              </Link>
+            </Col>
+          </Form.Row>
           <FormControl
             value={password}
             onChange={e => setPassword(e.target.value)}
@@ -104,10 +92,19 @@ export default function Login() {
         >
           {t('Login.btnLogin')}
         </Button>
-
-        <p className="forgot-password text-right">
-          <a href={PATHS.FORGOT}>{t('Login.lblForgotPassword')}</a>
-        </p>
+        <Form.Row>
+          <Col className="forgot-password text-right">
+            <Link
+              to={{
+                pathname: PATHS.SIGNUP,
+                state: { redirectedFrom: { pathname: redirectedFrom } },
+              }}
+            >
+              {t('Login.lblDonthaveaccount')} {t('Login.lnkSignup')}
+            </Link>
+          </Col>
+        </Form.Row>
+        <br />
 
         <div className="separator"> {t('Login.lblOr')} </div>
         <br />
