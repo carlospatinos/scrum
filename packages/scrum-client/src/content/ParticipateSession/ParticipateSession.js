@@ -92,6 +92,13 @@ export default function ParticipateSession() {
   };
   const handleEndVoting = e => {
     try {
+      console.log(storyVotes);
+      socketEvents.setRoomStory({
+        room: { id: roomId },
+        story: { storyTitle, storyDescription, isStoryActive: false },
+      });
+      storyVotes.splice(0, storyVotes.length);
+
       if (summaryVotes !== undefined) {
         UserStoryAPI.post({
           planningSessionId: roomId,
