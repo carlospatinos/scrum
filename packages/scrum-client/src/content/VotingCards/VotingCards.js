@@ -1,5 +1,6 @@
 /* eslint-disable react/style-prop-object */
 import React, { useState, useEffect } from 'react';
+import Timer from 'react-compound-timer';
 import { useParams } from 'react-router-dom';
 import { Container, ListGroup, Badge, Spinner, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
@@ -64,6 +65,15 @@ export default function VotingCards() {
             {sessionInformation ? sessionInformation.title : ''}{' '}
             <Badge variant="secondary">{t('VotingCards.lblMemberView')}</Badge>
           </h4>
+          {isStoryActive ? (
+            <Timer formatValue={value => `${value < 10 ? `0${value}` : value} `}>
+              <Timer.Hours />:
+              <Timer.Minutes />:
+              <Timer.Seconds />
+            </Timer>
+          ) : (
+            <div />
+          )}
         </ListGroup.Item>
         {!isStoryActive ? (
           <Button variant="primary" disabled>

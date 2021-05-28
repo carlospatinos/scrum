@@ -1,19 +1,26 @@
 import React, { useEffect, useState } from 'react';
-
-import { Container, Table } from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
+import { Container, Table, Button } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import './SessionSummary.css';
 import { API_CONSTANTS } from '../../constants';
 import { CommonFunctions } from '../../util';
 import { UserStoryAPI } from '../../api';
 
 export default function SessionSummary() {
+  const { roomId } = useParams();
+  const { t } = useTranslation();
   const [userStoryArray, setUserStoryArray] = useState([]);
   useEffect(() => {
-    const roomId = CommonFunctions.getValueFromLocalStorage2(API_CONSTANTS.PLANNING_ROOM_ID);
     try {
-      UserStoryAPI.get(roomId).then(planningSessionInformation => {
+      let roomIdFromURLOrLocalStorage = roomId;
+      if (!roomIdFromURLOrLocalStorage || roomId === ':roomId') {
+        roomIdFromURLOrLocalStorage = CommonFunctions.getValueFromLocalStorage2(
+          API_CONSTANTS.PLANNING_ROOM_ID
+        );
+      }
+      UserStoryAPI.get(roomIdFromURLOrLocalStorage).then(planningSessionInformation => {
         setUserStoryArray(planningSessionInformation);
-        console.log(userStoryArray);
       });
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -21,6 +28,9 @@ export default function SessionSummary() {
     }
   }, []);
 
+  const handleDeleteSession = () => {
+    console.log('Too late');
+  };
   return (
     <Container>
       <br />
@@ -29,11 +39,11 @@ export default function SessionSummary() {
       <Table striped bordered hover>
         <thead>
           <tr>
-            <th>#</th>
-            <th>Title</th>
-            <th>Min Val</th>
-            <th>Max Val</th>
-            <th>Chosen value</th>
+            <th>{t('SessionSummary.lblTableColNumber')}</th>
+            <th>{t('SessionSummary.lblTableColTitle')}</th>
+            <th>{t('SessionSummary.lblTableColMin')}</th>
+            <th>{t('SessionSummary.lblTableColMax')}</th>
+            <th>{t('SessionSummary.lblTableColChosen')}</th>
           </tr>
         </thead>
         {/* eslint-disable */}
@@ -57,7 +67,11 @@ export default function SessionSummary() {
       </p>
 
       <br />
-      <p>Delete session?</p>
+      <p>
+        <Button variant="danger" onClick={handleDeleteSession}>
+          {t('SessionSummary.btnDeleteSession')}
+        </Button>
+      </p>
     </Container>
   );
 }

@@ -48,6 +48,14 @@
         "mdlMsgEndSession": "Are you sure?",
         "mdlBtnEndSession": "Totally"
     },
+    "SessionSummary": {
+        "btnDeleteSession": "Delete this session?",
+        "lblTableColNumber": "#",
+        "lblTableColTitle": "Title",
+        "lblTableColMin": "Min Val",
+        "lblTableColMax": "Max Val",
+        "lblTableColChosen": "Chosen value"
+    },
     "PlanningConfig": {
         "lblTitle": "Session name",
         "lblCardDeck": "Card Deck",
