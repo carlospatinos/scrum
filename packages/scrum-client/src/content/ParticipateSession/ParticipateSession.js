@@ -43,6 +43,7 @@ export default function ParticipateSession() {
   const [storyDescription, setStoryDescription] = useState('');
   const [validUserStory, setValidUserStory] = useState(false);
   const [sessionInformation, setSessionInformation] = useState();
+  const [summaryVotes, setSummaryVotes] = useState({});
   const { socketEvents, setStory, users, storyVotes } = useSocket(roomId);
   const [fullUrlToJoin, setFullUrlToJoin] = useState('');
   const userDetails = useAuthState();
@@ -59,6 +60,13 @@ export default function ParticipateSession() {
       console.log(url + joinSessionPath);
     }
   }, [roomId]);
+
+  useEffect(() => {
+    if (!!sessionInformation && sessionInformation.cardDeck !== undefined) {
+      const cardDeck = DECKS.byLabels(sessionInformation.cardDeck);
+      setSummaryVotes(cardDeck.getSummaryVote(storyVotes));
+    }
+  }, [sessionInformation, storyVotes]);
 
   if (!sessionInformation || !users) {
     return <Spinner animation="border" />;
@@ -84,9 +92,7 @@ export default function ParticipateSession() {
   };
   const handleEndVoting = e => {
     try {
-      const cardDeck = DECKS.byLabels(sessionInformation.cardDeck);
-      if (cardDeck !== undefined) {
-        const summaryVotes = cardDeck.getSummaryVote(storyVotes);
+      if (summaryVotes !== undefined) {
         UserStoryAPI.post({
           planningSessionId: roomId,
           title: storyTitle,
@@ -216,6 +222,7 @@ export default function ParticipateSession() {
             users={users}
             admin={{ id: userDetails.user }}
             storyVotes={storyVotes}
+            summaryVotes={summaryVotes}
           />
         </Col>
       </Row>

@@ -3,7 +3,6 @@ import { Card, Accordion, Badge } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import GridGenerator from '../GridGenerator';
 import './TeamList.css';
-import { DECKS } from '../../constants';
 
 const getUserVote = (storyVotes, user) => {
   const storyVote = storyVotes.find(([id]) => id === user.id);
@@ -11,9 +10,7 @@ const getUserVote = (storyVotes, user) => {
 };
 
 const TeamList = props => {
-  const { title, subtitle, users, storyVotes, sessionInformation, admin } = props;
-  const cardDeck = DECKS.byLabels(sessionInformation.cardDeck);
-  const summaryVotes = cardDeck.getSummaryVote(storyVotes);
+  const { title, subtitle, users, storyVotes, admin, summaryVotes } = props;
 
   const generateUserStatusBadge = () => {
     const randomStatus = Math.random();
