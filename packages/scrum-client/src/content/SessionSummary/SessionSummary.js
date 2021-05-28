@@ -34,7 +34,7 @@ export default function SessionSummary() {
             <th>Title</th>
             <th>Min Val</th>
             <th>Max Val</th>
-            <th>Chose value</th>
+            <th>Chosen value</th>
           </tr>
         </thead>
         {/* eslint-disable */}
@@ -43,7 +43,7 @@ export default function SessionSummary() {
             <tr key={userStory._id}>
               <td>{i}</td>
               <td>{userStory.title}</td>
-              <td>{userStory.choosedEstimatedValue}</td>
+              <td>{userStory.chosenEstimatedValue}</td>
               <td>{userStory.minEstimatedValue}</td>
               <td>{userStory.maxEstimatedValue}</td>
             </tr>

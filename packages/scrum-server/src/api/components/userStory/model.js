@@ -12,7 +12,7 @@ const UserStorySchema = new mongoose.Schema({
   description: {
     type: String,
   },
-  choosedEstimatedValue: {
+  chosenEstimatedValue: {
     type: String,
     required: true,
   },

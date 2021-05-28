@@ -97,7 +97,7 @@ export default function ParticipateSession() {
           planningSessionId: roomId,
           title: storyTitle,
           description: storyDescription,
-          choosedEstimatedValue: summaryVotes.avgVote,
+          chosenEstimatedValue: summaryVotes.avgVote,
           minEstimatedValue: summaryVotes.minVote,
           maxEstimatedValue: summaryVotes.maxVote,
         });
