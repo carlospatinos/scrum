@@ -18,9 +18,12 @@ export default function ShareSession() {
     history.push(sessionToJoin);
   };
 
-  // TODO Is this a common function? Where to put it?
+  // TODOIs this a common function? Where to put it?
   function generateQR() {
-    const planningRoomId = CommonFunctions.getValueFromLocalStorage(API_CONSTANTS.PLANNING_ROOM_ID);
+    const planningRoomId = CommonFunctions.getValueFromLocalStorage2(
+      API_CONSTANTS.PLANNING_ROOM_ID
+    );
+    // CommonFunctions.getValueFromLocalStorage
     // TODO DELETE roomid?
     const url = window.location.href.split('/').slice(0, 3).join('/'); // ${API_CONSTANTS.API_BASE_URL}
     const joinSessionPath = PATHS.SESSION_JOIN.replace(':roomId?', planningRoomId);
