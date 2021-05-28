@@ -1,45 +1,64 @@
 import React, { useEffect, useState } from 'react';
 
-import { Alert, Container, Form } from 'react-bootstrap';
+import { Container, Table } from 'react-bootstrap';
 import './SessionSummary.css';
 import { API_CONSTANTS } from '../../constants';
 import { CommonFunctions } from '../../util';
 import { UserStoryAPI } from '../../api';
 
 export default function SessionSummary() {
-  const [errorMessage, setErrorMessage] = useState('');
-  const [apiResponse, setApiResponse] = useState('');
+  const [userStoryArray, setUserStoryArray] = useState([]);
   const [numberOfUserStories, setNumberOfUserStories] = useState('');
-
-  function handleSubmit(event) {
-    event.preventDefault();
-  }
-
   useEffect(() => {
-    const roomId = CommonFunctions.getValueFromLocalStorage(API_CONSTANTS.PLANNING_ROOM_ID);
-
+    const roomId = CommonFunctions.getValueFromLocalStorage2(API_CONSTANTS.PLANNING_ROOM_ID);
     try {
-      UserStoryAPI.get(roomId).then(val => {
-        console.log(val);
+      UserStoryAPI.get(roomId).then(planningSessionInformation => {
+        setUserStoryArray(planningSessionInformation);
+        setNumberOfUserStories(planningSessionInformation.length);
       });
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log('error', MediaError);
     }
-  });
+  }, []);
 
   return (
     <Container>
-      <Form onSubmit={handleSubmit}>
-        <p>Session Summary:</p>
-        <p>Total number of user stories</p>
-        <p>Deviation of estimation in general</p>
-        <p>Fastest user`s response</p>
-        <p>Most accurate user</p>
-        <br />
-        <p>Delete session?</p>
-        {apiResponse && <Alert variant="danger">{apiResponse}</Alert>}
-        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-      </Form>
+      <br />
+      <p>Session Summary:</p>
+      <br />
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Min Val</th>
+            <th>Max Val</th>
+            <th>Chose value</th>
+          </tr>
+        </thead>
+        {/* eslint-disable */}
+        <tbody>
+          {userStoryArray.map((userStory, i) => (
+            <tr key={userStory._id}>
+              <td>{i}</td>
+              <td>{userStory.title}</td>
+              <td>{userStory.choosedEstimatedValue}</td>
+              <td>{userStory.minEstimatedValue}</td>
+              <td>{userStory.maxEstimatedValue}</td>
+            </tr>
+          ))}
+        </tbody>
+        {/* eslint-enable */}
+      </Table>
+
+      <p>
+        Deviation of estimation in general, Most accurate user, Fastest users response, session
+        duration
+      </p>
+
+      <br />
+      <p>Delete session?</p>
     </Container>
   );
 }

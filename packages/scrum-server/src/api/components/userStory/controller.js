@@ -14,9 +14,9 @@ const userStoryServiceSave = async (req, res) => {
   }
 };
 
-const userStoryServiceFind = async (req, res) => {
+const userStoryServiceFindAll = async (req, res) => {
   try {
-    const serviceResponse = await UserStoryService.find(req.params.id);
+    const serviceResponse = await UserStoryService.findAll(req.params.id);
     return res.status(200).json({
       success: true,
       data: serviceResponse.data,
@@ -26,4 +26,4 @@ const userStoryServiceFind = async (req, res) => {
   }
 };
 
-module.exports = { userStoryServiceSave, userStoryServiceFind };
+module.exports = { userStoryServiceSave, userStoryServiceFindAll };

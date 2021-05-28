@@ -6,9 +6,6 @@ import { PlanningSessionAPI } from '../../api';
 
 const isUserAdminForSession = async (userId, roomId) => {
   const data = await PlanningSessionAPI.get(roomId);
-  console.log('data.userAdmin === userId', data.userAdmin === userId);
-  console.log('data.userAdmin', data);
-  console.log('userId', userId);
   return data.userAdmin === userId;
 };
 

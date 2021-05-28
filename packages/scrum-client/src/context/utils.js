@@ -50,7 +50,6 @@ const generateAction = (dispatchFxn, apiFxn, action) => async req => {
 
   try {
     const response = await apiFxn(req);
-    console.log('response.data', response.data);
     dispatchFxn({
       type: action.successAction,
       payload: response.data,

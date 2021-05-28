@@ -8,6 +8,6 @@ const { END_POINTS } = require('scrum-common');
 const UserStoryController = require('./controller');
 
 router.post(END_POINTS.USER_STORY, UserStoryController.userStoryServiceSave);
-router.get(`${END_POINTS.USER_STORY}/:id`, UserStoryController.userStoryServiceFind);
+router.get(`${END_POINTS.USER_STORY}/:id`, UserStoryController.userStoryServiceFindAll);
 
 module.exports = router;
