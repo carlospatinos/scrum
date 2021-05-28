@@ -6,6 +6,9 @@ import { PlanningSessionAPI } from '../../api';
 
 const isUserAdminForSession = async (userId, roomId) => {
   const data = await PlanningSessionAPI.get(roomId);
+  console.log('data.userAdmin === userId', data.userAdmin === userId);
+  console.log('data.userAdmin', data);
+  console.log('userId', userId);
   return data.userAdmin === userId;
 };
 
@@ -14,11 +17,14 @@ const JoinSessionRoute = ({ location }) => {
   const userDetails = useAuthState();
   const [isUserAdmin, setIsUserAdmin] = useState(undefined);
 
+  /* eslint-disable */
   useEffect(() => {
-    isUserAdminForSession(userDetails.user.id, roomId).then(_isUserAdmin =>
+    console.log('userDetails', userDetails);
+    isUserAdminForSession(userDetails.user._id, roomId).then(_isUserAdmin =>
       setIsUserAdmin(_isUserAdmin)
     );
-  }, [roomId, userDetails.user.id]);
+  }, [roomId, userDetails.user._id]);
+  /* eslint-enable */
 
   if (isUserAdmin === undefined) {
     return null;

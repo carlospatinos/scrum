@@ -24,7 +24,9 @@ export default function Profile() {
 
   function generateReferralLink(userInfo) {
     const url = window.location.href.split('/').slice(0, 3).join('/');
-    setShareLink(`${url}/signup/${userInfo.user.id}`);
+    console.log(userInfo.user);
+    // eslint-disable-next-line no-underscore-dangle
+    setShareLink(`${url}/signup/${userInfo.user._id}`);
   }
 
   useEffect(() => {

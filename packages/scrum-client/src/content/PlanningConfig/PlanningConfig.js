@@ -60,10 +60,10 @@ export default function PlanningConfig() {
       cardDeck,
       allowUnauthenticated,
       userStoriesCreationMethod,
-      userAdmin: userDetails.user.id,
+      // eslint-disable-next-line
+      userAdmin: userDetails.user._id,
     };
 
-    console.log('userDetails.user.id', userDetails);
     PlanningSessionAPI.post(payload)
       .then(serviceResponse => {
         // TODO since the request util throws exceptions, is the sucesss needed?

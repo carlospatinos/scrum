@@ -55,9 +55,7 @@ export default function ShareSession() {
           </p>
           {t('ShareSession.lblShareLink')}
           <br />
-          <p>
-            {fullUrlToJoin} <a href={fullUrlToJoin}>Go Join</a>
-          </p>
+          <p>{fullUrlToJoin}</p>
         </ListGroup.Item>
       </ListGroup>
     </Container>

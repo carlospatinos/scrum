@@ -5,7 +5,8 @@ import GridGenerator from '../GridGenerator';
 import './TeamList.css';
 
 const getUserVote = (storyVotes, user) => {
-  const storyVote = storyVotes.find(([id]) => id === user.id);
+  // eslint-disable-next-line
+  const storyVote = storyVotes.find(([id]) => id === user._id);
   return storyVote ? storyVote[1] : '...';
 };
 
@@ -30,8 +31,9 @@ const TeamList = props => {
         <Accordion.Collapse eventKey="0">
           <Card.Body>
             <GridGenerator columns={2}>
+              {/* eslint-disable */}
               {users
-                .filter(user => user.id !== admin.id)
+                .filter(user => user._id !== admin.id)
                 .map(user => {
                   return (
                     <Card style={{ width: '12rem' }}>
@@ -46,6 +48,7 @@ const TeamList = props => {
                     </Card>
                   );
                 })}
+                { /* eslint-enable */ }
             </GridGenerator>
           </Card.Body>
         </Accordion.Collapse>

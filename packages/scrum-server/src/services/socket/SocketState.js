@@ -18,14 +18,15 @@ const SocketState = (initialState = []) => {
   };
 
   const joinUserToRoom = (room, user) => {
+    const userId = user._id;
     if (rooms.has(room.id)) {
       const _room = rooms.get(room.id);
-      if (!_room.users.has(user.id)) {
-        _room.users.set(user.id, user);
+      if (!_room.users.has(userId)) {
+        _room.users.set(userId, user);
       }
     } else {
       const users = new Map();
-      users.set(user.id, user);
+      users.set(userId, user);
       addRoom({ id: room.id, users });
     }
     return rooms.get(room.id);
@@ -38,9 +39,10 @@ const SocketState = (initialState = []) => {
   };
 
   const setRoomStoryVote = (room, user, vote) => {
+    const userId = user._id;
     console.log('--server--state-voteStory', room, user, vote);
     const _room = rooms.get(room.id);
-    _room.storyVotes.set(user.id, vote);
+    _room.storyVotes.set(userId, vote);
     return _room.storyVotes;
   };
   const getRoom = room => {

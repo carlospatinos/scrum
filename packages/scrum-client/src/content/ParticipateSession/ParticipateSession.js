@@ -215,7 +215,6 @@ export default function ParticipateSession() {
       </Row>
       <Row>
         <Col>
-          {/* TODO admin.id is null? error in console */}
           <TeamList
             title="Team Summary"
             sessionInformation={sessionInformation}
