@@ -8,13 +8,12 @@ import { UserStoryAPI } from '../../api';
 
 export default function SessionSummary() {
   const [userStoryArray, setUserStoryArray] = useState([]);
-  const [numberOfUserStories, setNumberOfUserStories] = useState('');
   useEffect(() => {
     const roomId = CommonFunctions.getValueFromLocalStorage2(API_CONSTANTS.PLANNING_ROOM_ID);
     try {
       UserStoryAPI.get(roomId).then(planningSessionInformation => {
         setUserStoryArray(planningSessionInformation);
-        setNumberOfUserStories(planningSessionInformation.length);
+        console.log(userStoryArray);
       });
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -39,7 +38,7 @@ export default function SessionSummary() {
         </thead>
         {/* eslint-disable */}
         <tbody>
-          {userStoryArray.map((userStory, i) => (
+          {userStoryArray !== undefined && userStoryArray.length > 0  ? userStoryArray.map((userStory, i) => (
             <tr key={userStory._id}>
               <td>{i}</td>
               <td>{userStory.title}</td>
@@ -47,7 +46,7 @@ export default function SessionSummary() {
               <td>{userStory.minEstimatedValue}</td>
               <td>{userStory.maxEstimatedValue}</td>
             </tr>
-          ))}
+          )) : <tr></tr>}
         </tbody>
         {/* eslint-enable */}
       </Table>
