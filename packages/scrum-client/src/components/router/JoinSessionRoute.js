@@ -14,17 +14,21 @@ const JoinSessionRoute = ({ location }) => {
   const userDetails = useAuthState();
   const [isUserAdmin, setIsUserAdmin] = useState(undefined);
 
+  /* eslint-disable */
   useEffect(() => {
-    isUserAdminForSession(userDetails.user.id, roomId).then(_isUserAdmin =>
+    console.log('userDetails', userDetails);
+    isUserAdminForSession(userDetails.user._id, roomId).then(_isUserAdmin =>
       setIsUserAdmin(_isUserAdmin)
     );
-  }, [roomId, userDetails.user.id]);
+  }, [roomId, userDetails.user._id]);
+  /* eslint-enable */
 
   if (isUserAdmin === undefined) {
     return null;
   }
 
   let pathname = isUserAdmin ? PATHS.SESSION_PARTICIPATE : PATHS.VOTING_CARDS;
+
   pathname = pathname.replace(':roomId?', roomId);
 
   return (

@@ -1,47 +1,77 @@
-import React, { useState } from 'react';
-import { Alert, Container, Form } from 'react-bootstrap';
-import { END_POINTS } from 'scrum-common';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { Container, Table, Button } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import './SessionSummary.css';
 import { API_CONSTANTS } from '../../constants';
-import { Request } from '../../util';
+import { CommonFunctions } from '../../util';
+import { UserStoryAPI } from '../../api';
 
 export default function SessionSummary() {
-  const [errorMessage, setErrorMessage] = useState('');
-  const [apiResponse, setApiResponse] = useState('');
-
-  function handleSubmit(event) {
-    event.preventDefault();
-
+  const { roomId } = useParams();
+  const { t } = useTranslation();
+  const [userStoryArray, setUserStoryArray] = useState([]);
+  useEffect(() => {
     try {
-      Request.post(`${API_CONSTANTS.API_BASE_URL}${END_POINTS.API}${END_POINTS.SIGN_UP}`).then(
-        data => {
-          if (data.success) {
-            // eslint-disable-next-line
-            console.log('succeed');
-          } else {
-            setApiResponse(data.message);
-          }
-        }
-      );
-    } catch (e) {
-      // console.error(`=====> error:${e}`);
-      setErrorMessage({ error: e });
-      // TODO this erro happen if API is not available but business errors like length of password go above. how to handle and display those?
+      let roomIdFromURLOrLocalStorage = roomId;
+      if (!roomIdFromURLOrLocalStorage || roomId === ':roomId') {
+        roomIdFromURLOrLocalStorage = CommonFunctions.getValueFromLocalStorage2(
+          API_CONSTANTS.PLANNING_ROOM_ID
+        );
+      }
+      UserStoryAPI.get(roomIdFromURLOrLocalStorage).then(planningSessionInformation => {
+        setUserStoryArray(planningSessionInformation);
+      });
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('error', MediaError);
     }
-  }
+  }, []);
+
+  const handleDeleteSession = () => {
+    console.log('Too late');
+  };
   return (
     <Container>
-      <Form onSubmit={handleSubmit}>
-        <p>Session Summary:</p>
-        <p>Total number of user stories</p>
-        <p>Deviation of estimation in general</p>
-        <p>Fastest user`s response</p>
-        <p>Most accurate user</p>
-        <br />
-        <p>Delete session?</p>
-        {apiResponse && <Alert variant="danger">{apiResponse}</Alert>}
-        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-      </Form>
+      <br />
+      <p>Session Summary:</p>
+      <br />
+      <Table striped bordered hover>
+        <thead>
+          <tr>
+            <th>{t('SessionSummary.lblTableColNumber')}</th>
+            <th>{t('SessionSummary.lblTableColTitle')}</th>
+            <th>{t('SessionSummary.lblTableColMin')}</th>
+            <th>{t('SessionSummary.lblTableColMax')}</th>
+            <th>{t('SessionSummary.lblTableColChosen')}</th>
+          </tr>
+        </thead>
+        {/* eslint-disable */}
+        <tbody>
+          {userStoryArray !== undefined && userStoryArray.length > 0  ? userStoryArray.map((userStory, i) => (
+            <tr key={userStory._id}>
+              <td>{i}</td>
+              <td>{userStory.title}</td>
+              <td>{userStory.chosenEstimatedValue}</td>
+              <td>{userStory.minEstimatedValue}</td>
+              <td>{userStory.maxEstimatedValue}</td>
+            </tr>
+          )) : <tr></tr>}
+        </tbody>
+        {/* eslint-enable */}
+      </Table>
+
+      <p>
+        Deviation of estimation in general, Most accurate user, Fastest users response, session
+        duration
+      </p>
+
+      <br />
+      <p>
+        <Button variant="danger" onClick={handleDeleteSession}>
+          {t('SessionSummary.btnDeleteSession')}
+        </Button>
+      </p>
     </Container>
   );
 }

@@ -3,6 +3,7 @@
 const i18n = require('i18n');
 const UserStory = require('./model');
 const ObjectId = require('mongoose').Types.ObjectId;
+const MAX_RESULTS_FROM_DB = 100;
 
 const save = async jsonData => {
   try {
@@ -17,11 +18,12 @@ const save = async jsonData => {
   }
 };
 
-const find = async objectId => {
+const findAll = async objectId => {
   if (!objectId || !ObjectId.isValid(objectId)) {
     throw Error(i18n.__('serviceInvalidId'));
   }
-  const userStory = await UserStory.findOne({ _id: objectId });
+  const userStory = await UserStory.find({ planningSessionId: objectId }).limit(MAX_RESULTS_FROM_DB);
+  console.log(userStory);
   if (!userStory) {
     throw Error(i18n.__('serviceFindError'));
   } else {
@@ -29,4 +31,4 @@ const find = async objectId => {
   }
 };
 
-module.exports = { save, find };
+module.exports = { save, findAll };

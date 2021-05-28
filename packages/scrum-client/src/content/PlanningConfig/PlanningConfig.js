@@ -24,7 +24,6 @@ export default function PlanningConfig() {
   const { t } = useTranslation();
   const [title, setTitle] = useState('');
   const [sampleValues, setSampleValues] = useState('');
-  // const [userStoriesCreation] = useState('');
   const [cardDeck, setCardDeck] = useState('');
   const [allowUnauthenticated, setAllowUnauthenticated] = useState(false);
   const [userStoriesCreationMethod, setUserStoriesCreationMethod] = useState('manual');
@@ -32,7 +31,7 @@ export default function PlanningConfig() {
   const [apiResponse, setApiResponse] = useState('');
   const userDetails = useAuthState();
 
-  // TODO what to do here?
+  // TODO what to do here when we remove the menu?
   const redirectedFrom = location.state?.redirectedFrom?.pathname || PATHS.SHARE_SESSION;
 
   const cardDeckOptions = [
@@ -61,7 +60,8 @@ export default function PlanningConfig() {
       cardDeck,
       allowUnauthenticated,
       userStoriesCreationMethod,
-      userAdmin: userDetails.user.id,
+      // eslint-disable-next-line
+      userAdmin: userDetails.user._id,
     };
 
     PlanningSessionAPI.post(payload)

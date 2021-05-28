@@ -19,8 +19,9 @@ import { useParams, useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import TeamList from '../../components/TeamList';
 import useSocket from '../../hooks/useSocket';
-import { PlanningSessionAPI } from '../../api';
-import { PATHS } from '../../constants';
+import { PlanningSessionAPI, UserStoryAPI } from '../../api';
+import { DECKS, PATHS } from '../../constants';
+
 import { useAuthState } from '../../context';
 import './ParticipateSession.css';
 
@@ -42,10 +43,12 @@ export default function ParticipateSession() {
   const [storyDescription, setStoryDescription] = useState('');
   const [validUserStory, setValidUserStory] = useState(false);
   const [sessionInformation, setSessionInformation] = useState();
+  const [summaryVotes, setSummaryVotes] = useState({});
   const { socketEvents, setStory, users, storyVotes } = useSocket(roomId);
   const [fullUrlToJoin, setFullUrlToJoin] = useState('');
   const userDetails = useAuthState();
   const history = useHistory();
+
   const handleClose = () => setShowModal(false);
 
   useEffect(() => {
@@ -57,6 +60,13 @@ export default function ParticipateSession() {
       console.log(url + joinSessionPath);
     }
   }, [roomId]);
+
+  useEffect(() => {
+    if (!!sessionInformation && sessionInformation.cardDeck !== undefined) {
+      const cardDeck = DECKS.byLabels(sessionInformation.cardDeck);
+      setSummaryVotes(cardDeck.getSummaryVote(storyVotes));
+    }
+  }, [sessionInformation, storyVotes]);
 
   if (!sessionInformation || !users) {
     return <Spinner animation="border" />;
@@ -81,6 +91,28 @@ export default function ParticipateSession() {
     console.log(e);
   };
   const handleEndVoting = e => {
+    try {
+      console.log(storyVotes);
+      socketEvents.setRoomStory({
+        room: { id: roomId },
+        story: { storyTitle, storyDescription, isStoryActive: false },
+      });
+      storyVotes.splice(0, storyVotes.length);
+
+      if (summaryVotes !== undefined) {
+        UserStoryAPI.post({
+          planningSessionId: roomId,
+          title: storyTitle,
+          description: storyDescription,
+          chosenEstimatedValue: summaryVotes.avgVote,
+          minEstimatedValue: summaryVotes.minVote,
+          maxEstimatedValue: summaryVotes.maxVote,
+        });
+      }
+    } catch (error) {
+      console.log('error', MediaError);
+    }
+
     setStoryTitle('');
     setStoryDescription('');
     setValidUserStory(false);
@@ -190,13 +222,13 @@ export default function ParticipateSession() {
       </Row>
       <Row>
         <Col>
-          {/* TODO admin.id is null? error in console */}
           <TeamList
             title="Team Summary"
             sessionInformation={sessionInformation}
             users={users}
             admin={{ id: userDetails.user }}
             storyVotes={storyVotes}
+            summaryVotes={summaryVotes}
           />
         </Col>
       </Row>

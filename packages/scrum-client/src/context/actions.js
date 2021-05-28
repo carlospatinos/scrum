@@ -10,6 +10,7 @@ const loginUserGeneric = async (dispatch, loginApiFxn, loginPayload) => {
   try {
     const loginUserAction = ContextUtil.generateAction(dispatch, loginApiFxn, LOGIN_ACTIONS);
     const response = await loginUserAction(loginPayload);
+    console.log('response', response);
     const { data } = response;
     if (data.user) {
       CommonFunctions.setValueToLocalStorage(API_CONSTANTS.CURRENT_USER, JSON.stringify(data));
@@ -34,7 +35,6 @@ export async function logout(dispatch) {
   const response = await logoutUserAction();
   localStorage.removeItem(API_CONSTANTS.CURRENT_USER);
   localStorage.removeItem(API_CONSTANTS.ACCESS_TOKEN_NAME);
-  // TODO is this needed? localStorage.clear();
   localStorage.clear();
   // TODO  do we need the response?
   console.log('logout-response', response);

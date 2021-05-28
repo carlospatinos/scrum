@@ -1,7 +1,8 @@
 /* eslint-disable react/style-prop-object */
 import React, { useState, useEffect } from 'react';
+import Timer from 'react-compound-timer';
 import { useParams } from 'react-router-dom';
-import { Container, ListGroup, Badge } from 'react-bootstrap';
+import { Container, ListGroup, Badge, Spinner, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { DECKS } from '../../constants';
 import ClickableCard from '../../components/ClickableCard';
@@ -64,15 +65,33 @@ export default function VotingCards() {
             {sessionInformation ? sessionInformation.title : ''}{' '}
             <Badge variant="secondary">{t('VotingCards.lblMemberView')}</Badge>
           </h4>
+          {isStoryActive ? (
+            <Timer formatValue={value => `${value < 10 ? `0${value}` : value} `}>
+              <Timer.Hours />:
+              <Timer.Minutes />:
+              <Timer.Seconds />
+            </Timer>
+          ) : (
+            <div />
+          )}
         </ListGroup.Item>
-        <ListGroup.Item>
-          {t('VotingCards.lblStoryTitle')}{' '}
-          {isStoryActive ? story.storyTitle : t('VotingCards.plcHdlStoryTitle')}
-        </ListGroup.Item>
-        <ListGroup.Item>
-          {t('VotingCards.lblStoryDescription')}{' '}
-          {isStoryActive ? story.storyDescription : t('VotingCards.plcHdlStoryDescription')}
-        </ListGroup.Item>
+        {!isStoryActive ? (
+          <Button variant="primary" disabled>
+            <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
+            {t('VotingCards.storyNotProvided')}
+          </Button>
+        ) : (
+          <>
+            <ListGroup.Item>
+              {t('VotingCards.lblStoryTitle')}{' '}
+              {isStoryActive ? story.storyTitle : t('VotingCards.plcHdlStoryTitle')}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              {t('VotingCards.lblStoryDescription')}{' '}
+              {isStoryActive ? story.storyDescription : t('VotingCards.plcHdlStoryDescription')}
+            </ListGroup.Item>
+          </>
+        )}
       </ListGroup>
 
       {/* Room: {roomId}
@@ -94,7 +113,7 @@ export default function VotingCards() {
           })}
         </GridGenerator>
       ) : (
-        <div>{t('VotingCards.storyNotProvided')}</div>
+        <div />
       )}
     </Container>
   );

@@ -4,6 +4,7 @@ import { Container, ListGroup, Button } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { API_CONSTANTS, PATHS } from '../../constants';
+import { CommonFunctions } from '../../util';
 import './ShareSession.css';
 
 export default function ShareSession() {
@@ -17,9 +18,12 @@ export default function ShareSession() {
     history.push(sessionToJoin);
   };
 
-  // Is this a common function? Where to put it?
+  // TODOIs this a common function? Where to put it?
   function generateQR() {
-    const planningRoomId = localStorage.getItem(API_CONSTANTS.PLANNING_ROOM_ID);
+    const planningRoomId = CommonFunctions.getValueFromLocalStorage2(
+      API_CONSTANTS.PLANNING_ROOM_ID
+    );
+    // CommonFunctions.getValueFromLocalStorage
     // TODO DELETE roomid?
     const url = window.location.href.split('/').slice(0, 3).join('/'); // ${API_CONSTANTS.API_BASE_URL}
     const joinSessionPath = PATHS.SESSION_JOIN.replace(':roomId?', planningRoomId);
@@ -51,9 +55,7 @@ export default function ShareSession() {
           </p>
           {t('ShareSession.lblShareLink')}
           <br />
-          <p>
-            {fullUrlToJoin} <a href={fullUrlToJoin}>Go Join</a>
-          </p>
+          <p>{fullUrlToJoin}</p>
         </ListGroup.Item>
       </ListGroup>
     </Container>

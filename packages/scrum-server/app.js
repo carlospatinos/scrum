@@ -17,7 +17,7 @@ require('./src/services/db.js');
 
 const app = express();
 const i18n = require('i18n');
-const { TipsRoutes, UserRoutes, PlanningSessionRoutes, AuthRoutes , DefaultRoute } = require('./src/api/routes');
+const { TipsRoutes, UserRoutes, PlanningSessionRoutes, AuthRoutes , DefaultRoute, UserStoryRoutes } = require('./src/api/routes');
 
 AuthStrategies.configure(passport);
 i18n.configure({
@@ -72,6 +72,7 @@ app.use(END_POINTS.AUTH, AuthRoutes);
 app.use(END_POINTS.API, UserRoutes);
 app.use(END_POINTS.API, TipsRoutes);
 app.use(END_POINTS.API, PlanningSessionRoutes);
+app.use(END_POINTS.API, UserStoryRoutes);
 
 // Handles any requests that don't match the ones above
 app.get('*', (req, res, next) => {
