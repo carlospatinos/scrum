@@ -1,11 +1,11 @@
-const getValueFromLocalStorage = itemId => {
+const getValueFromLocalStorage2 = itemId => {
   if (localStorage && itemId) {
     return localStorage.getItem(itemId);
   }
   return '';
 };
 
-const getValueFromLocalStorageArray = (itemId, key) => {
+const getValueFromLocalStorage = (itemId, key) => {
   if (localStorage && itemId && key) {
     return localStorage.getItem(itemId) ? JSON.parse(localStorage.getItem(itemId))[key] : '';
   }
@@ -18,4 +18,4 @@ const setValueToLocalStorage = (itemId, value) => {
   }
 };
 
-export default { getValueFromLocalStorage, setValueToLocalStorage, getValueFromLocalStorageArray };
+export default { getValueFromLocalStorage, setValueToLocalStorage, getValueFromLocalStorage2 };
