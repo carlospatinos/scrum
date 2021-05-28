@@ -127,6 +127,10 @@ UserSchema.methods.generateToken = async function () {
 UserSchema.statics.findByToken = async function (token) {
   const user = this;
   let isVerified = undefined;
+  
+  if (token === undefined) {
+    return undefined;
+  }
   try {
     isVerified = await jwt.verify(token, keys.jwtSecret);
     //console.log(isVerified);

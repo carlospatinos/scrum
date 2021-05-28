@@ -21,7 +21,8 @@ const find = async objectId => {
   if (!objectId || !ObjectId.isValid(objectId)) {
     throw Error(i18n.__('serviceInvalidId'));
   }
-  const userStory = await UserStory.findOne({ _id: objectId });
+  const userStory = await UserStory.findOne({ planningSessionId: objectId });
+  console.log(userStory);
   if (!userStory) {
     throw Error(i18n.__('serviceFindError'));
   } else {

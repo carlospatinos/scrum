@@ -1,6 +1,10 @@
 const mongoose = require('mongoose');
 
 const UserStorySchema = new mongoose.Schema({
+  planningSessionId: {
+    type: String,
+    required: true,
+  },
   title: {
     type: String,
     required: true,
@@ -10,14 +14,16 @@ const UserStorySchema = new mongoose.Schema({
   },
   choosedEstimatedValue: {
     type: String,
+    required: true,
   },
   minEstimatedValue: {
     type: String,
+    required: true,
   },
   maxEstimatedValue: {
     type: String,
+    required: true,
   },
-  // TODO possibly add jira id, github id, etc
   creationDate: {
     type: Date,
     default: Date.now,

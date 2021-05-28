@@ -24,7 +24,6 @@ export default function PlanningConfig() {
   const { t } = useTranslation();
   const [title, setTitle] = useState('');
   const [sampleValues, setSampleValues] = useState('');
-  // const [userStoriesCreation] = useState('');
   const [cardDeck, setCardDeck] = useState('');
   const [allowUnauthenticated, setAllowUnauthenticated] = useState(false);
   const [userStoriesCreationMethod, setUserStoriesCreationMethod] = useState('manual');
@@ -32,7 +31,7 @@ export default function PlanningConfig() {
   const [apiResponse, setApiResponse] = useState('');
   const userDetails = useAuthState();
 
-  // TODO what to do here?
+  // TODO what to do here when we remove the menu?
   const redirectedFrom = location.state?.redirectedFrom?.pathname || PATHS.SHARE_SESSION;
 
   const cardDeckOptions = [
@@ -64,6 +63,7 @@ export default function PlanningConfig() {
       userAdmin: userDetails.user.id,
     };
 
+    console.log('userDetails.user.id', userDetails);
     PlanningSessionAPI.post(payload)
       .then(serviceResponse => {
         // TODO since the request util throws exceptions, is the sucesss needed?

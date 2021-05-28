@@ -25,6 +25,7 @@ const JoinSessionRoute = ({ location }) => {
   }
 
   let pathname = isUserAdmin ? PATHS.SESSION_PARTICIPATE : PATHS.VOTING_CARDS;
+
   pathname = pathname.replace(':roomId?', roomId);
 
   return (

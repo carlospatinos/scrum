@@ -14,6 +14,6 @@ router.get(END_POINTS.LOGOUT, auth, UserController.logout);
 
 router.post(END_POINTS.SIGN_UP, UserController.signUp);
 
-router.post(END_POINTS.DELETE_PROFILE, UserController.deleteProfile);
+router.delete(END_POINTS.DELETE_PROFILE, UserController.deleteProfile);
 
 module.exports = router;

@@ -64,17 +64,28 @@ const localAuth = async req => {
     }
 
     const updatedUser = await freshUser.generateToken();
-    // TODO return full user without pass?
+    const realUserObj = updatedUser.toJSON();
+    delete realUserObj.confirmPassword;
+    delete realUserObj.password;
+    console.log('realUserObj', realUserObj);
+    // TODO return full user without pass
+    // return {
+    //   data: {
+    //     login_access_token: updatedUser.token,
+    //     user: {
+    //       id: updatedUser._id,
+    //       email: updatedUser.email,
+    //       firstName: updatedUser.firstName,
+    //       lastName: updatedUser.lastName,
+    //       fullName: `${updatedUser.firstName} ${updatedUser.lastName}`,
+    //     }
+    //   }
+    // };
     return {
       data: {
-        login_access_token: updatedUser.token,
-        user: {
-          id: updatedUser._id,
-          email: updatedUser.email,
-          firstName: updatedUser.firstName,
-          lastName: updatedUser.lastName,
-          fullName: `${updatedUser.firstName} ${updatedUser.lastName}`,
-        }
+        other: 'yayayay',
+        login_access_token: realUserObj.token,
+        user: realUserObj
       }
     };
   } catch (e) {

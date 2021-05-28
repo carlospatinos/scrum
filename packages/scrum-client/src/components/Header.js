@@ -11,6 +11,7 @@ const visibleRoute = isUserLoggedIn => {
 
 export default function Header() {
   const userDetails = useAuthState();
+  console.log(userDetails);
   const isLoggedIn = userDetails.login_access_token;
   const visibleRouteCriteria = visibleRoute(isLoggedIn);
 

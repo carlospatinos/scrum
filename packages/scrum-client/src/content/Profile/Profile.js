@@ -28,6 +28,7 @@ export default function Profile() {
   }
 
   useEffect(() => {
+    console.log('userDetails', userDetails);
     generateReferralLink(userDetails);
   }, [userDetails]);
 

@@ -58,6 +58,7 @@ const authLoginSucess = async (req, res) => {
   const { user } = req;
   if (user) {
     const copy = user.toJSON();
+    console.log('copy', copy);
     // eslint-disable-next-line no-underscore-dangle
     copy.id = copy._id;
     return res.status(200).json({

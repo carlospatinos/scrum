@@ -47,8 +47,6 @@ export default function ParticipateSession() {
   const [fullUrlToJoin, setFullUrlToJoin] = useState('');
   const userDetails = useAuthState();
   const history = useHistory();
-  const cardDeck = DECKS.byLabels(sessionInformation.cardDeck);
-  const summaryVotes = cardDeck.getSummaryVote(storyVotes);
 
   const handleClose = () => setShowModal(false);
 
@@ -86,13 +84,18 @@ export default function ParticipateSession() {
   };
   const handleEndVoting = e => {
     try {
-      UserStoryAPI.post({
-        title: storyTitle,
-        description: storyDescription,
-        choosedEstimatedValue: summaryVotes.avgVote,
-        minEstimatedValue: summaryVotes.minVote,
-        maxEstimatedValue: summaryVotes.maxVote,
-      });
+      const cardDeck = DECKS.byLabels(sessionInformation.cardDeck);
+      if (cardDeck !== undefined) {
+        const summaryVotes = cardDeck.getSummaryVote(storyVotes);
+        UserStoryAPI.post({
+          planningSessionId: roomId,
+          title: storyTitle,
+          description: storyDescription,
+          choosedEstimatedValue: summaryVotes.avgVote,
+          minEstimatedValue: summaryVotes.minVote,
+          maxEstimatedValue: summaryVotes.maxVote,
+        });
+      }
     } catch (error) {
       console.log('error', MediaError);
     }
