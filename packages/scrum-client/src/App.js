@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Switch, BrowserRouter as Router } from 'react-router-dom';
-import { Container, Spinner } from 'react-bootstrap';
+import { Container, Spinner, Row, Col } from 'react-bootstrap';
 import CookieConsent from 'react-cookie-consent';
 import { useTranslation } from 'react-i18next';
 import Header from './components/Header';
@@ -18,22 +18,24 @@ function App() {
         <Header />
         <ErrorBoundary>
           <main className="flex-fill">
-            <Container className="px-5">
-              <Router>
-                <Suspense fallback={<Spinner animation="border" />}>
-                  <Switch>
-                    {routes.map(route => (
-                      <AppRoute
-                        key={route.path}
-                        path={route.path}
-                        component={route.component}
-                        isPrivate={route.isPrivate}
-                      />
-                    ))}
-                  </Switch>
-                </Suspense>
-              </Router>
-            </Container>
+            <Row className="align-items-center vh-100">
+              <Col className="col-6 mx-auto">
+                <Router>
+                  <Suspense fallback={<Spinner animation="border" />}>
+                    <Switch>
+                      {routes.map(route => (
+                        <AppRoute
+                          key={route.path}
+                          path={route.path}
+                          component={route.component}
+                          isPrivate={route.isPrivate}
+                        />
+                      ))}
+                    </Switch>
+                  </Suspense>
+                </Router>
+              </Col>
+            </Row>
           </main>
         </ErrorBoundary>
       </AuthProvider>

@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
-import { Alert, Button, FormGroup, FormControl, FormLabel, Container, Form } from 'react-bootstrap';
+import {
+  Alert,
+  Button,
+  FormGroup,
+  FormControl,
+  FormLabel,
+  Container,
+  Form,
+  Col,
+  Jumbotron,
+  Row,
+} from 'react-bootstrap';
 import { useParams, useHistory, useLocation, Link } from 'react-router-dom';
 import './Signup.css';
 import { useTranslation } from 'react-i18next';
@@ -82,76 +93,84 @@ export default function Signup() {
 
   return (
     <Container className="Signup">
-      <Form onSubmit={handleSubmit}>
-        <h1 className="text-center">{t('Signup.lblSignup')}</h1>
-        <FormGroup controlId="firstName">
-          <FormControl
-            value={firstName}
-            onChange={e => setFirstName(e.target.value)}
-            placeholder={t('Signup.lblFirstName')}
-          />
-        </FormGroup>
-        <FormGroup controlId="lastName">
-          <FormControl
-            value={lastName}
-            onChange={e => setLastName(e.target.value)}
-            placeholder={t('Signup.lblLastName')}
-          />
-        </FormGroup>
+      <Row>
+        <Col className="col-md-6 mx-auto">
+          <Jumbotron className="mt-3 shadow-lg p-3 mb-5 bg-white rounded ">
+            <Form onSubmit={handleSubmit}>
+              <h1 className="text-center">{t('Signup.lblSignup')}</h1>
+              <FormGroup controlId="firstName">
+                <FormControl
+                  value={firstName}
+                  onChange={e => setFirstName(e.target.value)}
+                  placeholder={t('Signup.lblFirstName')}
+                />
+              </FormGroup>
+              <FormGroup controlId="lastName">
+                <FormControl
+                  value={lastName}
+                  onChange={e => setLastName(e.target.value)}
+                  placeholder={t('Signup.lblLastName')}
+                />
+              </FormGroup>
 
-        <FormGroup controlId="email">
-          <FormControl
-            autoFocus
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            placeholder={t('Signup.lblEmail')}
-          />
-        </FormGroup>
-        <FormGroup controlId="password">
-          <FormControl
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            type="password"
-            placeholder={t('Signup.lblPassword')}
-          />
-        </FormGroup>
-        <FormGroup controlId="confirmPassword">
-          <FormControl
-            value={confirmPassword}
-            onChange={e => setConfirmPassword(e.target.value)}
-            type="password"
-            placeholder={t('Signup.lblPassword2')}
-          />
-        </FormGroup>
-        {isReferral && (
-          <FormGroup controlId="referredBy">
-            <FormLabel>{t('Signup.lblReferredBy')}</FormLabel>
-            <FormControl value={referrer} type="text" readOnly />
-          </FormGroup>
-        )}
+              <FormGroup controlId="email">
+                <FormControl
+                  autoFocus
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  placeholder={t('Signup.lblEmail')}
+                />
+              </FormGroup>
+              <FormGroup controlId="password">
+                <FormControl
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  type="password"
+                  placeholder={t('Signup.lblPassword')}
+                />
+              </FormGroup>
+              <FormGroup controlId="confirmPassword">
+                <FormControl
+                  value={confirmPassword}
+                  onChange={e => setConfirmPassword(e.target.value)}
+                  type="password"
+                  placeholder={t('Signup.lblPassword2')}
+                />
+              </FormGroup>
+              {isReferral && (
+                <FormGroup controlId="referredBy">
+                  <FormLabel>{t('Signup.lblReferredBy')}</FormLabel>
+                  <FormControl value={referrer} type="text" readOnly />
+                </FormGroup>
+              )}
 
-        {apiResponse && <Alert variant="danger">{apiResponse}</Alert>}
-        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-        <Button
-          block
-          disabled={!validateForm()}
-          type="submit"
-          variant={isValidForm ? 'primary' : 'secondary'}
-        >
-          {t('Signup.btnSignup')}
-        </Button>
-        <p className="forgot-password text-right">
-          <Link
-            to={{
-              pathname: PATHS.LOGIN,
-              state: { redirectedFrom: { pathname: redirectedFrom } },
-            }}
-          >
-            {t('Signup.lblAlreadyRegistered')} {t('Signup.lnkSignIn')}
-          </Link>
-        </p>
-      </Form>
+              {apiResponse && <Alert variant="danger">{apiResponse}</Alert>}
+              {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+              <Button
+                block
+                disabled={!validateForm()}
+                type="submit"
+                variant={isValidForm ? 'primary' : 'secondary'}
+              >
+                {t('Signup.btnSignup')}
+              </Button>
+              <p className="forgot-password text-right">
+                <Link
+                  to={{
+                    pathname: PATHS.LOGIN,
+                    state: { redirectedFrom: { pathname: redirectedFrom } },
+                  }}
+                >
+                  <small>
+                    {t('Signup.lblAlreadyRegistered')} {t('Signup.lnkSignIn')}
+                  </small>
+                </Link>
+              </p>
+            </Form>
+          </Jumbotron>
+        </Col>
+      </Row>
     </Container>
   );
 }

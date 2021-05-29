@@ -1,6 +1,10 @@
 @media all and (min-width: 180px) {
   .Login {
-    padding: 60px 0;
+    /* padding-top: 20px;
+text-align: justify;
+word-wrap: break-word; */
+    /* background: linear-gradient(rgba(168, 183, 245, 0.5), transparent);
+background-color: white; */
   }
 
   .Login form {
