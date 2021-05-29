@@ -78,6 +78,12 @@ export default function Login() {
                 />
               </FormGroup>
               <FormGroup controlId="password">
+                <FormControl
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  type="password"
+                  placeholder={t('Login.phrPassword')}
+                />
                 <Form.Row>
                   <Col className="forgot-password text-right">
                     <Link
@@ -90,12 +96,6 @@ export default function Login() {
                     </Link>
                   </Col>
                 </Form.Row>
-                <FormControl
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
-                  type="password"
-                  placeholder={t('Login.phrPassword')}
-                />
               </FormGroup>
               <Button
                 block

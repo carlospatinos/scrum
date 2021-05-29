@@ -100,6 +100,7 @@ export default function Signup() {
               <h1 className="text-center">{t('Signup.lblSignup')}</h1>
               <FormGroup controlId="firstName">
                 <FormControl
+                  autoFocus
                   value={firstName}
                   onChange={e => setFirstName(e.target.value)}
                   placeholder={t('Signup.lblFirstName')}
@@ -115,7 +116,6 @@ export default function Signup() {
 
               <FormGroup controlId="email">
                 <FormControl
-                  autoFocus
                   type="email"
                   value={email}
                   onChange={e => setEmail(e.target.value)}

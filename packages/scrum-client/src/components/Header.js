@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { PATHS } from '../constants';
 import routes from '../config/routes';
@@ -13,12 +13,7 @@ const visibleRoute = isUserLoggedIn => {
 export default function Header() {
   const userDetails = useAuthState();
   const isLoggedIn = userDetails.login_access_token;
-  const [activePath, setActivePath] = useState('');
   const visibleRouteCriteria = visibleRoute(isLoggedIn);
-  const changeActivePath = newPath => {
-    console.log('-->>', newPath);
-    // setActivePath(newPath);
-  };
 
   return (
     <header>
@@ -39,7 +34,7 @@ export default function Header() {
             <Nav className="ml-auto" activeKey={PATHS.LOGIN}>
               {routes.filter(visibleRouteCriteria).map(route => (
                 // TODO chavito, how can i set the active path? all 3 are clicked
-                <Nav.Link key={route.path} href={route.path} onClick={changeActivePath(route.path)}>
+                <Nav.Link key={route.path} href={route.path}>
                   {route.title}
                 </Nav.Link>
               ))}

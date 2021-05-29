@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Switch, BrowserRouter as Router } from 'react-router-dom';
-import { Container, Spinner, Row, Col } from 'react-bootstrap';
+import { Spinner, Row, Col } from 'react-bootstrap';
 import CookieConsent from 'react-cookie-consent';
 import { useTranslation } from 'react-i18next';
 import Header from './components/Header';
@@ -15,7 +15,7 @@ function App() {
   return (
     <div className="d-flex flex-column min-vh-100">
       <AuthProvider>
-        <Header />
+        <Header className="flex-shrink: 0" />
         <ErrorBoundary>
           <main className="flex-fill">
             <Row className="align-items-center vh-100">

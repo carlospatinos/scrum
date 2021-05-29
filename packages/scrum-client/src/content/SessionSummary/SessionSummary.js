@@ -26,9 +26,10 @@ export default function SessionSummary() {
       // eslint-disable-next-line no-console
       console.log('error', MediaError);
     }
-  }, []);
+  }, [roomId]);
 
   const handleDeleteSession = () => {
+    // eslint-disable-next-line no-console
     console.log('Too late');
   };
   return (
