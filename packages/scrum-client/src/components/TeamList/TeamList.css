@@ -2,6 +2,13 @@ table td+td {
     border-left: 2px solid red;
 }
 
+.box {
+    padding: 0 5px 0 5px;
+}
+
+.box .inner {
+    background-color: #fff;
+}
 
 table.dataCentered {
     margin-left: auto;

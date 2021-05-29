@@ -19,7 +19,7 @@ function App() {
         <ErrorBoundary>
           <main className="flex-fill">
             <Row className="align-items-center vh-100">
-              <Col className="col-6 mx-auto">
+              <Col className="col-12 mx-auto">
                 <Router>
                   <Suspense fallback={<Spinner animation="border" />}>
                     <Switch>

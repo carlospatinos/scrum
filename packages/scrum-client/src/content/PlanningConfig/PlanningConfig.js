@@ -89,7 +89,7 @@ export default function PlanningConfig() {
   const isValidForm = validateForm();
 
   return (
-    <Container className="Signup">
+    <Container className="PlanningConfig">
       <Form onSubmit={handleSubmit}>
         <FormGroup controlId="planningTitle">
           <FormLabel>{t('PlanningConfig.lblTitle')}</FormLabel>

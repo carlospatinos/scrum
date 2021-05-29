@@ -94,7 +94,8 @@ export default function Signup() {
   return (
     <Container className="Signup">
       <Row>
-        <Col className="col-md-6 mx-auto">
+        <Col xs={0} md={2} lg={4} className="mx-auto" />
+        <Col xs={12} md={8} lg={4} className="mx-auto">
           <Jumbotron className="mt-3 shadow-lg p-3 mb-5 bg-white rounded ">
             <Form onSubmit={handleSubmit}>
               <h1 className="text-center">{t('Signup.lblSignup')}</h1>
@@ -170,6 +171,7 @@ export default function Signup() {
             </Form>
           </Jumbotron>
         </Col>
+        <Col xs={0} md={2} lg={4} className="mx-auto" />
       </Row>
     </Container>
   );

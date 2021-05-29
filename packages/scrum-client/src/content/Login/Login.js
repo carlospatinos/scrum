@@ -61,9 +61,10 @@ export default function Login() {
   const isValidForm = validateForm(email, password);
 
   return (
-    <Container className="Login">
+    <Container className="">
       <Row>
-        <Col className="col-md-6 mx-auto">
+        <Col xs={0} md={2} lg={4} className="mx-auto" />
+        <Col xs={12} md={8} lg={4} className="mx-auto">
           <Jumbotron className="mt-3 shadow-lg p-3 mb-5 bg-white rounded">
             <Form onSubmit={handleSubmit}>
               <h1 className="text-center">{t('Login.lblSignIn')}</h1>
@@ -154,6 +155,7 @@ export default function Login() {
             </Form>
           </Jumbotron>
         </Col>
+        <Col xs={0} md={2} lg={4} className="mx-auto" />
       </Row>
     </Container>
   );

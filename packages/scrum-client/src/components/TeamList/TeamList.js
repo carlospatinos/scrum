@@ -1,7 +1,6 @@
 import React from 'react';
-import { Card, Accordion, Badge } from 'react-bootstrap';
+import { Badge, Row, Col, Image, Figure } from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import GridGenerator from '../GridGenerator';
 import './TeamList.css';
 
 const getUserVote = (storyVotes, user) => {
@@ -12,7 +11,7 @@ const getUserVote = (storyVotes, user) => {
 
 const TeamList = props => {
   const { title, subtitle, users, storyVotes, admin, summaryVotes } = props;
-
+  console.log(users);
   const generateUserStatusBadge = () => {
     const randomStatus = Math.random();
     if (randomStatus > 0.5) {
@@ -21,44 +20,76 @@ const TeamList = props => {
     return <Badge variant="danger">Offline</Badge>;
   };
   return (
-    <Accordion defaultActiveKey="0">
-      <Card className="text-center">
-        <Accordion.Toggle as={Card.Header} eventKey="0">
-          <b>{title}</b>
-          <br />
-          {subtitle}
-        </Accordion.Toggle>
-        <Accordion.Collapse eventKey="0">
-          <Card.Body>
-            <GridGenerator columns={2}>
-              {/* eslint-disable */}
-              {users
-                .filter(user => user._id !== admin.id)
-                .map(user => {
-                  return (
-                    <Card style={{ width: '12rem' }}>
-                      <Card.Img variant="top" src="/icons/unknown.png" />
-                      <Card.Body>
-                        <Card.Title>{getUserVote(storyVotes, user)}</Card.Title>
-                      </Card.Body>
-                      <Card.Footer className="text-muted">
-                        {user.fullName}
-                        <br /> {generateUserStatusBadge()}
-                      </Card.Footer>
-                    </Card>
-                  );
-                })}
-                { /* eslint-enable */ }
-            </GridGenerator>
-          </Card.Body>
-        </Accordion.Collapse>
-        <Card.Footer>
-          Average [{summaryVotes.avgVote}] | Max [{summaryVotes.maxVote}] | Min [
-          {summaryVotes.minVote}] | Question [{summaryVotes.question}] | Infinity [
-          {summaryVotes.infinity}] | Coffee [{summaryVotes.coffee}]
-        </Card.Footer>
-      </Card>
-    </Accordion>
+    <>
+      <Row>
+        <Col xs={12} className="d-flex justify-content-center">
+          <strong>
+            {title} {subtitle}
+          </strong>
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <Image src="/dashboard.png" fluid />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={6} md={4} lg={2}>
+          Average [{summaryVotes.avgVote}]
+        </Col>
+        <Col xs={6} md={4} lg={2}>
+          Max [{summaryVotes.maxVote}]
+        </Col>
+        <Col xs={6} md={4} lg={2}>
+          Min [{summaryVotes.minVote}]
+        </Col>
+        <Col xs={6} md={4} lg={2}>
+          Question [{summaryVotes.question}]
+        </Col>
+        <Col xs={6} md={4} lg={2}>
+          Infinity [{summaryVotes.infinity}]
+        </Col>
+        <Col xs={6} md={4} lg={2}>
+          Coffee [{summaryVotes.coffee}]
+        </Col>
+      </Row>
+      <br />
+      <br />
+      <Row>
+        {/* eslint-disable */}
+        {users.filter(user => user._id !== admin.id)
+          .map(user => {
+            return (
+              <Col className="box" xs={12} md={6}>
+                {/* bg-primary  */}
+                <div className="bg-light inner">
+                  <Row>
+                    <Col>
+                      <Figure className="my-auto">
+                        <Figure.Image
+                          roundedCircle
+                          width={50}
+                          height={50}
+                          alt="171x180"
+                          src="/icons/voting-face.png"
+                        />
+                        {generateUserStatusBadge()}
+                      </Figure>
+                    </Col>
+                    <Col className="my-auto">{user.firstName} {user.lastName}</Col>
+                    <Col className="my-auto">% acc</Col>
+                    <Col className="my-auto">{getUserVote(storyVotes, user)}</Col>
+                  </Row>
+                </div>
+              </Col>
+            );
+          })}
+        { /* eslint-enable */}
+
+
+
+      </Row>
+    </>
   );
 };
 

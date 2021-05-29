@@ -1,7 +1,7 @@
 import { chunk } from 'lodash';
 import React from 'react';
 import { Col, Row, Container } from 'react-bootstrap';
-
+// TODO remove this
 const GridGenerator = props => {
   const { columns } = props;
   const { children } = props;

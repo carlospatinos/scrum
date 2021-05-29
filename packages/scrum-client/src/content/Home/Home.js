@@ -1,7 +1,11 @@
-import React from 'react';
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable no-console */
+import React, { useState, useEffect } from 'react';
 import { Container, CardDeck, Card } from 'react-bootstrap';
 import { useLocation, Link } from 'react-router-dom';
 import { PATHS } from '../../constants';
+import ToastWrapper from '../../components/ToastWrapper/ToastWrapper';
+import { TipsAPI } from '../../api';
 
 // import TagManager from 'react-gtm-module'
 
@@ -22,7 +26,15 @@ import { PATHS } from '../../constants';
 const Home = () => {
   const location = useLocation();
   const redirectedFrom = location.state?.redirectedFrom?.pathname || PATHS.HOME;
-
+  const [tipList, setTipList] = useState([]);
+  useEffect(() => {
+    try {
+      TipsAPI.getAll().then(setTipList);
+    } catch (e) {
+      console.log('error', e);
+      // TODO this error happen if API is not available but business errors like length of password go above. how to handle and display those?
+    }
+  }, []);
   return (
     <Container>
       <br />
@@ -77,6 +89,10 @@ const Home = () => {
           </Card.Body>
         </Card>
       </CardDeck>
+
+      {tipList.map((tip, i) => (
+        <ToastWrapper message={tip} timeOut={i + 1} position="bottom-right" key={tip._id} />
+      ))}
     </Container>
   );
 };

@@ -33,13 +33,15 @@
         "lblDescriptionPlaceHolder": "Breve descripcion de la historia",
         "tooltipEndSession": "Selecciona el valor de acordado para la historia!",
         "btnDeleteSession": "Eliminar",
-        "badgeAdminView": "Vista de administrador",
+        "badgeAdminView": "admin",
         "btnStartVoting": "Iniciar Votacion",
         "btnEndVoting": "Terminar Votacion",
         "btnEndSession": "Finalizar Session",
         "mdlTtlEndSession": "Terminar session",
         "mdlMsgEndSession": "Esta seguro?",
-        "mdlBtnEndSession": "Estoy seguro"
+        "mdlBtnEndSession": "Estoy seguro",
+        "lblVotingSummary": "Resumen de votacion",
+        "lblMemberURL": "URL de participantes"
     },
     "SessionSummary": {
         "btnDeleteSession": "Borrar sesion?",
