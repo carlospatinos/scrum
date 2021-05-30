@@ -88,5 +88,26 @@
         "lblUserName": "User name: ",
         "lblEmail": "Email: ",
         "lblReferLinkTitle": "Invite people to use the tool: "
+    },
+    "Header": {
+        "btnManageYourAccount": "Manage your account",
+        "lblPrivacyPolicy": "Privacy Policy",
+        "lblTermsAndConditions": "Terms of condition"
+    },
+    "Routes": {
+        "login": "Login",
+        "signup": "Sign up",
+        "home": "Home",
+        "profile": "Profile",
+        "planningconfig": "Planning Config",
+        "votingcards": "Voting Cards",
+        "sharesession": "Share Session",
+        "joinsession": "Join Session",
+        "participatesessionadmin": "Participate Session (admin)",
+        "sessionsummaryadmin": "Session Summary (admin)",
+        "privacypolicy": "Privacy Policy",
+        "logout": "Logout",
+        "root": "Root",
+        "notfound": "Not Found"
     }
 }

@@ -91,7 +91,7 @@ const Home = () => {
       </CardDeck>
 
       {tipList.map((tip, i) => (
-        <ToastWrapper message={tip} timeOut={i + 1} position="bottom-right" key={tip._id} />
+        <ToastWrapper message={tip} timeOut={i + 1} position="bottom-left" key={tip._id} />
       ))}
     </Container>
   );

@@ -28,8 +28,11 @@ const TeamList = props => {
         </Col>
       </Row>
       <Row>
-        <Col xs={12}>
-          <Image src="/dashboard.png" fluid />
+        <Col xs={12} className="d-flex justify-content-center">
+          <Figure>
+            <Figure.Image width={680} alt="Chart" src="/dashboard.png" />
+            <Figure.Caption>Important chart about session behaviour</Figure.Caption>
+          </Figure>
         </Col>
       </Row>
       <Row>

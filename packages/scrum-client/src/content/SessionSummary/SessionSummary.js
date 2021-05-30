@@ -51,7 +51,7 @@ export default function SessionSummary() {
         <tbody>
           {userStoryArray !== undefined && userStoryArray.length > 0  ? userStoryArray.map((userStory, i) => (
             <tr key={userStory._id}>
-              <td>{i}</td>
+              <td>{i+1}</td>
               <td>{userStory.title}</td>
               <td>{userStory.chosenEstimatedValue}</td>
               <td>{userStory.minEstimatedValue}</td>

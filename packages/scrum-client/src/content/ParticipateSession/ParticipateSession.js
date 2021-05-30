@@ -67,7 +67,13 @@ export default function ParticipateSession() {
   }, [sessionInformation, storyVotes]);
 
   if (!sessionInformation || !users) {
-    return <Spinner animation="border" />;
+    return (
+      <Row>
+        <Col xs={12} className="d-flex justify-content-center">
+          <Spinner animation="border" />
+        </Col>
+      </Row>
+    );
   }
 
   const handleUserStoryTitle = e => {
@@ -138,6 +144,7 @@ export default function ParticipateSession() {
           </Button>
         </Modal.Footer>
       </Modal>
+
       <Row>
         <Col xs={12} md={6} lg={8} className="mx-auto">
           <h4>
