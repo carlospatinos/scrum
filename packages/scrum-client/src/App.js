@@ -14,6 +14,16 @@ function App() {
   const { t } = useTranslation();
   return (
     <div className="d-flex flex-column min-vh-100">
+      {/* TODO See why the message is not showing */}
+      {/* <CookieConsent
+        location="top"
+        overlay="true"
+        cookieName="scrum-cookie-consent"
+        buttonText={t('CookieConsent.buttonText')}
+        expires={365}
+      >
+        {t('CookieConsent.message')}
+      </CookieConsent> */}
       <AuthProvider>
         <Header className="flex-shrink: 0" />
         <ErrorBoundary>
@@ -39,15 +49,7 @@ function App() {
           </main>
         </ErrorBoundary>
       </AuthProvider>
-      <CookieConsent
-        location="none"
-        overlay="true"
-        cookieName="scrum-cookie-consent"
-        buttonText={t('CookieConsent.buttonText')}
-        expires={365}
-      >
-        {t('CookieConsent.message')}
-      </CookieConsent>
+
       <Footer />
     </div>
   );

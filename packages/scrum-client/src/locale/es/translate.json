@@ -75,5 +75,14 @@
         "plcHdlStoryTitle": "Proporcionada por el administrador",
         "plcHdlStoryDescription": "Proporcionada por el administrador",
         "storyNotProvided": "Esperando que el administrador proporcione una historia para votar."
+    },
+    "ProfileView": {
+        "mdlTtlDeleteProfile": "Seguro?",
+        "mdlMsgDeleteProfile": "Esta operacion es irreversible, usa tu sabiduria",
+        "mdlBtnYesDeleteProfile": "Borrar",
+        "mdlBtnNoDeleteProfile": "Cancelar",
+        "lblUserName": "Nombre de usuario: ",
+        "lblEmail": "Correo electronico: ",
+        "lblReferLinkTitle": "Invita a otros a usar nuestra herramienta: "
     }
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Container, Form, Card, Modal } from 'react-bootstrap';
+import { Button, Container, Form, Modal, Row, Col, Figure, Jumbotron } from 'react-bootstrap';
+import { useTranslation } from 'react-i18next';
 import { useAuthState, useAuthDispatch, logout } from '../../context';
 import { ProfileAPI } from '../../api';
 
@@ -8,6 +9,7 @@ import './Profile.css';
 export default function Profile() {
   const [shareLink, setShareLink] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const { t } = useTranslation();
 
   const modalClose = () => setShowModal(false);
   const modalShow = async event => {
@@ -52,33 +54,64 @@ export default function Profile() {
     <Container>
       <Modal show={showModal} onHide={modalClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Sure?</Modal.Title>
+          <Modal.Title>{t('ProfileView.mdlTtlDeleteProfile')}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>This operation is final and unreversible, chose wisely!</Modal.Body>
+        <Modal.Body>{t('ProfileView.mdlMsgDeleteProfile')}</Modal.Body>
         <Modal.Footer>
           <Button variant="danger" onClick={handleDeleteProfile}>
-            Delete
+            {t('ProfileView.mdlBtnYesDeleteProfile')}
           </Button>
           <Button variant="primary" onClick={modalClose}>
-            Cancel
+            {t('ProfileView.mdlBtnNoDeleteProfile')}
           </Button>
         </Modal.Footer>
       </Modal>
-      <Form onSubmit={modalShow}>
-        <Card style={{ width: '18rem' }}>
-          <Card.Img variant="top" src={image} />
-          <Card.Body>
-            <Card.Title>User: {userDetails.user.fullName}</Card.Title>
-            <Card.Text>
-              Email: {userDetails.user.email} <br />
-              Share the love: <br /> {shareLink}
-            </Card.Text>
-            <Button block variant="danger" type="submit">
-              Delete
-            </Button>
-          </Card.Body>
-        </Card>
-      </Form>
+      <Row>
+        <Col xs={0} md={2} lg={3} className="mx-auto" />
+        <Col xs={12} md={8} lg={6} className="mx-auto">
+          <Jumbotron className="mt-3 shadow-lg p-3 mb-5 bg-white rounded">
+            <Form onSubmit={modalShow}>
+              <Row>
+                <Col className="d-flex justify-content-center">
+                  <Figure variant="top">
+                    <Figure.Image
+                      roundedCircle
+                      width={150}
+                      height={150}
+                      alt="User Profile Pic"
+                      src={image}
+                    />
+                  </Figure>
+                </Col>
+              </Row>
+              <Row>
+                <Col md={3}>{t('ProfileView.lblUserName')}</Col>
+                <Col md={9}>
+                  {userDetails.user.firstName} {userDetails.user.lastName}
+                </Col>
+              </Row>
+              <Row>
+                <Col md={3}>{t('ProfileView.lblEmail')}</Col>
+                <Col md={9}>{userDetails.user.email}</Col>
+              </Row>
+              <br />
+              <Row>
+                <Col md={12}>{t('ProfileView.lblReferLinkTitle')}</Col>
+                <Col md={12}>{shareLink}</Col>
+              </Row>
+              <br />
+              <Row>
+                <Col md={12}>
+                  <Button block variant="danger" type="submit">
+                    Delete
+                  </Button>
+                </Col>
+              </Row>
+            </Form>
+          </Jumbotron>
+        </Col>
+        <Col xs={0} md={2} lg={3} className="mx-auto" />
+      </Row>
     </Container>
   );
 }

@@ -11,7 +11,6 @@ const getUserVote = (storyVotes, user) => {
 
 const TeamList = props => {
   const { title, subtitle, users, storyVotes, admin, summaryVotes } = props;
-  console.log(users);
   const generateUserStatusBadge = () => {
     const randomStatus = Math.random();
     if (randomStatus > 0.5) {

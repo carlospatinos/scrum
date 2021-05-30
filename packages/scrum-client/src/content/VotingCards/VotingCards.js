@@ -2,11 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import Timer from 'react-compound-timer';
 import { useParams } from 'react-router-dom';
-import { Container, ListGroup, Badge, Spinner, Button } from 'react-bootstrap';
+import { Container, Badge, Spinner, Button, Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { DECKS } from '../../constants';
 import ClickableCard from '../../components/ClickableCard';
-import GridGenerator from '../../components/GridGenerator';
 import useSocket from '../../hooks/useSocket';
 import './VotingCards.css';
 import { useAuthState } from '../../context';
@@ -34,7 +33,10 @@ export default function VotingCards() {
   const { roomId } = useParams();
   const [cardDeck, setCardDeck] = useState([]);
   const [sessionInformation, setSessionInformation] = useState({});
+  // TODO remove next line and keep this
   const { story, socketEvents } = useSocket(roomId);
+  // const story = { storyTitle: 'test', isStoryActive: true };
+  // const { socketEvents } = useSocket(roomId);
   const userDetails = useAuthState();
 
   useEffect(() => {
@@ -49,6 +51,7 @@ export default function VotingCards() {
     });
   };
   const isStoryActive = story && story.isStoryActive;
+
   if (roomId === undefined) {
     return (
       <Container>
@@ -59,62 +62,79 @@ export default function VotingCards() {
 
   return (
     <Container>
-      <ListGroup>
-        <ListGroup.Item>
-          <h4>
-            {sessionInformation ? sessionInformation.title : ''}{' '}
-            <Badge variant="secondary">{t('VotingCards.lblMemberView')}</Badge>
-          </h4>
-          {isStoryActive ? (
-            <Timer formatValue={value => `${value < 10 ? `0${value}` : value} `}>
-              <Timer.Hours />:
-              <Timer.Minutes />:
-              <Timer.Seconds />
-            </Timer>
-          ) : (
-            <div />
-          )}
-        </ListGroup.Item>
-        {!isStoryActive ? (
-          <Button variant="primary" disabled>
-            <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
-            {t('VotingCards.storyNotProvided')}
-          </Button>
-        ) : (
-          <>
-            <ListGroup.Item>
-              {t('VotingCards.lblStoryTitle')}{' '}
-              {isStoryActive ? story.storyTitle : t('VotingCards.plcHdlStoryTitle')}
-            </ListGroup.Item>
-            <ListGroup.Item>
-              {t('VotingCards.lblStoryDescription')}{' '}
-              {isStoryActive ? story.storyDescription : t('VotingCards.plcHdlStoryDescription')}
-            </ListGroup.Item>
-          </>
-        )}
-      </ListGroup>
+      <Row>
+        <Col xs={0} md={2} lg={3} className="mx-auto" />
+        <Col xs={12} md={8} lg={6} className="mx-auto">
+          <Row>
+            <Col xs={12} className="mx-auto">
+              <h4>
+                {sessionInformation ? sessionInformation.title : ''}{' '}
+                <Badge variant="secondary">{t('VotingCards.lblMemberView')}</Badge>
+              </h4>
+            </Col>
+          </Row>
 
-      {/* Room: {roomId}
+          {!isStoryActive ? (
+            <Row>
+              <Col xs={12} className="mx-auto">
+                <Button variant="primary" disabled>
+                  <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
+                  {t('VotingCards.storyNotProvided')}
+                </Button>
+              </Col>
+            </Row>
+          ) : (
+            <>
+              <Row>
+                <Col xs={12} md={9} className="mx-auto">
+                  {t('VotingCards.lblStoryTitle')}{' '}
+                  {isStoryActive ? story.storyTitle : t('VotingCards.plcHdlStoryTitle')}
+                </Col>
+                <Col xs={12} md={3} className="mx-auto  d-flex flex-row-reverse">
+                  {isStoryActive ? (
+                    <Timer formatValue={value => `${value < 10 ? `0${value}` : value} `}>
+                      <Timer.Hours />:
+                      <Timer.Minutes />:
+                      <Timer.Seconds />
+                    </Timer>
+                  ) : (
+                    <div />
+                  )}
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={12} className="mx-auto">
+                  {t('VotingCards.lblStoryDescription')}{' '}
+                  {isStoryActive ? story.storyDescription : t('VotingCards.plcHdlStoryDescription')}
+                </Col>
+              </Row>
+            </>
+          )}
           <br />
-          Card Deck: {sessionInformation ? sessionInformation.cardDeck : ''}
-          <br /> */}
-      {isStoryActive ? (
-        <GridGenerator columns={6}>
-          {cardDeck.map(card => {
+          <Row>
+            {/* eslint-disable */}
+        {isStoryActive ? (
+          <>{cardDeck.map(card => {
             return (
-              <ClickableCard
-                image={card.image}
-                clickableFunction={handleSpecificCardToggle}
-                keyboardFunction={handleSpecificCardToggleKeyboard}
-                key={card.val}
-                id={card.id}
-              />
-            );
-          })}
-        </GridGenerator>
-      ) : (
-        <div />
-      )}
+              <Col className="box" xs={4} md={3} lg={3}>
+                <ClickableCard
+                  image={card.image}
+                  clickableFunction={handleSpecificCardToggle}
+                  keyboardFunction={handleSpecificCardToggleKeyboard}
+                  key={card.val}
+                  id={card.id}
+                />
+              </Col>
+            )
+          })};</>
+        ) : (
+          <div />
+        )}
+        { /* eslint-enable */}
+          </Row>
+        </Col>
+        <Col xs={0} md={2} lg={3} className="mx-auto" />
+      </Row>
     </Container>
   );
 }

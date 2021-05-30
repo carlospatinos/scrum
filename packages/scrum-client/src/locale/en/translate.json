@@ -79,5 +79,14 @@
         "plcHdlStoryTitle": "Provided by Admin",
         "plcHdlStoryDescription": "Provided by Admin",
         "storyNotProvided": "Waiting for admin to provide a story to vote."
+    },
+    "ProfileView": {
+        "mdlTtlDeleteProfile": "Sure?",
+        "mdlMsgDeleteProfile": "This operation is final and unreversible, chose wisely!",
+        "mdlBtnYesDeleteProfile": "Delete",
+        "mdlBtnNoDeleteProfile": "Cancel",
+        "lblUserName": "User name: ",
+        "lblEmail": "Email: ",
+        "lblReferLinkTitle": "Invite people to use the tool: "
     }
 }

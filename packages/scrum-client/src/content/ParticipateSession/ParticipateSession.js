@@ -8,8 +8,6 @@ import {
   Button,
   Spinner,
   Form,
-  ButtonToolbar,
-  ButtonGroup,
   Modal,
   Badge,
   OverlayTrigger,
@@ -225,7 +223,7 @@ export default function ParticipateSession() {
           {t('ParticipateSession.lblMemberURL')}
         </Col>
         <Col md={8} lg={10} className="mx-auto">
-          <a href={fullUrlToJoin}>{fullUrlToJoin}</a>
+          {fullUrlToJoin}
         </Col>
         {/*  d-sm-none d-md-bloc 
         <Col xs={8} className="mx-auto d-block d-md-none">

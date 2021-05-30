@@ -35,7 +35,7 @@ export default function SessionSummary() {
   return (
     <Container>
       <br />
-      <p>Session Summary:</p>
+      <p>Session Summary: Titulo? Fecha? Tiempo de la sessionn? Numero de participantes?</p>
       <br />
       <Table striped bordered hover>
         <thead>
