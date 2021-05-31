@@ -38,7 +38,7 @@ export default function Header() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ml-auto" activeKey={PATHS.LOGIN} onSelect={handleSelect}>
-              {/* // TODO chavito, how can i set the active path? all 3 are clicked */}
+              {/* // TODO chavito, how can i set the active path? all 3 are clicked issue #101 */}
               {routes.filter(visibleRouteCriteria).map(route =>
                 route.path === PATHS.PROFILE ? (
                   <NavDropdown
