@@ -62,7 +62,11 @@ export default function ParticipateSession() {
   useEffect(() => {
     if (!!sessionInformation && sessionInformation.cardDeck !== undefined) {
       const cardDeck = DECKS.byLabels(sessionInformation.cardDeck);
-      setSummaryVotes(cardDeck.getSummaryVote(storyVotes));
+      if (JSON.stringify(storyVotes) !== '{}') {
+        setSummaryVotes(cardDeck.getSummaryVote(storyVotes));
+      } else {
+        console.log('storyVotes', storyVotes);
+      }
     }
   }, [sessionInformation, storyVotes]);
 
