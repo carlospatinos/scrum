@@ -15,21 +15,26 @@ function App() {
   return (
     <div className="d-flex flex-column min-vh-100">
       {/* TODO See why the message is not showing */}
-      {/* <CookieConsent
-        location="top"
+      <CookieConsent
+        location="bottom"
         overlay="true"
         cookieName="scrum-cookie-consent"
         buttonText={t('CookieConsent.buttonText')}
         expires={365}
+        contentStyle={{
+          color: 'white',
+          fontWeight: 'bolder',
+        }}
+        style={{ width: '90%' }}
       >
         {t('CookieConsent.message')}
-      </CookieConsent> */}
+      </CookieConsent>
       <AuthProvider>
         <Header className="flex-shrink: 0" />
         <ErrorBoundary>
-          <main className="flex-fill">
-            <Row className="align-items-center vh-100">
-              <Col className="col-12 mx-auto">
+          <main className="container-fluid d-flex flex-column flex-grow-1">
+            <Row className="flex-grow-1">
+              <Col xs={12} className="d-flex align-items-center justify-content-center">
                 <Router>
                   <Suspense fallback={<Spinner animation="border" />}>
                     <Switch>

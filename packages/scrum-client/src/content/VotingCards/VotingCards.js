@@ -61,62 +61,63 @@ export default function VotingCards() {
   }
 
   return (
-    <Container>
-      <Row>
-        <Col xs={0} md={2} lg={3} className="mx-auto" />
-        <Col xs={12} md={8} lg={6} className="mx-auto">
+    <Row className="VotingCards">
+      <Col xs={0} md={1} lg={2} className="mx-auto" />
+      <Col xs={12} md={10} lg={8} className="mx-auto">
+        <Row>
+          <Col xs={12} className="mx-auto">
+            <h4>
+              {sessionInformation ? sessionInformation.title : ''}{' '}
+              <Badge variant="secondary">{t('VotingCards.lblMemberView')}</Badge>
+            </h4>
+          </Col>
+        </Row>
+
+        {!isStoryActive ? (
           <Row>
             <Col xs={12} className="mx-auto">
-              <h4>
-                {sessionInformation ? sessionInformation.title : ''}{' '}
-                <Badge variant="secondary">{t('VotingCards.lblMemberView')}</Badge>
-              </h4>
+              <Button variant="primary" disabled>
+                <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
+                {t('VotingCards.storyNotProvided')}
+              </Button>
             </Col>
           </Row>
-
-          {!isStoryActive ? (
+        ) : (
+          <>
             <Row>
-              <Col xs={12} className="mx-auto">
-                <Button variant="primary" disabled>
-                  <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" />
-                  {t('VotingCards.storyNotProvided')}
-                </Button>
-              </Col>
-            </Row>
-          ) : (
-            <>
-              <Row>
-                <Col xs={12} md={9} className="mx-auto">
-                  {t('VotingCards.lblStoryTitle')}{' '}
-                  {isStoryActive ? story.storyTitle : t('VotingCards.plcHdlStoryTitle')}
-                </Col>
-                <Col xs={12} md={3} className="mx-auto  d-flex flex-row-reverse">
-                  {isStoryActive ? (
+              <Col xs={12} className="mx-auto  d-flex flex-row-reverse">
+                {isStoryActive ? (
+                  <h4>
                     <Timer formatValue={value => `${value < 10 ? `0${value}` : value} `}>
                       <Timer.Hours />:
                       <Timer.Minutes />:
                       <Timer.Seconds />
                     </Timer>
-                  ) : (
-                    <div />
-                  )}
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12} className="mx-auto">
-                  {t('VotingCards.lblStoryDescription')}{' '}
-                  {isStoryActive ? story.storyDescription : t('VotingCards.plcHdlStoryDescription')}
-                </Col>
-              </Row>
-            </>
-          )}
-          <br />
-          <Row>
-            {/* eslint-disable */}
+                  </h4>
+                ) : (
+                  <div />
+                )}
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12} className="mx-auto">
+                {t('VotingCards.lblStoryTitle')}{' '}
+                {isStoryActive ? story.storyTitle : t('VotingCards.plcHdlStoryTitle')}
+              </Col>
+              <Col xs={12} className="mx-auto">
+                {t('VotingCards.lblStoryDescription')}{' '}
+                {isStoryActive ? story.storyDescription : t('VotingCards.plcHdlStoryDescription')}
+              </Col>
+            </Row>
+          </>
+        )}
+        <br />
+        <Row>
+          {/* eslint-disable */}
         {isStoryActive ? (
           <>{cardDeck.map(card => {
             return (
-              <Col className="box" xs={4} md={3} lg={3}>
+              <Col className="box" xs={4} md={3} lg={2}>
                 <ClickableCard
                   image={card.image}
                   clickableFunction={handleSpecificCardToggle}
@@ -126,15 +127,14 @@ export default function VotingCards() {
                 />
               </Col>
             )
-          })};</>
+          })}</>
         ) : (
           <div />
         )}
         { /* eslint-enable */}
-          </Row>
-        </Col>
-        <Col xs={0} md={2} lg={3} className="mx-auto" />
-      </Row>
-    </Container>
+        </Row>
+      </Col>
+      <Col xs={0} md={1} lg={2} className="mx-auto" />
+    </Row>
   );
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, Row, Col, Image, Figure } from 'react-bootstrap';
+import { Badge, Row, Col, Figure } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import './TeamList.css';
 
@@ -28,8 +28,8 @@ const TeamList = props => {
         </Col>
       </Row>
       <Row>
-        <Col xs={12} className="d-flex justify-content-center">
-          <Figure>
+        <Col sm={12} className="d-flex justify-content-center">
+          <Figure className="d-none d-sm-none d-md-block">
             <Figure.Image width={680} alt="Chart" src="/dashboard.png" />
             <Figure.Caption>Important chart about session behaviour</Figure.Caption>
           </Figure>
@@ -63,7 +63,6 @@ const TeamList = props => {
           .map(user => {
             return (
               <Col className="box" xs={12} md={6}>
-                {/* bg-primary  */}
                 <div className="bg-light inner">
                   <Row>
                     <Col>

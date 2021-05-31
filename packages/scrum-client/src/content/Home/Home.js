@@ -36,10 +36,10 @@ const Home = () => {
     }
   }, []);
   return (
-    <Container>
+    <Container className="mt-5">
       <br />
       <br />
-      <CardDeck className="mb-3 text-center">
+      <CardDeck className="text-center">
         <Card className=" box-shadow">
           <Card.Header>
             <h4>Retro</h4>
