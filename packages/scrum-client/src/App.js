@@ -14,7 +14,6 @@ function App() {
   const { t } = useTranslation();
   return (
     <div className="d-flex flex-column min-vh-100">
-      {/* TODO See why the message is not showing */}
       <CookieConsent
         location="bottom"
         overlay="true"
