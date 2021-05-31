@@ -7,12 +7,15 @@ const getUserVote = (storyVotes, user) => {
   console.log('storyVotes', storyVotes);
   // eslint-disable-next-line
   console.log('user._id', user._id);
+  // Object.keys(storyVotes).length === 0
+  // JSON.stringify(obj) === '{}';
+  console.log('Object.keys(storyVotes).length', Object.keys(storyVotes).length);
   // eslint-disable-next-line
-  const storyVote = storyVotes.find(([id]) => {
-    console.log('id', id);
-    // eslint-disable-next-line
+  const storyVote = JSON.stringify(storyVotes) === '{}' ? undefined : storyVotes.find(([id]) => {
+          console.log('id', id);
+          // eslint-disable-next-line
     return id === user._id;
-  });
+        });
   return storyVote ? storyVote[1] : '...';
 };
 
