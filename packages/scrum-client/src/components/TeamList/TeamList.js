@@ -4,8 +4,15 @@ import PropTypes from 'prop-types';
 import './TeamList.css';
 
 const getUserVote = (storyVotes, user) => {
+  console.log('storyVotes', storyVotes);
   // eslint-disable-next-line
-  const storyVote = storyVotes.find(([id]) => id === user._id);
+  console.log('user._id', user._id);
+  // eslint-disable-next-line
+  const storyVote = storyVotes.find(([id]) => {
+    console.log('id', id);
+    // eslint-disable-next-line
+    return id === user._id;
+  });
   return storyVote ? storyVote[1] : '...';
 };
 
