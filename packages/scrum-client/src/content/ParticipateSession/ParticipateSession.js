@@ -8,8 +8,6 @@ import {
   Button,
   Spinner,
   Form,
-  ButtonToolbar,
-  ButtonGroup,
   Modal,
   Badge,
   OverlayTrigger,
@@ -69,7 +67,13 @@ export default function ParticipateSession() {
   }, [sessionInformation, storyVotes]);
 
   if (!sessionInformation || !users) {
-    return <Spinner animation="border" />;
+    return (
+      <Row>
+        <Col xs={12} className="d-flex justify-content-center">
+          <Spinner animation="border" />
+        </Col>
+      </Row>
+    );
   }
 
   const handleUserStoryTitle = e => {
@@ -140,14 +144,24 @@ export default function ParticipateSession() {
           </Button>
         </Modal.Footer>
       </Modal>
+
       <Row>
-        <Col>
+        <Col xs={12} md={6} lg={8} className="mx-auto">
           <h4>
             {sessionInformation.title}{' '}
             <Badge variant="secondary">{t('ParticipateSession.badgeAdminView')}</Badge>
           </h4>{' '}
         </Col>
-        <Col>
+        <Col xs={6} md={3} lg={2} className="mx-auto  d-flex flex-row-reverse">
+          <h4>
+            <Timer formatValue={value => `${value < 10 ? `0${value}` : value} `}>
+              <Timer.Hours />:
+              <Timer.Minutes />:
+              <Timer.Seconds />
+            </Timer>
+          </h4>
+        </Col>
+        <Col xs={6} md={3} lg={2} className="mx-auto d-flex flex-row-reverse">
           <Button variant="danger" type="button" onClick={handleEndSession}>
             {t('ParticipateSession.btnEndSession')}
           </Button>
@@ -155,75 +169,53 @@ export default function ParticipateSession() {
       </Row>
       <br />
       <Row>
-        <Col>
-          <div>
-            <Form>
-              <Row>
-                <Col>
-                  <Form.Control
-                    placeholder={t('ParticipateSession.lblStory')}
-                    onChange={e => handleUserStoryTitle(e.target.value)}
-                    readOnly={!showStartUserStory}
-                    value={storyTitle}
-                  />
-                </Col>
-                <Col>
-                  <Form.Control
-                    placeholder={t('ParticipateSession.lblDescription')}
-                    onChange={e => setStoryDescription(e.target.value)}
-                    readOnly={!showStartUserStory}
-                    value={storyDescription}
-                  />
-                </Col>
-                <Col>
-                  <ButtonToolbar className="mb-2 mr-2">
-                    {showStartUserStory && (
-                      <ButtonGroup className="mr-2">
-                        <Button
-                          variant="primary"
-                          type="button"
-                          onClick={handleStartVoting}
-                          disabled={!validUserStory}
-                        >
-                          {t('ParticipateSession.btnStartVoting')}
-                        </Button>
-                      </ButtonGroup>
-                    )}
-                    {!showStartUserStory && (
-                      <ButtonGroup className="mr-2">
-                        <OverlayTrigger
-                          overlay={
-                            <Tooltip id="tooltip-disabled">
-                              {t('ParticipateSession.tooltipEndSession')}
-                            </Tooltip>
-                          }
-                        >
-                          <span className="d-inline-block">
-                            <Button variant="secondary" type="button" onClick={handleEndVoting}>
-                              {t('ParticipateSession.btnEndVoting')}
-                            </Button>
-                          </span>
-                        </OverlayTrigger>{' '}
-                        <h3>
-                          <Timer formatValue={value => `${value < 10 ? `0${value}` : value} `}>
-                            <Timer.Hours />:
-                            <Timer.Minutes />:
-                            <Timer.Seconds />
-                          </Timer>
-                        </h3>
-                      </ButtonGroup>
-                    )}
-                  </ButtonToolbar>
-                </Col>
-              </Row>
-            </Form>
-          </div>
+        <Col xs={12} md={3} lg={4} className="mx-auto">
+          <Form.Control
+            placeholder={t('ParticipateSession.lblStory')}
+            onChange={e => handleUserStoryTitle(e.target.value)}
+            readOnly={!showStartUserStory}
+            value={storyTitle}
+          />
+        </Col>
+        <Col xs={12} md={6} lg={6} className="mx-auto">
+          <Form.Control
+            placeholder={t('ParticipateSession.lblDescription')}
+            onChange={e => setStoryDescription(e.target.value)}
+            readOnly={!showStartUserStory}
+            value={storyDescription}
+          />
+        </Col>
+        <Col xs={12} md={3} lg={2} className="mx-auto d-flex flex-row-reverse">
+          {showStartUserStory && (
+            <Button
+              variant="primary"
+              type="button"
+              onClick={handleStartVoting}
+              disabled={!validUserStory}
+            >
+              {t('ParticipateSession.btnStartVoting')}
+            </Button>
+          )}
+          {!showStartUserStory && (
+            <OverlayTrigger
+              overlay={
+                <Tooltip id="tooltip-disabled">{t('ParticipateSession.tooltipEndSession')}</Tooltip>
+              }
+            >
+              <span className="d-inline-block">
+                <Button variant="secondary" type="button" onClick={handleEndVoting}>
+                  {t('ParticipateSession.btnEndVoting')}
+                </Button>
+              </span>
+            </OverlayTrigger>
+          )}
         </Col>
       </Row>
+      <br />
       <Row>
         <Col>
           <TeamList
-            title="Team Summary"
+            title={t('ParticipateSession.lblVotingSummary')}
             sessionInformation={sessionInformation}
             users={users}
             admin={{ id: userDetails.user }}
@@ -232,13 +224,20 @@ export default function ParticipateSession() {
           />
         </Col>
       </Row>
+      <br />
       <Row>
-        <Col>
-          <div>
-            URL to join: <a href={fullUrlToJoin}>{fullUrlToJoin}</a>
-          </div>
+        <Col xs={4} md={8} lg={2} className="mx-auto">
+          {t('ParticipateSession.lblMemberURL')}
         </Col>
+        <Col md={8} lg={10} className="mx-auto">
+          {fullUrlToJoin}
+        </Col>
+        {/*  d-sm-none d-md-bloc 
+        <Col xs={8} className="mx-auto d-block d-md-none">
+          <a href={fullUrlToJoin}>URL</a>
+        </Col> */}
       </Row>
+      <br />
     </Container>
   );
 }

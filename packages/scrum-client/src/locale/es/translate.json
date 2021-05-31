@@ -33,13 +33,15 @@
         "lblDescriptionPlaceHolder": "Breve descripcion de la historia",
         "tooltipEndSession": "Selecciona el valor de acordado para la historia!",
         "btnDeleteSession": "Eliminar",
-        "badgeAdminView": "Vista de administrador",
+        "badgeAdminView": "admin",
         "btnStartVoting": "Iniciar Votacion",
         "btnEndVoting": "Terminar Votacion",
         "btnEndSession": "Finalizar Session",
         "mdlTtlEndSession": "Terminar session",
         "mdlMsgEndSession": "Esta seguro?",
-        "mdlBtnEndSession": "Estoy seguro"
+        "mdlBtnEndSession": "Estoy seguro",
+        "lblVotingSummary": "Resumen de votacion",
+        "lblMemberURL": "URL de participantes"
     },
     "SessionSummary": {
         "btnDeleteSession": "Borrar sesion?",
@@ -73,5 +75,35 @@
         "plcHdlStoryTitle": "Proporcionada por el administrador",
         "plcHdlStoryDescription": "Proporcionada por el administrador",
         "storyNotProvided": "Esperando que el administrador proporcione una historia para votar."
+    },
+    "ProfileView": {
+        "mdlTtlDeleteProfile": "Seguro?",
+        "mdlMsgDeleteProfile": "Esta operacion es irreversible, usa tu sabiduria",
+        "mdlBtnYesDeleteProfile": "Borrar",
+        "mdlBtnNoDeleteProfile": "Cancelar",
+        "lblUserName": "Nombre de usuario: ",
+        "lblEmail": "Correo electronico: ",
+        "lblReferLinkTitle": "Invita a otros a usar nuestra herramienta: "
+    },
+    "Header": {
+        "btnManageYourAccount": "Administra tu cuenta",
+        "lblPrivacyPolicy": "Politica de privacidad",
+        "lblTermsAndConditions": "Terminos y condiciones"
+    },
+    "Routes": {
+        "login": "Iniciar Sesion",
+        "signup": "Crear Cuenta",
+        "home": "Pagina inicial",
+        "profile": "Perfil",
+        "planningconfig": "Configurar planeacion",
+        "votingcards": "Cartas de votacion",
+        "sharesession": "Compartir Sesion",
+        "joinsession": "Unirte a una sesion",
+        "participatesessionadmin": "Participar en session (admin)",
+        "sessionsummaryadmin": "Resumen de la sesion (admin)",
+        "privacypolicy": "Politicas de privacidad",
+        "logout": "Salir",
+        "root": "Raiz",
+        "notfound": "Pagina no encontrada"
     }
 }

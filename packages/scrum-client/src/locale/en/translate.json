@@ -31,19 +31,21 @@
         "phrPassword": "Enter password"
     },
     "ParticipateSession": {
-        "lblStory": "Story",
+        "lblStory": "User story",
         "lblStoryPlaceHolder": "#1234 Story",
         "lblDescription": "Description",
         "lblDescriptionPlaceHolder": "Short description of the story",
         "tooltipEndSession": "Choose the agreed value for the story!",
         "btnDeleteSession": "Delete",
         "btnStartVoting": "Start Voting",
-        "badgeAdminView": "Admin view",
+        "badgeAdminView": "admin",
         "btnEndVoting": "End Voting",
         "btnEndSession": "End Session",
         "mdlTtlEndSession": "Finish session",
         "mdlMsgEndSession": "Are you sure?",
-        "mdlBtnEndSession": "Totally"
+        "mdlBtnEndSession": "Totally",
+        "lblVotingSummary": "Voting Summary",
+        "lblMemberURL": "Members URL"
     },
     "SessionSummary": {
         "btnDeleteSession": "Delete this session?",
@@ -77,5 +79,35 @@
         "plcHdlStoryTitle": "Provided by Admin",
         "plcHdlStoryDescription": "Provided by Admin",
         "storyNotProvided": "Waiting for admin to provide a story to vote."
+    },
+    "ProfileView": {
+        "mdlTtlDeleteProfile": "Sure?",
+        "mdlMsgDeleteProfile": "This operation is final and unreversible, chose wisely!",
+        "mdlBtnYesDeleteProfile": "Delete",
+        "mdlBtnNoDeleteProfile": "Cancel",
+        "lblUserName": "User name: ",
+        "lblEmail": "Email: ",
+        "lblReferLinkTitle": "Invite people to use the tool: "
+    },
+    "Header": {
+        "btnManageYourAccount": "Manage your account",
+        "lblPrivacyPolicy": "Privacy Policy",
+        "lblTermsAndConditions": "Terms of condition"
+    },
+    "Routes": {
+        "login": "Login",
+        "signup": "Sign up",
+        "home": "Home",
+        "profile": "Profile",
+        "planningconfig": "Planning Config",
+        "votingcards": "Voting Cards",
+        "sharesession": "Share Session",
+        "joinsession": "Join Session",
+        "participatesessionadmin": "Participate Session (admin)",
+        "sessionsummaryadmin": "Session Summary (admin)",
+        "privacypolicy": "Privacy Policy",
+        "logout": "Logout",
+        "root": "Root",
+        "notfound": "Not Found"
     }
 }

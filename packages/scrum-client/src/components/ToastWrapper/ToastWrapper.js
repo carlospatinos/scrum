@@ -18,7 +18,7 @@ const ToastWrapper = props => {
   return (
     <>
       <Toast
-        style={{ position: 'absolute', top: '20px', right: '20px' }}
+        style={{ position: 'absolute', bottom: '80px', left: '20px' }}
         onClose={() => setShow(false)}
         show={show}
         delay={DELAY}

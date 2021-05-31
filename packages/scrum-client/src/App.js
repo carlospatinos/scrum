@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Switch, BrowserRouter as Router } from 'react-router-dom';
-import { Container, Spinner } from 'react-bootstrap';
+import { Spinner, Row, Col } from 'react-bootstrap';
 import CookieConsent from 'react-cookie-consent';
 import { useTranslation } from 'react-i18next';
 import Header from './components/Header';
@@ -14,38 +14,42 @@ function App() {
   const { t } = useTranslation();
   return (
     <div className="d-flex flex-column min-vh-100">
-      <AuthProvider>
-        <Header />
-        <ErrorBoundary>
-          <main className="flex-fill">
-            <Container className="px-5">
-              <Router>
-                <Suspense fallback={<Spinner animation="border" />}>
-                  <Switch>
-                    {routes.map(route => (
-                      <AppRoute
-                        key={route.path}
-                        path={route.path}
-                        component={route.component}
-                        isPrivate={route.isPrivate}
-                      />
-                    ))}
-                  </Switch>
-                </Suspense>
-              </Router>
-            </Container>
-          </main>
-        </ErrorBoundary>
-      </AuthProvider>
-      <CookieConsent
-        location="none"
+      {/* TODO See why the message is not showing */}
+      {/* <CookieConsent
+        location="top"
         overlay="true"
         cookieName="scrum-cookie-consent"
         buttonText={t('CookieConsent.buttonText')}
         expires={365}
       >
         {t('CookieConsent.message')}
-      </CookieConsent>
+      </CookieConsent> */}
+      <AuthProvider>
+        <Header className="flex-shrink: 0" />
+        <ErrorBoundary>
+          <main className="flex-fill">
+            <Row className="align-items-center vh-100">
+              <Col className="col-12 mx-auto">
+                <Router>
+                  <Suspense fallback={<Spinner animation="border" />}>
+                    <Switch>
+                      {routes.map(route => (
+                        <AppRoute
+                          key={route.path}
+                          path={route.path}
+                          component={route.component}
+                          isPrivate={route.isPrivate}
+                        />
+                      ))}
+                    </Switch>
+                  </Suspense>
+                </Router>
+              </Col>
+            </Row>
+          </main>
+        </ErrorBoundary>
+      </AuthProvider>
+
       <Footer />
     </div>
   );
