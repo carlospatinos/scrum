@@ -5,7 +5,6 @@ import {
   FormGroup,
   FormControl,
   FormLabel,
-  Container,
   Col,
   Form,
   FormCheck,
@@ -89,96 +88,94 @@ export default function PlanningConfig() {
   const isValidForm = validateForm();
 
   return (
-    <Container className="PlanningConfig">
-      <Form onSubmit={handleSubmit}>
-        <FormGroup controlId="planningTitle">
-          <FormLabel>{t('PlanningConfig.lblTitle')}</FormLabel>
-          <FormControl
-            value={title}
-            onChange={e => setTitle(e.target.value)}
-            placeholder={t('PlanningConfig.phrTitle')}
-            name="title"
-          />
-        </FormGroup>
-        <FormGroup controlId="cardDeck">
-          <FormLabel>{t('PlanningConfig.lblCardDeck')}</FormLabel>
-          <FormControl
-            as="select"
-            name="cardDeck"
-            onChange={e => {
-              setCardDeck(e.target.value);
-              setSampleValues(e.target.value);
-            }}
-          >
-            {cardDeckOptions.map(({ key, name, labels }) => (
-              <option value={labels} key={key}>
-                {name}
-              </option>
-            ))}
-          </FormControl>
-        </FormGroup>
-        <FormGroup controlId="sampleValues">
-          <FormLabel>{t('PlanningConfig.lblValues')} </FormLabel>
-          <FormControl value={sampleValues} name="sampleValues" disabled />
-        </FormGroup>
-        <fieldset>
-          <Form.Group>
-            <Form.Label as="userStoriesCreationMethod" column>
-              {t('PlanningConfig.lblCreationMethod')}
-            </Form.Label>
-            <Col onChange={e => setUserStoriesCreationMethod(e.target.value)}>
-              <Form.Check
-                type="radio"
-                label="Manual"
-                name="userStoriesCreationMethod"
-                value="manual"
-                defaultChecked
-              />
-              <Form.Check
-                type="radio"
-                label="Github"
-                name="userStoriesCreationMethod"
-                value="github"
-                disabled
-              />
-              <Form.Check
-                type="radio"
-                label="GitLab"
-                name="userStoriesCreationMethod"
-                value="gitlab"
-                disabled
-              />
-
-              <Form.Check
-                type="radio"
-                label="CSV"
-                name="userStoriesCreationMethod"
-                value="csv"
-                disabled
-              />
-            </Col>
-          </Form.Group>
-        </fieldset>
-        <FormGroup controlId="allowUnauthenticated">
-          <FormCheck
-            type="checkbox"
-            label={t('PlanningConfig.lblAllowUnauthenticated')}
-            onChange={e => setAllowUnauthenticated(e.target.checked)}
-            name="allowUnauthenticated"
-          />
-        </FormGroup>
-
-        {apiResponse && <Alert variant="danger">{apiResponse}</Alert>}
-        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-        <Button
-          block
-          disabled={!validateForm()}
-          type="submit"
-          variant={isValidForm ? 'primary' : 'secondary'}
+    <Form onSubmit={handleSubmit} className="mt-5">
+      <FormGroup controlId="planningTitle">
+        <FormLabel>{t('PlanningConfig.lblTitle')}</FormLabel>
+        <FormControl
+          value={title}
+          onChange={e => setTitle(e.target.value)}
+          placeholder={t('PlanningConfig.phrTitle')}
+          name="title"
+        />
+      </FormGroup>
+      <FormGroup controlId="cardDeck">
+        <FormLabel>{t('PlanningConfig.lblCardDeck')}</FormLabel>
+        <FormControl
+          as="select"
+          name="cardDeck"
+          onChange={e => {
+            setCardDeck(e.target.value);
+            setSampleValues(e.target.value);
+          }}
         >
-          {t('PlanningConfig.btnCreateSession')}
-        </Button>
-      </Form>
-    </Container>
+          {cardDeckOptions.map(({ key, name, labels }) => (
+            <option value={labels} key={key}>
+              {name}
+            </option>
+          ))}
+        </FormControl>
+      </FormGroup>
+      <FormGroup controlId="sampleValues">
+        <FormLabel>{t('PlanningConfig.lblValues')} </FormLabel>
+        <FormControl value={sampleValues} name="sampleValues" disabled />
+      </FormGroup>
+      <fieldset>
+        <Form.Group>
+          <Form.Label as="userStoriesCreationMethod" column>
+            {t('PlanningConfig.lblCreationMethod')}
+          </Form.Label>
+          <Col onChange={e => setUserStoriesCreationMethod(e.target.value)}>
+            <Form.Check
+              type="radio"
+              label="Manual"
+              name="userStoriesCreationMethod"
+              value="manual"
+              defaultChecked
+            />
+            <Form.Check
+              type="radio"
+              label="Github"
+              name="userStoriesCreationMethod"
+              value="github"
+              disabled
+            />
+            <Form.Check
+              type="radio"
+              label="GitLab"
+              name="userStoriesCreationMethod"
+              value="gitlab"
+              disabled
+            />
+
+            <Form.Check
+              type="radio"
+              label="CSV"
+              name="userStoriesCreationMethod"
+              value="csv"
+              disabled
+            />
+          </Col>
+        </Form.Group>
+      </fieldset>
+      <FormGroup controlId="allowUnauthenticated">
+        <FormCheck
+          type="checkbox"
+          label={t('PlanningConfig.lblAllowUnauthenticated')}
+          onChange={e => setAllowUnauthenticated(e.target.checked)}
+          name="allowUnauthenticated"
+        />
+      </FormGroup>
+
+      {apiResponse && <Alert variant="danger">{apiResponse}</Alert>}
+      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+      <Button
+        block
+        disabled={!validateForm()}
+        type="submit"
+        variant={isValidForm ? 'primary' : 'secondary'}
+      >
+        {t('PlanningConfig.btnCreateSession')}
+      </Button>
+    </Form>
   );
 }
