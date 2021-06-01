@@ -24,9 +24,9 @@ const SocketState = (initialState = []) => {
     const userId = user._id;
     if (rooms.has(room.id)) {
       const _room = rooms.get(room.id);
-      logger.debug(`joinUserToRoom the room {${room}} exists already`);
+      logger.debug(`joinUserToRoom the room {${room.id}} exists already`);
       if (!_room.users.has(userId)) {
-        logger.debug(`joinUserToRoom adding user {${userId}} to the room {${_room.id}}`);
+        logger.debug(`joinUserToRoom adding user {${userId}} to the room {${room.id}}`);
         _room.users.set(userId, user);
       }
     } else {
@@ -46,8 +46,9 @@ const SocketState = (initialState = []) => {
 
   const setRoomStoryVote = (room, user, vote) => {
     const userId = user._id;
-    logger.debug(`--server-state-setRoomStoryVote on room {${room}} for user {${user}} with value {${vote}}`);
+    logger.debug(`--server-state-setRoomStoryVote on room {${room.id}} for user {${userId}} with value {${vote}}`);
     const _room = rooms.get(room.id);
+    logger.debug(`--server-state-setRoomStoryVote on room {${JSON.stringify(_room)}}`);
     _room.storyVotes.set(userId, vote);
     return _room.storyVotes;
   };

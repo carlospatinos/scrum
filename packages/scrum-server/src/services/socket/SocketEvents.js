@@ -28,13 +28,13 @@ const SocketEvents = io => {
     };
     const onStoryUpdate = ({ room, story }) => {
       const _room = socketState.setRoomStory(room, story);
-      logger.debug(`onStoryUpdate on event {${EVENT.STORY_UPDATE}} in room {${room.id}} for story {${story}}`);
+      logger.debug(`onStoryUpdate on event {${EVENT.STORY_UPDATE}} in room {${room.id}} for story {${JSON.stringify(story)}}`);
       io.to(room.id).emit(EVENT.STORY_UPDATE, {room:_room, story});
 
     };
     const onStoryVotesUpdate = ({ room, user, vote }) => {
       const storyVotes = socketState.setRoomStoryVote(room, user, vote);
-      logger.debug(`onStoryVotesUpdate on event {${EVENT.STORY_VOTES_UPDATE}} in room {${room.id}} with storyVotes {${storyVotes}}`);
+      logger.debug(`onStoryVotesUpdate on event {${EVENT.STORY_VOTES_UPDATE}} in room {${room.id}} with storyVotes {${JSON.stringify(storyVotes)}} - vote ${vote}`);
       io.to(room.id).emit(EVENT.STORY_VOTES_UPDATE, {room, storyVotes});
     };
 

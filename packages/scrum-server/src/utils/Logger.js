@@ -10,7 +10,9 @@ const myWinstonOptions = {
     format.label({ label: path.basename(require.main.filename) }),
     format.timestamp({ format: keys.logging.format }),
     format.align(),
-    format.printf(info => `${info.level} - ${[info.timestamp]} - ${info.message}`)
+    format.printf(
+      info => `${[info.timestamp]} - ${info.level} - [${info.label}] -> ${info.message}`
+    )
   ),
 };
 
