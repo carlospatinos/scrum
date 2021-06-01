@@ -62,7 +62,11 @@ export default function ParticipateSession() {
   useEffect(() => {
     if (!!sessionInformation && sessionInformation.cardDeck !== undefined) {
       const cardDeck = DECKS.byLabels(sessionInformation.cardDeck);
-      setSummaryVotes(cardDeck.getSummaryVote(storyVotes));
+      if (JSON.stringify(storyVotes) !== '{}') {
+        setSummaryVotes(cardDeck.getSummaryVote(storyVotes));
+      } else {
+        console.log('storyVotes', storyVotes);
+      }
     }
   }, [sessionInformation, storyVotes]);
 
@@ -152,7 +156,7 @@ export default function ParticipateSession() {
             <Badge variant="secondary">{t('ParticipateSession.badgeAdminView')}</Badge>
           </h4>{' '}
         </Col>
-        <Col xs={6} md={3} lg={2} className="mx-auto  d-flex flex-row-reverse">
+        <Col xs={5} md={3} lg={2} className="d-none d-md-block flex-row-reverse">
           <h4>
             <Timer formatValue={value => `${value < 10 ? `0${value}` : value} `}>
               <Timer.Hours />:
@@ -161,8 +165,16 @@ export default function ParticipateSession() {
             </Timer>
           </h4>
         </Col>
-        <Col xs={6} md={3} lg={2} className="mx-auto d-flex flex-row-reverse">
-          <Button variant="danger" type="button" onClick={handleEndSession}>
+        <Col xs={5} md={3} lg={2} className="d-sm-block d-md-none flex-row-reverse">
+          <h4>
+            <Timer formatValue={value => `${value < 10 ? `0${value}` : value} `}>
+              <Timer.Minutes />:
+              <Timer.Seconds />
+            </Timer>
+          </h4>
+        </Col>
+        <Col xs={7} md={3} lg={2} className="mx-auto d-flex flex-row-reverse">
+          <Button variant="danger" type="button" onClick={handleEndSession} className="btn-sm">
             {t('ParticipateSession.btnEndSession')}
           </Button>
         </Col>
@@ -192,6 +204,7 @@ export default function ParticipateSession() {
               type="button"
               onClick={handleStartVoting}
               disabled={!validUserStory}
+              className="btn-sm"
             >
               {t('ParticipateSession.btnStartVoting')}
             </Button>
@@ -226,16 +239,15 @@ export default function ParticipateSession() {
       </Row>
       <br />
       <Row>
-        <Col xs={4} md={8} lg={2} className="mx-auto">
+        <Col xs={6} md={4} lg={2} className="mx-auto">
           {t('ParticipateSession.lblMemberURL')}
         </Col>
-        <Col md={8} lg={10} className="mx-auto">
+        <Col sm={6} md={8} lg={10} className="mx-auto d-none d-md-block">
           {fullUrlToJoin}
         </Col>
-        {/*  d-sm-none d-md-bloc 
-        <Col xs={8} className="mx-auto d-block d-md-none">
+        <Col xs={6} md={8} className="mx-auto d-sm-block d-md-none">
           <a href={fullUrlToJoin}>URL</a>
-        </Col> */}
+        </Col>
       </Row>
       <br />
     </Container>

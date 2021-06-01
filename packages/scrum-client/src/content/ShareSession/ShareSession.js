@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import QRCode from 'qrcode.react';
-import { Container, ListGroup, Button } from 'react-bootstrap';
+import { Container, ListGroup, Button, Row, Col } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { API_CONSTANTS, PATHS } from '../../constants';
@@ -37,7 +37,7 @@ export default function ShareSession() {
   }, []);
 
   return (
-    <Container className="ShareSession">
+    <Container className="mt-5">
       <ListGroup as="ul">
         <ListGroup.Item as="li">
           <h4>{t('ShareSession.lblInviteMembers')}</h4>
@@ -47,15 +47,25 @@ export default function ShareSession() {
           </Button>
         </ListGroup.Item>
         <ListGroup.Item as="li">
-          {t('ShareSession.lblLetScanQR')}
-          <br />
-          <br />
-          <p className="ShareSessionQR">
-            <QRCode value={fullUrlToJoin} />
-          </p>
-          {t('ShareSession.lblShareLink')}
-          <br />
-          <p>{fullUrlToJoin}</p>
+          <Row>
+            <Col>{t('ShareSession.lblLetScanQR')}</Col>
+          </Row>
+          <Row>
+            <Col className="ShareSessionQR">
+              <QRCode value={fullUrlToJoin} />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} md={4} lg={2} className="mx-auto">
+              {t('ShareSession.lblShareLink')}
+            </Col>
+            <Col sm={12} md={8} lg={10} className="mx-auto d-none d-md-block">
+              {fullUrlToJoin}
+            </Col>
+            <Col xs={12} md={8} className="mx-auto d-sm-block d-md-none">
+              <a href={fullUrlToJoin}>URL</a>
+            </Col>
+          </Row>
         </ListGroup.Item>
       </ListGroup>
     </Container>
