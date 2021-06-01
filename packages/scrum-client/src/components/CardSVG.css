@@ -1,0 +1,7 @@
+.card-selected .inner-rect{
+    fill:'#61DAFB'
+}
+.card-not-selected .inner-rect{
+    fill:'#DDDDDD' 
+}
+/* TODO , NO FUNCIONO */
