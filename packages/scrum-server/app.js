@@ -35,7 +35,8 @@ i18n.configure({
 const CLIENT_PATH = '/../scrum-client/build/';
 app.use(cors(corsOptions));
 app.use(i18n.init);
-app.use(logger('dev'));
+app.use(logger(keys.httpLogging.httpLogFormat, { skip: (req, res) => keys.httpLogging.httpLoggingEnabled === 'false' }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());

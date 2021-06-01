@@ -14,6 +14,14 @@ const config = {
   port: process.env.PORT || 3000,
   jwtSecret: process.env.JWT_SECRET || 'jwtSecret',
   reactAppURL: process.env.REACT_APP_API_URL || 'http://scrum-app-local.com:4000',
+  logging: {
+    level: process.env.LOG_LEVEL || 'warn',
+    format: process.env.LOG_DATEFORMAT || 'MMM-DD-YYYY HH:mm:ss',
+  },
+  httpLogging: {
+    httpLogFormat: process.env.HTTP_LOG_FORMAT || 'tiny',
+    httpLoggingEnabled: process.env.HTTP_LOG_ENABLED || 'false',
+  },
   google: {
     clientID: process.env.GOOGLE_CLIENT_ID || 'clientID',
     clientSecret: process.env.GOOGLE_CLIENT_SECRET || 'clientSecret',
