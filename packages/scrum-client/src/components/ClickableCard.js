@@ -8,8 +8,8 @@ const ClickableCard = props => {
     <div
       role="button"
       tabIndex={0}
-      onClick={e => clickableFunction({ target: { id } })}
-      onKeyDown={e => keyboardFunction({ target: { id } })}
+      onClick={() => clickableFunction({ target: { id } })}
+      onKeyDown={() => keyboardFunction({ target: { id } })}
       className="card"
       id={id}
     >
