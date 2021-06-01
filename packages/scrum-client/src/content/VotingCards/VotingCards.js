@@ -35,8 +35,6 @@ export default function VotingCards() {
   const [sessionInformation, setSessionInformation] = useState({});
   // TODO remove next line and keep this
   const { story, socketEvents } = useSocket(roomId);
-  // const story = { storyTitle: 'test', isStoryActive: true };
-  // const { socketEvents } = useSocket(roomId);
   const userDetails = useAuthState();
 
   useEffect(() => {
@@ -49,6 +47,11 @@ export default function VotingCards() {
       user: userDetails.user,
       vote: cardDeck.find(card => card.id === event.target.id).val,
     });
+    setCardDeck(
+      cardDeck.map(card =>
+        card.id === event.target.id ? { ...card, isSelected: true } : { ...card, isSelected: false }
+      )
+    );
   };
   const isStoryActive = story && story.isStoryActive;
 
@@ -117,13 +120,15 @@ export default function VotingCards() {
         {isStoryActive ? (
           <>{cardDeck.map(card => {
             return (
-              <Col className="box" xs={4} md={3} lg={2}>
+              <Col className="box" xs={4} md={3} lg={3}>
                 <ClickableCard
                   image={card.image}
+                  text={card.text}
                   clickableFunction={handleSpecificCardToggle}
                   keyboardFunction={handleSpecificCardToggleKeyboard}
                   key={card.val}
                   id={card.id}
+                  isSelected={card.isSelected}
                 />
               </Col>
             )

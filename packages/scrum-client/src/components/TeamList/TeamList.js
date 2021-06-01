@@ -99,9 +99,6 @@ const TeamList = props => {
             );
           })}
         { /* eslint-enable */}
-
-
-
       </Row>
     </>
   );

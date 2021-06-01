@@ -1,19 +1,21 @@
 import React from 'react';
+import CardSVG from './CardSVG';
 
 const ClickableCard = props => {
-  const { clickableFunction } = props;
-  const { keyboardFunction } = props;
-  const { image } = props;
-  const { id } = props;
+  const { clickableFunction, keyboardFunction, text, id, isSelected } = props;
+
   return (
     <div
-      onClick={clickableFunction}
       role="button"
       tabIndex={0}
-      onKeyDown={keyboardFunction}
-      style={{ display: 'inline-block' }}
+      onClick={e => clickableFunction({ target: { id } })}
+      onKeyDown={e => keyboardFunction({ target: { id } })}
+      className="card"
+      id={id}
     >
-      <img src={image} alt="Card" width="100" id={id} />
+      <object style={{ width: '110%', padding: 0, border: 0 }} className="card">
+        <CardSVG text={text} isSelected={isSelected} />
+      </object>
     </div>
   );
 };
