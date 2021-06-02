@@ -29,12 +29,12 @@ function App() {
         {t('CookieConsent.message')}
       </CookieConsent>
       <AuthProvider>
-        <Header className="flex-shrink: 0" />
-        <ErrorBoundary>
-          <main className="container-fluid d-flex flex-column flex-grow-1">
-            <Row className="flex-grow-1">
-              <Col xs={12} className="d-flex align-items-center justify-content-center">
-                <Router>
+        <Router>
+          <Header className="flex-shrink: 0" />
+          <ErrorBoundary>
+            <main className="container-fluid d-flex flex-column flex-grow-1">
+              <Row className="flex-grow-1">
+                <Col xs={12} className="d-flex align-items-center justify-content-center">
                   <Suspense fallback={<Spinner animation="border" />}>
                     <Switch>
                       {routes.map(route => (
@@ -47,11 +47,11 @@ function App() {
                       ))}
                     </Switch>
                   </Suspense>
-                </Router>
-              </Col>
-            </Row>
-          </main>
-        </ErrorBoundary>
+                </Col>
+              </Row>
+            </main>
+          </ErrorBoundary>
+        </Router>
       </AuthProvider>
 
       <Footer />

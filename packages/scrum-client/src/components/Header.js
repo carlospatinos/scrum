@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, NavDropdown, Button, Figure } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
 import { PATHS } from '../constants';
 import routes from '../config/routes';
 import { useAuthState } from '../context';
@@ -13,33 +14,28 @@ const visibleRoute = isUserLoggedIn => {
 
 export default function Header() {
   const userDetails = useAuthState();
+  const location = useLocation();
   const isLoggedIn = userDetails.login_access_token;
   const visibleRouteCriteria = visibleRoute(isLoggedIn);
   const { t } = useTranslation();
 
-  // const [activeMenu, setActiveMenu] = useState([]);
+  // TODO to a function
   const image =
     userDetails.user.profileImageUrl === undefined
       ? '/icons/default-profile.png'
       : userDetails.user.profileImageUrl;
-  // const handleSelect = event => {
-  //   // setActiveMenu(event);
-  //   // console.log(event);
-  // };
 
   return (
     <header>
       <div>
         <Navbar variant="dark" className="bg-primary fixed-top navbar-expand-md" expand="lg">
           <Navbar.Brand className="" href={PATHS.HOME}>
-            <img src="/appLogo.svg" alt="Logo" />
-            <strong className="align-middle">Scrum</strong>
+            <img src="/appLogo.svg" alt={t(`Header.altLogo`)} />
+            <strong className="align-middle">{t(`Header.titleBrand`)}</strong>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            {/* // onSelect={handleSelect} */}
-            <Nav className="ml-auto" activeKey={PATHS.LOGIN}>
-              {/* // TODO chavito, how can i set the active path? all 3 are clicked issue #101 */}
+            <Nav className="ml-auto" activeKey={location.pathname}>
               {routes.filter(visibleRouteCriteria).map(route =>
                 route.path === PATHS.PROFILE ? (
                   <NavDropdown
@@ -52,7 +48,7 @@ export default function Header() {
                         roundedCircle
                         width={70}
                         height={70}
-                        alt="User Profile Pic"
+                        alt={t(`Header.altProfilePic`)}
                         src={image}
                       />
                     </Figure>
@@ -96,7 +92,6 @@ export default function Header() {
                   </Nav.Link>
                 )
               )}
-              {/* <Nav.Link key="12345sdasdas">Active: {activeMenu}</Nav.Link> */}
             </Nav>
           </Navbar.Collapse>
         </Navbar>
