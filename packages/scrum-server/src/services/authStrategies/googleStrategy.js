@@ -3,6 +3,9 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const keys = require('../../config/keys');
 const User = require('../../api/components/user/model');
+const { Logger } = require('../../utils/Logger');
+
+const logger = Logger(__filename);
 
 module.exports = function (passport) {
   function extractProfile(profile) {
@@ -30,15 +33,15 @@ module.exports = function (passport) {
         const googleProfileInfo = extractProfile(profile);
         const existingUser = await User.findOne({ googleId: googleProfileInfo.googleId }).exec();
         if (!existingUser) {
-          console.log('user not found in db');
+          logger.info('user not found in db');
           const newUser = await new User(googleProfileInfo).save();
           if (!newUser) {
-            console.log('error user not saved');
+            logger.warn('error user not saved');
             doneCallBack(null, profile);
           }
           doneCallBack(null, newUser);
         } else {
-          console.log('user found in db');
+          logger.info('user found in db');
           doneCallBack(null, existingUser);
         }
       }

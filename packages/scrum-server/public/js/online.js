@@ -1,5 +1,5 @@
 /* eslint-disable */
-
+// TODO is this really neded? Otherwise remove
 let user;
 
 const newItem = content => {

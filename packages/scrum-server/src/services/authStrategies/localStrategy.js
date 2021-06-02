@@ -2,6 +2,9 @@
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcrypt');
 const User = require('../../api/components/user/model');
+const { Logger } = require('../../utils/Logger');
+
+const logger = Logger(__filename);
 
 module.exports = function (passport) {
   passport.use(
@@ -10,7 +13,7 @@ module.exports = function (passport) {
       User.findOne({ email })
         .then(user => {
           if (!user) {
-            console.log('user not found');
+            logger.warn('user not found');
             return doneCallBack(null, false, { message: 'that email is not registered' });
           }
           // match pass
@@ -24,7 +27,7 @@ module.exports = function (passport) {
           });
         })
         .catch(err => {
-          console.log(err);
+          logger.error(err);
         });
     })
   );

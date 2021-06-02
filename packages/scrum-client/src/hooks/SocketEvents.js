@@ -19,39 +19,43 @@ const SocketEvents = (ioUri = API_CONSTANTS.API_BASE_URL) => {
     socket.emit(EVENT.JOIN, data);
   };
   const disconnectSocket = () => {
-    console.log('client--disconnectSocket');
+    console.log('client--disconnectSocket', ioUri);
     if (socket) socket.disconnect();
   };
   const onRoomMessages = cb => {
-    console.log('client--onRoomMessages');
+    console.log('client--onRoomMessages', ioUri);
     socket.on(EVENT.SEND_MESSAGE, data => {
       console.log('client--SEND_MESSAGE', data);
       return cb(null, data);
     });
   };
   const onUserJoined = cb => {
-    console.log('client--onRoomMessages');
+    console.log('client--onUserJoined', ioUri);
     socket.on(EVENT.USER_JOINED, data => cb(data.users));
   };
   const onStoryUpdate = cb => {
-    console.log('client--onStoryUpdate');
+    console.log('client--onStoryUpdate', ioUri);
     socket.on(EVENT.STORY_UPDATE, data => cb(data.story));
   };
   const onStoryVotesUpdate = cb => {
-    console.log('client--onStoryVotesUpdate');
-    socket.on(EVENT.STORY_VOTES_UPDATE, data => cb(data.storyVotes));
+    console.log('client--onStoryVotesUpdate', ioUri);
+    socket.on(EVENT.STORY_VOTES_UPDATE, data => {
+      console.log('data', data);
+      console.log('data.storyVote', data.storyVotes);
+      return cb(data.storyVotes);
+    });
   };
   const setRoomStory = ({ room, story }) => {
-    console.log('client--setRoomStory', room, story);
+    console.log('client--setRoomStory', ioUri, room, story);
     socket.emit(EVENT.STORY_UPDATE, { room, story });
   };
   const setRoomStoryVote = ({ room, user, vote }) => {
-    console.log('client--setRoomStoryVote', room, user, vote);
+    console.log('client--setRoomStoryVote', ioUri, room, user, vote);
     socket.emit(EVENT.STORY_VOTES_UPDATE, { room, user, vote });
   };
 
   const sendMessageToRoom = (room, message) => {
-    console.log('client--sendMessageToRoom', room, message);
+    console.log('client--sendMessageToRoom', ioUri, room, message);
     socket.emit(EVENT.SEND_MESSAGE, { room, message });
   };
 

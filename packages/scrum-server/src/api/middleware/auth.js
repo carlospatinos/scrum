@@ -1,9 +1,12 @@
 /* eslint-disable */
 const User = require('../../api/components/user/model');
+const { Logger } = require('../../utils/Logger');
+
+const logger = Logger(__filename);
 const auth = async (req, res, next) => {
   try {
     const token = req.cookies.auth;
-    console.log('token2', token);
+    logger.debug(`token2 ${token}`);
     const user = await User.findByToken(token);
     if (!user) {
       return res.json({
@@ -12,7 +15,7 @@ const auth = async (req, res, next) => {
         error: true
       });
     }
-    console.log("user found");
+    logger.debug("user found");
     req.token = token;
     req.user = user;
     next();

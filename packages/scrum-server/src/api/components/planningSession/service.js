@@ -4,6 +4,9 @@
 const i18n = require('i18n');
 const PlanningSession = require('./model');
 const ObjectId = require('mongoose').Types.ObjectId;
+const { Logger } = require('../../../utils/Logger');
+
+const logger = Logger(__filename);
 
 const save = async jsonData => {
   try {
@@ -15,7 +18,7 @@ const save = async jsonData => {
       planningRoomId: docSession._id,
     };
   } catch (e) {
-    console.log(e);
+    logger.error(e);
     throw Error(i18n.__('serviceSaveError'));
   }
 };

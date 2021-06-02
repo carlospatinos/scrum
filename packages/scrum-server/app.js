@@ -3,7 +3,7 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-const logger = require('morgan');
+const httpLogger = require('morgan');
 const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
@@ -11,6 +11,8 @@ const cors = require('cors');
 const { END_POINTS } = require('scrum-common');
 const keys = require('./src/config/keys');
 const corsOptions = require('./src/config/corsOptions');
+const {Logger} = require('./src/utils/Logger');
+const logger = Logger(__filename);
 
 const AuthStrategies = require('./src/services/authStrategies/');
 require('./src/services/db.js');
@@ -32,10 +34,12 @@ i18n.configure({
   },
 });
 
+
 const CLIENT_PATH = '/../scrum-client/build/';
 app.use(cors(corsOptions));
 app.use(i18n.init);
-app.use(logger('dev'));
+app.use(httpLogger(keys.httpLogging.httpLogFormat, { skip: (req, res) => keys.httpLogging.httpLoggingEnabled === 'false' }));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -76,7 +80,7 @@ app.use(END_POINTS.API, UserStoryRoutes);
 
 // Handles any requests that don't match the ones above
 app.get('*', (req, res, next) => {
-  console.log(`Client retrieval: ${path.join(`${__dirname + CLIENT_PATH}index.html`)}`);
+  logger.info(`Client retrieval: ${path.join(`${__dirname + CLIENT_PATH}index.html`)}`);
   res.sendFile(path.join(`${__dirname + CLIENT_PATH}index.html`));
 });
 
@@ -91,7 +95,7 @@ app.use((err, req, res, next) => {
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   // TODO is this needed?
-  console.log(err);
+  logger.error(err);
   // render the error page
   res.status(err.status || 500);
   res.json('error');

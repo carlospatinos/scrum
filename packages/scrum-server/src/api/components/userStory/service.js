@@ -3,6 +3,9 @@
 const i18n = require('i18n');
 const UserStory = require('./model');
 const ObjectId = require('mongoose').Types.ObjectId;
+const { Logger } = require('../../../utils/Logger');
+
+const logger = Logger(__filename);
 const MAX_RESULTS_FROM_DB = 100;
 
 const save = async jsonData => {
@@ -13,7 +16,7 @@ const save = async jsonData => {
       data: docUserStory,
     };
   } catch (e) {
-    console.log(e);
+    logger.error(e);
     throw Error(i18n.__('serviceSaveError'));
   }
 };
@@ -23,7 +26,7 @@ const findAll = async objectId => {
     throw Error(i18n.__('serviceInvalidId'));
   }
   const userStory = await UserStory.find({ planningSessionId: objectId }).limit(MAX_RESULTS_FROM_DB);
-  console.log(userStory);
+  logger.info(userStory);
   if (!userStory) {
     throw Error(i18n.__('serviceFindError'));
   } else {

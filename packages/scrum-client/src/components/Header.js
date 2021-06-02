@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Navbar, Nav, NavDropdown, Button, Figure } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { PATHS } from '../constants';
@@ -17,15 +17,15 @@ export default function Header() {
   const visibleRouteCriteria = visibleRoute(isLoggedIn);
   const { t } = useTranslation();
 
-  const [activeMenu, setActiveMenu] = useState([]);
+  // const [activeMenu, setActiveMenu] = useState([]);
   const image =
     userDetails.user.profileImageUrl === undefined
       ? '/icons/default-profile.png'
       : userDetails.user.profileImageUrl;
-  const handleSelect = event => {
-    setActiveMenu(event);
-    console.log(event);
-  };
+  // const handleSelect = event => {
+  //   // setActiveMenu(event);
+  //   // console.log(event);
+  // };
 
   return (
     <header>
@@ -37,7 +37,8 @@ export default function Header() {
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="ml-auto" activeKey={PATHS.LOGIN} onSelect={handleSelect}>
+            {/* // onSelect={handleSelect} */}
+            <Nav className="ml-auto" activeKey={PATHS.LOGIN}>
               {/* // TODO chavito, how can i set the active path? all 3 are clicked issue #101 */}
               {routes.filter(visibleRouteCriteria).map(route =>
                 route.path === PATHS.PROFILE ? (

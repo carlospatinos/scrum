@@ -3,6 +3,9 @@
 const TwitterStrategy = require('passport-twitter');
 const keys = require('../../config/keys');
 const User = require('../../api/components/user/model');
+const { Logger } = require('../../utils/Logger');
+
+const logger = Logger(__filename);
 
 module.exports = function (passport) {
   passport.use(
@@ -13,10 +16,10 @@ module.exports = function (passport) {
         callbackURL: keys.twitter.callback,
       },
       (accessToken, refreshToken, profile, doneCallBack) => {
-        console.log('user not found in db');
+        logger.debug('user not found in db');
         User.findOne({ twitterId: profile._json.id_str }, function (err, currentUser) {
           if (!currentUser) {
-            console.log('user not found in db for: ', profile._json.screen_name);
+            logger.debug(`user not found in db for: ${profile._json.screen_name}`);
             // doneCallBack(null, profile);
             new User({
               twitterId: profile._json.id_str,
@@ -26,13 +29,13 @@ module.exports = function (passport) {
               profileImageUrl: profile._json.profile_image_url,
             }).save((err, docUser) => {
               if (err) {
-                console.log(err);
+                logger.error(err);
                 doneCallBack(null, profile);
               }
               doneCallBack(null, docUser);
             });
           } else {
-            console.log('user found in db');
+            logger.debug('user found in db');
             doneCallBack(null, currentUser);
           }
         });
