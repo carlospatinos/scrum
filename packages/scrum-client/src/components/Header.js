@@ -87,7 +87,7 @@ export default function Header() {
                     </NavDropdown.Item>
                   </NavDropdown>
                 ) : (
-                  <Nav.Link key={route.path} href={route.path} active={route.isActive}>
+                  <Nav.Link key={route.path} href={route.path}>
                     <strong>{t(`Routes.${route.title}`)}</strong>
                   </Nav.Link>
                 )
