@@ -92,7 +92,10 @@
     "Header": {
         "btnManageYourAccount": "Manage your account",
         "lblPrivacyPolicy": "Privacy Policy",
-        "lblTermsAndConditions": "Terms of condition"
+        "lblTermsAndConditions": "Terms of condition",
+        "altLogo": "Logo",
+        "titleBrand": "Scrum",
+        "altProfilePic": "User Profile Pic"
     },
     "Routes": {
         "login": "Login",

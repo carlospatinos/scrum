@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header To match snapshot 1`] = `
+<DocumentFragment>
+  <header>
+    <div>
+      <nav
+        class="bg-primary fixed-top navbar-expand-md navbar navbar-expand-lg navbar-dark"
+      >
+        <a
+          class="navbar-brand"
+          href="/home"
+        >
+          <img
+            alt="Logo"
+            src="/appLogo.svg"
+          />
+          <strong
+            class="align-middle"
+          >
+            Scrum
+          </strong>
+        </a>
+        <button
+          aria-controls="basic-navbar-nav"
+          aria-label="Toggle navigation"
+          class="navbar-toggler collapsed"
+          type="button"
+        >
+          <span
+            class="navbar-toggler-icon"
+          />
+        </button>
+        <div
+          class="navbar-collapse collapse"
+          id="basic-navbar-nav"
+        >
+          <div
+            class="ml-auto navbar-nav"
+          >
+            <a
+              class="nav-link"
+              data-rb-event-key="/home"
+              href="/home"
+            >
+              <strong>
+                Home
+              </strong>
+            </a>
+            <div
+              class="dropdown nav-item"
+            >
+              <a
+                aria-expanded="false"
+                aria-haspopup="true"
+                class="dropdown-toggle nav-link"
+                href="#"
+                id="basic-nav-dropdown"
+                role="button"
+              >
+                Profile
+              </a>
+            </div>
+            <a
+              class="nav-link"
+              data-rb-event-key="/planningconfig"
+              href="/planningconfig"
+            >
+              <strong>
+                Planning Config
+              </strong>
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>
+</DocumentFragment>
+`;

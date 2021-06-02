@@ -1,0 +1,9 @@
+{
+    "isAuth": true,
+    "user": {
+        "profileImageUrl": "profileImageUrl"
+    },
+    "login_access_token": "login_access_token",
+    "loading": false,
+    "errorMessage": null
+}
