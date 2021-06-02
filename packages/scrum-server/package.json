@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha --require babel-core/register tests/*.js --exit",
     "testcoverage": "nyc mocha --require babel-core/register tests/*.js --exit",
-    "start": "node ./bin/www",
+    "start": "babel-node --presets babel-preset-env ./bin/www",
     "localStart": "node ./bin/www",
     "dev": "nodemon --exec babel-node --presets babel-preset-env ./bin/www",
     "debug": "DEBUG=* nodemon --exec babel-node --presets babel-preset-env ./bin/www",

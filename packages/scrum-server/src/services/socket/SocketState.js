@@ -28,7 +28,7 @@ const SocketState = (initialState = []) => {
       logger.debug(`assignUserToRoom the room {${room.id}} already exists`);
       if (!_room.users.has(userId)) {
         _room.users.set(userId, user);
-        logger.debug(`assignUserToRoom adding user {${userId}} to the room {${room.id}} resulting in rooms {${JSON.stringify(_room)}}`);
+        logger.debug(`assignUserToRoom adding user {${JSON.stringify(user)}} to the room {${room.id}} resulting in rooms {${JSON.stringify(_room)}}`);
       }
     } else {
       const users = new Map();
@@ -52,8 +52,6 @@ const SocketState = (initialState = []) => {
     const _room = rooms.get(room.id);
     logger.debug(`setRoomStoryVote on room {${JSON.stringify(_room)}}`);
     _room.storyVotes.set(userId, vote);
-    // _room.storyVotes.set('60b0cdc424f82090b806a36', '1');
-    // _room.storyVotes.set('60b0cdc424f82090b806a36', '2');
     logger.debug(`setRoomStoryVote on room {${JSON.stringify(_room)}}, {${userId}}, {${vote}}`);
     return _room.storyVotes;
   };

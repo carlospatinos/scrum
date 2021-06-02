@@ -20,7 +20,7 @@ const SocketEvents = io => {
       const _room = socketState.getRoom(room);
       const users = Array.from(_room.users.values());
       logger.debug(`{${EVENT.SEND_MESSAGE}} event with payload {${message}} on room {${room.id}} to {${users.length}} users`);
-      // todo retrieve title, subtitle
+      // TODO retrieve title, subtitle
       io.to(room.id).emit(EVENT.SEND_MESSAGE, {
         message: message,
         room: { id: _room.id, title: 'Scrum Session ' + room.id, subtitle: '', users: users },
