@@ -8,7 +8,7 @@ const SocketEvents  = require('./SocketEvents');
 
 class SocketService {
   constructor(server) {
-    this.logger = Logger();
+    this.logger = Logger(__filename);
     this.io = socketIo(server);
     this.logger.info('--server--SocketService');
     const socketEventIO = SocketEvents(this.io);
@@ -16,25 +16,24 @@ class SocketService {
     this.io.on(EVENT.CONNECTION, socket => {
       this.logger.info('--server--connection');
       const socketEvent  = socketEventIO(socket);
-      socket.on(EVENT.JOIN, socketEvent.joinUserToRoom);
-      socket.on(EVENT.SEND_MESSAGE, socketEvent.sendMessageToRoom);
+      socket.on(EVENT.JOIN, socketEvent.onJoinUserToRoom);
+      socket.on(EVENT.SEND_MESSAGE, socketEvent.onSendMessageToRoom);
       socket.on(EVENT.STORY_UPDATE, socketEvent.onStoryUpdate);
       socket.on(EVENT.STORY_VOTES_UPDATE, socketEvent.onStoryVotesUpdate);
       socket.on(EVENT.DISCONNECT, () => {
-        
-        this.logger.info("--server--disconnect");
+        this.logger.debug("--server--disconnect");
       });
 
-      socket.on('hi', async jsonData => {
-        this.logger.info('--server--hi', JSON.stringify(jsonData));
-        try {
-          // TODO userToGroupMap is undefined
-          this.io.sockets.in(userToGroupMap[jsonData.email]).emit('message', 'big announcement');
-        } catch (e) {
-          this.logger.error(e);
-        }
-        socket.emit('message', 'hello friends!');
-      });
+      // socket.on('hi', async jsonData => {
+      //   this.logger.info('--server--hi', JSON.stringify(jsonData));
+      //   try {
+      //     // TODO userToGroupMap is undefined
+      //     this.io.sockets.in(userToGroupMap[jsonData.email]).emit('message', 'big announcement');
+      //   } catch (e) {
+      //     this.logger.error(e);
+      //   }
+      //   socket.emit('message', 'hello friends!');
+      // });
     });
   }
 

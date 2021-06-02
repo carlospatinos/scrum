@@ -2,6 +2,9 @@
 
 const UserService = require('../user/service');
 const keys = require('../../../config/keys');
+const { Logger } = require('../../../utils/Logger');
+
+const logger = Logger(__filename);
 
 const authUserLocal = async (req, res) => {
   try {
@@ -16,39 +19,39 @@ const authUserLocal = async (req, res) => {
 };
 
 const authUserGoogle = async (req, res) => {
-  console.log('google auth');
+  logger.debug('google auth');
 };
 
 const authUserGoogleRedirect = async (req, res) => {
   req.session.save(function (err) {
     if (err) {
-      console.log(err);
+      logger.error(err);
     }
     res.redirect(`${keys.reactAppURL}/oauthvalidation`);
   });
 };
 
 const authUserTwitter = async (req, res) => {
-  console.log('twitter auth');
+  logger.debug('twitter auth');
 };
 
 const authUserTwitterRedirect = async (req, res) => {
   req.session.save(function (err) {
     if (err) {
-      console.log(err);
+      logger.error(err);
     }
     res.redirect(`${keys.reactAppURL}/oauthvalidation`);
   });
 };
 
 const authUserFacebook = async (req, res) => {
-  console.log('facebook auth');
+  logger.debug('facebook auth');
 };
 
 const authUserFacebookRedirect = async (req, res) => {
   req.session.save(function (err) {
     if (err) {
-      console.log(err);
+      logger.error(err);
     }
     res.redirect(`${keys.reactAppURL}/oauthvalidation`);
   });
@@ -58,7 +61,7 @@ const authLoginSucess = async (req, res) => {
   const { user } = req;
   if (user) {
     const copy = user.toJSON();
-    console.log('copy', copy);
+    logger.info(`copy ${copy}`);
     // eslint-disable-next-line no-underscore-dangle
     copy.id = copy._id;
     return res.status(200).json({

@@ -4,7 +4,6 @@
 
 const debug = require('debug')('scrum:server');
 const http = require('http');
-
 /**
  * Event listener for HTTP server "listening" event.
  */

@@ -2,6 +2,9 @@
 // The controller class handles incoming requests, validates them and sends the response data back to the client. It uses the service class to interact with the database.
 
 const UserService = require('./service');
+const { Logger } = require('../../../utils/Logger');
+
+const logger = Logger(__filename);
 
 const signUp = async (req, res) => {
   try {
@@ -36,7 +39,7 @@ const logout = async (req, res) => {
 const deleteProfile = async (req, res) => {
   try {
     const { id } = req.body.user;
-    console.log('userId to delete', id);
+    logger.info(`userId to delete ${id}`);
     const result = await UserService.deleteProfileById(id);
     if (result) {
       return res.status(200).json({

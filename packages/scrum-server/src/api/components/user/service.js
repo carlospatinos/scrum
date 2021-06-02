@@ -5,6 +5,9 @@
 const i18n = require('i18n');
 const User = require('./model');
 const UserType = require('./userType');
+const { Logger } = require('../../../utils/Logger');
+
+const logger = Logger(__filename);
 
 const isUserAReferral = referredBy => {
   return referredBy !== undefined && referredBy !== '';
@@ -19,7 +22,7 @@ const signUp = async jsonData => {
   const { referredBy } = jsonData;
   if (isUserAReferral(referredBy)) {
     newUser.wasReferred = true;
-    console.log('User was referredBy', referredBy);
+    logger.info(`User was referredBy ${referredBy}`);
   }
 
   if (newUser.password != newUser.confirmPassword) throw Error(i18n.__('apiPasswordDoNotMatch'));
@@ -35,12 +38,12 @@ const signUp = async jsonData => {
       referredByUser.referralList.push(newUser._id);
       const updatedReferredByUser = await referredByUser.save();
       if (!updatedReferredByUser) {
-        console.log(err);
+        logger.warn(err);
       }
     }
     return { user: docUser };
   } catch (e) {
-    console.log(e.message);
+    logger.error(e.message);
     throw Error(e.message);
   }
 };
@@ -67,7 +70,7 @@ const localAuth = async req => {
     const realUserObj = updatedUser.toJSON();
     delete realUserObj.confirmPassword;
     delete realUserObj.password;
-    console.log('realUserObj', realUserObj);
+    logger.info(`realUserObj ${realUserObj}`);
     // TODO return full user without pass
     // return {
     //   data: {
@@ -89,7 +92,7 @@ const localAuth = async req => {
       }
     };
   } catch (e) {
-    console.log(e.message);
+    logger.error(e.message);
     throw Error(e.message);
   }
 };
@@ -98,7 +101,7 @@ const deleteProfileById = async userId => {
     const user = await User.findOneAndDelete({ _id: userId });
     return user;
   } catch (e) {
-    console.log(e.message);
+    logger.error(e.message);
     throw Error(e.message);
   }
 };

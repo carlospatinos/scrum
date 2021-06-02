@@ -5,21 +5,21 @@ const { SocketState } = require('./SocketState');
 const {Logger} = require('../../utils/Logger');
 const SocketEvents = io => {
   const socketState = SocketState();
-  const logger = Logger();
+  const logger = Logger(__filename);
 
   return socket => {
-    const joinUserToRoom = ({ room, user }) => {
+    const onJoinUserToRoom = ({ room, user }) => {
       socket.join(room.id);
-      const roomUpdated = socketState.joinUserToRoom(room, user);
+      const roomUpdated = socketState.assignUserToRoom(room, user);
       const users =  Array.from(roomUpdated.users.values());
-      logger.debug(`joinUserToRoom on event {${EVENT.USER_JOINED}} in room {${room.id}} for user {${user._id}}`);
+      logger.debug(`{${EVENT.USER_JOINED}} event on room {${room.id}} resulting in room with {${users.length}} participants`);
       io.to(room.id).emit(EVENT.USER_JOINED, {room, users});
     };
 
-    const sendMessageToRoom = ({ room, message }) => {
+    const onSendMessageToRoom = ({ room, message }) => {
       const _room = socketState.getRoom(room);
       const users = Array.from(_room.users.values());
-      logger.debug(`sendMessageToRoom on event {${EVENT.SEND_MESSAGE}} with payload {${message}} in room {${room.id}} for user {${user.id}}`);
+      logger.debug(`{${EVENT.SEND_MESSAGE}} event with payload {${message}} on room {${room.id}} to {${users.length}} users`);
       // todo retrieve title, subtitle
       io.to(room.id).emit(EVENT.SEND_MESSAGE, {
         message: message,
@@ -28,17 +28,17 @@ const SocketEvents = io => {
     };
     const onStoryUpdate = ({ room, story }) => {
       const _room = socketState.setRoomStory(room, story);
-      logger.debug(`onStoryUpdate on event {${EVENT.STORY_UPDATE}} in room {${room.id}} for story {${JSON.stringify(story)}}`);
+      logger.debug(`{${EVENT.STORY_UPDATE}} event on room {${room.id}} with story {${JSON.stringify(story)}}`);
       io.to(room.id).emit(EVENT.STORY_UPDATE, {room:_room, story});
 
     };
     const onStoryVotesUpdate = ({ room, user, vote }) => {
       const storyVotes = socketState.setRoomStoryVote(room, user, vote);
-      logger.debug(`onStoryVotesUpdate on event {${EVENT.STORY_VOTES_UPDATE}} in room {${room.id}} with storyVotes {${JSON.stringify(storyVotes)}} - vote ${vote}`);
+      logger.debug(`{${EVENT.STORY_VOTES_UPDATE}} event on room {${room.id}} with vote ${vote} resulting in storyVotes {${JSON.stringify(storyVotes)}} - `);
       io.to(room.id).emit(EVENT.STORY_VOTES_UPDATE, {room, storyVotes});
     };
 
-    return { joinUserToRoom, sendMessageToRoom, onStoryUpdate, onStoryVotesUpdate };
+    return { onJoinUserToRoom, onSendMessageToRoom, onStoryUpdate, onStoryVotesUpdate };
   };
 };
 module.exports = SocketEvents;

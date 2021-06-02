@@ -4,6 +4,10 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const keys = require('../../../config/keys');
 const { ObjectId } = require('mongoose').Types;
+const { Logger } = require('../../../utils/Logger');
+
+const logger = Logger(__filename);
+
 const salt = 10;
 // TODO fix password was mandatory but with google/twitter oauth either we create 2 different collections or we find a way to persist all in the same
 
@@ -133,12 +137,11 @@ UserSchema.statics.findByToken = async function (token) {
   }
   try {
     isVerified = await jwt.verify(token, keys.jwtSecret);
-    //console.log(isVerified);
     if (!isVerified) {
-      console.err('jwt not verified');
+      logger.error(`jwt not verified for ${user._id}`);
     }
   } catch (e) {
-    console.log(e);
+    logger.error(e);
   }
 
   let userFromDB = await user.findOne({ _id: isVerified, token });
