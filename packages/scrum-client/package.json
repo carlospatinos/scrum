@@ -47,13 +47,11 @@
   },
   "scripts": {
     "dev": "react-scripts start",
-    "debug": "react-scripts start",
-    "start": "node --max-old-space-size=4000",
-    "localStart": "npm install --only=dev && npm install && npm run build",
-    "profile": "npm install --only=dev && npm install && npm run build",
-    "build": "react-scripts build",
     "test": "react-scripts test",
     "testcoverage": "react-scripts test --coverage",
+    "start": "node --max-old-space-size=4000",
+    "profile": "npm install --only=dev && npm install && npm run build",
+    "build": "react-scripts build",
     "eject": "react-scripts eject",
     "lint": "eslint src",
     "lint-fix": "eslint --fix src"

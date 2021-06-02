@@ -1,3 +1,7 @@
 {
-    "presets": [["env", {"exclude": ["transform-regenerator"]}]],
+    "presets": [
+        "babel-preset-env",
+        "es2015",
+        "stage-0"
+    ]
 }

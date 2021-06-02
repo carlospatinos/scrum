@@ -9,17 +9,17 @@ const flash = require('connect-flash');
 const passport = require('passport');
 const cors = require('cors');
 const { END_POINTS } = require('scrum-common');
-const keys = require('./src/config/keys');
-const corsOptions = require('./src/config/corsOptions');
-const {Logger} = require('./src/utils/Logger');
+const keys = require('./config/keys');
+const corsOptions = require('./config/corsOptions');
+const {Logger} = require('./utils/Logger');
 const logger = Logger(__filename);
 
-const AuthStrategies = require('./src/services/authStrategies/');
-require('./src/services/db.js');
+const AuthStrategies = require('./services/authStrategies');
+require('./services/db.js');
 
 const app = express();
 const i18n = require('i18n');
-const { TipsRoutes, UserRoutes, PlanningSessionRoutes, AuthRoutes , DefaultRoute, UserStoryRoutes } = require('./src/api/routes');
+const { TipsRoutes, UserRoutes, PlanningSessionRoutes, AuthRoutes , DefaultRoute, UserStoryRoutes } = require('./api/routes');
 
 AuthStrategies.configure(passport);
 i18n.configure({
@@ -35,7 +35,7 @@ i18n.configure({
 });
 
 
-const CLIENT_PATH = '/../scrum-client/build/';
+const CLIENT_PATH = '/../../scrum-client/build/';
 app.use(cors(corsOptions));
 app.use(i18n.init);
 app.use(httpLogger(keys.httpLogging.httpLogFormat, { skip: (req, res) => keys.httpLogging.httpLoggingEnabled === 'false' }));
