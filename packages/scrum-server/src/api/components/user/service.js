@@ -70,7 +70,7 @@ const localAuth = async req => {
     const realUserObj = updatedUser.toJSON();
     delete realUserObj.confirmPassword;
     delete realUserObj.password;
-    logger.info(`realUserObj ${realUserObj}`);
+    logger.info(`realUserObj ${JSON.stringify(realUserObj)}`);
     // TODO return full user without pass
     // return {
     //   data: {
@@ -86,7 +86,6 @@ const localAuth = async req => {
     // };
     return {
       data: {
-        other: 'yayayay',
         login_access_token: realUserObj.token,
         user: realUserObj
       }

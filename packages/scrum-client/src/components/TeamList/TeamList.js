@@ -1,21 +1,14 @@
 import React from 'react';
 import { Badge, Row, Col, Figure } from 'react-bootstrap';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, LabelList, Label } from 'recharts';
 import PropTypes from 'prop-types';
 import './TeamList.css';
 
 const getUserVote = (storyVotes, user) => {
-  // eslint-disable-next-line
-  console.log('storyVotes', storyVotes);
-  // eslint-disable-next-line
-  console.log('user._id', user._id);
-  // Object.keys(storyVotes).length === 0
-  // JSON.stringify(obj) === '{}';
-  // eslint-disable-next-line
-  console.log('Object.keys(storyVotes).length', Object.keys(storyVotes).length);
-  // eslint-disable-next-line
-  const storyVote = JSON.stringify(storyVotes) === '{}' ? undefined : storyVotes.find(([id]) => {
-          // eslint-disable-next-line
-    console.log('id', id);
+  const storyVote =
+    JSON.stringify(storyVotes) === '{}'
+      ? undefined
+      : storyVotes.find(([id]) => {
           // eslint-disable-next-line
     return id === user._id;
         });
@@ -24,6 +17,46 @@ const getUserVote = (storyVotes, user) => {
 
 const TeamList = props => {
   const { title, subtitle, users, storyVotes, admin, summaryVotes } = props;
+  const data = [
+    {
+      name: 'S',
+      numberOfVotes: 2,
+      voters: 'Carlos, Pedro, Luis',
+    },
+    {
+      name: 'M',
+      numberOfVotes: 5,
+      voters: 'Carlos, Miguel',
+    },
+    {
+      name: 'L',
+      numberOfVotes: 3,
+      voters: 'Jose, Juan',
+    },
+    {
+      name: 'XL',
+      numberOfVotes: 1,
+      voters: 'El chavito seguia bailando',
+    },
+    {
+      name: 'XS',
+      numberOfVotes: 2,
+      voters: 'A, B, C',
+    },
+  ];
+  // const CustomTooltip = ({ active, payload, label }) => {
+  //   if (active && payload && payload.length) {
+  //     return (
+  //       <div className="custom-tooltip">
+  //         <p className="label">{`${label} : ${payload[0].value}`}</p>
+  //         <p className="desc" />
+  //       </div>
+  //     );
+  //   }
+
+  //   return null;
+  // };
+
   const generateUserStatusBadge = () => {
     const randomStatus = Math.random();
     if (randomStatus > 0.5) {
@@ -41,11 +74,32 @@ const TeamList = props => {
         </Col>
       </Row>
       <Row>
-        <Col sm={12} className="d-flex justify-content-center">
-          <Figure className="d-none d-sm-none d-md-block">
-            <Figure.Image width={680} alt="Chart" src="/dashboard.png" />
-            <Figure.Caption>Important chart about session behaviour</Figure.Caption>
-          </Figure>
+        <Col sm={8} className="d-flex justify-content-center">
+          <BarChart
+            width={800}
+            height={400}
+            data={data}
+            margin={{ top: 15, right: 30, left: 20, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name">
+              <Label value="Pages of my website" offset={0} position="insideBottom" />
+            </XAxis>
+            <Tooltip />
+            <YAxis label={{ value: '# of votes', angle: -90, position: 'insideLeft' }} />
+            <Bar dataKey="numberOfVotes" fill="#8884d8" background={{ fill: '#eee' }}>
+              {' '}
+              <LabelList dataKey="voters" position="top" />
+            </Bar>
+          </BarChart>
+        </Col>
+        <Col sm={4}>
+          <Row>
+            <Col>Fastest responder: Luis</Col>
+          </Row>
+          <Row>
+            <Col>Most accurate responder so far: Luis</Col>
+          </Row>
         </Col>
       </Row>
       <Row>
