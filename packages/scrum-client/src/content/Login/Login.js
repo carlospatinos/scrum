@@ -20,7 +20,6 @@ export default function Login() {
   const dispatch = useAuthDispatch();
   const { loading, errorMessage } = useAuthState();
   const redirectedFrom = location.state?.redirectedFrom?.pathname || PATHS.HOME;
-
   function goToExternalURL(type) {
     let redirection;
     const authUrl = process.env.REACT_APP_API_URL + END_POINTS.AUTH;
@@ -42,7 +41,7 @@ export default function Login() {
     try {
       const response = await loginUser(dispatch, { email, password });
       if (response && response.user === undefined) return;
-      history.push(PATHS.HOME);
+      history.push(redirectedFrom);
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error(e);
