@@ -27,10 +27,12 @@ class ServerSingletonSocketService {
   }
 
   getInstance() {
+    this.logger.info("getInstance");
     return this;
   }
 
   emiter(event, body) {
+    this.logger.info("emitting event");
     if (body) this.io.emit(event, body);
   }
 }

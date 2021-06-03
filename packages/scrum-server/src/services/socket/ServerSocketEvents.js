@@ -32,7 +32,6 @@ const ServerSocketEvents = io => {
       logger.debug(`onStoryUpdate {${EVENT.STORY_UPDATE}} on room {${room.id}} with story {${story.storyTitle}}`);
       const _room = socketState.setRoomStory(room, story);
       io.to(room.id).emit(EVENT.STORY_UPDATE, {room:_room, story});
-
     };
     const onStoryVotesUpdate = ({ room, user, vote }) => {
       logger.debug(`onStoryVotesUpdate {${EVENT.STORY_VOTES_UPDATE}} on room {${room.id}} with vote ${vote} `);
