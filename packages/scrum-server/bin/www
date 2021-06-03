@@ -8,7 +8,7 @@
 var app = require('../app');
 var pjson = require('../package.json');
 var HttpServer = require('../src/api/server');
-var ServerSingletonSocketService = require('../src/services/socket/ServerSingletonSocketService');
+var ServerSocketService = require('../src/services/socket/ServerSocketService');
 
 /**
  * Normalize a port into a number, string, or false.
@@ -36,4 +36,4 @@ function normalizePort(val) {
 var port = normalizePort(process.env.PORT || '3000');
 var server = HttpServer({ app, port, pjson });
 app.set('port', port);
-app.set('socketService', new ServerSingletonSocketService(server));
+app.set('socketService', new ServerSocketService(server));

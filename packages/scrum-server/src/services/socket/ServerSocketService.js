@@ -6,7 +6,7 @@ const { EVENT } = require('scrum-common');
 const {Logger} = require('../../utils/Logger');
 const ServerSocketEvents  = require('./ServerSocketEvents');
 
-class ServerSingletonSocketService {
+class ServerSocketService {
   constructor(server) {
     this.logger = Logger(__filename);
     this.io = socketIo(server);
@@ -37,4 +37,4 @@ class ServerSingletonSocketService {
   }
 }
 
-module.exports = ServerSingletonSocketService;
+module.exports = ServerSocketService;
