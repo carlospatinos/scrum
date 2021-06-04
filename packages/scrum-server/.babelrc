@@ -20,6 +20,9 @@
                     "test": "./test"
                 }
             }
+        ],
+        [
+            "@babel/transform-runtime"
         ]
     ]
 }
