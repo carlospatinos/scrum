@@ -8,39 +8,31 @@ const buildRoom = ({ id, users = new Map(), storyVotes = new Map(), story = '' }
   story,
 });
 
-const SocketState = (initialState = []) => {
+const ServerSocketState = (initialState = []) => {
   const logger = Logger(__filename);
   const rooms = new Map(...initialState);
-  logger.debug(`Initializing rooms state`);
+  logger.info(`Initializing rooms`);
 
-  const addRoom = (room) => {
+  const addRoomIfDoesNotExists = (room) => {
     if (!rooms.has(room.id)) {
       rooms.set(room.id, buildRoom(room.id));
-      logger.debug(`addRoom creating room {${room.id}}`);
+      logger.debug(`addRoom building room {${room.id}}`);
     }
     return rooms.get(room.id);
   };
 
   const assignUserToRoom = (room, user) => {
     const userId = user._id;
-    if (rooms.has(room.id)) {
-      const _room = rooms.get(room.id);
-      logger.debug(`assignUserToRoom the room {${room.id}} already exists`);
-      if (!_room.users.has(userId)) {
-        _room.users.set(userId, user);
-        logger.debug(`assignUserToRoom adding user {${JSON.stringify(user)}} to the room {${room.id}} resulting in rooms {${JSON.stringify(_room)}}`);
-      }
-    } else {
-      const users = new Map();
-      users.set(userId, user);
-      // TODO why users are sent and not used in addRoom?
-      logger.debug(`assignUserToRoom creating users for room {${room.id}} and adding user {${userId}} resulting in users {${JSON.stringify(users)}}`);
-      addRoom({ id: room.id, users });
+    const _room = addRoomIfDoesNotExists({ id: room.id });
+    if (!_room.users.has(userId)) {
+      logger.debug(`assignUserToRoom adding user {${userId}} to the room {${room.id}}`);
+      _room.users.set(userId, user);
     }
     return rooms.get(room.id);
   };
+
   const setRoomStory = (room, story) => {
-    logger.debug('setRoomStory', room, story);
+    logger.debug(`setRoomStory on ${room.id} with ${story.storyTitle}`);
     const _room = rooms.get(room.id);
     _room.story = story;
     return _room;
@@ -50,9 +42,7 @@ const SocketState = (initialState = []) => {
     const userId = user._id;
     logger.debug(`setRoomStoryVote on room {${room.id}} for user {${userId}} with value {${vote}}`);
     const _room = rooms.get(room.id);
-    logger.debug(`setRoomStoryVote on room {${JSON.stringify(_room)}}`);
     _room.storyVotes.set(userId, vote);
-    logger.debug(`setRoomStoryVote on room {${JSON.stringify(_room)}}, {${userId}}, {${vote}}`);
     return _room.storyVotes;
   };
   const getRoom = room => {
@@ -64,4 +54,4 @@ const SocketState = (initialState = []) => {
   return { getRoom, assignUserToRoom, setRoomStory, setRoomStoryVote };
 };
 
-module.exports = { SocketState };
+module.exports = { ServerSocketState };

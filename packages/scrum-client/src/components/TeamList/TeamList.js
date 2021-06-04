@@ -5,25 +5,13 @@ import './TeamList.css';
 
 const getUserVote = (storyVotes, user) => {
   // eslint-disable-next-line
-  console.log('storyVotes', storyVotes);
-  // eslint-disable-next-line
-  console.log('user._id', user._id);
-  // Object.keys(storyVotes).length === 0
-  // JSON.stringify(obj) === '{}';
-  // eslint-disable-next-line
-  console.log('Object.keys(storyVotes).length', Object.keys(storyVotes).length);
-  // eslint-disable-next-line
-  const storyVote = JSON.stringify(storyVotes) === '{}' ? undefined : storyVotes.find(([id]) => {
-          // eslint-disable-next-line
-    console.log('id', id);
-          // eslint-disable-next-line
-    return id === user._id;
-        });
+  const storyVote = storyVotes.find(([id]) => id === user._id);
   return storyVote ? storyVote[1] : '...';
 };
 
 const TeamList = props => {
   const { title, subtitle, users, storyVotes, admin, summaryVotes } = props;
+
   const generateUserStatusBadge = () => {
     const randomStatus = Math.random();
     if (randomStatus > 0.5) {
@@ -40,14 +28,7 @@ const TeamList = props => {
           </strong>
         </Col>
       </Row>
-      <Row>
-        <Col sm={12} className="d-flex justify-content-center">
-          <Figure className="d-none d-sm-none d-md-block">
-            <Figure.Image width={680} alt="Chart" src="/dashboard.png" />
-            <Figure.Caption>Important chart about session behaviour</Figure.Caption>
-          </Figure>
-        </Col>
-      </Row>
+
       <Row>
         <Col xs={6} md={4} lg={2}>
           Average [{summaryVotes.avgVote}]

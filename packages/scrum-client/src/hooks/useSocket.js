@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { API_CONSTANTS } from '../constants';
-import SocketEvents from './SocketEvents';
+import ClientSocketEvents from './ClientSocketEvents';
 import { useAuthState } from '../context';
 
 const useSocket = (roomId, socketServerURL = API_CONSTANTS.API_BASE_URL) => {
@@ -12,7 +12,7 @@ const useSocket = (roomId, socketServerURL = API_CONSTANTS.API_BASE_URL) => {
   const userDetails = useAuthState();
 
   useEffect(() => {
-    const socketEventsRef = SocketEvents();
+    const socketEventsRef = ClientSocketEvents();
     const {
       joinToRoom,
       disconnectSocket,

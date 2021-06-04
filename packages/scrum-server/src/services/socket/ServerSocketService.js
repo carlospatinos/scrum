@@ -4,46 +4,37 @@
 const socketIo = require('socket.io');
 const { EVENT } = require('scrum-common');
 const {Logger} = require('../../utils/Logger');
-const SocketEvents  = require('./SocketEvents');
+const ServerSocketEvents  = require('./ServerSocketEvents');
 
-class SocketService {
+class ServerSocketService {
   constructor(server) {
     this.logger = Logger(__filename);
     this.io = socketIo(server);
-    this.logger.info('--server--SocketService');
-    const socketEventIO = SocketEvents(this.io);
+    this.logger.info('starting socket service');
+    const socketEventIO = ServerSocketEvents(this.io);
 
     this.io.on(EVENT.CONNECTION, socket => {
-      this.logger.info('--server--connection');
+      this.logger.info('socket connected');
       const socketEvent  = socketEventIO(socket);
       socket.on(EVENT.JOIN, socketEvent.onJoinUserToRoom);
       socket.on(EVENT.SEND_MESSAGE, socketEvent.onSendMessageToRoom);
       socket.on(EVENT.STORY_UPDATE, socketEvent.onStoryUpdate);
       socket.on(EVENT.STORY_VOTES_UPDATE, socketEvent.onStoryVotesUpdate);
       socket.on(EVENT.DISCONNECT, () => {
-        this.logger.debug("--server--disconnect");
+        this.logger.info("socket  disconnected");
       });
-
-      // socket.on('hi', async jsonData => {
-      //   this.logger.info('--server--hi', JSON.stringify(jsonData));
-      //   try {
-      //     // TODO userToGroupMap is undefined
-      //     this.io.sockets.in(userToGroupMap[jsonData.email]).emit('message', 'big announcement');
-      //   } catch (e) {
-      //     this.logger.error(e);
-      //   }
-      //   socket.emit('message', 'hello friends!');
-      // });
     });
   }
 
   getInstance() {
+    this.logger.info("getInstance");
     return this;
   }
 
   emiter(event, body) {
+    this.logger.info("emitting event");
     if (body) this.io.emit(event, body);
   }
 }
 
-module.exports = SocketService;
+module.exports = ServerSocketService;
