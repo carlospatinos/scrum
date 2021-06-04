@@ -2,29 +2,36 @@
   "name": "@scrum/server",
   "version": "0.0.0",
   "description": "Dev tools",
-  "main": "index.js",
-  "scripts": {
-    "test": "mocha --require babel-core/register tests/*.js --exit",
-    "testcoverage": "nyc mocha --require babel-core/register tests/*.js --exit",
-    "start": "babel-node --presets babel-preset-env ./bin/www",
-    "localStart": "node ./bin/www",
-    "dev": "nodemon --exec babel-node --presets babel-preset-env ./bin/www",
-    "debug": "DEBUG=* nodemon --exec babel-node --presets babel-preset-env ./bin/www",
-    "debug2": "nodemon --inspect-brk --exec babel-node --presets babel-preset-env ./bin/www",
-    "profile": "node --inspect ./bin/www",
-    "lint": "eslint \"./**/*.js\" ",
-    "lint-fix": "eslint --fix \"./**/*.js\""
+  "homepage": "https://github.com/carlospatinos/scrum#readme",
+  "bugs": {
+    "url": "https://github.com/carlospatinos/scrum/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/carlospatinos/scrum.git"
   },
-  "author": "carlospatinos@gmail.com",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/carlospatinos/scrum/issues"
+  "author": "carlospatinos@gmail.com",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run clean && babel ./src --out-dir build --copy-files",
+    "clean": "rm -rf build",
+    "debug": "DEBUG=* nodemon --exec babel-node  ./src/bin/www",
+    "debug2": "nodemon --inspect-brk --exec babel-node  ./src/bin/www",
+    "dev": "nodemon --exec babel-node ./src/bin/www",
+    "lint": "eslint \"./**/*.js\" ",
+    "lint-fix": "eslint --fix \"./**/*.js\"",
+    "localStart": "node ./src/bin/www",
+    "profile": "node --inspect ./src/bin/www",
+    "start": "node ./build/bin/www",
+    "test": "mocha --require babel-core/register tests/*.js --exit",
+    "testcoverage": "nyc mocha --require babel-core/register tests/*.js --exit"
   },
-  "homepage": "https://github.com/carlospatinos/scrum#readme",
+  "nyc": {
+    "check-coverage": true,
+    "lines": 52,
+    "statements": 53
+  },
   "dependencies": {
     "bcrypt": "^5.0.0",
     "bootstrap": "^4.5.3",
@@ -54,10 +61,12 @@
     "winston": "^3.3.3"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-preset-env": "^1.6.0",
-    "babel-register": "^6.26.0",
+    "@babel/cli": "^7.14.3",
+    "@babel/core": "^7.14.3",
+    "@babel/node": "^7.14.2",
+    "@babel/preset-env": "^7.14.4",
+    "@babel/register": "^7.13.16",
+    "babel-plugin-module-resolver": "^4.1.0",
     "braces": "^2.3.2",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
@@ -70,13 +79,8 @@
     "eslint-plugin-prettier": "^3.1.4",
     "express.io": "^1.1.13",
     "mocha": "^8.2.1",
-    "nodemon": "^1.17.4",
+    "nodemon": "^2.0.0",
     "nyc": "^15.1.0",
     "prettier": "^2.1.2"
-  },
-  "nyc": {
-    "check-coverage": true,
-    "lines": 52,
-    "statements": 53
   }
 }
