@@ -34,7 +34,9 @@ const ServerSocketState = (initialState = []) => {
   const setRoomStory = (room, story) => {
     logger.debug(`setRoomStory on ${room.id} with ${story.storyTitle}`);
     const _room = rooms.get(room.id);
-    _room.story = story;
+    if (_room !== undefined) {
+      _room.story = story;
+    }
     return _room;
   };
 

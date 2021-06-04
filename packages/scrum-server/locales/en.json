@@ -1,4 +1,5 @@
 {
+    "TODO": "MOVE this file into src?",
     "lblWelcome": "Welcome!",
     "apiWorking": "API is working properly",
     "apiPasswordDoNotMatch": "password do not match",
