@@ -16,8 +16,6 @@
   "scripts": {
     "build": "npm run clean && babel ./src --out-dir build --copy-files",
     "clean": "rm -rf build",
-    "debug": "DEBUG=* nodemon --exec babel-node  ./src/bin/www",
-    "debug2": "nodemon --inspect-brk --exec babel-node  ./src/bin/www",
     "dev": "nodemon --exec babel-node ./src/bin/www",
     "lint": "eslint \"./**/*.js\" ",
     "lint-fix": "eslint --fix \"./**/*.js\"",

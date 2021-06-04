@@ -21,7 +21,6 @@
     "localStart": "lerna run localStart --stream",
     "profile": "lerna run profile --stream",
     "dev": "lerna run dev --stream",
-    "debug": "lerna run debug --stream",
     "test": "lerna run test",
     "testcoverage": "lerna run testcoverage",
     "postinstall": "lerna bootstrap",
