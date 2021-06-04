@@ -6,9 +6,9 @@
  */
 
 var app = require('../app');
-var pjson = require('../package.json');
-var HttpServer = require('../src/api/server');
-var ServerSocketService = require('../src/services/socket/ServerSocketService');
+var pjson = require('../../package.json');
+var HttpServer = require('../api/server');
+var ServerSocketService = require('../services/socket/ServerSocketService');
 
 /**
  * Normalize a port into a number, string, or false.

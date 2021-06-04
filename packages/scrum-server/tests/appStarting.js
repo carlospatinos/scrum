@@ -2,7 +2,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import chaiJson from 'chai-json';
-import app from '../app';
+import app from '../src/app';
 
 // Configure chai
 chai.use(chaiHttp);
