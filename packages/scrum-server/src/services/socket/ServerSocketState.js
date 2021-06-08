@@ -27,6 +27,7 @@ const ServerSocketState = (initialState = []) => {
     if (!_room.users.has(userId)) {
       logger.debug(`assignUserToRoom adding user {${userId}} to the room {${room.id}}`);
       _room.users.set(userId, user);
+      logger.silly(`assignUserToRoom adding user {${userId}} to the room {${room.id}} resulting in ${JSON.stringify(_room.users)}`);
     }
     return rooms.get(room.id);
   };
@@ -45,6 +46,7 @@ const ServerSocketState = (initialState = []) => {
     logger.debug(`setRoomStoryVote on room {${room.id}} for user {${userId}} with value {${vote}}`);
     const _room = rooms.get(room.id);
     _room.storyVotes.set(userId, vote);
+    logger.silly(`setRoomStoryVote on room {${room.id}} for user {${userId}} has {${JSON.stringify(_room.storyVotes)}}`);
     return _room.storyVotes;
   };
   const getRoom = room => {
