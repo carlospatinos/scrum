@@ -6,7 +6,9 @@ describe('Map', () => {
       const k1 = { id: 1 };
       const k2 = { id: 2 };
       const storyVotes = new Map();
+      console.log(storyVotes);
       storyVotes.set(k1.id, k1);
+      console.log(storyVotes);
       const foundK1 = storyVotes.get(k1.id);
       storyVotes.should.have.key(k1.id);
       storyVotes.should.not.have.key(k2.id);
@@ -22,8 +24,8 @@ describe('Array', () => {
       const storyVotes = [5, 12, 8, 130, 44];
       const idToFind = 8;
       const found = storyVotes.find(id => id === idToFind);
-      console.log(found);
-      // assert.equal(found, idToFind);
+      // console.log(found);
+      assert.equal(found, idToFind);
       done();
     });
   });

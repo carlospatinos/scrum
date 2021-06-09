@@ -11,12 +11,12 @@ const buildRoom = ({ id, users = new Map(), storyVotes = new Map(), story = '' }
 const ServerSocketState = (initialState = []) => {
   const logger = Logger(__filename);
   const rooms = new Map(...initialState);
-  logger.info(`Initializing rooms`);
+  logger.info(`Initializing rooms ${JSON.stringify(rooms)}`);
 
   const addRoomIfDoesNotExists = (room) => {
     if (!rooms.has(room.id)) {
       rooms.set(room.id, buildRoom(room.id));
-      logger.debug(`addRoom building room {${room.id}}`);
+      logger.debug(`addRoom building room {${room.id}} resulting in  ${JSON.stringify(rooms)}`);
     }
     return rooms.get(room.id);
   };
