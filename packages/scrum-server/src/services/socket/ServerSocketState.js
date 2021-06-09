@@ -11,12 +11,12 @@ const buildRoom = ({ id, users = new Map(), storyVotes = new Map(), story = '' }
 const ServerSocketState = (initialState = []) => {
   const logger = Logger(__filename);
   const rooms = new Map(...initialState);
-  logger.info(`Initializing rooms`);
+  logger.info(`Initializing rooms ${JSON.stringify(rooms)}`);
 
   const addRoomIfDoesNotExists = (room) => {
     if (!rooms.has(room.id)) {
       rooms.set(room.id, buildRoom(room.id));
-      logger.debug(`addRoom building room {${room.id}}`);
+      logger.debug(`addRoom building room {${room.id}} resulting in  ${JSON.stringify(rooms)}`);
     }
     return rooms.get(room.id);
   };
@@ -27,6 +27,7 @@ const ServerSocketState = (initialState = []) => {
     if (!_room.users.has(userId)) {
       logger.debug(`assignUserToRoom adding user {${userId}} to the room {${room.id}}`);
       _room.users.set(userId, user);
+      logger.silly(`assignUserToRoom adding user {${userId}} to the room {${room.id}} resulting in ${JSON.stringify(_room.users)}`);
     }
     return rooms.get(room.id);
   };
@@ -34,7 +35,9 @@ const ServerSocketState = (initialState = []) => {
   const setRoomStory = (room, story) => {
     logger.debug(`setRoomStory on ${room.id} with ${story.storyTitle}`);
     const _room = rooms.get(room.id);
-    _room.story = story;
+    if (_room !== undefined) {
+      _room.story = story;
+    }
     return _room;
   };
 
@@ -43,6 +46,7 @@ const ServerSocketState = (initialState = []) => {
     logger.debug(`setRoomStoryVote on room {${room.id}} for user {${userId}} with value {${vote}}`);
     const _room = rooms.get(room.id);
     _room.storyVotes.set(userId, vote);
+    logger.silly(`setRoomStoryVote on room {${room.id}} for user {${userId}} has {${JSON.stringify(_room.storyVotes)}}`);
     return _room.storyVotes;
   };
   const getRoom = room => {

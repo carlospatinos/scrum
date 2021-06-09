@@ -33,7 +33,6 @@ export default function VotingCards() {
   const { roomId } = useParams();
   const [cardDeck, setCardDeck] = useState([]);
   const [sessionInformation, setSessionInformation] = useState({});
-  // TODO remove next line and keep this
   const { story, socketEvents } = useSocket(roomId);
   const userDetails = useAuthState();
 

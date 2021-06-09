@@ -1,7 +1,48 @@
 import React from 'react';
 import { Badge, Row, Col, Figure } from 'react-bootstrap';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, LabelList, Label } from 'recharts';
 import PropTypes from 'prop-types';
 import './TeamList.css';
+
+const data = [
+  {
+    name: 'S',
+    numberOfVotes: 2,
+    voters: 'Carlos, Pedro, Luis',
+  },
+  {
+    name: 'M',
+    numberOfVotes: 5,
+    voters: 'Carlos, Miguel',
+  },
+  {
+    name: 'L',
+    numberOfVotes: 3,
+    voters: 'Jose, Juan',
+  },
+  {
+    name: 'XL',
+    numberOfVotes: 1,
+    voters: 'El chavito seguia bailando',
+  },
+  {
+    name: 'XS',
+    numberOfVotes: 2,
+    voters: 'A, B, C',
+  },
+];
+// const CustomTooltip = ({ active, payload, label }) => {
+//   if (active && payload && payload.length) {
+//     return (
+//       <div className="custom-tooltip">
+//         <p className="label">{`${label} : ${payload[0].value}`}</p>
+//         <p className="desc" />
+//       </div>
+//     );
+//   }
+
+//   return null;
+// };
 
 const getUserVote = (storyVotes, user) => {
   // eslint-disable-next-line
@@ -28,7 +69,35 @@ const TeamList = props => {
           </strong>
         </Col>
       </Row>
-
+      <Row>
+        <Col sm={8} className="d-flex justify-content-center">
+          <BarChart
+            width={800}
+            height={400}
+            data={data}
+            margin={{ top: 15, right: 30, left: 20, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="name">
+              <Label value="Pages of my website" offset={0} position="insideBottom" />
+            </XAxis>
+            <Tooltip />
+            <YAxis label={{ value: '# of votes', angle: -90, position: 'insideLeft' }} />
+            <Bar dataKey="numberOfVotes" fill="#8884d8" background={{ fill: '#eee' }}>
+              {' '}
+              <LabelList dataKey="voters" position="top" />
+            </Bar>
+          </BarChart>
+        </Col>
+        <Col sm={4}>
+          <Row>
+            <Col>Fastest responder: Luis</Col>
+          </Row>
+          <Row>
+            <Col>Most accurate responder so far: Luis</Col>
+          </Row>
+        </Col>
+      </Row>
       <Row>
         <Col xs={6} md={4} lg={2}>
           Average [{summaryVotes.avgVote}]
