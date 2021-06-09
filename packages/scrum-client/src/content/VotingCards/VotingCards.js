@@ -20,7 +20,9 @@ function getPlanningSession(setCardDeckParam, roomId, setSessionInformation) {
   try {
     PlanningSessionAPI.get(roomId).then(data => {
       setSessionInformation(data);
-      setCardDeckParam(DECKS.byLabels(data.cardDeck).values);
+      if (DECKS.byLabels(data.cardDeck) !== undefined) {
+        setCardDeckParam(DECKS.byLabels(data.cardDeck).values);
+      }
       // TODO - handle error , data not present
     });
   } catch (e) {
@@ -33,7 +35,6 @@ export default function VotingCards() {
   const { roomId } = useParams();
   const [cardDeck, setCardDeck] = useState([]);
   const [sessionInformation, setSessionInformation] = useState({});
-  // TODO remove next line and keep this
   const { story, socketEvents } = useSocket(roomId);
   const userDetails = useAuthState();
 

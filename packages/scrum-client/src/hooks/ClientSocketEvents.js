@@ -9,7 +9,7 @@ import { API_CONSTANTS } from '../constants';
  */
 const ClientSocketEvents = (ioUri = API_CONSTANTS.API_BASE_URL) => {
   const socket = io(ioUri);
-  console.log('client--connectionSocket: ', ioUri);
+  console.log('client--connectionSocket to: ', ioUri, ' with socketId', socket.id);
   /**
    * Joins a user to a room.
    * @param {Object} data The data sent to the event.
@@ -20,7 +20,7 @@ const ClientSocketEvents = (ioUri = API_CONSTANTS.API_BASE_URL) => {
     socket.emit(EVENT.JOIN, data);
   };
   const disconnectSocket = () => {
-    console.log('client--disconnectSocket');
+    console.log('client--disconnectSocket from: ', ioUri, ' with socketId', socket.id);
     if (socket) socket.disconnect();
   };
   const onRoomMessages = cb => {
@@ -41,8 +41,6 @@ const ClientSocketEvents = (ioUri = API_CONSTANTS.API_BASE_URL) => {
   const onStoryVotesUpdate = cb => {
     console.log('onStoryVotesUpdate');
     socket.on(EVENT.STORY_VOTES_UPDATE, data => {
-      console.log('data', data);
-      console.log('data.storyVote', data.storyVotes);
       return cb(data.storyVotes);
     });
   };
