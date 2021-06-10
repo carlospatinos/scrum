@@ -1,3 +1,3 @@
 import JoinSessionRoute from './JoinSessionRoute';
 
-export default { JoinSessionRoute };
+export default JoinSessionRoute;
