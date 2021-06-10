@@ -20,9 +20,7 @@ function getPlanningSession(setCardDeckParam, roomId, setSessionInformation) {
   try {
     PlanningSessionAPI.get(roomId).then(data => {
       setSessionInformation(data);
-      if (DECKS.byLabels(data.cardDeck) !== undefined) {
-        setCardDeckParam(DECKS.byLabels(data.cardDeck).values);
-      }
+      setCardDeckParam(DECKS.byLabels(data.cardDeck).values);
       // TODO - handle error , data not present
     });
   } catch (e) {
