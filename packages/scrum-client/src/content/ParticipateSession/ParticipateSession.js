@@ -65,7 +65,7 @@ export default function ParticipateSession() {
       if (JSON.stringify(storyVotes) !== '{}') {
         setSummaryVotes(cardDeck.getSummaryVote(storyVotes));
       } else {
-        console.log('storyVotes', storyVotes);
+        console.log('storyVotes are empty');
       }
     }
   }, [sessionInformation, storyVotes]);

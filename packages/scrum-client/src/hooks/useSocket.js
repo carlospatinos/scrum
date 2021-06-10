@@ -12,6 +12,8 @@ const useSocket = (roomId, socketServerURL = API_CONSTANTS.API_BASE_URL) => {
   const userDetails = useAuthState();
 
   useEffect(() => {
+    // eslint-disable-next-line
+    console.log('WARNING!!! creating new connection?. ');
     const socketEventsRef = ClientSocketEvents();
     const {
       joinToRoom,
@@ -31,6 +33,8 @@ const useSocket = (roomId, socketServerURL = API_CONSTANTS.API_BASE_URL) => {
 
     setSocketEvents(socketEventsRef);
     return () => {
+      // eslint-disable-next-line
+      console.log('WARNING!!!  executing disconnection. ');
       disconnectSocket();
     };
   }, [roomId, socketServerURL, userDetails.user, story, storyVotes]);

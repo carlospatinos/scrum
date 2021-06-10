@@ -1,6 +1,5 @@
 /* eslint-disable */
 // TODO fix eslint
-// TODO Is this really used?
 const socketIo = require('socket.io');
 const { EVENT } = require('scrum-common');
 const {Logger} = require('../../utils/Logger');
@@ -14,14 +13,14 @@ class ServerSocketService {
     const socketEventIO = ServerSocketEvents(this.io);
 
     this.io.on(EVENT.CONNECTION, socket => {
-      this.logger.info('socket connected');
+      this.logger.info(`socket  connected [${socket.id}]`);
       const socketEvent  = socketEventIO(socket);
       socket.on(EVENT.JOIN, socketEvent.onJoinUserToRoom);
       socket.on(EVENT.SEND_MESSAGE, socketEvent.onSendMessageToRoom);
       socket.on(EVENT.STORY_UPDATE, socketEvent.onStoryUpdate);
       socket.on(EVENT.STORY_VOTES_UPDATE, socketEvent.onStoryVotesUpdate);
       socket.on(EVENT.DISCONNECT, () => {
-        this.logger.info("socket  disconnected");
+        this.logger.info(`socket  disconnected [${socket.id}]`);
       });
     });
   }

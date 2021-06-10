@@ -1,6 +1,6 @@
 import { lazy } from 'react';
 import { PATHS } from '../constants';
-import { JoinSessionRoute } from '../components/router';
+import JoinSessionRoute from '../components/router';
 
 const Login = lazy(() => import('../content/Login'));
 const Signup = lazy(() => import('../content/Signup'));
