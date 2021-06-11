@@ -31,7 +31,6 @@
     "statements": 53
   },
   "dependencies": {
-    "@babel/runtime": "^7.14.0",
     "bcrypt": "^5.0.0",
     "bootstrap": "^4.5.3",
     "coffee-script": "^1.12.7",
