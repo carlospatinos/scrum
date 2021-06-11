@@ -16,7 +16,7 @@ import {
 import { useParams, useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import TeamList from '../../components/TeamList';
-import useSocket from '../../hooks/useSocket';
+import { useScrumStory } from '../../hooks/useSocket';
 import { PlanningSessionAPI, UserStoryAPI } from '../../api';
 import { DECKS, PATHS } from '../../constants';
 
@@ -42,7 +42,7 @@ export default function ParticipateSession() {
   const [validUserStory, setValidUserStory] = useState(false);
   const [sessionInformation, setSessionInformation] = useState();
   const [summaryVotes, setSummaryVotes] = useState({});
-  const { socketEvents, setStory, users, storyVotes } = useSocket(roomId);
+  const { socketEvents, setStory, users, storyVotes } = useScrumStory(roomId);
   const [fullUrlToJoin, setFullUrlToJoin] = useState('');
   const userDetails = useAuthState();
   const history = useHistory();
