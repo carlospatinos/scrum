@@ -1,0 +1,327 @@
+openapi: 3.0.1
+info:
+  title: Scrum
+  description: Swagger docs for Scrum Rest APIs
+  version: 1.0.0
+servers:
+- url: https://localhost:4000
+tags:
+- name: default
+  description: Route to verify server is up and working.
+- name: auth
+  description: Authentication routes
+- name: user
+  description: user related operations
+- name: tips
+  description: encoraging messages to keep people motivated
+- name: planningSession
+  description: planning sessions operations
+- name: userStory
+  description: user story operations
+  
+paths:
+  /appRunning:
+    get:
+      tags:
+      - default
+      summary: Dummy response
+      description: This method was created to make sure the api is working
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Application is running"
+  /auth/local:
+    post:
+      tags:
+      - auth
+      summary: Validates user credentials and returns user profile if that exist
+      requestBody:
+        description: Email and password are both required to complete validation
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              example:   
+                email: jessica.smith@myorg.com
+                password: thisIsMySuperSecret
+        required: true
+      responses:
+        "200":
+          description: Valid user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessResponse'
+                  
+        "400":
+          description: Invalid user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericFailureResponse'
+  /auth/google:
+    get:
+      tags:
+      - auth
+      summary: Uses OAUTH to enable authentication
+      responses:
+        "302":
+          description: Redirection to google site for oauth
+  /auth/google/redirect:
+    get:
+      tags:
+      - auth
+      summary: Result of a valid authentication from google
+      responses:
+        "302":
+          description: Redirection to /oauthvalidation to enable login in scrum app
+  /api/logout:
+    get:
+      tags:
+      - user
+      summary: Logout functionality 
+      description: enables user to logout
+      responses:
+        "200":
+          description: logout successfully 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessResponse2'
+                  
+        "400":
+          description: Returned when token was not deleted or when there was an underlying issue
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericFailureResponse'
+  /api/signup:
+    post:
+      tags:
+      - user
+      summary: new user profile creation
+      description: This will allow any person to create an account 
+      responses:
+        "200":
+          description: profile created successfully 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessResponse2'
+                  
+        "400":
+          description: indicates an issue with the user creation (already existing user, invalid password, etc)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericFailureResponse'
+  /api/deleteprofile:
+    delete:
+      tags:
+      - user
+      summary: deletes user profile
+      description: This method was created to make sure the api is working
+      responses:
+        "200":
+          description: profile deleted successfully 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessResponse2'
+                  
+        "400":
+          description: indicates an issue with the user deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericFailureResponse'
+  /api/tipsforthesession:
+    get:
+      tags:
+      - tips
+      summary: returns all persisted tips
+      description: this method will return all tips persisted on the db
+      responses:
+        "200":
+          description: returns all tips 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessResponse'
+                  
+        "400":
+          description: indicates an issue returning the tips
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericFailureResponse'
+  /api/planningsession:
+    post:
+      tags:
+      - planningSession
+      summary: new planning session creation
+      requestBody:
+        description: This will allow any person to create a plannig session 
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PlanningSession"
+        required: true
+      responses:
+        "200":
+          description: planning session created successfully 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessResponse3'
+                  
+        "400":
+          description: indicates an issue with the session creation 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericFailureResponse'
+    get:
+      tags:
+      - planningSession
+      summary: returns single session
+      description: returns single session based on planningRoomId
+      responses:
+        "200":
+          description: sucessful operation 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessResponse'
+                  
+        "400":
+          description: no session found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericFailureResponse'
+  /api/userstory:
+    post:
+      tags:
+      - userStory
+      summary: new planning session creation
+      requestBody:
+        description: This will allow any person to create a plannig session 
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserStoiry"
+        required: true
+      responses:
+        "200":
+          description: planning session created successfully 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessResponse'
+                  
+        "400":
+          description: indicates an issue with the session creation 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericFailureResponse'
+    get:
+      tags:
+      - userStory
+      summary: returns single session
+      description: returns single session based on planningRoomId
+      responses:
+        "200":
+          description: sucessful operation 
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericSuccessResponse'
+                  
+        "400":
+          description: no session found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenericFailureResponse'
+components:
+  schemas:
+    GenericSuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        data:
+          type: object
+    GenericSuccessResponse2:
+      type: object
+      properties:
+        success:
+          type: boolean
+        user:
+          type: object
+    GenericSuccessResponse3:
+      type: object
+      properties:
+        success:
+          type: boolean
+        session:
+          type: object
+        planningRoomId:
+          type: string
+    GenericFailureResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+    UserStoiry: 
+      type: object
+      properties:
+        planningSessionId:
+          type: string
+        title:
+          type: string
+        description:
+          type: string
+        chosenEstimatedValue:
+          type: string
+        minEstimatedValue:
+          type: string
+        maxEstimatedValue:
+          type: string
+    PlanningSession:
+      required:
+        - title
+        - cardDeck
+        - userStoriesCreationMethod
+        - userStoryList
+        - userAdmin
+      type: object
+      properties:
+        title:
+          type: string
+        cardDeck:
+          type: string
+        userStoriesCreationMethod:
+          type: string
+        allowUnauthenticated:
+          type: string
+        userStoryList:
+          type: array
+          items:
+            type: string
+            example: 12345
+        userAdmin:
+          type: string
