@@ -16,7 +16,7 @@ import {
 import { useParams, useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import TeamList from '../../components/TeamList';
-import useSocket from '../../hooks/useSocket';
+import { useScrumStory } from '../../hooks/useSocket';
 import { PlanningSessionAPI, UserStoryAPI } from '../../api';
 import { DECKS, PATHS } from '../../constants';
 
@@ -42,7 +42,7 @@ export default function ParticipateSession() {
   const [validUserStory, setValidUserStory] = useState(false);
   const [sessionInformation, setSessionInformation] = useState();
   const [summaryVotes, setSummaryVotes] = useState({});
-  const { socketEvents, setStory, users, storyVotes } = useSocket(roomId);
+  const { socketEvents, setStory, users, storyVotes, setStoryVotes } = useScrumStory(roomId);
   const [fullUrlToJoin, setFullUrlToJoin] = useState('');
   const userDetails = useAuthState();
   const history = useHistory();
@@ -105,7 +105,6 @@ export default function ParticipateSession() {
         room: { id: roomId },
         story: { storyTitle, storyDescription, isStoryActive: false },
       });
-      storyVotes.splice(0, storyVotes.length);
 
       if (summaryVotes !== undefined) {
         UserStoryAPI.post({
@@ -116,6 +115,10 @@ export default function ParticipateSession() {
           minEstimatedValue: summaryVotes.minVote,
           maxEstimatedValue: summaryVotes.maxVote,
         });
+        //  Clean up summary results
+        // clean votes for each person
+        setSummaryVotes({});
+        setStoryVotes([]);
       }
     } catch (error) {
       console.log('error', MediaError);

@@ -6,7 +6,7 @@ import { Container, Badge, Spinner, Button, Row, Col } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { DECKS } from '../../constants';
 import ClickableCard from '../../components/ClickableCard';
-import useSocket from '../../hooks/useSocket';
+import { useScrumStory } from '../../hooks/useSocket';
 import './VotingCards.css';
 import { useAuthState } from '../../context';
 import { PlanningSessionAPI } from '../../api';
@@ -33,7 +33,10 @@ export default function VotingCards() {
   const { roomId } = useParams();
   const [cardDeck, setCardDeck] = useState([]);
   const [sessionInformation, setSessionInformation] = useState({});
-  const { story, socketEvents } = useSocket(roomId);
+  // TODO remove next line and keep this
+  // const { story, socketEvents } = useSocket(roomId);
+  const { story, socketEvents } = useScrumStory(roomId);
+
   const userDetails = useAuthState();
 
   useEffect(() => {
@@ -41,16 +44,13 @@ export default function VotingCards() {
   }, [setCardDeck, roomId]);
 
   const handleSpecificCardToggle = event => {
+    const vote = cardDeck.find(card => card.id === event.target.id).val;
     socketEvents.setRoomStoryVote({
       room: { id: roomId },
       user: userDetails.user,
-      vote: cardDeck.find(card => card.id === event.target.id).val,
+      vote,
     });
-    setCardDeck(
-      cardDeck.map(card =>
-        card.id === event.target.id ? { ...card, isSelected: true } : { ...card, isSelected: false }
-      )
-    );
+    setCardDeck(cardDeck.map(card => ({ ...card, isSelected: card.id === event.target.id })));
   };
   const isStoryActive = story && story.isStoryActive;
 
@@ -119,7 +119,7 @@ export default function VotingCards() {
         {isStoryActive ? (
           <>{cardDeck.map(card => {
             return (
-              <Col className="box" xs={4} md={3} lg={3}>
+              <Col key={card.id} className="box" xs={4} md={3} lg={3}>
                 <ClickableCard
                   image={card.image}
                   text={card.text}
