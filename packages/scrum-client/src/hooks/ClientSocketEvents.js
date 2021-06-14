@@ -41,6 +41,7 @@ const ClientSocketEvents = (ioUri = API_CONSTANTS.API_BASE_URL) => {
   const onStoryVotesUpdate = cb => {
     console.log('onStoryVotesUpdate');
     socket.on(EVENT.STORY_VOTES_UPDATE, data => {
+      console.log('onStoryVotesUpdate-data', data);
       return cb(data.storyVotes);
     });
   };

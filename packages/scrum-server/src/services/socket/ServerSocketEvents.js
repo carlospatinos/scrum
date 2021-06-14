@@ -36,7 +36,8 @@ const ServerSocketEvents = io => {
     const onStoryVotesUpdate = ({ room, user, vote }) => {
       logger.info(`onStoryVotesUpdate {${EVENT.STORY_VOTES_UPDATE}} on room {${room.id}} with vote ${vote} `);
       const storyVotes = socketState.setRoomStoryVote(room, user, vote);
-      io.to(room.id).emit(EVENT.STORY_VOTES_UPDATE, {room, storyVotes});
+
+      io.to(room.id).emit(EVENT.STORY_VOTES_UPDATE, {room,  storyVotes: Array.from(storyVotes)});
     };
 
     return { onJoinUserToRoom, onSendMessageToRoom, onStoryUpdate, onStoryVotesUpdate };

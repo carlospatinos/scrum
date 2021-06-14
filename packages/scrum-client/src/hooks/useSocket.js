@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useEffect, useState } from 'react';
 import { API_CONSTANTS } from '../constants';
 import ClientSocketEvents from './ClientSocketEvents';
