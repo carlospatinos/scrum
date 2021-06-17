@@ -22,8 +22,6 @@ const i18n = require('i18n');
 const { TipsRoutes, UserRoutes, PlanningSessionRoutes, AuthRoutes , DefaultRoute, UserStoryRoutes } = require('./api/routes');
 
 
-console.log("--->>>>>>" + __dirname + "/locales")
-
 AuthStrategies.configure(passport);
 i18n.configure({
   locales: ['es', 'en'],
