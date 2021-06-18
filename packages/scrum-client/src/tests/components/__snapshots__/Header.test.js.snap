@@ -5,7 +5,7 @@ exports[`Header To match snapshot 1`] = `
   <header>
     <div>
       <nav
-        class="bg-primary fixed-top navbar-expand-md navbar navbar-expand-lg navbar-dark"
+        class="bg-primary fixed-top navbar-expand-md navbar navbar-expand-md navbar-dark"
       >
         <a
           class="navbar-brand"
