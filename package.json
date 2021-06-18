@@ -17,6 +17,8 @@
     "build": "lerna run build --stream",
     "start": "lerna run start --stream",
     "change": "lerna changed",
+    "changelog": "auto-changelog --template changelog-template.hbs -p -u --commit-limit false",
+    "changelog-debug": "auto-changelog --template changelog-template.hbs -p --template json --output changelog-data.json",
     "clean": "lerna clean --yes && lerna run clean --stream",
     "localStart": "lerna run localStart --stream",
     "profile": "lerna run profile --stream",
@@ -29,6 +31,7 @@
     "lint": "lerna run lint",
     "lint-fix": "lerna run lint-fix"
   },
+  "auto-changelog": {},
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS"
