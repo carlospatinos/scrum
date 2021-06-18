@@ -28,7 +28,7 @@ export default function Header() {
   return (
     <header>
       <div>
-        <Navbar variant="dark" className="bg-primary fixed-top navbar-expand-md" expand="lg">
+        <Navbar variant="dark" className="bg-primary fixed-top navbar-expand-md" expand="md">
           <Navbar.Brand className="" href={PATHS.HOME}>
             <img src="/appLogo.svg" alt={t(`Header.altLogo`)} />
             <strong className="align-middle">{t(`Header.titleBrand`)}</strong>
@@ -58,16 +58,15 @@ export default function Header() {
                     <div className="d-flex justify-content-center">
                       <small className="text-secondary">{userDetails.user.email}</small>
                     </div>
-                    <NavDropdown.Item eventKey="manage" className="d-flex justify-content-center">
-                      <Button
-                        variant="outline-secondary"
-                        size="sm"
-                        className="rounded-pill"
-                        disabled
-                      >
-                        <strong>{t('Header.btnManageYourAccount')}</strong>
+                    <Nav.Link
+                      key={PATHS.PROFILE}
+                      href={PATHS.PROFILE}
+                      className="d-flex justify-content-center"
+                    >
+                      <Button variant="outline-secondary" size="sm" className="rounded-pill">
+                        <small>{t('Header.btnManageYourAccount')}</small>
                       </Button>
-                    </NavDropdown.Item>
+                    </Nav.Link>
                     <NavDropdown.Divider />
                     <Nav.Link
                       key={PATHS.LOGOUT}
