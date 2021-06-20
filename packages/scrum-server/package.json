@@ -23,7 +23,7 @@
     "profile": "node --inspect ./src/bin/www",
     "start": "node ./build/bin/www",
     "test": "mocha --require @babel/register tests/**/*.js --exit",
-    "testcoverage": "nyc mocha --require @babel/register tests/*.js --exit"
+    "testcoverage": "nyc mocha --require @babel/register tests/**/*.js --exit"
   },
   "nyc": {
     "check-coverage": true,

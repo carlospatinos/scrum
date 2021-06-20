@@ -1,20 +1,24 @@
-/* eslint-disable */
-// TODO fix eslint
 const socketIo = require('socket.io');
 const { EVENT } = require('scrum-common');
-const {Logger} = require('../../utils/Logger');
-const ServerSocketEvents  = require('./ServerSocketEvents');
+const { Logger } = require('../../utils/Logger');
+const ServerSocketEvents = require('./ServerSocketEvents');
 
+/**
+ * Sever socket singleton service.
+ *
+ * @class ServerSocketService
+ */
 class ServerSocketService {
   constructor(server) {
     this.logger = Logger(__filename);
     this.io = socketIo(server);
+
     this.logger.info('starting socket service');
     const socketEventIO = ServerSocketEvents(this.io);
 
     this.io.on(EVENT.CONNECTION, socket => {
       this.logger.info(`socket  connected [${socket.id}]`);
-      const socketEvent  = socketEventIO(socket);
+      const socketEvent = socketEventIO(socket);
       socket.on(EVENT.JOIN, socketEvent.onJoinUserToRoom);
       socket.on(EVENT.SEND_MESSAGE, socketEvent.onSendMessageToRoom);
       socket.on(EVENT.STORY_UPDATE, socketEvent.onStoryUpdate);
@@ -26,12 +30,12 @@ class ServerSocketService {
   }
 
   getInstance() {
-    this.logger.info("getInstance");
+    this.logger.info('getInstance');
     return this;
   }
 
-  emiter(event, body) {
-    this.logger.info("emitting event");
+  emitter(event, body) {
+    this.logger.info('emitting event');
     if (body) this.io.emit(event, body);
   }
 }

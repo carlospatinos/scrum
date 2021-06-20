@@ -60,7 +60,7 @@ describe('ServerSocketEvents', () => {
     //  Test updating the story
     serverSocketEvents.onStoryUpdate({ room, story: expectedMessageObj.story });
 
-    // Verify the message is sent
+    // Verify the story is updated
     expect(fakeTo.emit.getCall(1).args[0]).to.eql(EVENT.STORY_UPDATE);
     expect(fakeTo.emit.getCall(1).args[1].story.storyTitle).to.eql(
       expectedMessageObj.story.storyTitle
@@ -77,7 +77,7 @@ describe('ServerSocketEvents', () => {
     //  Test updating the story
     serverSocketEvents.onStoryVotesUpdate(expectedMessageObj);
 
-    // Verify the message is sent
+    // Verify  the votes are updated
     expect(fakeTo.emit.getCall(1).args[0]).to.eql(EVENT.STORY_VOTES_UPDATE);
     expect(fakeTo.emit.getCall(1).args[1].storyVotes).to.eql(expectedMessageObj.storyVotes);
     expect(fakeTo.emit.getCall(1).args[1].room.id).to.eql(expectedMessageObj.room.id);
