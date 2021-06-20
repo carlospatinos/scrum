@@ -1,7 +1,7 @@
 /* eslint-disable */
 // TODO fix eslint
 const { EVENT } = require('scrum-common');
-const { ServerSocketState } = require('./ServerSocketState');
+const ServerSocketState = require('./ServerSocketState');
 const {Logger} = require('../../utils/Logger');
 const ServerSocketEvents = io => {
   const logger = Logger(__filename);

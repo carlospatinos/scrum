@@ -15,7 +15,7 @@ const ServerSocketState = (initialState = []) => {
 
   const addRoomIfDoesNotExists = (room) => {
     if (!rooms.has(room.id)) {
-      rooms.set(room.id, buildRoom(room.id));
+      rooms.set(room.id, buildRoom(room));
       logger.debug(`addRoom building room {${room.id}} having ${rooms.size} rooms.`);
     }
     return rooms.get(room.id);
@@ -58,4 +58,4 @@ const ServerSocketState = (initialState = []) => {
   return { getRoom, assignUserToRoom, setRoomStory, setRoomStoryVote };
 };
 
-module.exports = { ServerSocketState };
+module.exports = ServerSocketState;
