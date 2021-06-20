@@ -1,6 +1,6 @@
-/* eslint-disable */
-const {Logger} = require('../../utils/Logger');
-// TODO fix eslint
+/* eslint-disable no-underscore-dangle */
+const { Logger } = require('../../utils/Logger');
+
 const buildRoom = ({ id, users = new Map(), storyVotes = new Map(), story = '' }) => ({
   id,
   users,
@@ -13,7 +13,7 @@ const ServerSocketState = (initialState = []) => {
   const rooms = new Map(...initialState);
   logger.info(`Initializing rooms with ${rooms.size}`);
 
-  const addRoomIfDoesNotExists = (room) => {
+  const addRoomIfDoesNotExists = room => {
     if (!rooms.has(room.id)) {
       rooms.set(room.id, buildRoom(room));
       logger.debug(`addRoom building room {${room.id}} having ${rooms.size} rooms.`);
@@ -25,9 +25,15 @@ const ServerSocketState = (initialState = []) => {
     const userId = user._id;
     const _room = addRoomIfDoesNotExists({ id: room.id });
     if (!_room.users.has(userId)) {
-      logger.debug(`assignUserToRoom adding user {${userId}} to the room {${room.id}} having ${_room.users.size} participants`);
+      logger.debug(
+        `assignUserToRoom adding user {${userId}} to the room {${room.id}} having ${_room.users.size} participants`
+      );
       _room.users.set(userId, user);
-      logger.silly(`assignUserToRoom adding user {${userId}} to the room {${room.id}} resulting in ${JSON.stringify(Array.from(_room.users.entries()))}`);
+      logger.silly(
+        `assignUserToRoom adding user {${userId}} to the room {${
+          room.id
+        }} resulting in ${JSON.stringify(Array.from(_room.users.entries()))}`
+      );
     }
     return rooms.get(room.id);
   };
@@ -46,7 +52,11 @@ const ServerSocketState = (initialState = []) => {
     logger.debug(`setRoomStoryVote on room {${room.id}} for user {${userId}} with value {${vote}}`);
     const _room = rooms.get(room.id);
     _room.storyVotes.set(userId, vote);
-    logger.silly(`setRoomStoryVote on room {${room.id}} for user {${userId}} has {${JSON.stringify(Array.from(_room.storyVotes.entries()))}}`);
+    logger.silly(
+      `setRoomStoryVote on room {${room.id}} for user {${userId}} has {${JSON.stringify(
+        Array.from(_room.storyVotes.entries())
+      )}}`
+    );
     return _room.storyVotes;
   };
   const getRoom = room => {
