@@ -1,1 +1,13 @@
-{}
+{
+    "lblWelcome": "Bienvenido!",
+    "apiWorking": "API funcionando adecuadamente",
+    "apiPasswordDoNotMatch": "la contraseña no corresponde",
+    "apiEmailExist": "correo electronico ya esta registrado",
+    "apiEmailNotFound": "Error de autenticacion, email no existe",
+    "apiUserAlreadyLoggedIn": "Cuenta actualmente en uso",
+    "apiFillTheFields": "Por favor completa todos los campos",
+    "apiPasswordMinLength": "Contraseña debe ser al menos 6 caracteres",
+    "serviceSaveError": "Error al persistir la informacion",
+    "serviceFindError": "Objecto no encontrado",
+    "serviceInvalidId": "Identificador invalido",
+}
