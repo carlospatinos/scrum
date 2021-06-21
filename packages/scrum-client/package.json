@@ -1,6 +1,6 @@
 {
   "name": "@scrum/client",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": false,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.5",
@@ -41,7 +41,7 @@
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
     "recharts": "^2.0.9",
-    "scrum-common": "^0.0.0",
+    "scrum-common": "^1.0.0",
     "socket.io-client": "^2.3.1",
     "web-vitals": "^0.2.4",
     "zxcvbn": "^4.4.2"

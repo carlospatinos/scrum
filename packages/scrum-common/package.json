@@ -1,6 +1,6 @@
 {
   "name": "scrum-common",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Common files between server and client packages",
   "author": "christopher-chavez <doncesarts@gmail.com>",
   "homepage": "https://github.com/carlospatinos/scrum/tree/master/packages/scrum-common#readme",
