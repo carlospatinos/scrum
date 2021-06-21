@@ -8,10 +8,10 @@ const DBConnection = require('mongoose');
 const { Logger } = require('../utils/Logger');
 
 const logger = Logger(__filename);
+const mongoParams = { useNewUrlParser: true, useUnifiedTopology: true };
+const mongoConnectionString = `mongodb+srv://${db_user}:${db_pass}@${db_url}/${db_name}?retryWrites=true&w=majority`;
 
-DBConnection.connect(
-  `mongodb+srv://${db_user}:${db_pass}@${db_url}/${db_name}?retryWrites=true&w=majority`
-)
+DBConnection.connect(mongoConnectionString, mongoParams)
   .then(() => logger.info(`Connected to ${db_url}`))
   .catch(err => logger.error(err));
 
