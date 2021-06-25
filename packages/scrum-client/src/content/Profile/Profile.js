@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { Button, Container, Form, Modal, Row, Col, Figure, Jumbotron } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import { useAuthState, useAuthDispatch, logout } from '../../context';
-import { ProfileAPI } from '../../api';
+import { ProfileAPI, PlanningSessionAPI } from '../../api';
 
 import './Profile.css';
 
 export default function Profile() {
   const [shareLink, setShareLink] = useState('');
   const [showModal, setShowModal] = useState(false);
+  const [numberOfSessions, setNumberOfSessions] = useState();
   const { t } = useTranslation();
 
   const modalClose = () => setShowModal(false);
@@ -32,6 +33,10 @@ export default function Profile() {
 
   useEffect(() => {
     generateReferralLink(userDetails);
+    // eslint-disable-next-line no-underscore-dangle
+    PlanningSessionAPI.getByAdminId(userDetails.user._id).then(res => {
+      setNumberOfSessions(res.length);
+    });
   }, [userDetails]);
 
   const handleDeleteProfile = async event => {
@@ -85,21 +90,25 @@ export default function Profile() {
                 </Col>
               </Row>
               <Row>
-                <Col md={3}>{t('ProfileView.lblUserName')}</Col>
-                <Col md={9}>
+                <Col md={5}>{t('ProfileView.lblUserName')}</Col>
+                <Col md={7}>
                   {userDetails.user.firstName} {userDetails.user.lastName}
                 </Col>
               </Row>
               <Row>
-                <Col md={3}>{t('ProfileView.lblEmail')}</Col>
-                <Col md={9}>{userDetails.user.email}</Col>
+                <Col md={5}>{t('ProfileView.lblEmail')}</Col>
+                <Col md={7}>{userDetails.user.email}</Col>
               </Row>
-              <br />
+              <Row>
+                <Col md={5}>Number of sessions: </Col>
+                <Col md={7}>{numberOfSessions}</Col>
+              </Row>
               <Row>
                 <Col md={12}>{t('ProfileView.lblReferLinkTitle')}</Col>
                 <Col md={12}>{shareLink}</Col>
               </Row>
               <br />
+
               <Row>
                 <Col md={12}>
                   <Button block variant="danger" type="submit">

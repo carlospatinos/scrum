@@ -1,24 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Container, Table, Button } from 'react-bootstrap';
 import { useTranslation } from 'react-i18next';
 import './SessionSummary.css';
-import { API_CONSTANTS } from '../../constants';
+import { API_CONSTANTS, PATHS } from '../../constants';
 import { CommonFunctions } from '../../util';
-import { UserStoryAPI } from '../../api';
+import { UserStoryAPI, PlanningSessionAPI } from '../../api';
 
 export default function SessionSummary() {
   const { roomId } = useParams();
   const { t } = useTranslation();
+  const history = useHistory();
   const [userStoryArray, setUserStoryArray] = useState([]);
+
+  let roomIdFromURLOrLocalStorage = roomId;
+  if (!roomIdFromURLOrLocalStorage || roomId === ':roomId') {
+    roomIdFromURLOrLocalStorage = CommonFunctions.getValueFromLocalStorage2(
+      API_CONSTANTS.PLANNING_ROOM_ID
+    );
+  }
+
   useEffect(() => {
     try {
-      let roomIdFromURLOrLocalStorage = roomId;
-      if (!roomIdFromURLOrLocalStorage || roomId === ':roomId') {
-        roomIdFromURLOrLocalStorage = CommonFunctions.getValueFromLocalStorage2(
-          API_CONSTANTS.PLANNING_ROOM_ID
-        );
-      }
       UserStoryAPI.get(roomIdFromURLOrLocalStorage).then(planningSessionInformation => {
         setUserStoryArray(planningSessionInformation);
       });
@@ -26,11 +29,19 @@ export default function SessionSummary() {
       // eslint-disable-next-line no-console
       console.log('error', MediaError);
     }
-  }, [roomId]);
+  }, [roomIdFromURLOrLocalStorage]);
 
   const handleDeleteSession = () => {
-    // eslint-disable-next-line no-console
-    console.log('Too late');
+    PlanningSessionAPI.remove(roomIdFromURLOrLocalStorage).then(response => {
+      if (response) {
+        // eslint-disable-next-line no-console
+        console.log(response);
+        history.push(PATHS.HOME);
+      } else {
+        // eslint-disable-next-line no-console
+        console.log('session not deleted?');
+      }
+    });
   };
   return (
     <Container>

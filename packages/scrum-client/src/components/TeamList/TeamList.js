@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, Row, Col, Figure } from 'react-bootstrap';
+import { Row, Col, Figure } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import './TeamList.css';
 

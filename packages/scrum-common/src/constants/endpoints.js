@@ -9,6 +9,7 @@ const END_POINTS = {
   SIGN_UP: '/signup',
   DELETE_PROFILE: '/deleteprofile',
   PLANNING_SESSION: '/planningsession',
+  PLANNING_SESSIONS: '/planningsessions',
   USER_STORY: '/userstory',
   TIPS_FOR_THE_SESSION: '/tipsforthesession',
   LOGOUT: '/logout',
