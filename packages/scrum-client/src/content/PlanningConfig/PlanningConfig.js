@@ -30,7 +30,6 @@ export default function PlanningConfig() {
   const [apiResponse, setApiResponse] = useState('');
   const userDetails = useAuthState();
 
-  // TODO what to do here when we remove the menu?
   const redirectedFrom = location.state?.redirectedFrom?.pathname || PATHS.SHARE_SESSION;
 
   const cardDeckOptions = [
@@ -72,7 +71,8 @@ export default function PlanningConfig() {
             serviceResponse.planningRoomId
           );
           history.push({
-            pathname: redirectedFrom,
+            pathname: PATHS.SHARE_SESSION,
+            state: { redirectedFrom: { pathname: redirectedFrom } },
           });
         } else {
           setApiResponse(serviceResponse.message);
@@ -146,7 +146,6 @@ export default function PlanningConfig() {
               value="gitlab"
               disabled
             />
-
             <Form.Check
               type="radio"
               label="CSV"
@@ -157,7 +156,7 @@ export default function PlanningConfig() {
           </Col>
         </Form.Group>
       </fieldset>
-      <FormGroup controlId="allowUnauthenticated">
+      <FormGroup controlId="allowUnauthenticated" hidden>
         <FormCheck
           type="checkbox"
           label={t('PlanningConfig.lblAllowUnauthenticated')}
