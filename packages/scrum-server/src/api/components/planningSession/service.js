@@ -25,7 +25,6 @@ const save = async jsonData => {
 };
 
 const findById = async planningRoomId => {
-  console.log(planningRoomId);
   if (!planningRoomId || !ObjectId.isValid(planningRoomId)) {
     throw Error(i18n.__('serviceInvalidId'));
   }
