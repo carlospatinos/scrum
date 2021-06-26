@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+// This needs to be shorter than the planning Session
+const EXPIRE_TIME_AFTER_ONE_WEEK = 60 * 60 * 24 * 7 * 1; // 604800
+
 const UserStorySchema = new mongoose.Schema({
   planningSessionId: {
     type: String,
@@ -27,6 +30,7 @@ const UserStorySchema = new mongoose.Schema({
   creationDate: {
     type: Date,
     default: Date.now,
+    expires: EXPIRE_TIME_AFTER_ONE_WEEK,
   },
 });
 const UserStory = mongoose.model('UserStory', UserStorySchema);

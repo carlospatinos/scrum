@@ -1,4 +1,13 @@
 {
-	"serviceInvalidId": "serviceInvalidId",
-	"serviceFindError": "serviceFindError"
+	"lblWelcome": "Welcome!",
+	"apiWorking": "API up and running",
+	"apiPasswordDoNotMatch": "password do not match",
+	"apiEmailExist": "email address already in use",
+	"apiEmailNotFound": "Auth error, email does not exist",
+	"apiUserAlreadyLoggedIn": "Account already in use",
+	"apiFillTheFields": "Please fill all the fields",
+	"apiPasswordMinLength": "Password lenght requirement not met",
+	"serviceSaveError": "Saving error",
+	"serviceFindError": "Object not found",
+	"serviceInvalidId": "Invalid id"
 }
