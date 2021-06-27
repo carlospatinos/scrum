@@ -45,6 +45,10 @@ npm start
 
 heroku config:set DB_USER=dbname --app app-name
 
+## Contributors
+
+carlospatinos
+doncesarts
 ## Coding Rules
 
 To ensure consistency, style and best practices throughout the source code we follow the AirBnb ESlint rules:
@@ -58,12 +62,3 @@ Useful tasks to contribute:
 - `npm run lint` : Checks if there are lint issues.
 - `npm run lint-fix` : To fix lint issues.
 - `npm run commit` : to commit the staged files using [conventional commits](https://github.com/commitizen/cz-cli)
-
-## Milestones
-
-Broadcast a message to connected users when someone connects or disconnects.
-Add support for nicknames.
-Don’t send the same message to the user that sent it. Instead, append the message directly as soon as he/she presses enter.
-Add “{user} is typing” functionality.
-Show who’s online.
-Add private messaging.

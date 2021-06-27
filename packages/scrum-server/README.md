@@ -15,18 +15,11 @@ We use jmeter to execute load testing, please install it and configured accordin
 
 ./jmeter.sh -n -t ./loadTesting/ScrumTestPlan.jmx -l testresults.jtl
 
-## Milestones
+# Swagger doc
 
-Broadcast a message to connected users when someone connects or disconnects.
-Add support for nicknames.
-Don’t send the same message to the user that sent it. Instead, append the message directly as soon as he/she presses enter.
-Add “{user} is typing” functionality.
-Show who’s online.
-Add private messaging. 
+API information can be found here [swagger doc](./doc/scrum.yaml)
 
+# GDPR
 
-
-## Contributors
-
-carlospatinos
-doncesarts
+User stories are autmatically removed after 7 days
+Sessions are removed automatically after 14 days
