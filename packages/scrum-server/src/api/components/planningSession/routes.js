@@ -8,6 +8,9 @@ const { END_POINTS } = require('scrum-common');
 const PlanningSessionController = require('./controller');
 
 router.post(END_POINTS.PLANNING_SESSION, PlanningSessionController.planningSessionSave);
-router.get(`${END_POINTS.PLANNING_SESSION}/:id`, PlanningSessionController.planningSessionFind);
+router.get(`${END_POINTS.PLANNING_SESSION}/:id`, PlanningSessionController.planningSessionFindById);
+router.delete(`${END_POINTS.PLANNING_SESSION}/:id`, PlanningSessionController.planningSessionDelete);
+router.delete(`${END_POINTS.PLANNING_SESSIONS}/:adminId`, PlanningSessionController.planningSessionDeleteAllByAdminId);
+router.get(`${END_POINTS.PLANNING_SESSION}/findByAdmin/:adminId`, PlanningSessionController.planningSessionFindByAdmin);
 
 module.exports = router;

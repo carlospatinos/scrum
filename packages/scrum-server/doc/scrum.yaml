@@ -4,26 +4,26 @@ info:
   description: Swagger docs for Scrum Rest APIs
   version: 1.0.0
 servers:
-- url: https://localhost:4000
+  - url: https://localhost:3000
 tags:
-- name: default
-  description: Route to verify server is up and working.
-- name: auth
-  description: Authentication routes
-- name: user
-  description: user related operations
-- name: tips
-  description: encoraging messages to keep people motivated
-- name: planningSession
-  description: planning sessions operations
-- name: userStory
-  description: user story operations
-  
+  - name: default
+    description: Route to verify server is up and working.
+  - name: auth
+    description: Authentication routes
+  - name: user
+    description: user related operations
+  - name: tips
+    description: encoraging messages to keep people motivated
+  - name: planningSession
+    description: planning sessions operations
+  - name: userStory
+    description: user story operations
+
 paths:
   /appRunning:
     get:
       tags:
-      - default
+        - default
       summary: Dummy response
       description: This method was created to make sure the api is working
       responses:
@@ -37,7 +37,7 @@ paths:
   /auth/local:
     post:
       tags:
-      - auth
+        - auth
       summary: Validates user credentials and returns user profile if that exist
       requestBody:
         description: Email and password are both required to complete validation
@@ -50,7 +50,7 @@ paths:
                   type: string
                 password:
                   type: string
-              example:   
+              example:
                 email: jessica.smith@myorg.com
                 password: thisIsMySuperSecret
         required: true
@@ -60,18 +60,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericSuccessResponse'
-                  
+                $ref: "#/components/schemas/GenericSuccessResponse"
+
         "400":
           description: Invalid user
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericFailureResponse'
+                $ref: "#/components/schemas/GenericFailureResponse"
   /auth/google:
     get:
       tags:
-      - auth
+        - auth
       summary: Uses OAUTH to enable authentication
       responses:
         "302":
@@ -79,7 +79,7 @@ paths:
   /auth/google/redirect:
     get:
       tags:
-      - auth
+        - auth
       summary: Result of a valid authentication from google
       responses:
         "302":
@@ -87,90 +87,97 @@ paths:
   /api/logout:
     get:
       tags:
-      - user
-      summary: Logout functionality 
+        - user
+      summary: Logout functionality
       description: enables user to logout
       responses:
         "200":
-          description: logout successfully 
+          description: logout successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericSuccessResponse2'
-                  
+                $ref: "#/components/schemas/GenericSuccessResponse2"
+
         "400":
           description: Returned when token was not deleted or when there was an underlying issue
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericFailureResponse'
+                $ref: "#/components/schemas/GenericFailureResponse"
   /api/signup:
     post:
       tags:
-      - user
+        - user
       summary: new user profile creation
-      description: This will allow any person to create an account 
+      description: This will allow any person to create an account
       responses:
         "200":
-          description: profile created successfully 
+          description: profile created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericSuccessResponse2'
-                  
+                $ref: "#/components/schemas/GenericSuccessResponse2"
+
         "400":
           description: indicates an issue with the user creation (already existing user, invalid password, etc)
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericFailureResponse'
-  /api/deleteprofile:
+                $ref: "#/components/schemas/GenericFailureResponse"
+  /api/deleteprofile/{id}:
     delete:
       tags:
-      - user
+        - user
       summary: deletes user profile
-      description: This method was created to make sure the api is working
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: Types.ObjectID of the profile to delete
+      description: This method was created to delete a profile
       responses:
         "200":
-          description: profile deleted successfully 
+          description: profile deleted successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericSuccessResponse2'
-                  
+                $ref: "#/components/schemas/GenericSuccessResponse2"
+
         "400":
           description: indicates an issue with the user deletion
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericFailureResponse'
+                $ref: "#/components/schemas/GenericFailureResponse"
   /api/tipsforthesession:
     get:
       tags:
-      - tips
+        - tips
       summary: returns all persisted tips
       description: this method will return all tips persisted on the db
       responses:
         "200":
-          description: returns all tips 
+          description: returns all tips
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericSuccessResponse'
-                  
+                $ref: "#/components/schemas/GenericSuccessResponse"
+
         "400":
           description: indicates an issue returning the tips
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericFailureResponse'
-  /api/planningsession:
+                $ref: "#/components/schemas/GenericFailureResponse"
+  /api/planningsession/:
     post:
       tags:
-      - planningSession
+        - planningSession
       summary: new planning session creation
       requestBody:
-        description: This will allow any person to create a plannig session 
+        description: This will allow any person to create a plannig session
         content:
           application/json:
             schema:
@@ -178,44 +185,132 @@ paths:
         required: true
       responses:
         "200":
-          description: planning session created successfully 
+          description: planning session created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericSuccessResponse3'
-                  
+                $ref: "#/components/schemas/GenericSuccessResponse3"
+
         "400":
-          description: indicates an issue with the session creation 
+          description: indicates an issue with the session creation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericFailureResponse'
+                $ref: "#/components/schemas/GenericFailureResponse"
+  /api/planningsession/{id}:
+    delete:
+      tags:
+        - planningSession
+      summary: deletes single session
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: Types.ObjectID of the session to delete
+      description: This method was created to delete a session
+      responses:
+        "200":
+          description: session deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericSuccessResponse2"
+
+        "400":
+          description: indicates an issue with the session deletion
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericFailureResponse"
     get:
       tags:
-      - planningSession
+        - planningSession
       summary: returns single session
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: Types.ObjectID of the session to get
       description: returns single session based on planningRoomId
       responses:
         "200":
-          description: sucessful operation 
+          description: sucessful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericSuccessResponse'
-                  
+                $ref: "#/components/schemas/GenericSuccessResponse"
+
         "400":
           description: no session found
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericFailureResponse'
+                $ref: "#/components/schemas/GenericFailureResponse"
+  /api/planningsession/findByAdmin/{adminId}:
+    get:
+      tags:
+        - planningSession
+      summary: multiple sessions
+      parameters:
+        - in: path
+          name: adminId
+          schema:
+            type: string
+          required: true
+          description: Types.ObjectID of the user that created sessions
+      description: multiple sessions created by the admin with adminId provided
+      responses:
+        "200":
+          description: sucessful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericSuccessResponse"
+
+        "400":
+          description: no session found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericFailureResponse"
+  /api/userstory/{id}:
+    get:
+      tags:
+        - userStory
+      summary: returns single session
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: Types.ObjectID of the user story to get
+      description: returns single session based on planningRoomId
+      responses:
+        "200":
+          description: sucessful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericSuccessResponse"
+
+        "400":
+          description: no session found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GenericFailureResponse"
   /api/userstory:
     post:
       tags:
-      - userStory
+        - userStory
       summary: new planning session creation
       requestBody:
-        description: This will allow any person to create a plannig session 
+        description: This will allow any person to create a plannig session
         content:
           application/json:
             schema:
@@ -223,37 +318,18 @@ paths:
         required: true
       responses:
         "200":
-          description: planning session created successfully 
+          description: planning session created successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericSuccessResponse'
-                  
+                $ref: "#/components/schemas/GenericSuccessResponse"
+
         "400":
-          description: indicates an issue with the session creation 
+          description: indicates an issue with the session creation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GenericFailureResponse'
-    get:
-      tags:
-      - userStory
-      summary: returns single session
-      description: returns single session based on planningRoomId
-      responses:
-        "200":
-          description: sucessful operation 
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericSuccessResponse'
-                  
-        "400":
-          description: no session found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/GenericFailureResponse'
+                $ref: "#/components/schemas/GenericFailureResponse"
 components:
   schemas:
     GenericSuccessResponse:
@@ -286,7 +362,7 @@ components:
           type: boolean
         message:
           type: string
-    UserStoiry: 
+    UserStoiry:
       type: object
       properties:
         planningSessionId:

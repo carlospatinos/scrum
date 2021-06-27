@@ -1,5 +1,5 @@
 import React from 'react';
-import { Badge, Row, Col, Figure } from 'react-bootstrap';
+import { Row, Col, Figure } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import './TeamList.css';
 
@@ -12,13 +12,6 @@ const getUserVote = (storyVotes, user) => {
 const TeamList = props => {
   const { title, subtitle, users, storyVotes, admin, summaryVotes } = props;
 
-  const generateUserStatusBadge = () => {
-    const randomStatus = Math.random();
-    if (randomStatus > 0.5) {
-      return <Badge variant="success">Online</Badge>;
-    }
-    return <Badge variant="danger">Offline</Badge>;
-  };
   return (
     <>
       <Row>
@@ -68,7 +61,6 @@ const TeamList = props => {
                           alt="171x180"
                           src="/icons/voting-face.png"
                         />
-                        {generateUserStatusBadge()}
                       </Figure>
                     </Col>
                     <Col className="my-auto">{user.firstName} {user.lastName}</Col>
