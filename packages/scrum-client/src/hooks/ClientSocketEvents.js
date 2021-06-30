@@ -53,7 +53,7 @@ const ClientSocketEvents = (ioUri = API_CONSTANTS.API_BASE_URL) => {
   // TODO do we need this?
   const onRoomClosed = cb => {
     console.log('onRoomClosed');
-    socket.on(EVENT.ROOM_CLOSED, data => cb(data));
+    socket.on(EVENT.CLOSE_ROOM, data => cb(data));
   };
   const setRoomOpen = ({ room }) => {
     console.log('setRoomOpen', room);

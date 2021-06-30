@@ -32,17 +32,19 @@ const useSocket = (roomId, socketServerURL = API_CONSTANTS.API_BASE_URL) => {
 const useScrumStory = roomId => {
   const { socketEvents, users } = useSocket(roomId);
   const [story, setStory] = useState();
+  const [room, setRoom] = useState({ status: false });
   const [storyVotes, setStoryVotes] = useState([]);
   console.log('useScrumStory', roomId, story, storyVotes);
 
   useEffect(() => {
     if (socketEvents) {
-      const { onStoryUpdate, onStoryVotesUpdate } = socketEvents;
+      const { onStoryUpdate, onStoryVotesUpdate, onRoomClosed } = socketEvents;
 
       console.log('useScrumStory-useEffect-init');
 
       onStoryUpdate(setStory);
       onStoryVotesUpdate(setStoryVotes);
+      onRoomClosed(setRoom);
     }
 
     return () => {
@@ -50,6 +52,7 @@ const useScrumStory = roomId => {
     };
   }, [socketEvents]);
   return {
+    room,
     users,
     story,
     storyVotes,
