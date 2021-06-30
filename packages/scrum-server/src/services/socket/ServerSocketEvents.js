@@ -22,18 +22,25 @@ const ServerSocketEvents = io => {
       io.to(room.id).emit(EVENT.USER_JOINED, { room, users });
     };
 
+    const onRoomOpened = ({ room }) => {
+      console.log('room opennedaaaaa');
+      logger.info(`onRoomOpened {${EVENT.OPEN_ROOM}} on room {${room.id}} `);
+      const existingRoom = socketState.openRoom(room);
+      io.to(room.id).emit(EVENT.OPEN_ROOM, { room: existingRoom });
+    };
+
     const onSendMessageToRoom = ({ room, message }) => {
       const roomI = socketState.getRoom(room);
       const users = Array.from(roomI.users.values());
       logger.debug(
         `onSendMessageToRoom {${EVENT.SEND_MESSAGE}} with payload {${message}} on room {${room.id}} to {${users.length}} users`
       );
-      // TODO retrieve title, subtitle
       io.to(room.id).emit(EVENT.SEND_MESSAGE, {
         message,
         room: { id: roomI.id, title: `Scrum Session ${room.id}`, subtitle: '', users },
       });
     };
+
     const onStoryUpdate = ({ room, story }) => {
       logger.debug(
         `onStoryUpdate {${EVENT.STORY_UPDATE}} on room {${room.id}} with story {${story.storyTitle}}`
@@ -41,6 +48,7 @@ const ServerSocketEvents = io => {
       const roomI = socketState.setRoomStory(room, story);
       io.to(room.id).emit(EVENT.STORY_UPDATE, { room: roomI, story });
     };
+
     const onStoryVotesUpdate = ({ room, user, vote }) => {
       logger.info(
         `onStoryVotesUpdate {${EVENT.STORY_VOTES_UPDATE}} on room {${room.id}} with vote ${vote} `
@@ -50,7 +58,20 @@ const ServerSocketEvents = io => {
       io.to(room.id).emit(EVENT.STORY_VOTES_UPDATE, { room, storyVotes: Array.from(storyVotes) });
     };
 
-    return { onJoinUserToRoom, onSendMessageToRoom, onStoryUpdate, onStoryVotesUpdate };
+    const onRoomClosed = ({ room }) => {
+      logger.info(`onRoomClosed {${EVENT.CLOSE_ROOM}} on room {${room.id}} `);
+      const existingRoom = socketState.closeRoom(room);
+      io.to(room.id).emit(EVENT.CLOSE_ROOM, { room: existingRoom });
+    };
+
+    return {
+      onJoinUserToRoom,
+      onRoomOpened,
+      onSendMessageToRoom,
+      onStoryUpdate,
+      onStoryVotesUpdate,
+      onRoomClosed,
+    };
   };
 };
 module.exports = ServerSocketEvents;

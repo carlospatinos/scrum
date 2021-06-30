@@ -26,7 +26,7 @@ const findAll = async objectId => {
     throw Error(i18n.__('serviceInvalidId'));
   }
   const userStory = await UserStory.find({ planningSessionId: objectId }).limit(MAX_RESULTS_FROM_DB);
-  logger.info(userStory);
+  logger.info('userStory', userStory);
   if (!userStory) {
     throw Error(i18n.__('serviceFindError'));
   } else {
