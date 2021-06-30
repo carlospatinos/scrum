@@ -19,7 +19,7 @@ const ServerSocketEvents = io => {
       const roomUpdated = socketState.assignUserToRoom(room, user);
       const users = Array.from(roomUpdated.users.values());
       logger.info(`onJoinUserToRoom room has {${users.length}} participants`);
-      io.to(room.id).emit(EVENT.USER_JOINED, { room, users });
+      io.to(room.id).emit(EVENT.USER_JOINED, { room: roomUpdated, users });
     };
 
     const onRoomOpened = ({ room }) => {
