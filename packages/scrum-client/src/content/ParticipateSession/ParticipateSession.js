@@ -70,6 +70,18 @@ export default function ParticipateSession() {
     }
   }, [sessionInformation, storyVotes]);
 
+  // TODO how to call this once?
+  useEffect(() => {
+    console.log('openning room');
+    try {
+      socketEvents.setRoomOpen({
+        room: { id: roomId },
+      });
+    } catch (error) {
+      console.log('error', MediaError);
+    }
+  }, []);
+
   if (!sessionInformation || !users) {
     return (
       <Row>
@@ -135,6 +147,13 @@ export default function ParticipateSession() {
     console.log(e);
   };
   const handleConfirmEndSession = () => {
+    try {
+      socketEvents.setRoomClosed({
+        room: { id: roomId },
+      });
+    } catch (error) {
+      console.log('error', MediaError);
+    }
     history.push(PATHS.SESSION_SUMMARY);
   };
 

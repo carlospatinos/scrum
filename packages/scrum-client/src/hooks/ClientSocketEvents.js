@@ -34,6 +34,11 @@ const ClientSocketEvents = (ioUri = API_CONSTANTS.API_BASE_URL) => {
     console.log('onUserJoined');
     socket.on(EVENT.USER_JOINED, data => cb(data.users));
   };
+  // TODO do we need this?
+  const onRoomOpened = cb => {
+    console.log('onRoomOpened');
+    socket.on(EVENT.ROOM_OPENED, data => cb(data));
+  };
   const onStoryUpdate = cb => {
     console.log('onStoryUpdate');
     socket.on(EVENT.STORY_UPDATE, data => cb(data.story));
@@ -45,6 +50,15 @@ const ClientSocketEvents = (ioUri = API_CONSTANTS.API_BASE_URL) => {
       return cb(data.storyVotes);
     });
   };
+  // TODO do we need this?
+  const onRoomClosed = cb => {
+    console.log('onRoomClosed');
+    socket.on(EVENT.ROOM_CLOSED, data => cb(data));
+  };
+  const setRoomOpen = ({ room }) => {
+    console.log('setRoomOpen', room);
+    socket.emit(EVENT.OPEN_ROOM, { room });
+  };
   const setRoomStory = ({ room, story }) => {
     console.log('setRoomStory', room, story);
     socket.emit(EVENT.STORY_UPDATE, { room, story });
@@ -53,23 +67,30 @@ const ClientSocketEvents = (ioUri = API_CONSTANTS.API_BASE_URL) => {
     console.log('setRoomStoryVote', room, user, vote);
     socket.emit(EVENT.STORY_VOTES_UPDATE, { room, user, vote });
   };
-
   const sendMessageToRoom = (room, message) => {
     console.log('sendMessageToRoom', room, message);
     socket.emit(EVENT.SEND_MESSAGE, { room, message });
+  };
+  const setRoomClosed = ({ room }) => {
+    console.log('setRoomClosed', room);
+    socket.emit(EVENT.CLOSE_ROOM, { room });
   };
 
   return {
     socket,
     onUserJoined,
+    onRoomOpened,
     joinToRoom,
     disconnectSocket,
     onRoomMessages,
+    onRoomClosed,
     sendMessageToRoom,
+    setRoomOpen,
     onStoryUpdate,
     onStoryVotesUpdate,
     setRoomStoryVote,
     setRoomStory,
+    setRoomClosed,
   };
 };
 

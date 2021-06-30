@@ -20,9 +20,11 @@ class ServerSocketService {
       this.logger.info(`socket  connected [${socket.id}]`);
       const socketEvent = socketEventIO(socket);
       socket.on(EVENT.JOIN, socketEvent.onJoinUserToRoom);
+      socket.on(EVENT.OPEN_ROOM, socketEvent.onRoomOpened);
       socket.on(EVENT.SEND_MESSAGE, socketEvent.onSendMessageToRoom);
       socket.on(EVENT.STORY_UPDATE, socketEvent.onStoryUpdate);
       socket.on(EVENT.STORY_VOTES_UPDATE, socketEvent.onStoryVotesUpdate);
+      socket.on(EVENT.CLOSE_ROOM, socketEvent.onRoomClosed);
       socket.on(EVENT.DISCONNECT, () => {
         this.logger.info(`socket  disconnected [${socket.id}]`);
       });

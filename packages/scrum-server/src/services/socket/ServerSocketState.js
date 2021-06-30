@@ -1,11 +1,20 @@
 /* eslint-disable no-underscore-dangle */
 const { Logger } = require('../../utils/Logger');
 
-const buildRoom = ({ id, users = new Map(), storyVotes = new Map(), story = '' }) => ({
+const buildRoom = ({
+  id,
+  users = new Map(),
+  storyVotes = new Map(),
+  story = '',
+  started = false,
+  completed = false,
+}) => ({
   id,
   users,
   storyVotes,
   story,
+  started,
+  completed,
 });
 
 const ServerSocketState = (initialState = []) => {
@@ -19,6 +28,15 @@ const ServerSocketState = (initialState = []) => {
       logger.debug(`addRoom building room {${room.id}} having ${rooms.size} rooms.`);
     }
     return rooms.get(room.id);
+  };
+
+  const openRoom = room => {
+    const existingRoom = rooms.get(room.id);
+    if (existingRoom) {
+      existingRoom.started = true;
+      logger.debug(`openRoom room {${room.id}} resulting in ${JSON.stringify(existingRoom)}.`);
+    }
+    return existingRoom;
   };
 
   const assignUserToRoom = (room, user) => {
@@ -59,13 +77,23 @@ const ServerSocketState = (initialState = []) => {
     );
     return _room.storyVotes;
   };
+
   const getRoom = room => {
     const foundRoom = rooms.get(room.id);
     logger.debug(`getRoom for room_id {${room.id}} found ${foundRoom}`);
     return foundRoom;
   };
 
-  return { getRoom, assignUserToRoom, setRoomStory, setRoomStoryVote };
+  const closeRoom = room => {
+    const existingRoom = rooms.get(room.id);
+    if (existingRoom) {
+      existingRoom.completed = true;
+      logger.debug(`closeRoom {${room.id}} resulting in ${JSON.stringify(existingRoom)}.`);
+    }
+    return existingRoom;
+  };
+
+  return { getRoom, openRoom, assignUserToRoom, setRoomStory, setRoomStoryVote, closeRoom };
 };
 
 module.exports = ServerSocketState;
